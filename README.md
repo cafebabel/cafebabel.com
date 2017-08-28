@@ -7,7 +7,7 @@
 
 ## technologies
 	- languages de programmation : python, javascript ?
-	- interface contributeur : doit rester dans l’interface publique WYSIWYG => Hélène Pillon, Katha Kloss, 
+	- interface contributeur : doit rester dans l’interface publique WYSIWYG => Hélène Pillon, Katha Kloss, Selina Glaap
 	- cms interface administrateur (django un peu merdique) => wordpress possible ? drupal ? => sur-mesure
 	- chargement page ajax
     => chargement SPA, service workers, progressive webApp
