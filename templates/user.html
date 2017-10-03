@@ -1,64 +1,76 @@
 {% extends 'base.html' %}
 
-{% block mode %}{% if edit %}edit{% endif %}{% endblock %}
-
 {% block body %}
+{% if user.id %}
 <h1>{{ user }}'s profile</h1>
+{% else %}
+<h1>Create a profile</h1>
+{% endif %}
+
 <ul>
   <li>firstname: <span data-edit=firstname>{{ user.firstname or '' }}</span></li>
   <li>lastname: <span data-edit=lastname>{{ user.lastname or '' }}</span></li>
   <li>email: <span data-edit=email>{{ user.email or '' }}</span></li>
 </ul>
 
-{# <p>
-  <a href={{ url_for('api_user_put', id=user.id) }}>Edit this profile</a>
-  <form method=post action={{ url_for('user_delete', id=user.id) }}>
-    <button type=submit>Delete this profile</button>
-  </form>
-</p> #}
+{% if not edit %}
+  <a href=?edit>Edit this profile</a>
+{% endif %}
 
 {% if edit %}
   {% if user.id %}
-  <form class=page-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
+  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
+    <button type=submit>Delete this profile</button>
+  </form>
+  {% endif %}
+
+  {% if user.id %}
+  <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
   {% else %}
-  <form class=page-save method=post action={{ url_for('api_user_post') }}>
+  <form class=user-save method=post action={{ url_for('api_user_post') }}>
   {% endif %}
     <button type=submit>Save my profile</button>
   </form>
+
+  <script>
+    Array.from(document.querySelectorAll('[data-edit]')).forEach(editable => {
+      editable.setAttribute('contentEditable', true)
+    })
+
+    document.querySelector('.user-save').addEventListener('submit', event => {
+      event.preventDefault()
+
+      const fields = Array.from(document.querySelectorAll('[data-edit]'))
+      const data = {
+        'firstname': fields.find(f => f.dataset.edit === 'firstname').textContent,
+        'lastname': fields.find(f => f.dataset.edit === 'lastname').textContent,
+        'email': fields.find(f => f.dataset.edit === 'email').textContent,
+      }
+
+      request(event.target.action, {
+        method: event.target.dataset.method || event.target.method,
+        body: data
+      })
+      .then(r => {
+        location.href = `/user/${r.body.id}/`
+      })
+    })
+
+    const deleteForm = document.querySelector('.user-delete')
+    deleteForm && deleteForm.addEventListener('submit', event => {
+      event.preventDefault()
+      request(event.target.action, {method: event.target.dataset.method})
+      .then(r => {
+        if(r.status === 204) {
+          console.info('user deleted')
+          location.href = '/'
+        }
+        else {
+          console.error(r)
+        }
+      })
+    })
+  </script>
 {% endif %}
 
-<script>
-Array.from(document.querySelectorAll('body.edit [data-edit]')).forEach(editable => {
-  editable.setAttribute('contentEditable', true)
-})
-
-document.querySelector('.page-save').addEventListener('submit', event => {
-  event.preventDefault()
-
-  const fields = Array.from(document.querySelectorAll('[data-edit]'))
-  const data = {
-    'firstname': fields.find(f => f.dataset.edit === 'firstname').textContent,
-    'lastname': fields.find(f => f.dataset.edit === 'lastname').textContent,
-    'email': fields.find(f => f.dataset.edit === 'email').textContent,
-  }
-
-  fetch(event.target.action, {
-    method: event.target.dataset.method || event.target.method,
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(r => {
-    if(r.ok) {
-      return r.json()
-    }
-    console.error(r)
-  })
-  .then(response => {
-    console.info('user data:', response)
-    console.info(`user url: /user/${response.id}/`)
-  })
-})
-</script>
 {% endblock %}
