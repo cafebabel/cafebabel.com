@@ -8,8 +8,8 @@ login_manager.init_app(app)
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(session_token):
     try:
-        return User.get(id=user_id)
+        return User.get(session_token=session_token)
     except User.DoesNotExist:
         return None

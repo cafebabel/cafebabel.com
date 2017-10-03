@@ -11,7 +11,6 @@ def home():
 
 
 @app.route('/user/')
-@login_required
 def user_new():
     return render_template('user.html', user=User(), edit=True)
 
