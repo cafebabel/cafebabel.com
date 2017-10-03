@@ -1,8 +1,9 @@
 import datetime
 
-from core import db
 from peewee import CharField, DateField, Model
 from playhouse.fields import PasswordField
+
+from . import db
 
 
 class User(Model):
