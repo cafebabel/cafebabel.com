@@ -51,9 +51,8 @@
         method: event.target.dataset.method || event.target.method,
         body: data
       })
-      .then(r => {
-        location.href = `/user/${r.body.id}/`
-      })
+      .then(r => location.href = `/user/${r.id}/`)
+      .catch(e => alert(e.error))
     })
 
     const deleteForm = document.querySelector('.user-delete')
@@ -61,14 +60,10 @@
       event.preventDefault()
       request(event.target.action, {method: event.target.dataset.method})
       .then(r => {
-        if(r.status === 204) {
-          console.info('user deleted')
-          location.href = '/'
-        }
-        else {
-          console.error(r)
-        }
+        console.info('user deleted')
+        location.href = '/'
       })
+      .catch(e => alert(e.error))
     })
   </script>
 {% endif %}
