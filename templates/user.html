@@ -1,16 +1,64 @@
 {% extends 'base.html' %}
 
+{% block mode %}{% if edit %}edit{% endif %}{% endblock %}
+
 {% block body %}
 <h1>{{ user }}'s profile</h1>
 <ul>
-  <li>firstname: {{ user.firstname }}</li>
-  <li>lastname: {{ user.lastname }}</li>
+  <li>firstname: <span data-edit=firstname>{{ user.firstname or '' }}</span></li>
+  <li>lastname: <span data-edit=lastname>{{ user.lastname or '' }}</span></li>
+  <li>email: <span data-edit=email>{{ user.email or '' }}</span></li>
 </ul>
 
-<p>
-  <a href={{ url_for('user_edit', id=user.id) }}>Edit this profile</a>
+{# <p>
+  <a href={{ url_for('api_user_put', id=user.id) }}>Edit this profile</a>
   <form method=post action={{ url_for('user_delete', id=user.id) }}>
     <button type=submit>Delete this profile</button>
   </form>
-</p>
+</p> #}
+
+{% if edit %}
+  {% if user.id %}
+  <form class=page-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
+  {% else %}
+  <form class=page-save method=post action={{ url_for('api_user_post') }}>
+  {% endif %}
+    <button type=submit>Save my profile</button>
+  </form>
+{% endif %}
+
+<script>
+Array.from(document.querySelectorAll('body.edit [data-edit]')).forEach(editable => {
+  editable.setAttribute('contentEditable', true)
+})
+
+document.querySelector('.page-save').addEventListener('submit', event => {
+  event.preventDefault()
+
+  const fields = Array.from(document.querySelectorAll('[data-edit]'))
+  const data = {
+    'firstname': fields.find(f => f.dataset.edit === 'firstname').textContent,
+    'lastname': fields.find(f => f.dataset.edit === 'lastname').textContent,
+    'email': fields.find(f => f.dataset.edit === 'email').textContent,
+  }
+
+  fetch(event.target.action, {
+    method: event.target.dataset.method || event.target.method,
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(r => {
+    if(r.ok) {
+      return r.json()
+    }
+    console.error(r)
+  })
+  .then(response => {
+    console.info('user data:', response)
+    console.info(`user url: /user/${response.id}/`)
+  })
+})
+</script>
 {% endblock %}

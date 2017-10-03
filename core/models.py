@@ -14,5 +14,8 @@ class User(Model):
     def __str__(self):
         return f'{self.firstname} {self.lastname}'
 
+    def to_dict(self):
+        return self._data
+
     class Meta:
         database = db
