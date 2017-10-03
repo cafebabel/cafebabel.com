@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>My profile</h1>
+
+<form method=post action={{ url_for('user_save', id=user.id) }}>
+  <input name=email placeholder=email value="{{ user.email or '' }}">
+  <input name=firstname placeholder=firstname value="{{ user.firstname or '' }}">
+  <input name=lastname placeholder=lastname value="{{ user.lastname or '' }}">
+
+  <button type=submit>Save my profile</button>
+</form>
+{% endblock %}

@@ -1,17 +1,5 @@
-import os
-from flask import Flask
-
-
-PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
-
-app = Flask(__name__)
-
-app.config.from_pyfile(f'{PROJECT_PATH}/settings.py')
-
-
-@app.route('/')
-def home():
-    return '<h1>Cafebabel</h1>'
+from core import app
+from core import views  # noqa: 401
 
 
 if __name__ == '__main__':

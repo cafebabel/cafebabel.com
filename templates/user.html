@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>{{ user }}'s profile</h1>
+<ul>
+  <li>firstname: {{ user.firstname }}</li>
+  <li>lastname: {{ user.lastname }}</li>
+</ul>
+
+<p>
+  <a href={{ url_for('user_edit', id=user.id) }}>Edit this profile</a>
+  <form method=post action={{ url_for('user_delete', id=user.id) }}>
+    <button type=submit>Delete this profile</button>
+  </form>
+</p>
+{% endblock %}

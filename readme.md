@@ -17,6 +17,16 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Install the database
+
+```
+export FLASK_APP=cli.py
+flask initdb
+```
+
+> You may reset your database by deleting the _/cafebabel.db_ file and
+re-initializing the database.
+
 
 ## Running the project
 
