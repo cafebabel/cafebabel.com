@@ -1,12 +1,13 @@
 import datetime
 
+from flask_login import UserMixin
 from peewee import CharField, DateField, Model
 from playhouse.fields import PasswordField
 
 from . import db
 
 
-class User(Model):
+class User(Model, UserMixin):
     email = CharField(unique=True)
     firstname = CharField()
     lastname = CharField()

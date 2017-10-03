@@ -4,6 +4,22 @@
 <link rel=stylesheet href=/static/css/edit.css>
 
 <body class="{% block mode %}{% endblock %}">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% if current_user.is_authenticated %}
+    Hi {{ current_user }}!
+    <p>Do you want to <a href="{{ url_for('logout') }}">log out?</a>
+{% else %}
+    Hi anonymous
+    <p>Do you want to <a href="{{ url_for('login') }}">log in?</a>
+{% endif %}
 {% block body %}
 
 {% endblock %}

@@ -1,4 +1,5 @@
-from flask import abort, render_template, redirect, request, url_for
+from flask import abort, render_template, request
+from flask_login import login_required
 
 from . import app
 from .models import User
@@ -6,20 +7,17 @@ from .models import User
 
 @app.route('/')
 def home():
-    return '''
-        <h1>Cafebabel</h1>
-        <p>
-            <a href=/user/>Create a profile</a>
-        </p>
-    '''
+    return render_template('home.html')
 
 
 @app.route('/user/')
+@login_required
 def user_new():
     return render_template('user.html', user=User(), edit=True)
 
 
 @app.route('/user/<int:id>/')
+@login_required
 def user(id):
     try:
         user = User.get(id=id)

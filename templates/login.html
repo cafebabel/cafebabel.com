@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body %}
+  <h1>Login</h1>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form method=post>
+    {{ form.csrf_token }}
+    {{ form.email.label }} {{ form.email(type='email') }}
+    {{ form.password.label }} {{ form.password(pattern='.{10,}') }}
+    <p><input type=submit value=Login>
+    <input type=hidden value="{{ next or '' }}" name=next>
+  </form>
+{% endblock %}
