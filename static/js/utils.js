@@ -5,10 +5,10 @@ function request (url, options = undefined) {
   return fetch(url, optionsHandler(options))
     .then(handleResponse)
     .catch(error => {
-        const e = new Error(`${error.message} ${url}`)
-        Object.assign(e, error, {url})
-        throw e
-      })
+      const e = new Error(`${error.message} ${url}`)
+      Object.assign(e, error, {url})
+      throw e
+    })
 }
 
 function optionsHandler (options) {
