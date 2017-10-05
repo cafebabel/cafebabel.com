@@ -8,9 +8,9 @@
 {% endif %}
 
 <ul>
-  <li>firstname: <span data-edit=firstname>{{ user.firstname or '' }}</span></li>
-  <li>lastname: <span data-edit=lastname>{{ user.lastname or '' }}</span></li>
-  <li>email: <span data-edit=email>{{ user.email or '' }}</span></li>
+  <li>firstname: <span data-edit-name=firstname>{{ user.firstname or '' }}</span></li>
+  <li>lastname: <span data-edit-name=lastname>{{ user.lastname or '' }}</span></li>
+  <li>email: <span data-edit-name=email data-edit-type=email data-edit-attrs="required">{{ user.email or '' }}</span></li>
 </ul>
 
 {% if not edit %}
@@ -33,8 +33,15 @@
   </form>
 
   <script>
-    Array.from(document.querySelectorAll('[data-edit]')).forEach(editable => {
-      editable.setAttribute('contentEditable', true)
+    Array.from(document.querySelectorAll('[data-edit-name]')).forEach(editable => {
+      editable.innerHTML = `
+        <input data-edit
+          type=${editable.dataset.editType || 'text'}
+          name="${editable.dataset.editName}"
+          value="${editable.textContent || ''}"
+          ${editable.dataset.editAttrs}
+        >
+      `
     })
 
     document.querySelector('.user-save').addEventListener('submit', event => {
@@ -42,9 +49,9 @@
 
       const fields = Array.from(document.querySelectorAll('[data-edit]'))
       const data = {
-        'firstname': fields.find(f => f.dataset.edit === 'firstname').textContent,
-        'lastname': fields.find(f => f.dataset.edit === 'lastname').textContent,
-        'email': fields.find(f => f.dataset.edit === 'email').textContent,
+        'firstname': fields.find(f => f.name === 'firstname').value,
+        'lastname': fields.find(f => f.name === 'lastname').value,
+        'email': fields.find(f => f.name === 'email').value,
       }
 
       request(event.target.action, {
