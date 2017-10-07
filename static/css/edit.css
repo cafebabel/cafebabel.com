@@ -1,4 +1,4 @@
-.edit [data-edit] {
+[data-edit][contentEditable] {
   border: 1px solid #ccc;
   padding: 0 1rem;
   border-radius: .2rem;
