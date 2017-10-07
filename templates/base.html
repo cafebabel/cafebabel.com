@@ -4,16 +4,15 @@
 <link rel=stylesheet href=/static/css/edit.css>
 
 <body class="{% block mode %}{% endblock %}">
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
+  {% if current_user.is_authenticated %}
+    <h2>Hi {{ current_user }}!</h2>
+    <p>
+      <a href={{ url_for('security.logout') }}>Log out</a>
+      <a href={{ url_for('security.change_password') }}>Change password</a>
+    </p>
+  {% else %}
+    {% include "security/_menu.html" %}
   {% endif %}
-{% endwith %}
-{% block body %}
-
-{% endblock %}
+  {% include "security/_flash_messages.html" %}
+  {% block body %}{% endblock %}
 </body>
