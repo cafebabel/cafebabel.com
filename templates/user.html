@@ -10,10 +10,6 @@
 <ul>
   <li>First Name: <span data-edit-name=firstname data-edit-attrs="required">{{ user.firstname or '' }}</span></li>
   <li>Last Name: <span data-edit-name=lastname data-edit-attrs="required">{{ user.lastname or '' }}</span></li>
-  <li>Email: <span data-edit-name=email data-edit-type=email data-edit-attrs="required">{{ user.email or '' }}</span></li>
-  {% if edit %}
-  <li>Password: <input type=password name=password placeholder="Make it strong" pattern=".{10,}"></li>
-  {% endif %}
 </ul>
 
 {% if not edit %}
@@ -54,7 +50,6 @@
       const data = {
         'firstname': fields.find(f => f.name === 'firstname').value,
         'lastname': fields.find(f => f.name === 'lastname').value,
-        'email': fields.find(f => f.name === 'email').value,
       }
 
       request(event.target.action, {

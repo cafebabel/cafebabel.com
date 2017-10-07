@@ -1,8 +1,5 @@
 from flask import abort, render_template, request
-<<<<<<< HEAD
-=======
 from flask_login import login_required
->>>>>>> d422bdd7b6af01d9eb2821b37b5e9ad75cdd24b5
 
 from . import app
 from .models import User
