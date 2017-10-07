@@ -1,42 +1,37 @@
 import datetime
-import os
-import uuid
 
-from flask_login import UserMixin
-from peewee import CharField, DateField, Model
-from playhouse.fields import PasswordField
+from flask_security import RoleMixin, UserMixin
+from peewee import (BooleanField, CharField, DateField, DateTimeField,
+                    ForeignKeyField, TextField)
 
 from . import db
 
 
-class User(Model, UserMixin):
+class Role(db.Model, RoleMixin):
+    name = CharField(unique=True)
+    description = TextField(null=True)
+
+
+class User(db.Model, UserMixin):
     email = CharField(unique=True)
     firstname = CharField()
     lastname = CharField()
-    password = PasswordField()
-    session_token = CharField()
+    password = TextField()
     creation_date = DateField(default=datetime.datetime.utcnow)
-
-    class Meta:
-        database = db
+    active = BooleanField(default=True)
+    confirmed_at = DateTimeField(null=True)
 
     def __str__(self):
         return f'{self.firstname} {self.lastname}'
-
-    def save(self, *args, **kwargs):
-        if not self.session_token:
-            self.session_token = uuid.UUID(bytes=os.urandom(16))
-        super().save(*args, **kwargs)
 
     def to_dict(self):
         user_dict = self._data.copy()
         del user_dict['password']
         return user_dict
 
-    def get_id(self):
-        """In use by flask_login to retrieve the user from session.
 
-        See https://flask-login.readthedocs.io/en/latest/#alternative-tokens
-        for reasons why.
-        """
-        return self.session_token
+class UserRoles(db.Model):
+    user = ForeignKeyField(User, related_name='roles')
+    role = ForeignKeyField(Role, related_name='users')
+    name = property(lambda self: self.role.name)
+    description = property(lambda self: self.role.description)

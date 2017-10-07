@@ -1,5 +1,5 @@
+import cli  # noqa: import commands.
 from api import views  # noqa: 401
-from auth import views  # noqa: 401
 from core import views  # noqa: 401
 from core import app
 

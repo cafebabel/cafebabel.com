@@ -15,10 +15,10 @@
 {% endwith %}
 {% if current_user.is_authenticated %}
     Hi {{ current_user }}!
-    <p>Do you want to <a href="{{ url_for('logout') }}">log out?</a>
+    <p>Do you want to <a href="{{ url_for('security.logout') }}">log out?</a>
 {% else %}
     Hi anonymous
-    <p>Do you want to <a href="{{ url_for('login') }}">log in?</a>
+    <p>Do you want to <a href="{{ url_for('security.login') }}">log in?</a>
 {% endif %}
 {% block body %}
 
