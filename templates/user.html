@@ -8,7 +8,6 @@
   <li>firstname: <span data-edit=firstname>{{ user.firstname or '' }}</span></li>
   <li>lastname: <span data-edit=lastname>{{ user.lastname or '' }}</span></li>
   <li>email: <span data-edit=email>{{ user.email or '' }}</span></li>
-  <li>password: <span data-edit=password></span></li>
 </ul>
 
 {# <p>
@@ -41,7 +40,6 @@ document.querySelector('.page-save').addEventListener('submit', event => {
     'firstname': fields.find(f => f.dataset.edit === 'firstname').textContent,
     'lastname': fields.find(f => f.dataset.edit === 'lastname').textContent,
     'email': fields.find(f => f.dataset.edit === 'email').textContent,
-    'password': fields.find(f => f.dataset.edit === 'password').textContent,
   }
 
   fetch(event.target.action, {
