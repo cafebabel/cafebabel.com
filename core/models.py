@@ -14,15 +14,18 @@ class Role(db.Model, RoleMixin):
 
 class User(db.Model, UserMixin):
     email = CharField(unique=True)
-    firstname = CharField()
-    lastname = CharField()
+    firstname = CharField(null=True)
+    lastname = CharField(null=True)
     password = TextField()
     creation_date = DateField(default=datetime.datetime.utcnow)
     active = BooleanField(default=True)
     confirmed_at = DateTimeField(null=True)
 
     def __str__(self):
-        return f'{self.firstname} {self.lastname}'
+        if self.firstname and self.lastname:
+            return f'{self.firstname} {self.lastname}'
+        else:
+            return self.email
 
     def to_dict(self):
         user_dict = self._data.copy()
