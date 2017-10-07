@@ -20,7 +20,8 @@ pip install -r requirements.txt
 ### Install the database
 
 ```
-export FLASK_APP=cli.py
+export FLASK_APP=app.py
+export FLASK_DEBUG=1
 flask initdb
 ```
 
@@ -31,5 +32,11 @@ re-initializing the database.
 ## Running the project
 
 ```
-python app.py
+flask run
+```
+
+## Running a dummy mail server
+
+```
+sudo python -m smtpd -n -c DebuggingServer localhost:25
 ```

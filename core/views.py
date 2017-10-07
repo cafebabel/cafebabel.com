@@ -1,4 +1,8 @@
 from flask import abort, render_template, request
+<<<<<<< HEAD
+=======
+from flask_login import login_required
+>>>>>>> d422bdd7b6af01d9eb2821b37b5e9ad75cdd24b5
 
 from . import app
 from .models import User
@@ -6,12 +10,7 @@ from .models import User
 
 @app.route('/')
 def home():
-    return '''
-        <h1>Cafebabel</h1>
-        <p>
-            <a href=/user/>Create a profile</a>
-        </p>
-    '''
+    return render_template('home.html')
 
 
 @app.route('/user/')
@@ -20,6 +19,7 @@ def user_new():
 
 
 @app.route('/user/<int:id>/')
+@login_required
 def user(id):
     try:
         user = User.get(id=id)
