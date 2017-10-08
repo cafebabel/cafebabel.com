@@ -1,23 +1,18 @@
-from unittest import TestCase
-
-from peewee import drop_model_tables, create_model_tables
+import pytest
 from flask_security.confirmable import confirm_user
 
+from ..auth import security  # noqa: to load the security extension.
+from ..core import app as myapp
 from ..core.models import User, UserProfile
-from ..core import app
 
 
-class UserProfileTest(TestCase):
-    def setUp(self):
-        app.testing = True
+@pytest.fixture
+def app():
+    return myapp
 
-    def tearDown(self):
-        tables = [User, UserProfile]
-        drop_model_tables(tables, fail_silently=True)
-        create_model_tables(tables, fail_silently=True)
 
-    @app.app_context
-    def test_confirm_user_creates_profile(self):
-        user = User.create(email='testy@tester.local', password='secret')
+def test_confirm_user_creates_profile(app):
+    user = User.create(email='testy@tester.local', password='secret')
+    with app.app_context():
         confirm_user(user)
-        assert UserProfile.get(user=user)
+    assert UserProfile.get(user=user)

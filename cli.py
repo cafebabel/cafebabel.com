@@ -1,15 +1,20 @@
 import click
-from auth import user_datastore
-from core import app
-from core.models import Role, User, UserRoles, UserProfile
+from cafebabel.auth import user_datastore
+from cafebabel.core import app
+from cafebabel.core.models import Role, User, UserProfile, UserRoles
+from peewee import create_model_tables, drop_model_tables
 
 
-@app.cli.command()
-def initdb():
-    for Model in (Role, User, UserRoles, UserProfile):
-        Model.drop_table(fail_silently=True)
-        Model.create_table(fail_silently=True)
+def _initdb():
+    tables = [User, UserProfile, Role, UserRoles]
+    drop_model_tables(tables, fail_silently=True)
+    create_model_tables(tables, fail_silently=True)
     user_datastore.create_user(
         email='admin@example.com', password='password',
         firstname='Admin', lastname='Admin')
     click.echo('DB intialized.')
+
+
+@app.cli.command()
+def initdb():
+    _initdb()
