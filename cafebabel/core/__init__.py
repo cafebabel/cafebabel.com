@@ -6,8 +6,9 @@ from flask_mail import Mail
 
 
 app = Flask(__name__)
-app.root_path = Path(__file__).parent.parent.parent
-app.config.from_pyfile(app.root_path / 'settings.py')
+ROOT_PATH = Path(__file__).parent.parent.parent
+app.root_path = str(ROOT_PATH)
+app.config.from_pyfile(str(ROOT_PATH / 'settings.py'))
 
 db = Database(app)
 mail = Mail(app)
