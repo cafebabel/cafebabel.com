@@ -2,6 +2,7 @@
 <meta charset=utf-8>
 <title>Cafebabel</title>
 
+<link rel=stylesheet href=https://rawgit.com/cafebabel/styleguide/master/styleguide.css>
 <link rel=stylesheet href=/static/css/edit.css>
 <script src=/static/js/utils.js></script>
 
@@ -14,5 +15,5 @@
 {% else %}
   {% include "security/_menu.html" %}
 {% endif %}
-{% include "_flash_messages.html" %}
+{% include "security/_messages.html" %}
 {% block body %}{% endblock %}
