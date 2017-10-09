@@ -15,6 +15,12 @@ def _initdb():
     click.echo('DB intialized.')
 
 
+def _dropdb():
+    tables = [User, UserProfile, Role, UserRoles]
+    drop_model_tables(tables, fail_silently=True)
+    click.echo('DB droped.')
+
+
 @app.cli.command()
 def initdb():
     _initdb()
