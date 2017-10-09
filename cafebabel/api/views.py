@@ -1,7 +1,7 @@
 from flask import request, jsonify
 
-from core import app
-from core.models import User
+from ..core import app
+from ..core.models import User
 
 
 @app.route('/api/user/', methods=['post'])
