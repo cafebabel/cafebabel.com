@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_APP: app.py
+    steps:
+      - checkout
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements-dev.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            py.test
