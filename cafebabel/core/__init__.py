@@ -1,7 +1,6 @@
 from pathlib import Path
 
 from flask import Flask
-from flask_debugtoolbar import DebugToolbarExtension
 from flask_peewee.db import Database
 from flask_mail import Mail
 
@@ -13,4 +12,10 @@ app.config.from_pyfile(str(ROOT_PATH / 'settings.py'))
 
 db = Database(app)
 mail = Mail(app)
-toolbar = DebugToolbarExtension(app)
+
+# Dev specific packages
+try:
+    from flask_debugtoolbar import DebugToolbarExtension
+    toolbar = DebugToolbarExtension(app)
+except ModuleNotFoundError:
+    pass
