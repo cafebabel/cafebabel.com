@@ -11,6 +11,16 @@
   <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
 </ul>
 
+<h2>Social accounts</h2>
+<ul>
+  <li>Twitter: <span data-edit-name=socials-twitter>{{ user.profile.socials.twitter }}</span></li>
+  <li>Facebook: <span data-edit-name=socials-facebook>{{ user.profile.socials.facebook }}</span></li>
+  <li>Medium: <span data-edit-name=socials-medium>{{ user.profile.socials.medium }}</span></li>
+  <li>Flickr: <span data-edit-name=socials-flickr>{{ user.profile.socials.flickr }}</span></li>
+  <li>Pinterest: <span data-edit-name=socials-pinterest>{{ user.profile.socials.pinterest }}</span></li>
+  <li>Instagram<span data-edit-name=socials-instagram>{{ user.profile.socials.instagram }}</span></li>
+</ul>
+
 {% if edit %}
   <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
     <button type=submit>Delete my profile</button>
@@ -39,8 +49,12 @@
 
       const fields = Array.from(document.querySelectorAll('[data-edit]'))
       const data = {
-        'name': fields.find(f => f.name === 'name').value
+        'name': fields.find(f => f.name === 'name').value,
+        'socials': {},
       }
+      fields.filter(f => f.name.slice(0, 8) === 'socials-').forEach(input => {
+        data['socials'][input.name.slice(8)] = input.value
+      })
 
       request(event.target.action, {
         method: event.target.dataset.method || event.target.method,

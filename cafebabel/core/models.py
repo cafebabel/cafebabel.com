@@ -4,6 +4,7 @@ from flask_security import RoleMixin, UserMixin
 from peewee import (BooleanField, CharField, DateField, DateTimeField,
                     ForeignKeyField, TextField)
 from playhouse.signals import post_save
+from playhouse.fields import PickledField
 
 from . import db
 
@@ -48,6 +49,7 @@ class UserRoles(db.Model):
 class UserProfile(db.Model):
     name = CharField(null=True)
     user = ForeignKeyField(User, related_name='profiles', on_delete='CASCADE')
+    socials = PickledField(null=True)
 
     def __str__(self):
         return self.name or str(self.user.email)

@@ -16,8 +16,10 @@ def api_user_post():
 @login_required
 def api_user_put():
     id = current_user.id
-    UserProfile.update(**request.get_json()).where(UserProfile.user_id == id).execute()
-    return jsonify(current_user.to_dict())
+    (UserProfile.update(**request.get_json())
+                .where(UserProfile.user_id == id).execute())
+    user = User.get(id=id)
+    return jsonify(user.to_dict())
 
 
 @app.route('/api/user/<int:id>/', methods=['delete'])
