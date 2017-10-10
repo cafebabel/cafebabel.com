@@ -50,6 +50,8 @@ class UserProfile(db.Model):
     name = CharField(null=True)
     user = ForeignKeyField(User, related_name='profiles', on_delete='CASCADE')
     socials = PickledField(null=True)
+    website = CharField(null=True)
+    about = CharField(null=True)
 
     def __str__(self):
         return self.name or str(self.user.email)
