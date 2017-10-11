@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if user.profile %}
+<h1>{{ user }}'s profile</h1>
+{% else %}
+<h1>Create a profile</h1>
+{% endif %}
+
+<ul>
+  <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
+  <li>Website: <span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website }}" target=_blank>{{ user.profile.website }}</a></span></li>
+</ul>
+
+<h2>About</h2>
+<p>
+  <span data-edit-name=about data-edit-type=textarea>{{ user.profile.about or '' }}</span>
+</p>
+
+<h2>Social accounts</h2>
+<ul>
+  <li>Twitter: <span data-edit-name=socials-twitter>{{ user.profile.socials.twitter }}</span></li>
+  <li>Facebook: <span data-edit-name=socials-facebook>{{ user.profile.socials.facebook }}</span></li>
+  <li>Medium: <span data-edit-name=socials-medium>{{ user.profile.socials.medium }}</span></li>
+  <li>Flickr: <span data-edit-name=socials-flickr>{{ user.profile.socials.flickr }}</span></li>
+  <li>Pinterest: <span data-edit-name=socials-pinterest>{{ user.profile.socials.pinterest }}</span></li>
+  <li>Instagram<span data-edit-name=socials-instagram>{{ user.profile.socials.instagram }}</span></li>
+</ul>
+
+{% if edit %}
+  <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
+    <button type=submit>Save my profile</button>
+  </form>
+
+  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
+    <button type=submit>Delete my profile</button>
+  </form>
+
+  <script>
+    function dataEditInput(editable) {
+      const type = editable.dataset.editType && `type=${editable.dataset.editType}`
+      editable.innerHTML = `
+        <input data-edit
+          ${type}
+          name="${editable.dataset.editName}"
+          value="${editable.textContent || ''}"
+          ${editable.dataset.editAttrs}
+          >
+      `
+    }
+
+    function dataEditTextarea(editable) {
+      editable.innerHTML = `
+        <textarea data-edit
+          name="${editable.dataset.editName}"
+          ${editable.dataset.editAttrs}
+          >${editable.textContent || ''}</textarea>
+      `
+    }
+    Array.from(document.querySelectorAll('[data-edit-name]')).forEach(editable => {
+      const type = editable.dataset.editType || 'input'
+      const funcName = `dataEdit${type[0].toUpperCase()}${type.slice(1)}`
+      this[funcName] ? this[funcName](editable) : dataEditInput(editable)
+    })
+
+    document.querySelector('.user-save').addEventListener('submit', event => {
+      event.preventDefault()
+
+      const fields = Array.from(document.querySelectorAll('[data-edit]'))
+      const data = {
+        'name': fields.find(f => f.name === 'name').value.trim(),
+        'website': fields.find(f => f.name === 'website').value.trim(),
+        'about': fields.find(f => f.name === 'about').value.trim(),
+        'socials': {},
+      }
+      fields.filter(f => f.name.slice(0, 8) === 'socials-').forEach(input => {
+        data['socials'][input.name.slice(8)] = input.value.trim()
+      })
+
+      request(event.target.action, {
+        method: event.target.dataset.method || event.target.method,
+        body: data,
+      })
+      .then(r => location.href = `/profile/${r.id}/`)
+      .catch(e => alert(e.error))
+    })
+
+    const deleteForm = document.querySelector('.user-delete')
+    deleteForm && deleteForm.addEventListener('submit', event => {
+      event.preventDefault()
+      const confirmed = confirm('Are you sure you want to delete your account?')
+      if (!confirmed) return
+
+      request(event.target.action, {method: event.target.dataset.method})
+      .then(r => {
+        console.info('user deleted')
+        location.href = '/'
+      })
+      .catch(e => alert(e.error))
+    })
+  </script>
+{% endif %}
+
+{% endblock %}

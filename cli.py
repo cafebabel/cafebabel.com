@@ -5,9 +5,11 @@ from cafebabel.core.models import Role, User, UserProfile, UserRoles
 from peewee import create_model_tables, drop_model_tables
 
 
+tables = [User, UserProfile, Role, UserRoles]
+
+
 def _initdb():
-    tables = [User, UserProfile, Role, UserRoles]
-    drop_model_tables(tables, fail_silently=True)
+    _dropdb()
     create_model_tables(tables, fail_silently=True)
     user_datastore.create_user(
         email='admin@example.com', password='password',
@@ -16,7 +18,6 @@ def _initdb():
 
 
 def _dropdb():
-    tables = [User, UserProfile, Role, UserRoles]
     drop_model_tables(tables, fail_silently=True)
     click.echo('DB dropped.')
 

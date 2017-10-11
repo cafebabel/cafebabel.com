@@ -14,6 +14,8 @@ function request (url, options = undefined) {
 function optionsHandler (options) {
   const def = {
     method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
     headers: {'Content-Type': 'application/json'}
   }
 
