@@ -1,7 +1,6 @@
 from pathlib import Path
 
 from flask import Flask
-from flask_debugtoolbar import DebugToolbarExtension
 from flask_mail import Mail
 
 from .database import Database
