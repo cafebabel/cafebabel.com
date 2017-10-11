@@ -1,9 +1,9 @@
 import datetime
 
 from flask_security import RoleMixin, UserMixin
-from flask_security.signals import user_confirmed
 from peewee import (BooleanField, CharField, DateField, DateTimeField,
                     ForeignKeyField, TextField)
+from playhouse.signals import post_save
 
 from . import db
 
@@ -21,17 +21,21 @@ class User(db.Model, UserMixin):
     confirmed_at = DateTimeField(null=True)
 
     def __str__(self):
-        return self.email
+        return str(self.profile)
 
     def to_dict(self):
         user_dict = self._data.copy()
         del user_dict['password']
         return user_dict
 
+    @property
+    def profile(self):
+        return self.profiles.get()
 
-@user_confirmed.connect
-def create_user_profile(app, user):
-    UserProfile.create(user=user)
+
+@post_save(sender=User)
+def create_user_profile(ModelClass, instance, created):
+    UserProfile.create(user=instance)
 
 
 class UserRoles(db.Model):
@@ -43,7 +47,7 @@ class UserRoles(db.Model):
 
 class UserProfile(db.Model):
     name = CharField(null=True)
-    user = ForeignKeyField(User)
+    user = ForeignKeyField(User, related_name='profiles', on_delete='CASCADE')
 
     def __str__(self):
-        return self.name if self.name else str(self.user)
+        return self.name or str(self.user.email)

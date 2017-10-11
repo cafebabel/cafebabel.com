@@ -1,33 +1,24 @@
 {% extends 'base.html' %}
 
 {% block body %}
-{% if user.id %}
+{% if user.profile %}
 <h1>{{ user }}'s profile</h1>
 {% else %}
 <h1>Create a profile</h1>
 {% endif %}
 
 <ul>
-  <li>First Name: <span data-edit-name=firstname data-edit-attrs="required">{{ user.firstname or '' }}</span></li>
-  <li>Last Name: <span data-edit-name=lastname data-edit-attrs="required">{{ user.lastname or '' }}</span></li>
+  <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
 </ul>
 
-{% if not edit %}
-  <a href=?edit>Edit this profile</a>
+{% if edit %}
+  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
+    <button type=submit>Delete my profile</button>
+  </form>
 {% endif %}
 
 {% if edit %}
-  {% if user.id %}
-  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
-    <button type=submit>Delete this profile</button>
-  </form>
-  {% endif %}
-
-  {% if user.id %}
   <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
-  {% else %}
-  <form class=user-save method=post action={{ url_for('api_user_post') }}>
-  {% endif %}
     <button type=submit>Save my profile</button>
   </form>
 
@@ -48,21 +39,23 @@
 
       const fields = Array.from(document.querySelectorAll('[data-edit]'))
       const data = {
-        'firstname': fields.find(f => f.name === 'firstname').value,
-        'lastname': fields.find(f => f.name === 'lastname').value,
+        'name': fields.find(f => f.name === 'name').value
       }
 
       request(event.target.action, {
         method: event.target.dataset.method || event.target.method,
         body: data
       })
-      .then(r => location.href = `/user/${r.id}/`)
+      .then(r => location.href = `/profile/${r.id}/`)
       .catch(e => alert(e.error))
     })
 
     const deleteForm = document.querySelector('.user-delete')
     deleteForm && deleteForm.addEventListener('submit', event => {
       event.preventDefault()
+      const confirmed = confirm('Are you sure you want to delete your account?')
+      if (!confirmed) return
+
       request(event.target.action, {method: event.target.dataset.method})
       .then(r => {
         console.info('user deleted')
