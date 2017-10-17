@@ -18,5 +18,7 @@
 {% else %}
   {% include "security/_menu.html" %}
 {% endif %}
+<a href={{ url_for('article_proposal') }}>Suggest an article</a>
+
 {% include "security/_messages.html" %}
 {% block body %}{% endblock %}

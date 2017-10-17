@@ -24,3 +24,19 @@ SECURITY_REGISTER_USER_TEMPLATE = 'register.html'
 SECURITY_SEND_CONFIRMATION_TEMPLATE = 'confirmation.html'
 EXPLAIN_TEMPLATE_LOADING = True
 DEBUG_TB_INTERCEPT_REDIRECTS = False
+
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USE_TLS = False
+MAIL_USE_SSL = False
+MAIL_DEBUG = DEBUG
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+MAIL_DEFAULT_SENDER = None
+
+EDITORS_EMAIL_DEFAULT = 'editors@cafebabel.com'
+EDITOR_EMAILS = {
+    'en': 'en@cafebabel.com',
+    'fr': 'fr@cafebabel.com',
+    'it': 'it@cafebabel.com',
+}
