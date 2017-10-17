@@ -4,4 +4,3 @@ flask-peewee==0.6.7
 Flask-Mail==0.9.1
 Flask-Security==3.0.0
 gunicorn==19.7.1
-pytest-flask==0.10.0

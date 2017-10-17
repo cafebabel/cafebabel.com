@@ -1,7 +1,7 @@
-from flask import render_template, request, flash, redirect
+from flask import render_template, request, flash, redirect, url_for
 from flask_mail import Message
 
-from ..core import app, mail
+from core import app, mail
 
 
 @app.route('/article/proposal/')
@@ -27,4 +27,4 @@ Additional infos: {data['additional']}
                   )
     mail.send(msg)
     flash('Your proposal was successfully send.', 'success')
-    return redirect('home')
+    return redirect(url_for('home'))
