@@ -1,7 +1,4 @@
 import cli  # noqa: import commands.
-from cafebabel.api import views  # noqa: 401
-from cafebabel.articles import views  # noqa: 401
-from cafebabel.core import views  # noqa: 401
 from cafebabel.core import app
 
 if __name__ == '__main__':

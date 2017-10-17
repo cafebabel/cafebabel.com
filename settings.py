@@ -11,7 +11,7 @@ SECURITY_CONFIRMABLE = False
 SECURITY_REGISTERABLE = True
 SECURITY_RECOVERABLE = True
 SECURITY_CHANGEABLE = True
-SECURITY_EMAIL_SENDER = 'no-reply@cafebabel.com'
+SECURITY_EMAIL_SENDER = '@'.join('no-reply', 'cafebabel.com')
 SECURITY_POST_LOGIN_VIEW = '/profile/'
 
 SECURITY_SEND_REGISTER_EMAIL = not DEBUG
@@ -34,9 +34,10 @@ MAIL_USERNAME = None
 MAIL_PASSWORD = None
 MAIL_DEFAULT_SENDER = None
 
-EDITORS_EMAIL_DEFAULT = 'editors@cafebabel.com'
+# Prevent writing clear email for avoiding robots on Github sources.
+EDITORS_EMAIL_DEFAULT = '@'.join('editors', 'cafebabel.com')
 EDITOR_EMAILS = {
-    'en': 'en@cafebabel.com',
-    'fr': 'fr@cafebabel.com',
-    'it': 'it@cafebabel.com',
+    'en': '@'.join('en', 'cafebabel.co.uk'),
+    'fr': '@'.join('fr', 'cafebabel.fr'),
+    'it': '@'.join('it', 'cafebabel.it'),
 }
