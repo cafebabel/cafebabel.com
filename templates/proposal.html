@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section>
+  <form action={{ url_for('article_proposal_create') }} method=post>
+    <label for=field_language>language</label>
+    <select name=language id=field_language required>
+      <option value=en>English</option>
+      <option value=fr>French</option>
+      <option value=it>Italian</option>
+      <option value=de>German</option>
+      <option value=es>Spanish</option>
+    </select>
+    <label for=field_topic>topic *</label><input name=topic id=field_topic required>
+    <label for=field_angle>angle</label><input name=angle id=field_angle>
+    <label for=field_format>format</label><input name=format id=field_format>
+    <label for=field_additional>additional</label><textarea name=additional id=field_additional></textarea>
+    <label for=field_name>name *</label><input name=name id=field_name required>
+    <label for=field_email>contact *</label><input type=email name=email id=field_email required>
+    <label for=field_city>city</label><input name=city id=field_city>
+
+    <button type=submit>Suggest this article</button>
+  </form>
+  <p>or <a href=m&#x61;ilto:{{config.EDITORS_EMAIL_DEFAULT|urlencode|replace('.', '&#46;')|replace('a', '&#x61;')|safe}}>send your proposal by email</a>.</p>
+</section>
+{% endblock %}
