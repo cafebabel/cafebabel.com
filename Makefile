@@ -1,5 +1,5 @@
 # Defaults
-branch=master
+branch=mailjet-smtp
 LOGS=access
 
 # Commands

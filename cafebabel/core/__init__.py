@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from flask import Flask
@@ -9,7 +10,9 @@ from .database import Database
 app = Flask(__name__)
 ROOT_PATH = Path(__file__).parent.parent.parent
 app.root_path = str(ROOT_PATH)
-app.config.from_pyfile(str(ROOT_PATH / 'settings.py'))
+SETTINGS_PATH = (os.environ.get('SETTINGS_PATH') or
+                 str(ROOT_PATH / 'settings.py'))
+app.config.from_pyfile(SETTINGS_PATH)
 db = Database(app)
 mail = Mail(app)
 
