@@ -19,9 +19,9 @@ MAIL_DEFAULT_SENDER = '@'.join(['do-reply', 'cafebabel.com'])
 
 EDITORS_EMAIL_DEFAULT = '@'.join(['editors', 'cafebabel.com'])
 EDITOR_EMAILS = {
-    'en': '@'.join(['en', 'cafebabel.co.uk']),
+    'en': '@'.join(['j.giraud', 'cafebabel.com']),
     'fr': '@'.join(['fr', 'cafebabel.fr']),
-    'it': '@'.join(['it', 'cafebabel.it']),
+    'it': '@'.join(['vincent.agnano+cafebabel', 'scopyleft.fr']),
 }
 
 SECURITY_SEND_REGISTER_EMAIL = True

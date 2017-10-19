@@ -28,7 +28,6 @@ flask initdb
 > You may reset your database by deleting the _/cafebabel.db_ file and
 re-initializing the database.
 
-
 ## Running the project
 
 ```
@@ -49,6 +48,9 @@ In order to deploy to the staging server, you should have an SSH access
 to the server with the _cafebabel_ user callable via the command `ssh cafebabel`.
 
 Your server must have python3.6 installed.
+
+Local configuration can be done creating a file called `settings.local.py` at
+the root of your project. This file will override the `settings.py` file.
 
 Installation can be processed with `make install`.
 Deploying will run through `make deploy`.
