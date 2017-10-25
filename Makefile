@@ -1,5 +1,5 @@
 # Defaults
-branch=master
+branch=submit-article
 LOGS=access
 
 # Commands
@@ -18,8 +18,7 @@ deploy:
 	ssh cafebabel "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	ssh cafebabel "${goto_src} && pip install -r requirements.txt"
 	-ssh cafebabel "${goto_src} && pkill gunicorn"
-	ssh cafebabel "${goto_src} && gunicorn -w 4 -b 0.0.0.0:5000 app:app --access-logfile logs/access.log --error-logfile logs/errors.log > /dev/null"
-	@echo "< Deployed!"
+	ssh cafebabel "${goto_src} && gunicorn -w 4 -b 0.0.0.0:5000 app:app --access-logfile logs/access.log --error-logfile logs/errors.log &"
 
 install:
 	@echo "> Installing sources, dependencies and database."
