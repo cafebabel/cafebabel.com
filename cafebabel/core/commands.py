@@ -13,6 +13,7 @@ def _initdb():
     user_datastore.create_user(
         email='admin@example.com', password='password',
         firstname='Admin', lastname='Admin')
+    Role.create(name='editor')
     if not db.database.is_closed():
         db.close_db(None)
     click.echo('DB intialized.')
