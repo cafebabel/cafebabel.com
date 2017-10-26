@@ -6,7 +6,7 @@ from peewee import (BooleanField, CharField, DateField, DateTimeField,
 from playhouse.signals import post_save
 from playhouse.fields import PickledField
 
-from . import db
+from ..core import db
 
 
 class Role(db.Model, RoleMixin):

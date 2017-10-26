@@ -1,7 +1,7 @@
 import click
 from cafebabel.auth import user_datastore
 from cafebabel.core import app
-from cafebabel.core.models import Role, User, UserProfile, UserRoles
+from cafebabel.users.models import Role, User, UserProfile, UserRoles
 from peewee import create_model_tables, drop_model_tables
 
 

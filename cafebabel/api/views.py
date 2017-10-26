@@ -2,7 +2,7 @@ from flask import request, jsonify
 from flask_login import current_user, login_required
 
 from ..core import app
-from ..core.models import User, UserProfile
+from ..users.models import User, UserProfile
 
 
 @app.route('/api/user/', methods=['post'])
