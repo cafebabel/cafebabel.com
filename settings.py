@@ -37,7 +37,9 @@ MAIL_DEFAULT_SENDER = None
 # Prevent writing clear email for avoiding robots on Github sources.
 EDITORS_EMAIL_DEFAULT = '@'.join(['editors', 'cafebabel.com'])
 EDITOR_EMAILS = {
-    'en': '@'.join(['en', 'cafebabel.co.uk']),
-    'fr': '@'.join(['fr', 'cafebabel.fr']),
-    'it': '@'.join(['it', 'cafebabel.it']),
+    'fr': '@'.join(['redaction', 'cafebabel.com']),
+    'en': '@'.join(['editors', 'cafebabel.com']),
+    'de': '@'.join(['redaktion', 'cafebabel.com']),
+    'es': '@'.join(['redaccion', 'cafebabel.com']),
+    'it': '@'.join(['redazione', 'cafebabel.com']),
 }
