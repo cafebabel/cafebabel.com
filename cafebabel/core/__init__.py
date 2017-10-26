@@ -15,9 +15,9 @@ if Path.exists(ROOT_PATH / 'settings.local.py'):
 db = Database(app)
 mail = Mail(app)
 
-from cafebabel.core import views  # noqa: F401, F801
-from cafebabel.api import views  # noqa: F401
+from . import views  # noqa: F401, F801
 from cafebabel.articles import views  # noqa: F401, F801
+from cafebabel.api import views  # noqa: F401, F801
 
 # Dev specific packages
 try:
