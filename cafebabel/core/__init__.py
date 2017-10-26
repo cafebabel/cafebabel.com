@@ -16,6 +16,7 @@ db = Database(app)
 mail = Mail(app)
 
 from . import views  # noqa: F401, F801
+from cafebabel.users import views  # noqa: F401, F801
 from cafebabel.articles import views  # noqa: F401, F801
 from cafebabel.api import views  # noqa: F401, F801
 
