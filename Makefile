@@ -1,5 +1,5 @@
 # Defaults
-branch=submit-article
+branch=master
 LOGS=access
 
 # Commands

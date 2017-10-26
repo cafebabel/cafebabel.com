@@ -3,3 +3,4 @@ __pycache__/
 /cafebabel.db
 .cache
 /logs/
+/settings.local.py
