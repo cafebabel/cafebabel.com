@@ -14,6 +14,7 @@ def _initdb():
     user_datastore.create_user(
         email='admin@example.com', password='password',
         firstname='Admin', lastname='Admin')
+    Role.create(name='editor')
     click.echo('DB intialized.')
 
 
