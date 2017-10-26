@@ -2,7 +2,7 @@ import click
 from peewee import create_model_tables, drop_model_tables
 
 from .. import app, db
-from .models import Role, User, UserProfile, UserRoles, user_datastore
+from ..users.models import Role, User, UserProfile, UserRoles, user_datastore
 
 tables = [User, UserProfile, Role, UserRoles]
 
