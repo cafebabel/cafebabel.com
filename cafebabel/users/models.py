@@ -29,6 +29,11 @@ class User(db.Model, UserMixin):
         del user_dict['password']
         return user_dict
 
+    def has_role(self, role, or_admin=True):
+        if super(User, self).has_role('admin') and or_admin:
+            return True
+        return super(User, self).has_role(role)
+
     @property
     def profile(self):
         return self.profiles.get()

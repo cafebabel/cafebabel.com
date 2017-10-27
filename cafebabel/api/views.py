@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 
 from .. import app
 from ..users.models import User, UserProfile, Role, UserRoles
+from ..users import user_datastore
 
 
 @app.route('/api/user/', methods=['post'])
@@ -20,14 +21,13 @@ def api_user_put():
                     for k in ['name', 'socials', 'website', 'about']}
     (UserProfile.update(**profile_data)
                 .where(UserProfile.user_id == current_user.id).execute())
+
     user = User.get(id=current_user.id)
     editor = Role.get(name='editor')
     if data.get('is_editor'):
-        UserRoles.get_or_create(user=current_user.id, role=editor.id)
+        user_datastore.add_role_to_user(user=user, role=editor)
     else:
-        (UserRoles.delete().where(UserRoles.user == current_user.id,
-                                  UserRoles.role == editor.id)
-                  .execute())
+        user_datastore.remove_role_from_user(user=user, role=editor)
     return jsonify(user.to_dict())
 
 
