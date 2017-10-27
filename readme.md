@@ -17,7 +17,7 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Install the database
+### Installing the database
 
 ```
 export FLASK_APP=app.py
@@ -27,6 +27,11 @@ flask initdb
 
 > You may reset your database by deleting the _/cafebabel.db_ file and
 re-initializing the database.
+
+### Configuring
+
+If existing, the file `settings.local.py` at the root of the project will
+override the default `settings.py` configuration.
 
 
 ## Running the project
