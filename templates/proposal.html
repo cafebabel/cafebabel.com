@@ -3,14 +3,15 @@
 {% block body %}
 <section>
   <form action={{ url_for('article_proposal_create') }} method=post>
-    <label for=field_language>language</label>
-    <select name=language id=field_language required>
-      <option value=en>English</option>
-      <option value=fr>French</option>
-      <option value=it>Italian</option>
-      <option value=de>German</option>
-      <option value=es>Spanish</option>
-    </select>
+    <label for=field-language>Language
+      <select name=language id=field-language required>
+        <option value=en>English</option>
+        <option value=fr>French</option>
+        <option value=it>Italian</option>
+        <option value=de>German</option>
+        <option value=es>Spanish</option>
+      </select>
+    </label>
     <label for=field_topic>topic *</label><input name=topic id=field_topic required>
     <label for=field_angle>angle</label><input name=angle id=field_angle>
     <label for=field_format>format</label><input name=format id=field_format>
