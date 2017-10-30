@@ -8,17 +8,22 @@
 
 <h1>Cafebabel</h1>
 
+<button class=menu-button></button>
+  
 {% if current_user.is_authenticated %}
-  <h2>Hi {{ current_user }}!</h2>
-  <p>
-    <a href={{ url_for('profile') }}>Profile</a>
-    <a href={{ url_for('security.logout') }}>Log out</a>
-    <a href={{ url_for('security.change_password') }}>Change password</a>
-  </p>
+<nav>
+  <ul>
+    <li><a href={{ url_for('profile') }}>Profile</a></li>
+    <li><a href={{ url_for('security.logout') }}>Log out</a></li>
+    <li><a href={{ url_for('security.change_password') }}>Change password</a></li>
 {% else %}
+<nav>
+  <ul>
   {% include "security/_menu.html" %}
 {% endif %}
-<a href={{ url_for('article_proposal') }}>Suggest an article</a>
+    <li><a href={{ url_for('article_proposal') }}>Suggest an article</a></li>
+  </ul>
+</nav>
 
 {% include "security/_messages.html" %}
 {% block body %}{% endblock %}
