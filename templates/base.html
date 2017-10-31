@@ -18,8 +18,19 @@
     <li><a href={{ url_for('security.change_password') }}>Change password</a></li>
 {% else %}
 <nav>
+  {% if security.registerable or security.recoverable or security.confirmable %}
   <ul>
-  {% include "security/_menu.html" %}
+    <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
+    {% if security.registerable %}
+    <li><a href="{{ url_for_security('register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Register') }}</a><br/></li>
+    {% endif %}
+    {% if security.recoverable %}
+    <li><a href="{{ url_for_security('forgot_password') }}">{{ _('Forgot password') }}</a><br/></li>
+    {% endif %}
+    {% if security.confirmable %}
+    <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+    {% endif %}
+  {% endif %}
 {% endif %}
     <li><a href={{ url_for('article_proposal') }}>Suggest an article</a></li>
   </ul>
