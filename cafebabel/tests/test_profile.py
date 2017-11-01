@@ -1,6 +1,6 @@
 from flask_security.confirmable import confirm_user
 
-from ..auth import security  # noqa: to load the security extension.
+from ..users import security  # noqa: to load the security extension.
 from ..users.models import User, UserProfile
 from cli import _initdb, _dropdb
 
