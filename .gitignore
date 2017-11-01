@@ -4,4 +4,4 @@ __pycache__/
 .cache
 /logs/
 /settings.local.py
-*.egg-info/*
+*.egg-info
