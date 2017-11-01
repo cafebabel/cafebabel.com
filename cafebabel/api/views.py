@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_login import current_user, login_required
 
-from ..core import app
+from .. import app
 from ..core.models import User, UserProfile
 
 

@@ -1,12 +1,12 @@
 import datetime
 
-from flask_security import RoleMixin, UserMixin
+from flask_security import PeeweeUserDatastore, RoleMixin, Security, UserMixin
 from peewee import (BooleanField, CharField, DateField, DateTimeField,
                     ForeignKeyField, TextField)
-from playhouse.signals import post_save
 from playhouse.fields import PickledField
+from playhouse.signals import post_save
 
-from . import db
+from .. import app, db
 
 
 class Role(db.Model, RoleMixin):
@@ -55,3 +55,7 @@ class UserProfile(db.Model):
 
     def __str__(self):
         return self.name or str(self.user.email)
+
+
+user_datastore = PeeweeUserDatastore(db, User, Role, UserRoles)
+security = Security(app, user_datastore)
