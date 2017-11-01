@@ -1,7 +1,7 @@
 from flask import render_template
 from flask_login import login_required, current_user
 
-from ..core import app
+from .. import app
 from .models import User
 
 
