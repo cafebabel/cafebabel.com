@@ -4,7 +4,6 @@ from cafebabel.users import user_datastore
 from cafebabel.users.models import Role, User, UserProfile, UserRoles
 from peewee import create_model_tables, drop_model_tables
 
-
 tables = [User, UserProfile, Role, UserRoles]
 
 
