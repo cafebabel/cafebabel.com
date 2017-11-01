@@ -14,14 +14,19 @@ Python 3.6+
 ```
 python3 -m venv ./venv
 source ./venv/bin/activate
-pip install -r requirements.txt
+```
+
+### Installing the dependencies
+
+```
+export FLASK_APP=cafebabel
+export FLASK_DEBUG=1
+pip install -e .
 ```
 
 ### Installing the database
 
 ```
-export FLASK_APP=app.py
-export FLASK_DEBUG=1
 flask initdb
 ```
 
