@@ -1,6 +1,6 @@
 from flask_security.confirmable import confirm_user
 
-from ..core.models import User, UserProfile
+from ..users.models import User, UserProfile
 
 
 def test_confirm_user_creates_profile(app):

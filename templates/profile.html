@@ -28,6 +28,14 @@
 </ul>
 
 {% if edit %}
+
+  {% if user.has_role('editor') %}
+  <label>
+    <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor', False) %}checked{% endif %}>
+    <span>Editor role</span>
+  </label>
+  {% endif %}
+
   <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
     <button type=submit>Save my profile</button>
   </form>
@@ -72,6 +80,7 @@
         'website': fields.find(f => f.name === 'website').value.trim(),
         'about': fields.find(f => f.name === 'about').value.trim(),
         'socials': {},
+        'is_editor': document.querySelector('[name=editor]').checked,
       }
       fields.filter(f => f.name.slice(0, 8) === 'socials-').forEach(input => {
         data['socials'][input.name.slice(8)] = input.value.trim()
