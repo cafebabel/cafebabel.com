@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body %}
+<article>
+  <h1>{{ article.title }}</h1>
+
+  {% if article.summary %}
+  <p>
+    {{ article.summary }}
+  </p>
+  {% endif %}
+
+  {{ article.body }}
+  <p>
+    Published on <time>{{ article.creation_date.date() }}</time>
+  </p>
+</article>
+{% endblock %}

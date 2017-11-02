@@ -1,7 +1,10 @@
 import click
 
-from .. import app
-from ..users.models import Role, User, user_datastore
+from .. import app, db
+from ..users.models import Role, User, UserProfile, UserRoles, user_datastore
+from ..articles.models import Article
+
+tables = [User, UserProfile, Role, UserRoles, Article]
 
 
 def _initdb():

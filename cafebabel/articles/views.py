@@ -1,7 +1,10 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, abort
 from flask_mail import Message
+from flask_login import current_user, login_required
 
 from .. import app, mail
+from ..users.models import User
+from .models import Article
 
 
 @app.route('/article/proposal/')
@@ -30,19 +33,48 @@ Additional infos: {data['additional']}
     return redirect(url_for('home'))
 
 
-@app.route('/article/create/')
-def article_create():
+@app.route('/article/write/')
+@login_required
+def article_write():
     article = Article()
-    return render_template('articles/create.html', article=article)
+    authors = User.select()
+    return render_template('articles/edit.html', article=article,
+                           authors=authors)
+
+
+@app.route('/article/<slug>-<id>/')
+def article_read(id, slug):
+    try:
+        article = Article.get(id=id)
+    except Article.DoesNotExist:
+        abort(404, 'No article matches that id.')
+    if article.slug != slug:
+        return redirect(url_for(
+            'article_read', slug=article.slug, id=article.id), code=301)
+    return render_template('articles/read.html', article=article)
 
 
 @app.route('/article/create/', methods=['post'])
+@login_required
 def article_post():
-    article = Article.create(**request.form)
-    return redirect(url_for('draft_read', id=article.id))
+    data = request.form.to_dict()
+    data['author'] = int(data.get('author'))
+    data['editor'] = current_user.id
+    article = Article.create(**data)
+    flash('Your article was successfully saved.')
+    if article.status == 'draft':
+        return redirect(url_for('article_draft', uid=article.uid))
+    else:
+        return redirect(url_for('article_read', slug=article.slug,
+                                id=article.id))
 
 
-@app.route('/draft/<id>/')
-def draft_read(id):
-    article = Article.get(id=id, status='draft')
-    return render_template('articles/read.html', article=article)
+@app.route('/article/draft/<uid>/')
+def article_draft(uid):
+    try:
+        article = Article.get(uid=uid, status='draft')
+    except Article.DoesNotExist:
+        abort(404, 'No draft found with this uid.')
+    authors = User.select()
+    return render_template('articles/edit.html', article=article,
+                           authors=authors)

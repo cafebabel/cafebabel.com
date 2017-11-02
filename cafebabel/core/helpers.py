@@ -1,7 +1,7 @@
 import re
 import unicodedata
 
-from . import app
+from .. import app
 
 
 @app.template_filter()

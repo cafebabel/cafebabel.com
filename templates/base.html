@@ -9,7 +9,7 @@
 <h1>Cafebabel</h1>
 
 <button class=menu-button></button>
-  
+
 {% if current_user.is_authenticated %}
 <nav>
   <ul>
@@ -33,6 +33,9 @@
   {% endif %}
 {% endif %}
     <li><a href={{ url_for('article_proposal') }}>Suggest an article</a></li>
+    {% if current_user.has_role('editor') %}
+    <li><a href={{ url_for('article_write') }}>Write an article</a></li>
+    {% endif %}
   </ul>
 </nav>
 
