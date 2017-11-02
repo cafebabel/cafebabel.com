@@ -6,6 +6,16 @@ DATABASE = {
     'engine': 'peewee.SqliteDatabase',
 }
 
+LANGUAGES = (
+    ('en', 'English'),
+    ('fr', 'Français'),
+    ('es', 'Español'),
+    ('it', 'Italiano'),
+    ('de', 'Deutch'),
+)
+
+CATEGORIES = ['society', 'lifestyle', 'politics', 'culture']
+
 SECURITY_PASSWORD_SALT = 'and pepper'
 SECURITY_CONFIRMABLE = False
 SECURITY_REGISTERABLE = True
@@ -51,3 +61,4 @@ EDITOR_EMAILS = {
     'es': '@'.join(['redaccion', 'cafebabel.com']),
     'it': '@'.join(['redazione', 'cafebabel.com']),
 }
+ARTICLES_IMAGES_URL = '/static/uploads/articles'

@@ -9,20 +9,24 @@
   <div class=select>
     <label for=language>Language</label>
     <select id=language name=language required>
-      <option value=en selected>English</option>
+      {% for language in get_languages() %}
+      <option value={{language[0]}}{% if article.language == language[0] %} selected{% endif %}>{{ language[1] }}</option>
+      {% endfor %}
     </select>
   </div>
   <div class=select>
     <label for=category>Category</label>
     <select id=category name=category required>
-      <option value=news selected>News</option>
+      {% for category in get_categories() %}
+      <option value={{ category }}{% if article.category == category %} selected{% endif %}>{{ category }}</option>
+      {% endfor %}
     </select>
   </div>
   <div class=select>
     <label for=status>Status</label>
     <select id=status name=status required>
-      <option value=draft selected>Draft</option>
-      <option value=published>Published</option>
+      <option value=draft{% if article.is_draft %} selected{% endif %}>Draft</option>
+      <option value=published{% if article.is_published %} selected{% endif %}>Published</option>
     </select>
   </div>
   <div class=select>
@@ -43,8 +47,11 @@
   </div>
   <div class=file>
     <label for=image>Image</label>
+    {% if article.image %}
+    <img src={{ article_image_url(article) }} alt>
+    {% endif %}
     <input type=file id=image name=image>
   </div>
-  <input type=submit value="Save as draft">
+  <input type=submit value="Save">
 </form>
 {% endblock %}
