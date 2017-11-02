@@ -1,7 +1,7 @@
 import click
 
 from .. import app
-from ..users.models import Role, User, UserProfile, user_datastore
+from ..users.models import Role, User, user_datastore
 
 
 def _initdb():
@@ -17,7 +17,6 @@ def _initdb():
 def _dropdb():
     Role.drop_collection()
     User.drop_collection()
-    UserProfile.drop_collection()
     click.echo('Roles and Users dropped.')
 
 

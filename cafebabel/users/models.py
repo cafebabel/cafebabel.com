@@ -2,7 +2,7 @@ import datetime
 
 from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
                             UserMixin)
-from mongoengine import CASCADE, signals
+from mongoengine import signals
 
 from .. import app, db
 
@@ -12,6 +12,16 @@ class Role(db.Document, RoleMixin):
     description = db.StringField(max_length=255)
 
 
+class UserProfile(db.EmbeddedDocument):
+    name = db.StringField()
+    socials = db.DictField()
+    website = db.StringField()
+    about = db.StringField()
+
+    def __str__(self):
+        return self.name
+
+
 class User(db.Document, UserMixin):
     email = db.StringField(max_length=255, unique=True)
     password = db.StringField(max_length=255)
@@ -19,6 +29,7 @@ class User(db.Document, UserMixin):
     active = db.BooleanField(default=True)
     confirmed_at = db.DateTimeField()
     roles = db.ListField(db.ReferenceField(Role), default=[])
+    profile = db.EmbeddedDocumentField(UserProfile)
 
     def __str__(self):
         return str(self.profile)
@@ -39,30 +50,15 @@ class User(db.Document, UserMixin):
             return True
         return super(User, self).has_role(role)
 
-    @property
-    def profile(self):
-        return UserProfile.objects.get(user=self)
-
     @classmethod
     def post_save(cls, sender, document, **kwargs):
         if kwargs.get('created', False):
             # Create the profile only on creation (vs. update).
-            UserProfile.objects.create(user=document)
+            document.profile = UserProfile(name=document.email)
+            document.save()
 
 
 signals.post_save.connect(User.post_save, sender=User)
-
-
-class UserProfile(db.Document):
-    name = db.StringField()
-    user = db.ReferenceField(User, reverse_delete_rule=CASCADE)
-    socials = db.DictField()
-    website = db.StringField()
-    about = db.StringField()
-
-    def __str__(self):
-        return self.name or str(self.user.email)
-
 
 user_datastore = MongoEngineUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
