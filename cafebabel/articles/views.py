@@ -33,10 +33,12 @@ Additional infos: {data['additional']}
     return redirect(url_for('home'))
 
 
-@app.route('/article/write/')
-@login_required
-def article_write():
-    article = Article()
+@app.route('/article/draft/<uid>/')
+def article_draft(uid):
+    try:
+        article = Article.get(uid=uid, status='draft')
+    except Article.DoesNotExist:
+        abort(404, 'No draft found with this uid.')
     authors = User.select()
     return render_template('articles/edit.html', article=article,
                            authors=authors)
@@ -45,13 +47,22 @@ def article_write():
 @app.route('/article/<slug>-<id>/')
 def article_read(id, slug):
     try:
-        article = Article.get(id=id)
+        article = Article.get(id=id, status='published')
     except Article.DoesNotExist:
-        abort(404, 'No article matches that id.')
+        abort(404, 'No published article matches that id.')
     if article.slug != slug:
         return redirect(url_for(
             'article_read', slug=article.slug, id=article.id), code=301)
     return render_template('articles/read.html', article=article)
+
+
+@app.route('/article/write/')
+@login_required
+def article_write():
+    article = Article()
+    authors = User.select()
+    return render_template('articles/edit.html', article=article,
+                           authors=authors)
 
 
 @app.route('/article/create/', methods=['post'])
@@ -62,19 +73,8 @@ def article_post():
     data['editor'] = current_user.id
     article = Article.create(**data)
     flash('Your article was successfully saved.')
-    if article.status == 'draft':
+    if article.is_draft:
         return redirect(url_for('article_draft', uid=article.uid))
     else:
         return redirect(url_for('article_read', slug=article.slug,
                                 id=article.id))
-
-
-@app.route('/article/draft/<uid>/')
-def article_draft(uid):
-    try:
-        article = Article.get(uid=uid, status='draft')
-    except Article.DoesNotExist:
-        abort(404, 'No draft found with this uid.')
-    authors = User.select()
-    return render_template('articles/edit.html', article=article,
-                           authors=authors)

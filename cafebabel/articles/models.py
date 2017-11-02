@@ -27,6 +27,14 @@ class Article(db.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def is_draft(self):
+        return self.status == 'draft'
+
+    @property
+    def is_published(self):
+        return self.status == 'published'
+
 
 @pre_save(sender=Article)
 def publication_status_changed(ModelClass, instance, created):
