@@ -64,3 +64,14 @@ Your server must have python3.6 installed.
 
 Installation can be processed with `make install`.
 Deploying will run through `make deploy`.
+
+
+## Documentation
+
+### Architecture Decision Records
+
+Please document important
+[architecture decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions),
+you can use [adr-tools](https://github.com/npryce/adr-tools) for this.
+
+Existing ones are located in `docs/architecture/decisions`.
