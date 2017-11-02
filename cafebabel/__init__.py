@@ -19,6 +19,7 @@ mail = Mail(app)
 from .articles import views  # noqa: F401, F801
 from .api import views  # noqa: F401, F801
 from .core import commands, views  # noqa: F401, F801
+from .users import views  # noqa: F401, F801
 
 # Dev specific packages
 try:
