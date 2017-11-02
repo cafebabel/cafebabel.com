@@ -4,7 +4,7 @@ Date: 2017-11-02
 
 ## Status
 
-Accepted
+Proposed
 
 ## Context
 
@@ -14,7 +14,7 @@ Only 4 are available at the moment:
 
 * Flask-SQLAlchemy: too bloated
 * Flask-MongoEngine: relies on Mongo (harder migrations)
-* Flask-Peewee: initial choice, not anymore maintained
+* Flask-Peewee: initial choice, not maintained anymore
 * PonyORM: looks great but the code is hard to contribute to
 
 ## Decision
