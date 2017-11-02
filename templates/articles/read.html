@@ -10,7 +10,7 @@
   </p>
   {% endif %}
 
-  {{ article.body }}
+  {{ article.body|markdown }}
   <p>
     Published on <time>{{ article.creation_date.date() }}</time>
   </p>
