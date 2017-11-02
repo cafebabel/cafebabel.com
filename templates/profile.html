@@ -36,11 +36,11 @@
   </label>
   {% endif %}
 
-  <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
+  <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.idstr) }}>
     <button type=submit>Save my profile</button>
   </form>
 
-  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
+  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.idstr) }}>
     <button type=submit>Delete my profile</button>
   </form>
 
@@ -80,7 +80,7 @@
         'website': fields.find(f => f.name === 'website').value.trim(),
         'about': fields.find(f => f.name === 'about').value.trim(),
         'socials': {},
-        'is_editor': document.querySelector('[name=editor]').checked,
+        // 'is_editor': document.querySelector('[name=editor]').checked,
       }
       fields.filter(f => f.name.slice(0, 8) === 'socials-').forEach(input => {
         data['socials'][input.name.slice(8)] = input.value.trim()

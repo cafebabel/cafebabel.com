@@ -1,33 +1,38 @@
 import datetime
 
-from flask_security import PeeweeUserDatastore, RoleMixin, Security, UserMixin
-from peewee import (BooleanField, CharField, DateField, DateTimeField,
-                    ForeignKeyField, TextField)
-from playhouse.fields import PickledField
-from playhouse.signals import post_save
+from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
+                            UserMixin)
+from mongoengine import CASCADE, signals
 
 from .. import app, db
 
 
-class Role(db.Model, RoleMixin):
-    name = CharField(unique=True)
-    description = TextField(null=True)
+class Role(db.Document, RoleMixin):
+    name = db.StringField(max_length=80, unique=True)
+    description = db.StringField(max_length=255)
 
 
-class User(db.Model, UserMixin):
-    email = CharField(unique=True)
-    password = TextField()
-    creation_date = DateField(default=datetime.datetime.utcnow)
-    active = BooleanField(default=True)
-    confirmed_at = DateTimeField(null=True)
+class User(db.Document, UserMixin):
+    email = db.StringField(max_length=255, unique=True)
+    password = db.StringField(max_length=255)
+    creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
+    active = db.BooleanField(default=True)
+    confirmed_at = db.DateTimeField()
+    roles = db.ListField(db.ReferenceField(Role), default=[])
 
     def __str__(self):
         return str(self.profile)
 
+    @property
+    def idstr(self):
+        # Otherwise returns an ObjectID, not good in url_for.
+        return str(self.id)
+
     def to_dict(self):
-        user_dict = self._data.copy()
-        del user_dict['password']
-        return user_dict
+        return {
+            'id': self.idstr,
+            'email': self.email,
+        }
 
     def has_role(self, role, or_admin=True):
         if super(User, self).has_role('admin') and or_admin:
@@ -36,31 +41,28 @@ class User(db.Model, UserMixin):
 
     @property
     def profile(self):
-        return self.profiles.get()
+        return UserProfile.objects(user=self).get()
+
+    @classmethod
+    def post_save(cls, sender, document, **kwargs):
+        if kwargs.get('created', False):
+            # Create the profile only on creation (vs. update).
+            UserProfile(user=document).save()
 
 
-@post_save(sender=User)
-def create_user_profile(ModelClass, instance, created):
-    UserProfile.create(user=instance)
+signals.post_save.connect(User.post_save, sender=User)
 
 
-class UserRoles(db.Model):
-    user = ForeignKeyField(User, related_name='roles')
-    role = ForeignKeyField(Role, related_name='users')
-    name = property(lambda self: self.role.name)
-    description = property(lambda self: self.role.description)
-
-
-class UserProfile(db.Model):
-    name = CharField(null=True)
-    user = ForeignKeyField(User, related_name='profiles', on_delete='CASCADE')
-    socials = PickledField(null=True)
-    website = CharField(null=True)
-    about = CharField(null=True)
+class UserProfile(db.Document):
+    name = db.StringField()
+    user = db.ReferenceField(User, reverse_delete_rule=CASCADE)
+    socials = db.DictField()
+    website = db.StringField()
+    about = db.StringField()
 
     def __str__(self):
         return self.name or str(self.user.email)
 
 
-user_datastore = PeeweeUserDatastore(db, User, Role, UserRoles)
+user_datastore = MongoEngineUserDatastore(db, User, Role)
 security = Security(app, user_datastore)

@@ -16,20 +16,17 @@ def pytest_runtest_teardown():
 
 @pytest.fixture
 def app():
-    from cafebabel import app as myapp
     return myapp
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def user():
-    _initdb()
-    user = User.create(email='testy@tester.local', password='secret')
+    user = User(email='testy@example.com', password='secret').save()
     with myapp.app_context():
         confirm_user(user)
     return user
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def admin():
-    _initdb()
-    return User.get(email='admin@example.com')
+    return User.objects(email='admin@example.com').get()
