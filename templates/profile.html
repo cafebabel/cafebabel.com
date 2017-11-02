@@ -37,6 +37,12 @@
     <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
       <button type=submit>Delete my profile</button>
     </form>
+    
+  </section>
+  <section>
+    <h2>Contributions</h2>
+  </section>
+</main>
 
     <script>
       function dataEditInput(editable) {
@@ -102,10 +108,5 @@
       })
     </script>
   {% endif %}
-  </section>
-  <section>
-    <h2>Contributions</h2>
-  </section>
-</main>
 
 {% endblock %}
