@@ -12,10 +12,10 @@ def profile():
     return render_template('profile.html', user=user, edit=True)
 
 
-@app.route('/profile/<int:id>/')
+@app.route('/profile/<id>/')
 def profile_user(id):
     try:
-        user = User.get(id=id)
+        user = User.objects.get(id=id)
     except User.DoesNotExist:
         abort(404, 'User not found.')
     return render_template('profile.html', user=user, edit=False)

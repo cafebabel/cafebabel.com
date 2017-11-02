@@ -11,6 +11,8 @@ Python 3.6+
 
 ## Preparing the project
 
+Install and launch MongoDB on default port.
+
 ```
 python3 -m venv ./venv
 source ./venv/bin/activate
