@@ -68,10 +68,20 @@ def article_write():
 @app.route('/article/create/', methods=['post'])
 @login_required
 def article_post():
+    image = request.files.get('image')
     data = request.form.to_dict()
     data['author'] = int(data.get('author'))
     data['editor'] = current_user.id
-    article = Article.create(**data)
+    if data.get('uid'):
+        article = Article.get(uid=data['uid'], status='draft')
+        # article.update(**data)
+    else:
+        article = Article.create(**data)
+    if data.get('delete-image'):
+        article.delete_image()
+    if image:
+        article.attach_image(image)
+    article.save()
     flash('Your article was successfully saved.')
     if article.is_draft:
         return redirect(url_for('article_draft', uid=article.uid))

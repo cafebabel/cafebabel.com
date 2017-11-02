@@ -5,3 +5,4 @@ __pycache__/
 /logs/
 /settings.local.py
 *.egg-info/
+/static/uploads/*

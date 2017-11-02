@@ -25,6 +25,7 @@ install:
 	ssh cafebabel "git clone https://github.com/cafebabel/cafebabel.com.git ~/src"
 	ssh cafebabel "python3.6 -m venv ~/venv"
 	ssh cafebabel "${goto_src} && mkdir logs"
+	ssh cafebabel "${goto_src} && mkdir -p static/uploads/articles"
 	ssh cafebabel "${goto_src} && pip install -r requirements.txt"
 
 reset-db:
