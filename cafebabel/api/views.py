@@ -19,7 +19,8 @@ def api_user_put():
     data = request.get_json()
     profile_data = {k: data[k]
                     for k in ['name', 'socials', 'website', 'about']}
-    UserProfile.objects(user=current_user.id).modify(**profile_data)
+    current_user.profile = UserProfile(**profile_data)
+    current_user.save()
     editor = Role.objects.get(name='editor')
     if data.get('is_editor'):
         user_datastore.add_role_to_user(user=user, role=editor)
@@ -31,5 +32,5 @@ def api_user_put():
 @app.route('/api/user/<id>/', methods=['delete'])
 @login_required
 def api_user_delete(id):
-    User.get(id=current_user.id).delete().execute()
+    User.objects.get(id=current_user.id).delete()
     return '', 204

@@ -42,7 +42,6 @@ class User(db.Document, UserMixin):
     def to_dict(self):
         return {
             'id': self.idstr,
-            'email': self.email,
         }
 
     def has_role(self, role, or_admin=True):
