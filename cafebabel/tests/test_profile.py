@@ -7,4 +7,4 @@ def test_confirm_user_creates_profile(app):
     user = User(email='test_user@example.com', password='secret').save()
     with app.app_context():
         confirm_user(user)
-    assert UserProfile.objects(user=user).get()
+    assert UserProfile.objects.get(user=user)

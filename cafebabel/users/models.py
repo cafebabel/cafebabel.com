@@ -41,7 +41,7 @@ class User(db.Document, UserMixin):
 
     @property
     def profile(self):
-        return UserProfile.objects(user=self).get()
+        return UserProfile.objects.get(user=self)
 
     @classmethod
     def post_save(cls, sender, document, **kwargs):

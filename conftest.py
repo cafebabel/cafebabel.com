@@ -29,4 +29,4 @@ def user():
 
 @pytest.fixture(scope='session')
 def admin():
-    return User.objects(email='admin@example.com').get()
+    return User.objects.get(email='admin@example.com')

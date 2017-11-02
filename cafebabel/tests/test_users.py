@@ -10,7 +10,7 @@ def test_user_has_no_default_roles(user):
 
 
 def test_user_add_custom_role(user):
-    editor = Role.objects(name='editor').get()
+    editor = Role.objects.get(name='editor')
     user_datastore.add_role_to_user(user=user, role=editor)
     assert user.has_role('editor')
     assert not user.has_role('admin')
@@ -26,11 +26,3 @@ def test_admin_has_all_roles(admin):
 def test_unauthenticated_user_cannot_access_login_required_page(client):
     response = client.get('/profile/')
     assert response.status_code == HTTPStatus.FOUND
-
-
-def test_authenticated_user_can_access_login_required_page(client, user):
-    data = dict(email=user.email, password='secret', remember='y')
-    response = client.post('/login', data=data)
-    assert response.status_code == HTTPStatus.OK
-    response = client.get('/profile/')
-    # assert response.status_code == HTTPStatus.OK

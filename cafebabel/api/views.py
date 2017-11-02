@@ -1,6 +1,5 @@
 from flask import request, jsonify
 from flask_login import current_user, login_required
-from mongoengine.queryset.visitor import Q
 
 from .. import app
 from ..users.models import User, UserProfile, Role, user_datastore
@@ -16,12 +15,12 @@ def api_user_post():
 @app.route('/api/user/', methods=['put'])
 @login_required
 def api_user_put():
-    user = User.objects(id=current_user.id).get()
+    user = User.objects.get(id=current_user.id)
     data = request.get_json()
     profile_data = {k: data[k]
                     for k in ['name', 'socials', 'website', 'about']}
     UserProfile.objects(user=current_user.id).modify(**profile_data)
-    editor = Role.objects(name='editor').get()
+    editor = Role.objects.get(name='editor')
     if data.get('is_editor'):
         user_datastore.add_role_to_user(user=user, role=editor)
     else:
