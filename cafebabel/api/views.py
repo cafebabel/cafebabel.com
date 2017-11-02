@@ -8,7 +8,7 @@ from ..users.models import User, UserProfile, Role, user_datastore
 @app.route('/api/user/', methods=['post'])
 def api_user_post():
     data = request.get_json()
-    user = User(**data).save()
+    user = User.objects.create(**data)
     return jsonify(user.to_dict()), 201
 
 

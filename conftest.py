@@ -21,7 +21,7 @@ def app():
 
 @pytest.fixture(scope='session')
 def user():
-    user = User(email='testy@example.com', password='secret').save()
+    user = User.objects.create(email='testy@example.com', password='secret')
     with myapp.app_context():
         confirm_user(user)
     return user

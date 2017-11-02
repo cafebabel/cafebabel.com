@@ -6,8 +6,8 @@ from ..users.models import Role, User, UserProfile, user_datastore
 
 def _initdb():
     _dropdb()
-    Role(name='editor').save()
-    admin_role = Role(name='admin').save()
+    Role.objects.create(name='editor')
+    admin_role = Role.objects.create(name='admin')
     admin_user = user_datastore.create_user(
         email='admin@example.com', password='password')
     user_datastore.add_role_to_user(admin_user, admin_role)

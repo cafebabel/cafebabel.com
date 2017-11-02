@@ -4,7 +4,8 @@ from ..users.models import User, UserProfile
 
 
 def test_confirm_user_creates_profile(app):
-    user = User(email='test_user@example.com', password='secret').save()
+    user = User.objects.create(email='test_user@example.com',
+                               password='secret')
     with app.app_context():
         confirm_user(user)
     assert UserProfile.objects.get(user=user)

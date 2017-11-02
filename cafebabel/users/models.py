@@ -47,7 +47,7 @@ class User(db.Document, UserMixin):
     def post_save(cls, sender, document, **kwargs):
         if kwargs.get('created', False):
             # Create the profile only on creation (vs. update).
-            UserProfile(user=document).save()
+            UserProfile.objects.create(user=document)
 
 
 signals.post_save.connect(User.post_save, sender=User)
