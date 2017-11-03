@@ -3,28 +3,27 @@ import os
 from hashlib import md5
 from pathlib import Path
 
-from peewee import DateTimeField, CharField, ForeignKeyField
-from playhouse.signals import pre_save, post_save
+from mongoengine import signals
 
 from .. import app, db
 from ..core.helpers import slugify
 from ..users.models import User
 
 
-class Article(db.Model):
-    title = CharField(null=False)
-    slug = CharField(null=False)
-    language = CharField(max_length=2, null=False)
-    category = CharField(null=True)
-    summary = CharField(null=True)
-    body = CharField(null=True)
-    image = CharField(null=True)
-    status = CharField(default='draft')
-    uid = CharField(max_length=32, null=False)
-    editor = ForeignKeyField(User, related_name='edits')
-    author = ForeignKeyField(User, related_name='articles')
-    creation_date = DateTimeField(default=datetime.datetime.utcnow)
-    publication_date = DateTimeField(null=True)
+class Article(db.Document):
+    title = db.StringField(required=True)
+    slug = db.StringField(required=True)
+    language = db.StringField(max_length=2, required=True)
+    category = db.StringField()
+    summary = db.StringField()
+    body = db.StringField(required=True)
+    image = db.StringField()
+    status = db.StringField(default='draft')
+    uid = db.UUIDField(binary=False, required=True)
+    editor = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
+    author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
+    creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
+    publication_date = db.DateTimeField()
     _upload_image = None
 
     def __str__(self):
@@ -55,25 +54,31 @@ class Article(db.Model):
             return
         self._upload_image = image
 
+    @classmethod
+    def update_publication_date(cls, sender, article, **kwargs):
+        if article.status == 'published' and not article.publication_date:
+            article.publication_date = datetime.datetime.utcnow()
 
-@pre_save(sender=Article)
-def publication_status_changed(ModelClass, instance, created):
-    if instance.status == 'published' and not instance.publication_date:
-        instance.publication_date = datetime.datetime.utcnow()
+    @classmethod
+    def update_slug(cls, sender, article, **kwargs):
+        article.slug = slugify(article.title)
+
+    @classmethod
+    def generate_uid(cls, sender, article, **kwargs):
+        if not article.uid:
+            article.uid = os.urandom(16).hex()
+
+    @classmethod
+    def store_image(cls, sender, article, **kwargs):
+        if article._upload_image:
+            article.image = article.id
+            article._upload_image.save(
+                f'{app.config.get("ARTICLES_IMAGES_PATH")}/{article.image}')
+            article._upload_image = None
+            article.save()
 
 
-@pre_save(sender=Article)
-def create_article_slug(ModelClass, instance, created):
-    instance.slug = slugify(instance.title)
-    if not instance.uid:
-        instance.uid = os.urandom(16).hex()
-
-
-@post_save(sender=Article)
-def store_image(ModelClass, instance, created):
-    if instance._upload_image:
-        instance.image = instance.id
-        instance._upload_image.save(
-            f'{app.config.get("ARTICLES_IMAGES_PATH")}/{instance.image}')
-        instance._upload_image = None
-        instance.save()
+signals.pre_save.connect(Article.generate_uid, sender=Article)
+signals.pre_save.connect(Article.update_publication_date, sender=Article)
+signals.pre_save.connect(Article.update_slug, sender=Article)
+signals.post_save.connect(Article.store_image, sender=Article)

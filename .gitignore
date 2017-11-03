@@ -6,3 +6,4 @@ __pycache__/
 /settings.local.py
 *.egg-info/
 /static/uploads/*
+/data/
