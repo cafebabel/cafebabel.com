@@ -11,17 +11,24 @@ Python 3.6+
 
 ## Preparing the project
 
+Install and launch MongoDB on default port.
+
 ```
 python3 -m venv ./venv
 source ./venv/bin/activate
-pip install -r requirements.txt
+```
+
+### Installing the dependencies
+
+```
+export FLASK_APP=cafebabel
+export FLASK_DEBUG=1
+pip install -e .
 ```
 
 ### Installing the database
 
 ```
-export FLASK_APP=app.py
-export FLASK_DEBUG=1
 flask initdb
 ```
 
@@ -57,3 +64,14 @@ Your server must have python3.6 installed.
 
 Installation can be processed with `make install`.
 Deploying will run through `make deploy`.
+
+
+## Documentation
+
+### Architecture Decision Records
+
+Please document important
+[architecture decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions),
+you can use [adr-tools](https://github.com/npryce/adr-tools) for this.
+
+Existing ones are located in `docs/architecture/decisions`.

@@ -1,11 +1,6 @@
 DEBUG = True
 SECRET_KEY = 'TODO'
 
-DATABASE = {
-    'name': 'cafebabel.db',
-    'engine': 'peewee.SqliteDatabase',
-}
-
 SECURITY_PASSWORD_SALT = 'and pepper'
 SECURITY_CONFIRMABLE = False
 SECURITY_REGISTERABLE = True
@@ -22,8 +17,16 @@ SECURITY_RESET_PASSWORD_TEMPLATE = 'auth/reset.html'
 SECURITY_LOGIN_USER_TEMPLATE = 'auth/login.html'
 SECURITY_REGISTER_USER_TEMPLATE = 'auth/register.html'
 SECURITY_SEND_CONFIRMATION_TEMPLATE = 'auth/confirmation.html'
-EXPLAIN_TEMPLATE_LOADING = True
+EXPLAIN_TEMPLATE_LOADING = False
+
 DEBUG_TB_INTERCEPT_REDIRECTS = False
+DEBUG_TB_PANELS = [
+    'flask_debugtoolbar.panels.request_vars.RequestVarsDebugPanel',
+    'flask_debugtoolbar.panels.config_vars.ConfigVarsDebugPanel',
+    'flask_debugtoolbar.panels.template.TemplateDebugPanel',
+    'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',
+    'flask_mongoengine.panels.MongoDebugPanel'
+]
 
 MAIL_SERVER = 'localhost'
 MAIL_PORT = 25

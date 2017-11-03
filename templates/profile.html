@@ -28,15 +28,23 @@
       <li>Instagram<span data-edit-name=socials-instagram>{{ user.profile.socials.instagram }}</span></li>
     </ul>
 
-  {% if edit %}
-    <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
-      <button type=submit>Save my profile</button>
-    </form>
+{% if edit %}
 
-    <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.id) }}>
-      <button type=submit>Delete my profile</button>
-    </form>
-    
+  {% if user.has_role('editor') %}
+  <label>
+    <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor', False) %}checked{% endif %}>
+    <span>Editor role</span>
+  </label>
+  {% endif %}
+
+  <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.idstr) }}>
+    <button type=submit>Save my profile</button>
+  </form>
+
+  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.idstr) }}>
+    <button type=submit>Delete my profile</button>
+  </form>
+
   </section>
   <section>
     <h2>Contributions</h2>
@@ -55,13 +63,13 @@
         `
       }
 
-      function dataEditTextarea(editable) {
-        editable.innerHTML = `
-          <textarea data-edit
-            name="${editable.dataset.editName}"
-            ${editable.dataset.editAttrs}
-            >${editable.textContent || ''}</textarea>
-        `
+      const fields = Array.from(document.querySelectorAll('[data-edit]'))
+      const data = {
+        'name': fields.find(f => f.name === 'name').value.trim(),
+        'website': fields.find(f => f.name === 'website').value.trim(),
+        'about': fields.find(f => f.name === 'about').value.trim(),
+        'socials': {},
+        // 'is_editor': document.querySelector('[name=editor]').checked,
       }
       Array.from(document.querySelectorAll('[data-edit-name]')).forEach(editable => {
         const type = editable.dataset.editType || 'input'

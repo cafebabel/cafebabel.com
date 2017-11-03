@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for
 from flask_mail import Message
 
-from ..core import app, mail
+from .. import app, mail
 
 
 @app.route('/article/proposal/')
