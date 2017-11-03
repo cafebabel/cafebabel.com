@@ -14,6 +14,9 @@ if Path.exists(ROOT_PATH / 'settings.local.py'):
 db = MongoEngine(app)
 mail = Mail(app)
 
+from .core.routing import ArticleConverter  # noqa: F401
+
+app.url_map.converters['article'] = ArticleConverter
 
 from .articles import views  # noqa: F401, F801
 from .api import views  # noqa: F401, F801

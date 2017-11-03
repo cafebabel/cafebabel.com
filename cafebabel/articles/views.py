@@ -48,18 +48,6 @@ def article_edit(uid):
                            authors=authors)
 
 
-@app.route('/article/<slug>-<id>/')
-def article_detail(id, slug):
-    try:
-        article = Article.objects.get(id=id, status='published')
-    except Article.DoesNotExist:
-        abort(404, 'No published article matches that id.')
-    if article.slug != slug:
-        return redirect(url_for(
-            'article_detail', slug=article.slug, id=article.id), code=301)
-    return render_template('articles/detail.html', article=article)
-
-
 @app.route('/article/new/')
 @login_required
 def article_new():
@@ -94,8 +82,16 @@ def article_create():
     if article.is_draft:
         return redirect(url_for('article_edit', uid=article.uid))
     else:
-        return redirect(url_for('article_detail', slug=article.slug,
-                                id=article.id))
+        return redirect(url_for('article_detail', article=article))
+
+
+@app.route('/article/<article(status="published"):article>/')
+def article_detail(article):
+    if article.slug != article.url_slug:
+        return redirect(
+            url_for('article_detail', article=article),
+            code=HTTPStatus.MOVED_PERMANENTLY)
+    return render_template('articles/detail.html', article=article)
 
 
 @app.route('/article/<id>/delete/', methods=['post'])
