@@ -1,5 +1,7 @@
 from http import HTTPStatus
 
+from flask.helpers import get_flashed_messages
+
 from ..articles.models import Article
 from .utils import login
 
@@ -16,6 +18,7 @@ def test_delete_article_should_return_200(client, editor, article):
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert Article.objects.all().count() == 0
+    assert get_flashed_messages() == ['Article was deleted.']
 
 
 def test_delete_regular_user_should_return_403(client, user, article):
