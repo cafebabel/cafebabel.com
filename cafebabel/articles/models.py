@@ -1,7 +1,5 @@
 import datetime
 import os
-from hashlib import md5
-from pathlib import Path
 
 from mongoengine import signals
 
@@ -17,7 +15,7 @@ class Article(db.Document):
     category = db.StringField()
     summary = db.StringField()
     body = db.StringField(required=True)
-    image = db.StringField()
+    has_image = db.BooleanField(default=False)
     status = db.StringField(default='draft')
     uid = db.StringField(required=True)
     editor = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
@@ -39,19 +37,17 @@ class Article(db.Document):
 
     @property
     def image_url(self):
-        if self.image:
-            return f'{app.config.get("ARTICLES_IMAGES_URL")}/{self.image}'
+        if self.has_image:
+            return f'{app.config.get("ARTICLES_IMAGES_URL")}/{self.id}'
 
     def delete_image(self):
-        if not self.image:
+        if not self.has_image:
             return
-        Path(f'{app.config.get("ARTICLES_IMAGES_PATH")}/{self.image}').unlink()
-        self.image = None
+        (app.config.get('ARTICLES_IMAGES_PATH') / str(self.id)).unlink()
+        self.has_image = False
         self.save()
 
     def attach_image(self, image):
-        if not image:
-            return
         self._upload_image = image
 
     @classmethod
@@ -71,21 +67,19 @@ class Article(db.Document):
     @classmethod
     def store_image(cls, sender, document, **kwargs):
         if document._upload_image:
-            document.image = str(document.id)
+            document.has_image = True
             document._upload_image.save(
-                f'{app.config.get("ARTICLES_IMAGES_PATH")}/{document.image}')
+                str(app.config.get('ARTICLES_IMAGES_PATH') / str(document.id)))
             document._upload_image = None
             document.save()
 
     @classmethod
-    def delete_image(cls, sender, document, **kwargs):
-        if document.image:
-            (Path(f'{app.config.get("ARTICLES_IMAGES_PATH")}/{document.image}')
-             .unlink())
+    def delete_image_file(cls, sender, document, **kwargs):
+        document.delete_image()
 
 
 signals.pre_save.connect(Article.generate_uid, sender=Article)
 signals.pre_save.connect(Article.update_publication_date, sender=Article)
 signals.pre_save.connect(Article.update_slug, sender=Article)
 signals.post_save.connect(Article.store_image, sender=Article)
-signals.post_delete.connect(Article.delete_image, sender=Article)
+signals.pre_delete.connect(Article.delete_image_file, sender=Article)

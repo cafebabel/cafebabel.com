@@ -34,7 +34,7 @@ Additional infos: {data['additional']}
 
 
 @app.route('/article/draft/<uid>/')
-def article_draft(uid):
+def article_edit(uid):
     try:
         article = Article.objects.get(uid=uid)
     except Article.DoesNotExist:
@@ -45,20 +45,23 @@ def article_draft(uid):
 
 
 @app.route('/article/<slug>-<id>/')
-def article_read(id, slug):
+def article_detail(id, slug):
     try:
         article = Article.objects.get(id=id, status='published')
     except Article.DoesNotExist:
         abort(404, 'No published article matches that id.')
     if article.slug != slug:
         return redirect(url_for(
-            'article_read', slug=article.slug, id=article.id), code=301)
-    return render_template('articles/read.html', article=article)
+            'article_detail', slug=article.slug, id=article.id), code=301)
+    return render_template('articles/detail.html', article=article)
 
 
-@app.route('/article/write/')
+@app.route('/article/new/')
 @login_required
-def article_write():
+def article_new():
+    if not current_user.has_role('editor'):
+        flash("You don't have permission to access this ressource.", 'error')
+        return redirect(url_for('home'))
     article = Article()
     authors = User.objects.all()
     return render_template('articles/edit.html', article=article,
@@ -67,7 +70,7 @@ def article_write():
 
 @app.route('/article/create/', methods=['post'])
 @login_required
-def article_post():
+def article_create():
     image = request.files.get('image')
     data = request.form.to_dict()
     data['author'] = User.objects.get(id=data.get('author'))
@@ -85,9 +88,9 @@ def article_post():
     article.save()
     flash('Your article was successfully saved.')
     if article.is_draft:
-        return redirect(url_for('article_draft', uid=article.uid))
+        return redirect(url_for('article_edit', uid=article.uid))
     else:
-        return redirect(url_for('article_read', slug=article.slug,
+        return redirect(url_for('article_detail', slug=article.slug,
                                 id=article.id))
 
 

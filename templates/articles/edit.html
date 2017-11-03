@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-<form method=post action={{ url_for('article_post') }} enctype=multipart/form-data>
+<form method=post action={{ url_for('article_create') }} enctype=multipart/form-data>
   <input type=hidden name=uid value="{{article.uid or ''}}">
   <div class=text>
     <label for=title>Title</label>
@@ -50,7 +50,7 @@
   </div>
   <div class=file>
     <label for=image>Image</label>
-    {% if article.image %}
+    {% if article.has_image %}
     <img src={{ article_image_url(article) }} alt>
     <div class=checkbox>
       <label for=delete-image>Delete image</label>
