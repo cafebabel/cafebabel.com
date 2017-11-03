@@ -34,7 +34,7 @@
 {% endif %}
     <li><a href={{ url_for('article_proposal') }}>Suggest an article</a></li>
     {% if current_user.has_role('editor') %}
-    <li><a href={{ url_for('article_new') }}>Write an article</a></li>
+    <li><a href={{ url_for('article_draft_new') }}>Write an article</a></li>
     {% endif %}
   </ul>
 </nav>

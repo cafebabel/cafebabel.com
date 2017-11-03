@@ -17,7 +17,7 @@ class Article(db.Document):
     body = db.StringField(required=True)
     has_image = db.BooleanField(default=False)
     status = db.StringField(default='draft')
-    uid = db.StringField(required=True)
+    uid = db.StringField(required=True, unique=True)
     editor = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
