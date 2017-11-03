@@ -16,6 +16,7 @@ def pytest_runtest_teardown():
 
 @pytest.fixture
 def app():
+    myapp.config['WTF_CSRF_ENABLED'] = False
     return myapp
 
 

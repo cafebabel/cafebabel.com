@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from ..users.models import Role, user_datastore
+from .utils import login, logout
 
 
 def test_user_has_no_default_roles(user):
@@ -24,5 +25,19 @@ def test_admin_has_all_roles(admin):
 
 
 def test_unauthenticated_user_cannot_access_login_required_page(client):
+    response = client.get('/profile/')
+    assert response.status_code == HTTPStatus.FOUND
+
+
+def test_authenticated_user_can_access_login_required_page(client, user):
+    login(client, user.email, 'secret')
+    response = client.get('/profile/')
+    assert response.status_code == HTTPStatus.OK
+    assert b'<h1>testy@example.com\'s profile</h1>' in response.data
+
+
+def test_logout_user_cannot_access_login_required_page(client, user):
+    login(client, user.email, 'secret')
+    logout(client)
     response = client.get('/profile/')
     assert response.status_code == HTTPStatus.FOUND
