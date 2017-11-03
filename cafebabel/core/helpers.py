@@ -1,8 +1,11 @@
 import re
 import unicodedata
+from functools import wraps
+from http import HTTPStatus
 
 import markdown as markdownlib
-from flask import Markup
+from flask import Markup, abort
+from flask_login import current_user
 
 from .. import app
 
@@ -28,3 +31,18 @@ def add_template_helpers():
         article_image_url=(lambda a:
             f'{app.config.get("ARTICLES_IMAGES_URL")}/{a.id}'),
     )
+
+
+def editor_required(func):
+    """Decorator which ensure that the current user's has an editor role.
+
+    If you decorate a view with this, it must be used in conjunction with the
+    `(fresh_)login_required` decorator.
+    """
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if not current_user.has_role('editor'):
+            abort(HTTPStatus.FORBIDDEN,
+                  'An editor is required to perform this action.')
+        return func(*args, **kwargs)
+    return decorated_view

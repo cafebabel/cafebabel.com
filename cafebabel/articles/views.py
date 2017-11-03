@@ -1,11 +1,12 @@
 from http import HTTPStatus
 
-from flask import render_template, request, flash, redirect, url_for, abort
-from flask_mail import Message
-from flask_login import current_user, login_required
 import mongoengine
+from flask import abort, flash, redirect, render_template, request, url_for
+from flask_login import current_user, fresh_login_required, login_required
+from flask_mail import Message
 
 from .. import app, mail
+from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
 
@@ -98,7 +99,8 @@ def article_create():
 
 
 @app.route('/article/<id>/delete/', methods=['post'])
-@login_required
+@fresh_login_required
+@editor_required
 def article_delete(id):
     try:
         Article.objects.get(id=id).delete()
