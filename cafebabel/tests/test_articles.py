@@ -49,6 +49,49 @@ def test_access_old_slug_article_should_return_301(client, article):
     assert response.status_code == HTTPStatus.MOVED_PERMANENTLY
 
 
+def test_access_article_form_regular_user_should_return_403(client, user,
+                                                            article):
+    login(client, user.email, 'secret')
+    response = client.get(f'/article/{article.slug}-{article.id}/form/')
+    assert response.status_code == HTTPStatus.FORBIDDEN
+
+
+def test_access_published_article_form_should_return_200(client, editor,
+                                                         article):
+    login(client, editor.email, 'secret')
+    article.status = 'published'
+    article.save()
+    response = client.get(f'/article/{article.slug}-{article.id}/form/')
+    assert response.status_code == HTTPStatus.OK
+
+
+def test_access_draft_article_form_should_return_404(client, editor, article):
+    login(client, editor.email, 'secret')
+    response = client.get(f'/article/{article.slug}-{article.id}/form/')
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_access_no_article_form_should_return_404(client, editor):
+    login(client, editor.email, 'secret')
+    response = client.get(f'/article/foo-bar/form/')
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_access_no_id_form_should_return_404(client, editor):
+    login(client, editor.email, 'secret')
+    response = client.get(f'/article/foobar/form/')
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_access_old_slug_article_form_should_return_301(client, editor,
+                                                        article):
+    login(client, editor.email, 'secret')
+    article.status = 'published'
+    article.save()
+    response = client.get(f'/article/wrong-slug-{article.id}/form/')
+    assert response.status_code == HTTPStatus.MOVED_PERMANENTLY
+
+
 def test_delete_article_should_return_200(client, editor, article):
     login(client, editor.email, 'secret')
     response = client.post(f'/article/{article.id}/delete/',
@@ -60,16 +103,14 @@ def test_delete_article_should_return_200(client, editor, article):
 
 def test_delete_article_regular_user_should_return_403(client, user, article):
     login(client, user.email, 'secret')
-    response = client.post(f'/article/{article.id}foo/delete/',
-                           follow_redirects=True)
+    response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.FORBIDDEN
     assert Article.objects.all().count() == 1
 
 
 def test_delete_incorrect_id_should_return_404(client, editor, article):
     login(client, editor.email, 'secret')
-    response = client.post(f'/article/{article.id}foo/delete/',
-                           follow_redirects=True)
+    response = client.post(f'/article/{article.id}foo/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert Article.objects.all().count() == 1
 
@@ -77,6 +118,5 @@ def test_delete_incorrect_id_should_return_404(client, editor, article):
 def test_delete_inexistent_article_should_return_404(client, editor, article):
     article.delete()
     login(client, editor.email, 'secret')
-    response = client.post(f'/article/{article.id}/delete/',
-                           follow_redirects=True)
+    response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND

@@ -82,30 +82,48 @@ def article_create():
     if article.is_draft:
         return redirect(url_for('article_edit', uid=article.uid))
     else:
-        return redirect(url_for('article_detail', id=article.id,
+        return redirect(url_for('article_detail', article_id=article.id,
                                 slug=article.slug))
 
 
-@app.route('/article/<slug>-<regex("\w{24}"):id>/')
-def article_detail(slug, id):
+@app.route('/article/<slug>-<regex("\w{24}"):article_id>/')
+def article_detail(slug, article_id):
     try:
-        article = Article.objects.get(id=id, status='published')
+        article = Article.objects.get(id=article_id, status='published')
     except Article.DoesNotExist:
-        abort(HTTPStatus.NOT_FOUND, 'No artile matches this id.')
+        abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
     if article.slug != slug:
         return redirect(
-            url_for('article_detail', id=article.id, slug=article.slug),
+            url_for('article_detail', article_id=article.id,
+                    slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
     return render_template('articles/detail.html', article=article)
 
 
-@app.route('/article/<id>/delete/', methods=['post'])
+@app.route('/article/<slug>-<regex("\w{24}"):article_id>/form/')
+@login_required
+@editor_required
+def article_detail_form(slug, article_id):
+    try:
+        article = Article.objects.get(id=article_id, status='published')
+    except Article.DoesNotExist:
+        abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
+    if article.slug != slug:
+        return redirect(
+            url_for('article_detail_form', article_id=article.id,
+                    slug=article.slug),
+            code=HTTPStatus.MOVED_PERMANENTLY)
+    return render_template('articles/edit.html', article=article)
+
+
+@app.route('/article/<regex("\w{24}"):article_id>/delete/', methods=['post'])
 @fresh_login_required
 @editor_required
-def article_delete(id):
+def article_delete(article_id):
     try:
-        Article.objects.get(id=id).delete()
-    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
+        article = Article.objects.get(id=article_id)
+    except Article.DoesNotExist:
         abort(HTTPStatus.NOT_FOUND, 'No article found with this id.')
+    article.delete()
     flash('Article was deleted.', 'success')
     return redirect(url_for('home'))
