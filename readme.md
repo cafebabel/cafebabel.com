@@ -6,12 +6,11 @@
 
 ### Requirements
 
-Python 3.6+
+- Python 3.6+
+- MongoDB 3.4+
 
 
 ## Preparing the project
-
-Install and launch MongoDB on default port.
 
 ```
 python3 -m venv ./venv
@@ -21,12 +20,13 @@ source ./venv/bin/activate
 ### Installing the dependencies
 
 ```
-export FLASK_APP=cafebabel
-export FLASK_DEBUG=1
 pip install -e .
 ```
 
 ### Installing the database
+
+Install and launch MongoDB on default port (27017) or tune it in your
+_settings.local.py_ (see [Configuring section](#Configuring)).
 
 ```
 flask initdb
@@ -44,6 +44,8 @@ override the default `settings.py` configuration.
 ## Running the project
 
 ```
+export FLASK_APP=cafebabel
+export FLASK_DEBUG=1
 flask run
 ```
 
