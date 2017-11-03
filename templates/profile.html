@@ -35,7 +35,7 @@
     <span>Editor role</span>
   </label>
   {% endif %}
-  <form class=user-save data-method=put action={{ url_for('api_user_put', id=user.id) }}>
+  <form class=user-save data-method=put action={{ url_for('api_user_put') }}>
     <button type=submit>Save my profile</button>
   </form>
 
