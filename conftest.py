@@ -16,10 +16,12 @@ def pytest_runtest_teardown():
 
 @pytest.fixture
 def app():
+    myapp.config['MONGODB_DB'] = 'tests'
+    myapp.config['WTF_CSRF_ENABLED'] = False
     return myapp
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture
 def user():
     user = User.objects.create(email='testy@example.com', password='secret')
     with myapp.app_context():
@@ -27,6 +29,6 @@ def user():
     return user
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture
 def admin():
     return User.objects.get(email='admin@example.com')
