@@ -36,10 +36,10 @@ Additional infos: {data['additional']}
 @app.route('/article/draft/<uid>/')
 def article_draft(uid):
     try:
-        article = Article.get(uid=uid, status='draft')
+        article = Article.objects.get(uid=uid)
     except Article.DoesNotExist:
         abort(404, 'No draft found with this uid.')
-    authors = User.select()
+    authors = User.objects.all()
     return render_template('articles/edit.html', article=article,
                            authors=authors)
 
@@ -47,7 +47,7 @@ def article_draft(uid):
 @app.route('/article/<slug>-<id>/')
 def article_read(id, slug):
     try:
-        article = Article.get(id=id, status='published')
+        article = Article.objects.get(id=id, status='published')
     except Article.DoesNotExist:
         abort(404, 'No published article matches that id.')
     if article.slug != slug:
@@ -60,7 +60,7 @@ def article_read(id, slug):
 @login_required
 def article_write():
     article = Article()
-    authors = User.select()
+    authors = User.objects.all()
     return render_template('articles/edit.html', article=article,
                            authors=authors)
 
@@ -70,13 +70,14 @@ def article_write():
 def article_post():
     image = request.files.get('image')
     data = request.form.to_dict()
-    data['author'] = int(data.get('author'))
+    data['author'] = User.objects.get(id=data.get('author'))
     data['editor'] = current_user.id
     if data.get('uid'):
-        article = Article.get(uid=data['uid'], status='draft')
-        # article.update(**data)
+        article = Article.objects.get(uid=data['uid'], status='draft')
+        for field, value in data.items():
+            setattr(article, field, value)
     else:
-        article = Article.create(**data)
+        article = Article(**data)
     if data.get('delete-image'):
         article.delete_image()
     if image:

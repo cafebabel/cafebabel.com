@@ -4,6 +4,10 @@
 <article>
   <h1>{{ article.title }}</h1>
 
+  {% if article.image %}
+  <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
+  {% endif %}
+
   {% if article.summary %}
   <p>
     {{ article.summary }}

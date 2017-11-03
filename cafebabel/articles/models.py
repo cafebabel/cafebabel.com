@@ -19,7 +19,7 @@ class Article(db.Document):
     body = db.StringField(required=True)
     image = db.StringField()
     status = db.StringField(default='draft')
-    uid = db.UUIDField(binary=False, required=True)
+    uid = db.StringField(required=True)
     editor = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
@@ -55,27 +55,27 @@ class Article(db.Document):
         self._upload_image = image
 
     @classmethod
-    def update_publication_date(cls, sender, article, **kwargs):
-        if article.status == 'published' and not article.publication_date:
-            article.publication_date = datetime.datetime.utcnow()
+    def update_publication_date(cls, sender, document, **kwargs):
+        if document.status == 'published' and not document.publication_date:
+            document.publication_date = datetime.datetime.utcnow()
 
     @classmethod
-    def update_slug(cls, sender, article, **kwargs):
-        article.slug = slugify(article.title)
+    def update_slug(cls, sender, document, **kwargs):
+        document.slug = slugify(document.title)
 
     @classmethod
-    def generate_uid(cls, sender, article, **kwargs):
-        if not article.uid:
-            article.uid = os.urandom(16).hex()
+    def generate_uid(cls, sender, document, **kwargs):
+        if not document.uid:
+            document.uid = os.urandom(16).hex()
 
     @classmethod
-    def store_image(cls, sender, article, **kwargs):
-        if article._upload_image:
-            article.image = article.id
-            article._upload_image.save(
-                f'{app.config.get("ARTICLES_IMAGES_PATH")}/{article.image}')
-            article._upload_image = None
-            article.save()
+    def store_image(cls, sender, document, **kwargs):
+        if document._upload_image:
+            document.image = str(document.id)
+            document._upload_image.save(
+                f'{app.config.get("ARTICLES_IMAGES_PATH")}/{document.image}')
+            document._upload_image = None
+            document.save()
 
 
 signals.pre_save.connect(Article.generate_uid, sender=Article)
