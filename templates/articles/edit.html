@@ -23,6 +23,7 @@
       {% endfor %}
     </select>
   </div>
+  {% if current_user.has_role('editor') %}
   <div class=select>
     <label for=status>Status</label>
     <select id=status name=status required>
@@ -38,6 +39,7 @@
       {% endfor %}
     </select>
   </div>
+  {% endif %}
   <div class=textarea>
     <label for=summary>Summary</label>
     <textarea id=summary name=summary>{{ article.summary or '' }}</textarea>
@@ -59,4 +61,8 @@
   </div>
   <input type=submit value="Save">
 </form>
+
+{% if current_user.has_role('editor') and article.id %}
+<a class=button href={{ url_for('article_delete', id=article.id) }}>Delete this article</a>
+{% endif %}
 {% endblock %}

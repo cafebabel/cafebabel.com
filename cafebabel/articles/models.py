@@ -56,7 +56,7 @@ class Article(db.Document):
 
     @classmethod
     def update_publication_date(cls, sender, document, **kwargs):
-        if document.status == 'published' and not document.publication_date:
+        if document.is_published and not document.publication_date:
             document.publication_date = datetime.datetime.utcnow()
 
     @classmethod

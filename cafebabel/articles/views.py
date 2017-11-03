@@ -89,3 +89,14 @@ def article_post():
     else:
         return redirect(url_for('article_read', slug=article.slug,
                                 id=article.id))
+
+
+@app.route('/article/<id>/delete/')
+@login_required
+def article_delete(id):
+    try:
+        Article.objects.get(id=id).delete()
+    except Article.DoesNotExist:
+        abort('No article found with this id.', 404)
+    flash('Article was deleted.', 'success')
+    return redirect(url_for('home'))
