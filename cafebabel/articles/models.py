@@ -77,8 +77,15 @@ class Article(db.Document):
             document._upload_image = None
             document.save()
 
+    @classmethod
+    def delete_image(cls, sender, document, **kwargs):
+        if document.image:
+            (Path(f'{app.config.get("ARTICLES_IMAGES_PATH")}/{document.image}')
+             .unlink())
+
 
 signals.pre_save.connect(Article.generate_uid, sender=Article)
 signals.pre_save.connect(Article.update_publication_date, sender=Article)
 signals.pre_save.connect(Article.update_slug, sender=Article)
 signals.post_save.connect(Article.store_image, sender=Article)
+signals.post_delete.connect(Article.delete_image, sender=Article)
