@@ -82,14 +82,19 @@ def article_create():
     if article.is_draft:
         return redirect(url_for('article_edit', uid=article.uid))
     else:
-        return redirect(url_for('article_detail', article=article))
+        return redirect(url_for('article_detail', id=article.id,
+                                slug=article.slug))
 
 
-@app.route('/article/<article(status="published"):article>/')
-def article_detail(article):
-    if article.slug != article.url_slug:
+@app.route('/article/<slug>-<regex("\w{24}"):id>/')
+def article_detail(slug, id):
+    try:
+        article = Article.objects.get(id=id, status='published')
+    except Article.DoesNotExist:
+        abort(HTTPStatus.NOT_FOUND, 'No artile matches this id.')
+    if article.slug != slug:
         return redirect(
-            url_for('article_detail', article=article),
+            url_for('article_detail', id=article.id, slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
     return render_template('articles/detail.html', article=article)
 
