@@ -1,9 +1,9 @@
 import pytest
-from flask_security.confirmable import confirm_user
-
 from cafebabel import app as myapp
+from cafebabel.articles.models import Article
 from cafebabel.core.commands import _dropdb, _initdb
 from cafebabel.users.models import User
+from flask_security.confirmable import confirm_user
 
 
 def pytest_runtest_setup():
@@ -32,3 +32,11 @@ def user():
 @pytest.fixture
 def admin():
     return User.objects.get(email='admin@example.com')
+
+
+@pytest.fixture
+def article():
+    return Article.objects.create(
+        title='title',
+        language=myapp.config['LANGUAGES'][0][0],
+        body='body')

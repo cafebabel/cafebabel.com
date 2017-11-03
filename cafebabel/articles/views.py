@@ -1,6 +1,9 @@
+from http import HTTPStatus
+
 from flask import render_template, request, flash, redirect, url_for, abort
 from flask_mail import Message
 from flask_login import current_user, login_required
+import mongoengine
 
 from .. import app, mail
 from ..users.models import User
@@ -94,12 +97,12 @@ def article_create():
                                 id=article.id))
 
 
-@app.route('/article/<id>/delete/')
+@app.route('/article/<id>/delete/', methods=['post'])
 @login_required
 def article_delete(id):
     try:
         Article.objects.get(id=id).delete()
-    except Article.DoesNotExist:
-        abort('No article found with this id.', 404)
+    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
+        abort(HTTPStatus.NOT_FOUND, 'No article found with this id.')
     flash('Article was deleted.', 'success')
     return redirect(url_for('home'))
