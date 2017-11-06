@@ -119,30 +119,57 @@ def article_create():
     if article.is_draft:
         return redirect(url_for('article_edit', uid=article.uid))
     else:
-        return redirect(url_for('article.article_detail',
+        return redirect(url_for('article.detail',
                                 article_id=article.id,
                                 slug=article.slug))
 
 
 # Only route with the slug for SEO purpose.
 @article.route('/<slug>-<regex("\w{24}"):article_id>/')
-def article_detail(slug, article_id):
+def detail(slug, article_id):
     try:
         article = Article.objects.get(id=article_id, status='published')
     except Article.DoesNotExist:
         abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
     if article.slug != slug:
         return redirect(
-            url_for('.article_detail', article_id=article.id,
+            url_for('.detail', article_id=article.id,
                     slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
     return render_template('articles/detail.html', article=article)
 
 
+@article.route('/<regex("\w{24}"):article_id>/', methods=['post'])
+@login_required
+@editor_required
+def update(article_id):
+    try:
+        article = Article.objects.get(id=article_id, status='published')
+    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
+        abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
+
+    data = request.form.to_dict()
+    data['author'] = User.objects.get(id=data.get('author'))
+    data['editor'] = current_user.id
+    for field, value in data.items():
+        setattr(article, field, value)
+
+    if data.get('delete-image'):
+        article.delete_image()
+    image = request.files.get('image')
+    if image:
+        article.attach_image(image)
+
+    article.save()
+    flash('Your article was successfully saved.')
+    return redirect(
+        url_for('.detail', article_id=article.id, slug=article.slug))
+
+
 @article.route('/<regex("\w{24}"):article_id>/form/')
 @login_required
 @editor_required
-def article_detail_form(article_id):
+def detail_form(article_id):
     try:
         article = Article.objects.get(id=article_id, status='published')
     except (Article.DoesNotExist, mongoengine.errors.ValidationError):
@@ -153,7 +180,7 @@ def article_detail_form(article_id):
 @article.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
 @fresh_login_required
 @editor_required
-def article_delete(article_id):
+def delete(article_id):
     try:
         article = Article.objects.get(id=article_id)
     except (Article.DoesNotExist, mongoengine.errors.ValidationError):
