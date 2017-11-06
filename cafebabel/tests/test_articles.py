@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from pathlib import Path
-import base64
+from io import BytesIO
 
 from flask.helpers import get_flashed_messages
 
@@ -46,17 +46,19 @@ def test_draft_editing_should_update_content(client, editor):
 def test_draft_image_should_save_and_render(client, editor):
     login(client, editor.email, 'secret')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
-        image = content.read()
+        image = BytesIO(content.read())
     data = {
         'title': 'My article',
         'language': 'en',
         'body': 'Article body',
-        'image': image,
+        'image': (image, 'image-name.jpg'),
     }
     response = client.post('/article/draft/', data=data,
                            content_type='multipart/form-data',
                            follow_redirects=True)
+    assert response.status_code == HTTPStatus.CREATED
     article = Article.objects.first()
+    assert article.has_image
     assert (Path(app.config.get('ARTICLES_IMAGES_PATH') / str(article.id))
             .exists())
 

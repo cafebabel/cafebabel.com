@@ -67,4 +67,5 @@ EDITOR_EMAILS = {
     'it': '@'.join(['redazione', 'cafebabel.com']),
 }
 ARTICLES_IMAGES_URL = '/static/uploads/articles'
-ARTICLES_IMAGES_PATH = Path(__file__).parent / 'static/uploads/articles'
+ARTICLES_IMAGES_PATH = (
+    Path(__file__).parent / 'static' / 'uploads' / 'articles')

@@ -1,8 +1,11 @@
+from pathlib import Path
+from tempfile import mkdtemp
+
 import pytest
 from cafebabel import app as myapp
 from cafebabel.articles.models import Article
 from cafebabel.core.commands import _dropdb, _initdb
-from cafebabel.users.models import User, Role, user_datastore
+from cafebabel.users.models import Role, User, user_datastore
 from flask_security.confirmable import confirm_user
 
 
@@ -18,6 +21,7 @@ def pytest_runtest_teardown():
 def app():
     myapp.config['MONGODB_DB'] = 'tests'
     myapp.config['WTF_CSRF_ENABLED'] = False
+    myapp.config['ARTICLES_IMAGES_PATH'] = mkdtemp()
     return myapp
 
 
