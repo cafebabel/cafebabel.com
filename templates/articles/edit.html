@@ -63,7 +63,7 @@
 </form>
 
 {% if current_user.has_role('editor') and article.id %}
-<form method=post action={{ url_for('.delete', article_id=article.id) }}>
+<form method=post action={{ url_for('article.delete', article_id=article.id) }}>
   <input type=submit value="Delete this article">
 </form>
 {% endif %}
