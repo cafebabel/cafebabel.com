@@ -98,33 +98,6 @@ def article_draft_detail(draft_id):
     return render_template('articles/draft_detail.html', article=article)
 
 
-@app.route('/article/create/', methods=['post'])
-@login_required
-def article_create():
-    image = request.files.get('image')
-    data = request.form.to_dict()
-    data['author'] = User.objects.get(id=data.get('author'))
-    data['editor'] = current_user.id
-    try:
-        article = Article.objects.get(id=data['id'], status='draft')
-    except Article.DoesNotExist:
-        article = Article()
-    for field, value in data.items():
-        setattr(article, field, value)
-    if data.get('delete-image'):
-        article.delete_image()
-    if image:
-        article.attach_image(image)
-    article.save()
-    flash('Your article was successfully saved.')
-    if article.is_draft:
-        return redirect(url_for('article_draft_detail', draft_id=article.id))
-    else:
-        return redirect(url_for('article.detail',
-                                article_id=article.id,
-                                slug=article.slug))
-
-
 # Only route with the slug for SEO purpose.
 @article.route('/<slug>-<regex("\w{24}"):article_id>/')
 def detail(slug, article_id):

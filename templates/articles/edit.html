@@ -2,7 +2,7 @@
 
 {% block body %}
 {% if article.is_draft %}
-  <form method=post action={{ url_for('article_create') }} enctype=multipart/form-data>
+  <form method=post action={{ url_for('article_draft_save', draft_id=article.id or '') }} enctype=multipart/form-data>
 {% else %}
   <form method=post action={{ url_for('article.update', article_id=article.id) }} enctype=multipart/form-data>
 {% endif %}
