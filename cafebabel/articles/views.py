@@ -46,7 +46,7 @@ Additional infos: {data['additional']}
 def article_draft_new():
     article = Article()
     authors = User.objects.all()
-    return render_template('articles/draft_edit.html', article=article,
+    return render_template('articles/edit.html', article=article,
                            authors=authors)
 
 
@@ -57,7 +57,7 @@ def article_draft_edit(uid):
     except Article.DoesNotExist:
         abort(404, 'No draft found with this uid.')
     authors = User.objects.all()
-    return render_template('articles/draft_edit.html', article=article,
+    return render_template('articles/edit.html', article=article,
                            authors=authors)
 
 
@@ -117,7 +117,7 @@ def article_create():
     article.save()
     flash('Your article was successfully saved.')
     if article.is_draft:
-        return redirect(url_for('article_edit', uid=article.uid))
+        return redirect(url_for('article_draft_detail', uid=article.uid))
     else:
         return redirect(url_for('article.detail',
                                 article_id=article.id,
@@ -174,7 +174,9 @@ def detail_form(article_id):
         article = Article.objects.get(id=article_id, status='published')
     except (Article.DoesNotExist, mongoengine.errors.ValidationError):
         abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
-    return render_template('articles/edit.html', article=article)
+    authors = User.objects.all()
+    return render_template(
+        'articles/edit.html', article=article, authors=authors)
 
 
 @article.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
