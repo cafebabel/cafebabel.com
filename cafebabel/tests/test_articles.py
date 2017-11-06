@@ -1,10 +1,12 @@
 from http import HTTPStatus
 from pathlib import Path
+import base64
 
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
 from .utils import login
+from .. import app
 
 
 def test_proposal_sends_email_to_editor(app, client):
@@ -43,7 +45,8 @@ def test_draft_editing_should_update_content(client, editor):
 
 def test_draft_image_should_save_and_render(client, editor):
     login(client, editor.email, 'secret')
-    image = open(Path(__file__).parent / 'dummy-image.jpg')
+    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
+        image = content.read()
     data = {
         'title': 'My article',
         'language': 'en',
@@ -53,9 +56,9 @@ def test_draft_image_should_save_and_render(client, editor):
     response = client.post('/article/draft/', data=data,
                            content_type='multipart/form-data',
                            follow_redirects=True)
-    image.close()
     article = Article.objects.first()
-    assert Path(app.config.get('ARTICLES_IMAGES_PATH') / article.id).exists()
+    assert (Path(app.config.get('ARTICLES_IMAGES_PATH') / str(article.id))
+            .exists())
 
 
 def test_access_published_article_should_return_200(client, article):
