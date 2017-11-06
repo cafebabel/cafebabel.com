@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from pathlib import Path
 
 from flask.helpers import get_flashed_messages
 
@@ -23,6 +24,38 @@ def test_create_draft_should_generate_article(client, editor):
     body = response.get_data(as_text=True)
     assert '<h1>Test article</h1>' in body
     assert '<p>Article body</p>' in body
+
+
+def test_draft_editing_should_update_content(client, editor):
+    login(client, editor.email, 'secret')
+    data = {'title': 'My article', 'language': 'en', 'body': 'Article body'}
+    draft = Article.objects.create(**data)
+    updated_data = data.copy()
+    updated_data['language'] = 'fr'
+    response = client.post(f'/article/draft/{draft.uid}/edit/',
+                           data=updated_data, follow_redirects=True)
+    assert response.status_code == 200
+    updated_draft = Article.objects.get(uid=draft.uid)
+    assert updated_draft.id == draft.id
+    assert updated_draft.language == 'fr'
+    assert updated_draft.title == 'My article'
+
+
+def test_draft_image_should_save_and_render(client, editor):
+    login(client, editor.email, 'secret')
+    image = open(Path(__file__).parent / 'dummy-image.jpg')
+    data = {
+        'title': 'My article',
+        'language': 'en',
+        'body': 'Article body',
+        'image': image,
+    }
+    response = client.post('/article/draft/', data=data,
+                           content_type='multipart/form-data',
+                           follow_redirects=True)
+    image.close()
+    article = Article.objects.first()
+    assert Path(app.config.get('ARTICLES_IMAGES_PATH') / article.id).exists()
 
 
 def test_access_published_article_should_return_200(client, article):
