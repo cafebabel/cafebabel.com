@@ -15,6 +15,17 @@ def test_proposal_sends_email_to_editor(app, client):
     assert 'action=/article/proposal/' in response.get_data().decode()
 
 
+def test_create_draft_should_display_form(client, editor):
+    login(client, editor.email, 'secret')
+    response = client.get('/article/draft/')
+    assert response.status_code == 200
+    assert '<input id=title' in response.get_data(as_text=True)
+
+
+def test_read_article_should_display_content(client, editor):
+    Article.objects.create(name='My title', body='Read me')
+
+
 def test_create_draft_should_generate_article(client, editor):
     login(client, editor.email, 'secret')
     response = client.post('/article/draft/', data={
@@ -59,8 +70,9 @@ def test_draft_image_should_save_and_render(client, editor):
     assert response.status_code == HTTPStatus.OK
     article = Article.objects.first()
     assert article.has_image
-    assert (Path(app.config.get('ARTICLES_IMAGES_PATH') / str(article.id))
-            .exists())
+    assert Path(app.config.get('ARTICLES_IMAGES_PATH')
+                / str(article.id)).exists()
+    assert f'<img src={article.image_url}' in response.get_data(as_text=True)
 
 
 def test_access_published_article_should_return_200(client, article):
