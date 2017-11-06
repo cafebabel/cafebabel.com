@@ -1,0 +1,6 @@
+{% extends "articles/detail.html" %}
+
+{% block body %}
+  {{ super() }}
+  <a class=button href={{ url_for('article_draft_edit', uid=article.uid) }}>Edit this draft</a>
+{% endblock %}

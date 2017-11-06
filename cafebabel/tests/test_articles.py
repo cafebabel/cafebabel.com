@@ -12,6 +12,19 @@ def test_proposal_sends_email_to_editor(app, client):
     assert 'action=/article/proposal/' in response.get_data().decode()
 
 
+def test_create_draft_should_generate_article(client, editor):
+    login(client, editor.email, 'secret')
+    response = client.post('/article/draft/', data={
+        'title': 'Test article',
+        'language': 'en',
+        'body': 'Article body',
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    body = response.get_data(as_text=True)
+    assert '<h1>Test article</h1>' in body
+    assert '<p>Article body</p>' in body
+
+
 def test_access_published_article_should_return_200(client, article):
     article.status = 'published'
     article.save()
