@@ -19,6 +19,27 @@ article_bp = Blueprint(
     'article', __name__, template_folder='templates/articles')
 
 
+def _save_article(data, article):
+    if current_user.has_role('editor'):
+        if not article.editor:
+            data['editor'] = current_user.id
+        if data.get('author'):
+            data['author'] = User.objects.get(id=data.get('author'))
+    else:
+        if data.get('author'):
+            del data['author']
+        if data.get('editor'):
+            del data['editor']
+    for field, value in data.items():
+        setattr(article, field, value)
+    if data.get('delete-image'):
+        article.delete_image()
+    image = request.files.get('image')
+    if image:
+        article.attach_image(image)
+    return article.save()
+
+
 @proposal_bp.route('/')
 def proposal_create_form():
     return render_template('articles/proposal.html')
@@ -59,17 +80,7 @@ def draft_create_form():
 @editor_required
 @login_required
 def draft_create():
-    article = Article()
-    data = request.form.to_dict()
-    data['editor'] = current_user.id
-    if data.get('author'):
-        data['author'] = User.objects.get(id=data.get('author'))
-    for field, value in data.items():
-        setattr(article, field, value)
-    image = request.files.get('image')
-    if image:
-        article.attach_image(image)
-    article.save()
+    article = _save_article(request.form.to_dict(), Article())
     flash('Your article was successfully saved.')
     if article.is_draft:
         return redirect(url_for('draft.draft_detail', draft_id=article.id))
@@ -96,19 +107,7 @@ def draft_edit(draft_id=None):
         article = Article.objects.get(id=draft_id)
     except Article.DoesNotExist:
         abort(404, 'No draft found with this id.')
-    data = request.form.to_dict()
-
-    data['editor'] = current_user.id
-    if data.get('author'):
-        data['author'] = User.objects.get(id=data.get('author'))
-    for field, value in data.items():
-        setattr(article, field, value)
-    if data.get('delete-image'):
-        article.delete_image()
-    image = request.files.get('image')
-    if image:
-        article.attach_image(image)
-    article.save()
+    article = _save_article(request.form.to_dict(), article)
     flash('Your article was successfully saved.')
     if article.is_draft:
         return redirect(url_for('draft.draft_detail', draft_id=article.id))
@@ -149,20 +148,7 @@ def article_edit(article_id):
         article = Article.objects.get(id=article_id, status='published')
     except (Article.DoesNotExist, mongoengine.errors.ValidationError):
         abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
-
-    data = request.form.to_dict()
-    data['author'] = User.objects.get(id=data.get('author'))
-    data['editor'] = current_user.id
-    for field, value in data.items():
-        setattr(article, field, value)
-
-    if data.get('delete-image'):
-        article.delete_image()
-    image = request.files.get('image')
-    if image:
-        article.attach_image(image)
-
-    article.save()
+    article = _save_article(request.form.to_dict(), article)
     flash('Your article was successfully saved.')
     return redirect(
         url_for('.article_detail', article_id=article.id, slug=article.slug))

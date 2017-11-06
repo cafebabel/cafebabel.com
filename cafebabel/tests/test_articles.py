@@ -12,7 +12,7 @@ from .. import app
 def test_proposal_sends_email_to_editor(app, client):
     response = client.get('/proposal/')
     assert response.status_code == 200
-    assert 'action=/proposal/' in response.get_data().decode()
+    assert 'action=/proposal/' in response.get_data(as_text=True)
 
 
 def test_create_draft_should_display_form(client, editor):
@@ -69,6 +69,21 @@ def test_draft_image_should_save_and_render(client, editor):
     assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
                 str(article.id)).exists()
     assert f'<img src="{article.image_url}"' in response.get_data(as_text=True)
+
+
+def test_visitor_cannot_change_editor_nor_author(client, editor, user):
+    draft = Article.objects.create(title='My draft', body='Content',
+                                   language='en', status='draft',
+                                   author=user, editor=editor)
+    client.post(f'/draft/{draft.id}/edit/', data={
+        'title': 'Updated draft',
+        'author': editor,
+        # 'editor': user.id,
+    })
+    draft = Article.objects.get(id=draft.id)
+    assert draft.title == 'Updated draft'
+    assert draft.author == user
+    assert editor == editor
 
 
 def test_access_published_article_should_return_200(client, article):
