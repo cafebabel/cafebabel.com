@@ -101,7 +101,7 @@ def test_access_old_slug_article_should_return_301(client, article):
 def test_access_article_form_regular_user_should_return_403(client, user,
                                                             article):
     login(client, user.email, 'secret')
-    response = client.get(f'/article/{article.slug}-{article.id}/form/')
+    response = client.get(f'/article/{article.id}/form/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
@@ -110,35 +110,66 @@ def test_access_published_article_form_should_return_200(client, editor,
     login(client, editor.email, 'secret')
     article.status = 'published'
     article.save()
-    response = client.get(f'/article/{article.slug}-{article.id}/form/')
+    response = client.get(f'/article/{article.id}/form/')
     assert response.status_code == HTTPStatus.OK
 
 
 def test_access_draft_article_form_should_return_404(client, editor, article):
     login(client, editor.email, 'secret')
-    response = client.get(f'/article/{article.slug}-{article.id}/form/')
+    response = client.get(f'/article/{article.id}/form/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
 def test_access_no_article_form_should_return_404(client, editor):
     login(client, editor.email, 'secret')
-    response = client.get(f'/article/foo-bar/form/')
+    response = client.get(f'/article/foobarbazquxquuxquuzcorg/form/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_access_no_id_form_should_return_404(client, editor):
-    login(client, editor.email, 'secret')
-    response = client.get(f'/article/foobar/form/')
-    assert response.status_code == HTTPStatus.NOT_FOUND
-
-
-def test_access_old_slug_article_form_should_return_301(client, editor,
-                                                        article):
+def test_update_published_article_should_return_200(client, user, editor,
+                                                    article):
     login(client, editor.email, 'secret')
     article.status = 'published'
     article.save()
-    response = client.get(f'/article/wrong-slug-{article.id}/form/')
-    assert response.status_code == HTTPStatus.MOVED_PERMANENTLY
+    data = {
+        'title': 'updated',
+        'author': user.id
+    }
+    response = client.post(f'/article/{article.id}/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    article.reload()
+    assert article.title == 'updated'
+    assert article.author == user
+    assert article.editor == editor
+    assert get_flashed_messages() == ['Your article was successfully saved.']
+
+
+def test_update_article_with_user_should_return_403(client, user, article):
+    login(client, user.email, 'secret')
+    article.status = 'published'
+    article.save()
+    data = {
+        'title': 'updated',
+        'author': user.id
+    }
+    response = client.post(f'/article/{article.id}/', data=data)
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    article.reload()
+    assert article.title == 'title'
+
+
+def test_update_unpublished_article_should_return_404(client, user, editor,
+                                                      article):
+    login(client, editor.email, 'secret')
+    data = {
+        'title': 'updated',
+        'author': user.id
+    }
+    response = client.post(f'/article/{article.id}/', data=data)
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    article.reload()
+    assert article.title == 'title'
 
 
 def test_delete_article_should_return_200(client, editor, article):
