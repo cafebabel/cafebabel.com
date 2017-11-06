@@ -22,11 +22,24 @@ def test_create_draft_should_display_form(client, editor):
     assert '<input id=title' in response.get_data(as_text=True)
 
 
-def test_read_article_should_display_content(client):
-    article = Article.objects.create(name='My title', body='Read me')
-    response = client.get(f'/article/{artile.slug}-{article.id}')
+def test_published_article_should_display_content(client):
+    article = Article.objects.create(title='My title', body='Read me',
+                                     status='published', language='en')
+    response = client.get(f'/article/{article.slug}-{article.id}/')
     assert response.status_code == 200
     assert f'<h1>{article.title}</h1>' in response.get_data(as_text=True)
+
+
+def test_published_article_should_render_markdown(client):
+    article = Article.objects.create(title='My title',
+                                     body='## Body title\n> quote me',
+                                     status='published', language='en')
+    response = client.get(f'/article/{article.slug}-{article.id}/')
+    assert response.status_code == 200
+    content = response.get_data(as_text=True)
+    assert f'<h1>{article.title}</h1>' in content
+    assert f'<h2>Body title</h2>' in content
+    assert f'<blockquote>\n<p>quote me</p>\n</blockquote>' in content
 
 
 def test_create_draft_should_generate_article(client, editor):
@@ -75,7 +88,6 @@ def test_draft_image_should_save_and_render(client, editor):
     assert article.has_image
     assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
                 str(article.id)).exists()
-    print(response.get_data(as_text=True))
     assert f'<img src="{article.image_url}"' in response.get_data(as_text=True)
 
 
