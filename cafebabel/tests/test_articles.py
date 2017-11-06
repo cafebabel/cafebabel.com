@@ -73,9 +73,10 @@ def test_draft_image_should_save_and_render(client, editor):
     assert response.status_code == HTTPStatus.OK
     article = Article.objects.first()
     assert article.has_image
-    assert Path(app.config.get('ARTICLES_IMAGES_PATH')
-                / str(article.id)).exists()
-    assert f'<img src={article.image_url}' in response.get_data(as_text=True)
+    assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
+                str(article.id)).exists()
+    print(response.get_data(as_text=True))
+    assert f'<img src="{article.image_url}"' in response.get_data(as_text=True)
 
 
 def test_access_published_article_should_return_200(client, article):
