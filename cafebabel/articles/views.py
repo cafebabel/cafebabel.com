@@ -120,7 +120,7 @@ def draft_edit(draft_id=None):
 @draft_bp.route('/<regex("\w{24}"):draft_id>/')
 def draft_detail(draft_id):
     try:
-        article = Article.objects.get(id=draft_id)
+        article = Article.objects.get(id=draft_id, status='draft')
     except Article.DoesNotExist:
         abort(404, 'No draft found with this id.')
     return render_template('articles/draft_detail.html', article=article)
