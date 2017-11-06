@@ -22,8 +22,11 @@ def test_create_draft_should_display_form(client, editor):
     assert '<input id=title' in response.get_data(as_text=True)
 
 
-def test_read_article_should_display_content(client, editor):
-    Article.objects.create(name='My title', body='Read me')
+def test_read_article_should_display_content(client):
+    article = Article.objects.create(name='My title', body='Read me')
+    response = client.get(f'/article/{artile.slug}-{article.id}')
+    assert response.status_code == 200
+    assert f'<h1>{article.title}</h1>' in response.get_data(as_text=True)
 
 
 def test_create_draft_should_generate_article(client, editor):
