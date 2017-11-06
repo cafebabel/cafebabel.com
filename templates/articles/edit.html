@@ -6,7 +6,7 @@
 {% else %}
   <form method=post action={{ url_for('article.update', article_id=article.id) }} enctype=multipart/form-data>
 {% endif %}
-  <input type=hidden name=uid value="{{article.uid or ''}}">
+  <input type=hidden name=id value="{{article.id or ''}}">
   <div class=text>
     <label for=title>Title</label>
     <input id=title name=title value="{{ article.title or '' }}" required>

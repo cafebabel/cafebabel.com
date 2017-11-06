@@ -61,10 +61,10 @@ def test_draft_editing_should_update_content(client, editor):
     draft = Article.objects.create(**data)
     updated_data = data.copy()
     updated_data['language'] = 'fr'
-    response = client.post(f'/article/draft/{draft.uid}/edit/',
+    response = client.post(f'/article/draft/{draft.id}/edit/',
                            data=updated_data, follow_redirects=True)
     assert response.status_code == 200
-    updated_draft = Article.objects.get(uid=draft.uid)
+    updated_draft = Article.objects.get(id=draft.id)
     assert updated_draft.id == draft.id
     assert updated_draft.language == 'fr'
     assert updated_draft.title == 'My article'

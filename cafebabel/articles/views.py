@@ -50,22 +50,23 @@ def article_draft_new():
                            authors=authors)
 
 
-@app.route('/article/draft/<uid>/edit/')
-def article_draft_edit(uid):
+@app.route('/article/draft/<regex("\w{24}"):draft_id>/edit/')
+def article_draft_edit(draft_id):
     try:
-        article = Article.objects.get(uid=uid)
+        article = Article.objects.get(id=draft_id)
     except Article.DoesNotExist:
-        abort(404, 'No draft found with this uid.')
+        abort(404, 'No draft found with this id.')
     authors = User.objects.all()
     return render_template('articles/edit.html', article=article,
                            authors=authors)
 
 
 @app.route('/article/draft/', methods=['post'])
-@app.route('/article/draft/<uid>/edit/', methods=['post'])
-def article_draft_save(uid=None):
-    article = (Article.objects.get(uid=uid, status='draft')
-               if uid else Article())
+@app.route('/article/draft/<regex("\w{24}"):draft_id>/edit/',
+           methods=['post'])
+def article_draft_save(draft_id=None):
+    article = (Article.objects.get(id=draft_id, status='draft')
+               if draft_id else Article())
     image = request.files.get('image')
     data = request.form.to_dict()
 
@@ -82,18 +83,18 @@ def article_draft_save(uid=None):
 
     flash('Your article was successfully saved.')
     if article.is_draft:
-        return redirect(url_for('article_draft_detail', uid=article.uid))
+        return redirect(url_for('article_draft_detail', draft_id=article.id))
     else:
         return redirect(url_for('article_detail', slug=article.slug,
                                 id=article.id))
 
 
-@app.route('/article/draft/<uid>/')
-def article_draft_detail(uid):
+@app.route('/article/draft/<regex("\w{24}"):draft_id>/')
+def article_draft_detail(draft_id):
     try:
-        article = Article.objects.get(uid=uid)
+        article = Article.objects.get(id=draft_id)
     except Article.DoesNotExist:
-        abort(404, 'No draft found with this uid.')
+        abort(404, 'No draft found with this id.')
     return render_template('articles/draft_detail.html', article=article)
 
 
@@ -104,12 +105,12 @@ def article_create():
     data = request.form.to_dict()
     data['author'] = User.objects.get(id=data.get('author'))
     data['editor'] = current_user.id
-    if data.get('uid'):
-        article = Article.objects.get(uid=data['uid'], status='draft')
-        for field, value in data.items():
-            setattr(article, field, value)
-    else:
-        article = Article(**data)
+    try:
+        article = Article.objects.get(id=data['id'], status='draft')
+    except Article.DoesNotExist:
+        article = Article()
+    for field, value in data.items():
+        setattr(article, field, value)
     if data.get('delete-image'):
         article.delete_image()
     if image:
@@ -117,7 +118,7 @@ def article_create():
     article.save()
     flash('Your article was successfully saved.')
     if article.is_draft:
-        return redirect(url_for('article_draft_detail', uid=article.uid))
+        return redirect(url_for('article_draft_detail', draft_id=article.id))
     else:
         return redirect(url_for('article.detail',
                                 article_id=article.id,
