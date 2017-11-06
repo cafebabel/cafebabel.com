@@ -7,7 +7,7 @@
   {% else %}
     <form method=post action={{ url_for('article.article_edit', article_id=article.id) }} enctype=multipart/form-data>
   {% endif %}
-  <input type=hidden name=id value="{{article.id or ''}}">
+  <input type=hidden name=id value="{{article.id}}">
 {% else %}
   <form method=post action={{ url_for('draft.draft_create') }} enctype=multipart/form-data>
 {% endif %}
