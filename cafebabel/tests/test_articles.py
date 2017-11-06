@@ -12,17 +12,38 @@ def test_proposal_sends_email_to_editor(app, client):
     assert 'action=/article/proposal/' in response.get_data().decode()
 
 
-def test_create_draft_should_generate_article(client, editor):
+def test_create_draft_should_render_article(client, editor):
     login(client, editor.email, 'secret')
     response = client.post('/article/draft/', data={
-        'title': 'Test article',
+        'title': 'My article',
         'language': 'en',
         'body': 'Article body',
     }, follow_redirects=True)
     assert response.status_code == 200
     body = response.get_data(as_text=True)
-    assert '<h1>Test article</h1>' in body
+    assert '<h1>My article</h1>' in body
     assert '<p>Article body</p>' in body
+
+
+def test_draft_editing_should_update_content(client, editor):
+    login(client, editor.email, 'secret')
+    data = {'title': 'My article', 'language': 'en', 'body': 'Article body'}
+    draft = Article.objects.create(**data)
+    updated_data = data.copy()
+    updated_data['language'] = 'fr'
+    response = client.post(f'/article/draft/{draft.uid}/edit/',
+                           data=updated_data, follow_redirects=True)
+    assert response.status_code == 200
+    updated_draft = Article.objects.get(uid=draft.uid)
+    assert updated_draft.id == draft.id
+    assert updated_draft.language == 'fr'
+    assert updated_draft.title == 'My article'
+
+
+def test_draft_image_should_save_and_render(client, editor):
+    login(client, editor.email, 'secret')
+    data = {'title': 'My article', 'language': 'en', 'body': 'Article body'}
+    response = client.post('/article/draft/', data=data, follow_redirects=True)
 
 
 def test_access_published_article_should_return_200(client, article):
