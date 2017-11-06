@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+import mongoengine
 from flask import (Blueprint, abort, flash, redirect, render_template, request,
                    url_for)
 from flask_login import current_user, fresh_login_required, login_required
@@ -9,7 +10,6 @@ from .. import app, mail
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
-
 
 article = Blueprint('article', __name__, template_folder='templates/articles')
 
@@ -124,6 +124,7 @@ def article_create():
                                 slug=article.slug))
 
 
+# Only route with the slug for SEO purpose.
 @article.route('/<slug>-<regex("\w{24}"):article_id>/')
 def article_detail(slug, article_id):
     try:
@@ -138,19 +139,14 @@ def article_detail(slug, article_id):
     return render_template('articles/detail.html', article=article)
 
 
-@article.route('/<slug>-<regex("\w{24}"):article_id>/form/')
+@article.route('/<regex("\w{24}"):article_id>/form/')
 @login_required
 @editor_required
-def article_detail_form(slug, article_id):
+def article_detail_form(article_id):
     try:
         article = Article.objects.get(id=article_id, status='published')
-    except Article.DoesNotExist:
+    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
         abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
-    if article.slug != slug:
-        return redirect(
-            url_for('.article_detail_form', article_id=article.id,
-                    slug=article.slug),
-            code=HTTPStatus.MOVED_PERMANENTLY)
     return render_template('articles/edit.html', article=article)
 
 
@@ -160,7 +156,7 @@ def article_detail_form(slug, article_id):
 def article_delete(article_id):
     try:
         article = Article.objects.get(id=article_id)
-    except Article.DoesNotExist:
+    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
         abort(HTTPStatus.NOT_FOUND, 'No article found with this id.')
     article.delete()
     flash('Article was deleted.', 'success')
