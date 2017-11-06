@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
-import mongoengine
-from flask import abort, flash, redirect, render_template, request, url_for
+from flask import (Blueprint, abort, flash, redirect, render_template, request,
+                   url_for)
 from flask_login import current_user, fresh_login_required, login_required
 from flask_mail import Message
 
@@ -9,6 +9,9 @@ from .. import app, mail
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
+
+
+article = Blueprint('article', __name__, template_folder='templates/articles')
 
 
 @app.route('/article/proposal/')
@@ -116,11 +119,12 @@ def article_create():
     if article.is_draft:
         return redirect(url_for('article_edit', uid=article.uid))
     else:
-        return redirect(url_for('article_detail', article_id=article.id,
+        return redirect(url_for('article.article_detail',
+                                article_id=article.id,
                                 slug=article.slug))
 
 
-@app.route('/article/<slug>-<regex("\w{24}"):article_id>/')
+@article.route('/<slug>-<regex("\w{24}"):article_id>/')
 def article_detail(slug, article_id):
     try:
         article = Article.objects.get(id=article_id, status='published')
@@ -128,13 +132,13 @@ def article_detail(slug, article_id):
         abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
     if article.slug != slug:
         return redirect(
-            url_for('article_detail', article_id=article.id,
+            url_for('.article_detail', article_id=article.id,
                     slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
     return render_template('articles/detail.html', article=article)
 
 
-@app.route('/article/<slug>-<regex("\w{24}"):article_id>/form/')
+@article.route('/<slug>-<regex("\w{24}"):article_id>/form/')
 @login_required
 @editor_required
 def article_detail_form(slug, article_id):
@@ -144,13 +148,13 @@ def article_detail_form(slug, article_id):
         abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
     if article.slug != slug:
         return redirect(
-            url_for('article_detail_form', article_id=article.id,
+            url_for('.article_detail_form', article_id=article.id,
                     slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
     return render_template('articles/edit.html', article=article)
 
 
-@app.route('/article/<regex("\w{24}"):article_id>/delete/', methods=['post'])
+@article.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
 @fresh_login_required
 @editor_required
 def article_delete(article_id):
