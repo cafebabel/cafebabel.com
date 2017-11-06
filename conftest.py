@@ -21,7 +21,7 @@ def pytest_runtest_teardown():
 def app():
     myapp.config['MONGODB_DB'] = 'tests'
     myapp.config['WTF_CSRF_ENABLED'] = False
-    myapp.config['ARTICLES_IMAGES_PATH'] = mkdtemp()
+    myapp.config['ARTICLES_IMAGES_PATH'] = Path(mkdtemp())
     return myapp
 
 

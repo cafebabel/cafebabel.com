@@ -140,11 +140,37 @@ def test_update_published_article_should_return_200(client, user, editor,
     response = client.post(f'/article/{article.id}/', data=data,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your article was successfully saved.']
     article.reload()
     assert article.title == 'updated'
     assert article.author == user
     assert article.editor == editor
+
+
+def test_update_article_with_image_should_return_200(client, user, editor,
+                                                     article):
+    login(client, editor.email, 'secret')
+    article.status = 'published'
+    article.save()
+    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
+        image_content = BytesIO(content.read())
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'image': (image_content, 'image-name.jpg')
+    }
+    response = client.post(f'/article/{article.id}/', data=data,
+                           content_type='multipart/form-data',
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
+    article.reload()
+    assert article.title == 'updated'
+    assert article.author == user
+    assert article.editor == editor
+    assert article.has_image
+    assert (Path(app.config.get('ARTICLES_IMAGES_PATH') / str(article.id))
+            .exists())
 
 
 def test_update_article_with_user_should_return_403(client, user, article):
