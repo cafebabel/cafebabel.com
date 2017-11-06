@@ -10,41 +10,21 @@ from .. import app
 
 
 def test_proposal_sends_email_to_editor(app, client):
-    response = client.get('/article/proposal/')
+    response = client.get('/proposal/')
     assert response.status_code == 200
-    assert 'action=/article/proposal/' in response.get_data().decode()
+    assert 'action=/proposal/' in response.get_data().decode()
 
 
 def test_create_draft_should_display_form(client, editor):
     login(client, editor.email, 'secret')
-    response = client.get('/article/draft/')
+    response = client.get('/draft/')
     assert response.status_code == 200
     assert '<input id=title' in response.get_data(as_text=True)
 
 
-def test_published_article_should_display_content(client):
-    article = Article.objects.create(title='My title', body='Read me',
-                                     status='published', language='en')
-    response = client.get(f'/article/{article.slug}-{article.id}/')
-    assert response.status_code == 200
-    assert f'<h1>{article.title}</h1>' in response.get_data(as_text=True)
-
-
-def test_published_article_should_render_markdown(client):
-    article = Article.objects.create(title='My title',
-                                     body='## Body title\n> quote me',
-                                     status='published', language='en')
-    response = client.get(f'/article/{article.slug}-{article.id}/')
-    assert response.status_code == 200
-    content = response.get_data(as_text=True)
-    assert f'<h1>{article.title}</h1>' in content
-    assert f'<h2>Body title</h2>' in content
-    assert f'<blockquote>\n<p>quote me</p>\n</blockquote>' in content
-
-
 def test_create_draft_should_generate_article(client, editor):
     login(client, editor.email, 'secret')
-    response = client.post('/article/draft/', data={
+    response = client.post('/draft/', data={
         'title': 'Test article',
         'language': 'en',
         'body': 'Article body',
@@ -61,7 +41,7 @@ def test_draft_editing_should_update_content(client, editor):
     draft = Article.objects.create(**data)
     updated_data = data.copy()
     updated_data['language'] = 'fr'
-    response = client.post(f'/article/draft/{draft.id}/edit/',
+    response = client.post(f'/draft/{draft.id}/edit/',
                            data=updated_data, follow_redirects=True)
     assert response.status_code == 200
     updated_draft = Article.objects.get(id=draft.id)
@@ -80,7 +60,7 @@ def test_draft_image_should_save_and_render(client, editor):
         'body': 'Article body',
         'image': (image, 'image-name.jpg'),
     }
-    response = client.post('/article/draft/', data=data,
+    response = client.post('/draft/', data=data,
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
@@ -104,6 +84,26 @@ def test_access_article_with_large_slug_should_return_200(client, article):
     article.save()
     response = client.get(f'/article/{article.slug}-{article.id}/')
     assert response.status_code == HTTPStatus.OK
+
+
+def test_published_article_should_display_content(client):
+    article = Article.objects.create(title='My title', body='Read me',
+                                     status='published', language='en')
+    response = client.get(f'/article/{article.slug}-{article.id}/')
+    assert response.status_code == 200
+    assert f'<h1>{article.title}</h1>' in response.get_data(as_text=True)
+
+
+def test_published_article_should_render_markdown(client):
+    article = Article.objects.create(title='My title',
+                                     body='## Body title\n> quote me',
+                                     status='published', language='en')
+    response = client.get(f'/article/{article.slug}-{article.id}/')
+    assert response.status_code == 200
+    content = response.get_data(as_text=True)
+    assert f'<h1>{article.title}</h1>' in content
+    assert f'<h2>Body title</h2>' in content
+    assert f'<blockquote>\n<p>quote me</p>\n</blockquote>' in content
 
 
 def test_access_draft_article_should_return_404(client, article):

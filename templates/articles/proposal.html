@@ -2,7 +2,7 @@
 
 {% block body %}
 <section>
-  <form action={{ url_for('article_proposal_create') }} method=post>
+  <form action={{ url_for('proposal.proposal_create') }} method=post>
     <label for=field-language>Language
       <select name=language id=field-language required>
         <option value=en>English</option>

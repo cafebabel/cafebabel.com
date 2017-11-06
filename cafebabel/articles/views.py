@@ -11,16 +11,21 @@ from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
 
-article = Blueprint('article', __name__, template_folder='templates/articles')
+proposal_bp = Blueprint(
+    'proposal', __name__, template_folder='templates/articles')
+draft_bp = Blueprint(
+    'draft', __name__, template_folder='templates/articles')
+article_bp = Blueprint(
+    'article', __name__, template_folder='templates/articles')
 
 
-@app.route('/article/proposal/')
-def article_proposal():
+@proposal_bp.route('/')
+def proposal_create_form():
     return render_template('articles/proposal.html')
 
 
-@app.route('/article/proposal/', methods=['post'])
-def article_proposal_create():
+@proposal_bp.route('/', methods=['post'])
+def proposal_create():
     data = request.form
     msg = Message(f'Article proposal: {data["topic"]}',
                   sender=data['email'],
@@ -40,18 +45,41 @@ Additional infos: {data['additional']}
     return redirect(url_for('home'))
 
 
-@app.route('/article/draft/')
+@draft_bp.route('/')
 @editor_required
 @login_required
-def article_draft_new():
+def draft_create_form():
     article = Article()
     authors = User.objects.all()
     return render_template('articles/edit.html', article=article,
                            authors=authors)
 
 
-@app.route('/article/draft/<regex("\w{24}"):draft_id>/edit/')
-def article_draft_edit(draft_id):
+@draft_bp.route('/', methods=['post'])
+@editor_required
+@login_required
+def draft_create():
+    article = Article()
+    data = request.form.to_dict()
+    data['editor'] = current_user.id
+    if data.get('author'):
+        data['author'] = User.objects.get(id=data.get('author'))
+    for field, value in data.items():
+        setattr(article, field, value)
+    image = request.files.get('image')
+    if image:
+        article.attach_image(image)
+    article.save()
+    flash('Your article was successfully saved.')
+    if article.is_draft:
+        return redirect(url_for('draft.draft_detail', draft_id=article.id))
+    else:
+        return redirect(url_for('article.article_detail', slug=article.slug,
+                                id=article.id))
+
+
+@draft_bp.route('/<regex("\w{24}"):draft_id>/edit/')
+def draft_edit_form(draft_id):
     try:
         article = Article.objects.get(id=draft_id)
     except Article.DoesNotExist:
@@ -61,13 +89,13 @@ def article_draft_edit(draft_id):
                            authors=authors)
 
 
-@app.route('/article/draft/', methods=['post'])
-@app.route('/article/draft/<regex("\w{24}"):draft_id>/edit/',
-           methods=['post'])
-def article_draft_save(draft_id=None):
-    article = (Article.objects.get(id=draft_id, status='draft')
-               if draft_id else Article())
-    image = request.files.get('image')
+@draft_bp.route('/<regex("\w{24}"):draft_id>/edit/',
+                methods=['post'])
+def draft_edit(draft_id=None):
+    try:
+        article = Article.objects.get(id=draft_id)
+    except Article.DoesNotExist:
+        abort(404, 'No draft found with this id.')
     data = request.form.to_dict()
 
     data['editor'] = current_user.id
@@ -77,20 +105,20 @@ def article_draft_save(draft_id=None):
         setattr(article, field, value)
     if data.get('delete-image'):
         article.delete_image()
+    image = request.files.get('image')
     if image:
         article.attach_image(image)
-    article = article.save()
-
+    article.save()
     flash('Your article was successfully saved.')
     if article.is_draft:
-        return redirect(url_for('article_draft_detail', draft_id=article.id))
+        return redirect(url_for('draft.draft_detail', draft_id=article.id))
     else:
-        return redirect(url_for('article_detail', slug=article.slug,
-                                id=article.id))
+        return redirect(url_for('article.article_detail', slug=article.slug,
+                                article_id=article.id))
 
 
-@app.route('/article/draft/<regex("\w{24}"):draft_id>/')
-def article_draft_detail(draft_id):
+@draft_bp.route('/<regex("\w{24}"):draft_id>/')
+def draft_detail(draft_id):
     try:
         article = Article.objects.get(id=draft_id)
     except Article.DoesNotExist:
@@ -99,24 +127,24 @@ def article_draft_detail(draft_id):
 
 
 # Only route with the slug for SEO purpose.
-@article.route('/<slug>-<regex("\w{24}"):article_id>/')
-def detail(slug, article_id):
+@article_bp.route('/<slug>-<regex("\w{24}"):article_id>/')
+def article_detail(slug, article_id):
     try:
         article = Article.objects.get(id=article_id, status='published')
     except Article.DoesNotExist:
         abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
     if article.slug != slug:
         return redirect(
-            url_for('.detail', article_id=article.id,
+            url_for('.article_detail', article_id=article.id,
                     slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
     return render_template('articles/detail.html', article=article)
 
 
-@article.route('/<regex("\w{24}"):article_id>/', methods=['post'])
+@article_bp.route('/<regex("\w{24}"):article_id>/', methods=['post'])
 @login_required
 @editor_required
-def update(article_id):
+def article_edit(article_id):
     try:
         article = Article.objects.get(id=article_id, status='published')
     except (Article.DoesNotExist, mongoengine.errors.ValidationError):
@@ -137,13 +165,13 @@ def update(article_id):
     article.save()
     flash('Your article was successfully saved.')
     return redirect(
-        url_for('.detail', article_id=article.id, slug=article.slug))
+        url_for('.article_detail', article_id=article.id, slug=article.slug))
 
 
-@article.route('/<regex("\w{24}"):article_id>/form/')
+@article_bp.route('/<regex("\w{24}"):article_id>/form/')
 @login_required
 @editor_required
-def detail_form(article_id):
+def article_edit_form(article_id):
     try:
         article = Article.objects.get(id=article_id, status='published')
     except (Article.DoesNotExist, mongoengine.errors.ValidationError):
@@ -153,10 +181,10 @@ def detail_form(article_id):
         'articles/edit.html', article=article, authors=authors)
 
 
-@article.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
+@article_bp.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
 @fresh_login_required
 @editor_required
-def delete(article_id):
+def article_delete(article_id):
     try:
         article = Article.objects.get(id=article_id)
     except (Article.DoesNotExist, mongoengine.errors.ValidationError):

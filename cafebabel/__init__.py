@@ -23,7 +23,9 @@ from .api import views  # noqa: F401, F801
 from .core import commands, views  # noqa: F401, F801
 from .users import views  # noqa: F401, F801
 
-app.register_blueprint(articles_views.article, url_prefix='/article')
+app.register_blueprint(articles_views.proposal_bp, url_prefix='/proposal')
+app.register_blueprint(articles_views.draft_bp, url_prefix='/draft')
+app.register_blueprint(articles_views.article_bp, url_prefix='/article')
 
 # Dev specific packages
 try:
