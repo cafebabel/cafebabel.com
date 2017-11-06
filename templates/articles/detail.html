@@ -18,8 +18,8 @@
   <p>
     Published on <time>{{ article.creation_date.date() }}</time>
   </p>
-  {% if current_user.has_role('editor') and article.id %}
-    <a class=button href={{ url_for('article.detail_form', article_id=article.id) }}>Edit this draft</a>
+  {% if current_user.has_role('editor') and article.is_published %}
+    <a class=button href={{ url_for('article.detail_form', article_id=article.id) }}>Edit this article</a>
   {% endif %}
 </article>
 {% endblock %}
