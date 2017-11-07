@@ -1,5 +1,25 @@
+from pathlib import Path
+
 DEBUG = True
 SECRET_KEY = 'TODO'
+
+MONGODB_SETTINGS = {
+    'db': 'cafebabel',
+    'host': '127.0.0.1',
+    'port': 27017,
+    'username': '',
+    'password': '',
+}
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('fr', 'Français'),
+    ('es', 'Español'),
+    ('it', 'Italiano'),
+    ('de', 'Deutch'),
+)
+
+CATEGORIES = ['society', 'lifestyle', 'politics', 'culture']
 
 SECURITY_PASSWORD_SALT = 'and pepper'
 SECURITY_CONFIRMABLE = False
@@ -46,3 +66,6 @@ EDITOR_EMAILS = {
     'es': '@'.join(['redaccion', 'cafebabel.com']),
     'it': '@'.join(['redazione', 'cafebabel.com']),
 }
+ARTICLES_IMAGES_URL = '/static/uploads/articles'
+ARTICLES_IMAGES_PATH = (
+    Path(__file__).parent / 'static' / 'uploads' / 'articles')

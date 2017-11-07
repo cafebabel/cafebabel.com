@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+<article>
+  <h1>{{ article.title }}</h1>
+
+  {% if article.has_image %}
+  <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
+  {% endif %}
+
+  {% if article.summary %}
+  <p>
+    {{ article.summary }}
+  </p>
+  {% endif %}
+
+  {{ article.body|markdown }}
+  <p>
+    Published on <time>{{ article.creation_date.date() }}</time>
+  </p>
+  {% if current_user.has_role('editor') and article.is_published %}
+    <a class=button href={{ url_for('article.article_edit_form', article_id=article.id) }}>Edit this article</a>
+  {% endif %}
+</article>
+{% endblock %}

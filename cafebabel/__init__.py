@@ -14,11 +14,18 @@ if Path.exists(ROOT_PATH / 'settings.local.py'):
 db = MongoEngine(app)
 mail = Mail(app)
 
+from .core.routing import RegexConverter  # noqa: E402
 
-from .articles import views  # noqa: F401, F801
+app.url_map.converters['regex'] = RegexConverter
+
+from .articles import views as articles_views  # noqa: F401, F801
 from .api import views  # noqa: F401, F801
 from .core import commands, views  # noqa: F401, F801
 from .users import views  # noqa: F401, F801
+
+app.register_blueprint(articles_views.proposal_bp, url_prefix='/proposal')
+app.register_blueprint(articles_views.draft_bp, url_prefix='/draft')
+app.register_blueprint(articles_views.article_bp, url_prefix='/article')
 
 # Dev specific packages
 try:

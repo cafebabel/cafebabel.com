@@ -28,7 +28,8 @@ class User(db.Document, UserMixin):
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     active = db.BooleanField(default=True)
     confirmed_at = db.DateTimeField()
-    roles = db.ListField(db.ReferenceField(Role), default=[])
+    roles = db.ListField(db.ReferenceField(Role, reverse_delete_rule=db.PULL),
+                         default=[])
     profile = db.EmbeddedDocumentField(UserProfile)
 
     def __str__(self):
