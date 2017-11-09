@@ -3,6 +3,7 @@ import unicodedata
 from functools import wraps
 from http import HTTPStatus
 from math import ceil
+from urllib.parse import quote_plus
 
 from jinja2.filters import do_wordcount
 
@@ -30,6 +31,9 @@ def markdown(value):
 def reading_time(text):
     words = do_wordcount(text)
     return ceil(words / 250)
+
+
+app.add_template_filter(quote_plus, 'quote_plus')
 
 
 @app.context_processor

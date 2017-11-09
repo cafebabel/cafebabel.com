@@ -2,6 +2,7 @@ from http import HTTPStatus
 from pathlib import Path
 from io import BytesIO
 
+from flask import request
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
@@ -31,6 +32,21 @@ def test_create_draft_should_generate_article(client, editor):
     }, follow_redirects=True)
     assert response.status_code == 200
     body = response.get_data(as_text=True)
+    assert '<h1>Test article</h1>' in body
+    assert '<p>Article body</p>' in body
+
+
+def test_create_published_draft_should_display_article(client, editor):
+    login(client, editor.email, 'secret')
+    response = client.post('/draft/', data={
+        'title': 'Test article',
+        'language': 'en',
+        'body': 'Article body',
+        'status': 'published',
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    body = response.get_data(as_text=True)
+    assert request.url_rule.endpoint == 'article.article_detail'
     assert '<h1>Test article</h1>' in body
     assert '<p>Article body</p>' in body
 
@@ -108,10 +124,10 @@ def test_access_article_with_large_slug_should_return_200(client, article):
     assert response.status_code == HTTPStatus.OK
 
 
-def test_published_article_should_display_content(client, user):
-    article = Article.objects.create(title='My title', summary='Sum this',
-                                     body='Read me', status='published',
-                                     language='en', author=user)
+def test_published_article_should_display_content(client, article, user):
+    article.status = 'published'
+    article.author = user
+    article.save()
     response = client.get(f'/article/{article.slug}-{article.id}/')
     assert response.status_code == 200
     content = response.get_data(as_text=True)
@@ -123,11 +139,12 @@ def test_published_article_should_display_content(client, user):
     assert f'<time>{article.creation_date.date()}</time>' in content
     assert f'<span>{article.language}</span>' in content
     assert f'{article.author.profile.name}' in content
-    assert (f'href="https://twitter.com/share?url=http://localhost/article/'
-            f'{article.slug}-{article.id}/&text={article.title}&via=cafebabel"'
+    assert (f'href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
+            f'article%2F{article.slug}-{article.id}%2F&text={article.title}'
+            f'&via=cafebabel"' in content)
+    assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
+            f'localhost%2Farticle%2F{article.slug}-{article.id}%2F"'
             in content)
-    assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http://'
-            f'localhost/article/{article.slug}-{article.id}/"' in content)
     assert '1 min' in content
 
 

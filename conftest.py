@@ -49,5 +49,6 @@ def admin():
 def article():
     return Article.objects.create(
         title='title',
+        summary='summary text',
         language=myapp.config['LANGUAGES'][0][0],
-        body='body')
+        body='body text')
