@@ -55,9 +55,3 @@ def editor_required(func):
                   'An editor is required to perform this action.')
         return func(*args, **kwargs)
     return decorated_view
-
-
-@app.template_filter()
-def reading_time(text):
-    words = do_wordcount(text)
-    return ceil(words / 250)
