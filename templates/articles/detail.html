@@ -7,7 +7,9 @@
 <article lang={{ article.language }}>
   <h1>{{ article.title }}</h1>
 
-  <p>Artile in <span>{{ article.language }}</span></p>
+  <p class=reading-time>Reading time: {{ article.body|reading_time }} min.</p>
+
+  <p>Article in <span>{{ article.language }}</span></p>
 
   {% if article.has_image %}
   <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">

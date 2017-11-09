@@ -2,6 +2,9 @@ import re
 import unicodedata
 from functools import wraps
 from http import HTTPStatus
+from math import ceil
+
+from jinja2.filters import do_wordcount
 
 import markdown as markdownlib
 from flask import Markup, abort
@@ -21,6 +24,12 @@ def slugify(value):
 @app.template_filter()
 def markdown(value):
     return Markup(markdownlib.markdown(value))
+
+
+@app.template_filter()
+def reading_time(text):
+    words = do_wordcount(text)
+    return ceil(words / 250)
 
 
 @app.context_processor
@@ -46,3 +55,9 @@ def editor_required(func):
                   'An editor is required to perform this action.')
         return func(*args, **kwargs)
     return decorated_view
+
+
+@app.template_filter()
+def reading_time(text):
+    words = do_wordcount(text)
+    return ceil(words / 250)

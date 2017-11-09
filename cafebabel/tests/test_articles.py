@@ -128,6 +128,7 @@ def test_published_article_should_display_content(client, user):
             in content)
     assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http://'
             f'localhost/article/{article.slug}-{article.id}/"' in content)
+    assert '1 min' in content
 
 
 def test_published_article_should_render_markdown(client):
