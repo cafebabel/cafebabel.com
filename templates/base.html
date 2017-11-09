@@ -1,6 +1,7 @@
 <!doctype html>
 <meta charset=utf-8>
-<title>Cafebabel</title>
+<title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
+<meta name=description content="{% block meta_description %}{% endblock %}">
 
 <link rel=stylesheet href=https://rawgit.com/cafebabel/styleguide/master/styleguide.css>
 <link rel=stylesheet href=/static/css/edit.css>
@@ -40,11 +41,11 @@
 </nav>
 
 {% include "security/_messages.html" %}
-    
+
 <main>
 {% block body %}{% endblock %}
 </main>
-    
 
-  
+
+
 <script src=https://rawgit.com/cafebabel/styleguide/master/script.js></script>
