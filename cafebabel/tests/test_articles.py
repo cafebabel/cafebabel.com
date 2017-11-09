@@ -108,12 +108,21 @@ def test_access_article_with_large_slug_should_return_200(client, article):
     assert response.status_code == HTTPStatus.OK
 
 
-def test_published_article_should_display_content(client):
-    article = Article.objects.create(title='My title', body='Read me',
-                                     status='published', language='en')
+def test_published_article_should_display_content(client, user):
+    article = Article.objects.create(title='My title', summary='Sum this',
+                                     body='Read me', status='published',
+                                     language='en', author=user)
     response = client.get(f'/article/{article.slug}-{article.id}/')
     assert response.status_code == 200
-    assert f'<h1>{article.title}</h1>' in response.get_data(as_text=True)
+    content = response.get_data(as_text=True)
+    assert f'<h1>{article.title}</h1>' in content
+    assert f'<title>{article.title}' in content
+    assert f'<meta name=description content="{article.summary}"' in content
+    assert f'<p class=summary>{article.summary}</p>' in content
+    assert f'<p>{article.body}</p>' in content
+    assert f'<time>{article.creation_date.date()}</time>' in content
+    assert f'<span>{article.language}</span>' in content
+    assert f'{article.author.profile.name}' in content
 
 
 def test_published_article_should_render_markdown(client):
