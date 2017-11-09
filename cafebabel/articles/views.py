@@ -86,7 +86,7 @@ def draft_create():
         return redirect(url_for('draft.draft_detail', draft_id=article.id))
     else:
         return redirect(url_for('article.article_detail', slug=article.slug,
-                                id=article.id))
+                                article_id=article.id))
 
 
 @draft_bp.route('/<regex("\w{24}"):draft_id>/edit/')

@@ -123,6 +123,11 @@ def test_published_article_should_display_content(client, user):
     assert f'<time>{article.creation_date.date()}</time>' in content
     assert f'<span>{article.language}</span>' in content
     assert f'{article.author.profile.name}' in content
+    assert (f'href="https://twitter.com/share?url=http://localhost/article/'
+            f'{article.slug}-{article.id}/&text={article.title}&via=cafebabel"'
+            in content)
+    assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http://'
+            f'localhost/article/{article.slug}-{article.id}/"' in content)
 
 
 def test_published_article_should_render_markdown(client):

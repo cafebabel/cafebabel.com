@@ -10,7 +10,7 @@
   <section>
     <ul>
       <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
-      <li>Website: <span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website }}" target=_blank>{{ user.profile.website }}</a></span></li>
+      <li>Website: <span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
     </ul>
 
     <h2>About</h2>

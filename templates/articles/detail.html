@@ -22,6 +22,10 @@
   <p>
     Published on <time>{{ article.creation_date.date() }}</time> by {{ article.author }}
   </p>
+  <nav class=share>
+    <a href="https://twitter.com/share?url={{ request.url }}&text={{ article.title }}&via=cafebabel">Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}">Facebook</a>
+  </nav>
   {% if current_user.has_role('editor') and article.is_published %}
     <a class=button href={{ url_for('article.article_edit_form', article_id=article.id) }}>Edit this article</a>
   {% endif %}
