@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% block body_class %}profile{% endblock %}
 {% if user.profile %}
 <h1>{{ user }}'s profile</h1>
 {% else %}
@@ -8,12 +9,12 @@
 {% endif %}
 
   <section>
+    <h2>About</h2>
+    <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder" class=profile-pic> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
     <ul>
       <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
       <li>Website: <span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
     </ul>
-
-    <h2>About</h2>
     <p>
       <span data-edit-name=about data-edit-type=textarea>{{ user.profile.about or '' }}</span>
     </p>

@@ -1,0 +1,28 @@
+/* Profile page */
+
+.profile main {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: 50% 50%;
+    grid-template-areas:    'title title'
+                            'content sidebar';
+    margin-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
+}
+.profile main section {
+    padding: 1.5rem;
+}
+
+.profile main section:first-of-type {
+    grid-area: content;
+}
+
+.profile main section:nth-of-type(2) {
+    grid-area: sidebar;
+}
+
+.profile h1 {
+    border: 0.3rem solid #00283C;
+    padding: 5rem;
+    text-align: center;
+    grid-area: title;
+}
