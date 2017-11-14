@@ -35,10 +35,10 @@
 
 {% if edit %}
   {% if user.has_role('editor') %}
-    <div class=checkbox>
-      <label for=editor>Editor role</label>
-      <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor', False) %}checked{% endif %}>
-    </div>
+  <div class=checkbox>
+    <label for=editor>Editor role</label>
+    <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor', False) %}checked{% endif %}>
+  </div>
   {% endif %}
   <form class=user-save data-method=put action={{ url_for('api_user_put') }}>
     <button type=submit>Save my profile</button>
