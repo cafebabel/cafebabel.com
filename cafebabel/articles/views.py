@@ -1,8 +1,6 @@
 from http import HTTPStatus
 
-import mongoengine
-from flask import (Blueprint, abort, flash, redirect, render_template, request,
-                   url_for)
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, fresh_login_required, login_required
 from flask_mail import Message
 
@@ -10,13 +8,11 @@ from .. import app, mail
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
+from ..translations.models import Translation
 
-proposal_bp = Blueprint(
-    'proposal', __name__, template_folder='templates/articles')
-draft_bp = Blueprint(
-    'draft', __name__, template_folder='templates/articles')
-article_bp = Blueprint(
-    'article', __name__, template_folder='templates/articles')
+proposal_bp = Blueprint('proposal', __name__)
+draft_bp = Blueprint('draft', __name__)
+article_bp = Blueprint('article', __name__)
 
 
 def _save_article(data, article):
@@ -91,22 +87,15 @@ def draft_create():
 
 @draft_bp.route('/<regex("\w{24}"):draft_id>/edit/')
 def draft_edit_form(draft_id):
-    try:
-        article = Article.objects.get(id=draft_id)
-    except Article.DoesNotExist:
-        abort(404, 'No draft found with this id.')
+    article = Article.objects.get_or_404(id=draft_id)
     authors = User.objects.all()
     return render_template('articles/edit.html', article=article,
                            authors=authors)
 
 
-@draft_bp.route('/<regex("\w{24}"):draft_id>/edit/',
-                methods=['post'])
-def draft_edit(draft_id=None):
-    try:
-        article = Article.objects.get(id=draft_id)
-    except Article.DoesNotExist:
-        abort(404, 'No draft found with this id.')
+@draft_bp.route('/<regex("\w{24}"):draft_id>/edit/', methods=['post'])
+def draft_edit(draft_id):
+    article = Article.objects.get_or_404(id=draft_id)
     article = _save_article(request.form.to_dict(), article)
     flash('Your article was successfully saved.')
     if article.is_draft:
@@ -118,36 +107,42 @@ def draft_edit(draft_id=None):
 
 @draft_bp.route('/<regex("\w{24}"):draft_id>/')
 def draft_detail(draft_id):
-    try:
-        article = Article.objects.get(id=draft_id, status='draft')
-    except Article.DoesNotExist:
-        abort(404, 'No draft found with this id.')
+    article = Article.objects.get_or_404(id=draft_id, status='draft')
     return render_template('articles/draft_detail.html', article=article)
 
 
 # Only route with the slug for SEO purpose.
 @article_bp.route('/<slug>-<regex("\w{24}"):article_id>/')
 def article_detail(slug, article_id):
-    try:
-        article = Article.objects.get(id=article_id, status='published')
-    except Article.DoesNotExist:
-        abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
+    article = Article.objects.get_or_404(id=article_id, status='published')
     if article.slug != slug:
         return redirect(
             url_for('.article_detail', article_id=article.id,
                     slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
-    return render_template('articles/detail.html', article=article)
+    if article.is_translation:
+        translations = Translation.objects(
+            translated_from=article.translated_from.id)
+    else:
+        translations = Translation.objects(translated_from=article.id)
+    translations_langs = [translation.language for translation in translations]
+    translations_drafts = [translation for translation in translations
+                           if translation.is_draft]
+    translations_publisheds = [translation for translation in translations
+                               if translation.is_published and
+                               translation.id != article.id]
+    return render_template('articles/detail.html', article=article,
+                           translations=translations,
+                           translations_langs=translations_langs,
+                           translations_drafts=translations_drafts,
+                           translations_publisheds=translations_publisheds)
 
 
 @article_bp.route('/<regex("\w{24}"):article_id>/', methods=['post'])
 @login_required
 @editor_required
 def article_edit(article_id):
-    try:
-        article = Article.objects.get(id=article_id, status='published')
-    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
-        abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
+    article = Article.objects.get_or_404(id=article_id, status='published')
     article = _save_article(request.form.to_dict(), article)
     flash('Your article was successfully saved.')
     return redirect(
@@ -158,10 +153,7 @@ def article_edit(article_id):
 @login_required
 @editor_required
 def article_edit_form(article_id):
-    try:
-        article = Article.objects.get(id=article_id, status='published')
-    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
-        abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
+    article = Article.objects.get_or_404(id=article_id, status='published')
     authors = User.objects.all()
     return render_template(
         'articles/edit.html', article=article, authors=authors)
@@ -171,10 +163,7 @@ def article_edit_form(article_id):
 @fresh_login_required
 @editor_required
 def article_delete(article_id):
-    try:
-        article = Article.objects.get(id=article_id)
-    except (Article.DoesNotExist, mongoengine.errors.ValidationError):
-        abort(HTTPStatus.NOT_FOUND, 'No article found with this id.')
+    article = Article.objects.get_or_404(id=article_id)
     article.delete()
     flash('Article was deleted.', 'success')
     return redirect(url_for('home'))

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>Creating a translation in {{ language }} for article “{{ article.title }}”</h1>
+
+<form method=post action=>
+  <div class=text>
+    <label for=title>Title</label>
+    <input id=title name=title required>
+  </div>
+  <div class=textarea>
+    <label for=summary>Summary</label>
+    <textarea id=summary name=summary required></textarea>
+  </div>
+  <div class=textarea>
+    <label for=body>Body</label>
+    <textarea id=body name=body required></textarea>
+  </div>
+  <input type=submit value="Create">
+</form>
+{% endblock %}

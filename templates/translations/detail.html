@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{{ translation.title }}{% endblock %}
+{% block meta_description %}{{ translation.summary }}{% endblock %}
+
+{% block body %}
+<article>
+  <h1>{{ translation.title }}</h1>
+
+  <p class=reading-time>Reading time: {{ translation.body|reading_time }} min.</p>
+
+  <p>Article in <span>{{ translation.language }}</span></p>
+
+  {% if translation.has_image %}
+    <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
+  {% endif %}
+
+  <p class=summary>{{ translation.summary }}</p>
+
+  {{ translation.body|markdown }}
+
+  <p>
+    Created on <time>{{ translation.translated_from.creation_date.date() }}</time> by {{ translation.author }}
+    {% if translation.category %}
+      in category {{ translation.category }}
+    {% endif %}
+  </p>
+
+  <p>
+    Translated from <a href="{{ translation.translated_from.detail_url }}">{{ translation.translated_from.title }}</a> by {{ translation.translator }}.
+  </p>
+
+  {% if current_user.has_role('editor') or translation.translator == current_user %}
+    <p>
+      <a class=button href={{ url_for('translation.translation_edit', id=translation.id) }}>Edit this translation</a>
+    </p>
+  {% endif %}
+</article>
+{% endblock %}

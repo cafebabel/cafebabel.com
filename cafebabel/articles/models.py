@@ -1,10 +1,21 @@
 import datetime
+from http import HTTPStatus
 
-from mongoengine import signals
+from flask import abort, url_for
+from mongoengine import errors, queryset, signals
 
 from .. import app, db
 from ..core.helpers import slugify
 from ..users.models import User
+
+
+class ArticleQuerySet(queryset.QuerySet):
+
+    def get_or_404(self, id, **extras):
+        try:
+            return self.get(id=id, **extras)
+        except (Article.DoesNotExist, errors.ValidationError):
+            abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
 
 
 class Article(db.Document):
@@ -12,7 +23,7 @@ class Article(db.Document):
     slug = db.StringField(required=True)
     language = db.StringField(max_length=2, required=True)
     category = db.StringField()
-    summary = db.StringField()
+    summary = db.StringField(required=True)
     body = db.StringField(required=True)
     has_image = db.BooleanField(default=False)
     status = db.StringField(default='draft')
@@ -22,8 +33,22 @@ class Article(db.Document):
     publication_date = db.DateTimeField()
     _upload_image = None
 
+    meta = {
+        'allow_inheritance': True,
+        'queryset_class': ArticleQuerySet
+    }
+
     def __str__(self):
         return self.title
+
+    @property
+    def detail_url(self):
+        if self.is_draft:
+            return url_for('draft.draft_detail', draft_id=self.id)
+        else:
+            return url_for('article.article_detail',
+                           slug=self.slug,
+                           article_id=self.id)
 
     @property
     def is_draft(self):
@@ -32,6 +57,10 @@ class Article(db.Document):
     @property
     def is_published(self):
         return self.status == 'published'
+
+    @property
+    def is_translation(self):
+        return False
 
     @property
     def image_url(self):

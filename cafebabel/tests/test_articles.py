@@ -2,7 +2,7 @@ from http import HTTPStatus
 from pathlib import Path
 from io import BytesIO
 
-from flask import request
+from flask import request, url_for
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
@@ -27,8 +27,9 @@ def test_create_draft_should_generate_article(client, editor):
     login(client, editor.email, 'secret')
     response = client.post('/draft/', data={
         'title': 'Test article',
-        'language': 'en',
+        'summary': 'Summary',
         'body': 'Article body',
+        'language': 'en',
     }, follow_redirects=True)
     assert response.status_code == 200
     body = response.get_data(as_text=True)
@@ -40,8 +41,9 @@ def test_create_published_draft_should_display_article(client, editor):
     login(client, editor.email, 'secret')
     response = client.post('/draft/', data={
         'title': 'Test article',
-        'language': 'en',
+        'summary': 'Summary',
         'body': 'Article body',
+        'language': 'en',
         'status': 'published',
     }, follow_redirects=True)
     assert response.status_code == 200
@@ -53,7 +55,12 @@ def test_create_published_draft_should_display_article(client, editor):
 
 def test_draft_editing_should_update_content(client, editor):
     login(client, editor.email, 'secret')
-    data = {'title': 'My article', 'language': 'en', 'body': 'Article body'}
+    data = {
+        'title': 'My article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+    }
     draft = Article.objects.create(**data)
     updated_data = data.copy()
     updated_data['language'] = 'fr'
@@ -72,8 +79,9 @@ def test_draft_image_should_save_and_render(client, editor):
         image = BytesIO(content.read())
     data = {
         'title': 'My article',
-        'language': 'en',
+        'summary': 'Summary',
         'body': 'Article body',
+        'language': 'en',
         'image': (image, 'image-name.jpg'),
     }
     response = client.post('/draft/', data=data,
@@ -88,9 +96,9 @@ def test_draft_image_should_save_and_render(client, editor):
 
 
 def test_visitor_cannot_change_editor_nor_author(client, editor, user):
-    draft = Article.objects.create(title='My draft', body='Content',
-                                   language='en', status='draft',
-                                   author=user, editor=editor)
+    draft = Article.objects.create(title='My draft', summary='Summary',
+                                   body='Content', language='en',
+                                   status='draft', author=user, editor=editor)
     client.post(f'/draft/{draft.id}/edit/', data={
         'title': 'Updated draft',
         'author': editor,
@@ -150,6 +158,7 @@ def test_published_article_should_display_content(client, article, user):
 
 def test_published_article_should_render_markdown(client):
     article = Article.objects.create(title='My title',
+                                     summary='Summary',
                                      body='## Body title\n> quote me',
                                      status='published', language='en')
     response = client.get(f'/article/{article.slug}-{article.id}/')
@@ -310,3 +319,19 @@ def test_delete_inexistent_article_should_return_404(client, editor, article):
     login(client, editor.email, 'secret')
     response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_access_published_article_should_link_translations(client, article,
+                                                           translation):
+    article.status = 'published'
+    article.save()
+    translation.status = 'published'
+    translation.save()
+    response = client.get(f'/article/{article.slug}-{article.id}/')
+    text = response.get_data(as_text=True)
+    assert response.status_code == HTTPStatus.OK
+    assert '<p>Translate this article in:</p>' in text
+    assert ((f'<li><a href={url_for("translation.translation_create")}'
+             f'?lang=it&from={article.id}>Italiano</a></li>') in text)
+    assert ((f'<li><a href={url_for("translation.translation_create")}'
+             f'?lang=fr&from={article.id}>Français</a></li>') not in text)
