@@ -11,7 +11,15 @@
   <section>
     <h2>About</h2>
     <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder" class=profile-pic> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
-    <ul>
+      <ul>
+          <li class=icon-twitter>Twitter: <span data-edit-name=socials-twitter>{{ user.profile.socials.twitter }}</span></li>
+          <li class=icon-facebook>Facebook: <span data-edit-name=socials-facebook>{{ user.profile.socials.facebook }}</span></li>
+          <li class=icon-medium>Medium: <span data-edit-name=socials-medium>{{ user.profile.socials.medium }}</span></li>
+          <li class=icon-flickr2>Flickr: <span data-edit-name=socials-flickr>{{ user.profile.socials.flickr }}</span></li>
+          <li class=icon-pinterest2>Pinterest: <span data-edit-name=socials-pinterest>{{ user.profile.socials.pinterest }}</span></li>
+          <li class=icon-instagram>Instagram<span data-edit-name=socials-instagram>{{ user.profile.socials.instagram }}</span></li>
+      </ul>
+      <ul>
       <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
       <li>Website: <span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
     </ul>
@@ -19,15 +27,6 @@
       <span data-edit-name=about data-edit-type=textarea>{{ user.profile.about or '' }}</span>
     </p>
 
-    <h2>Social accounts</h2>
-    <ul>
-      <li>Twitter: <span data-edit-name=socials-twitter>{{ user.profile.socials.twitter }}</span></li>
-      <li>Facebook: <span data-edit-name=socials-facebook>{{ user.profile.socials.facebook }}</span></li>
-      <li>Medium: <span data-edit-name=socials-medium>{{ user.profile.socials.medium }}</span></li>
-      <li>Flickr: <span data-edit-name=socials-flickr>{{ user.profile.socials.flickr }}</span></li>
-      <li>Pinterest: <span data-edit-name=socials-pinterest>{{ user.profile.socials.pinterest }}</span></li>
-      <li>Instagram<span data-edit-name=socials-instagram>{{ user.profile.socials.instagram }}</span></li>
-    </ul>
 
 
 {% if edit %}

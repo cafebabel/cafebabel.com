@@ -8,6 +8,13 @@
                             'content sidebar';
     margin-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
 }
+
+.profile h1 {
+    border: 0.3rem solid #00283C;
+    padding: 5rem;
+    text-align: center;
+    grid-area: title;
+}
 .profile main section {
     padding: 1.5rem;
 }
@@ -20,9 +27,30 @@
     grid-area: sidebar;
 }
 
-.profile h1 {
-    border: 0.3rem solid #00283C;
-    padding: 5rem;
+.profile main section h2{
     text-align: center;
-    grid-area: title;
+}
+
+img.profile-pic {
+    display: block;
+    border-radius: 50%;
+    max-width: 20rem;
+    margin: 0.2rem auto;
+}
+.profile ul:first-of-type {
+    width: 24rem;
+    margin: 1rem auto;
+}
+.profile [class^="icon-"],
+.profile [class*=" icon-"] {
+    text-indent: -9999rem;
+    display: inline-block;
+    width: 3.5rem;
+    font-size: 3rem;
+}
+
+.profile [class^="icon-"]:before,
+.profile [class*=" icon-"]:before {
+    position: absolute;
+    text-indent: 9999rem;
 }
