@@ -87,6 +87,20 @@ def test_draft_image_should_save_and_render(client, editor):
     assert f'<img src="{article.image_url}"' in response.get_data(as_text=True)
 
 
+def test_draft_should_not_offer_social_sharing(client, article):
+    response = client.get(f'/draft/{article.id}/')
+    assert response.status_code == 200
+    assert 'facebook.com/sharer' not in response.get_data(as_text=True)
+
+
+def test_published_article_should_offer_social_sharing(client, article):
+    article.status = 'published'
+    article.save()
+    response = client.get(f'/article/{article.slug}-{article.id}/')
+    assert response.status_code == 200
+    assert 'facebook.com/sharer' in response.get_data(as_text=True)
+
+
 def test_visitor_cannot_change_editor_nor_author(client, editor, user):
     draft = Article.objects.create(title='My draft', body='Content',
                                    language='en', status='draft',
@@ -141,7 +155,7 @@ def test_published_article_should_display_content(client, article, user):
     assert f'{article.author.profile.name}' in content
     assert (f'href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
             f'article%2F{article.slug}-{article.id}%2F&text={article.title}'
-            f'&via=cafebabel"' in content)
+            f'&via=cafebabel_eng"' in content)
     assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
             f'localhost%2Farticle%2F{article.slug}-{article.id}%2F"'
             in content)
