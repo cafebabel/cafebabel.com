@@ -1,63 +1,86 @@
 /* Profile page */
 
-.profile main {
+.profile-page main {
     display: block;
+    max-width: 120rem;
+    margin: 0 auto;
 }
 
-.profile h1 {
+.profile-page h1 {
     border: 0.3rem solid #00283C;
     padding: 5rem;
     text-align: center;
     grid-area: title;
 }
 
-.profile main section {
+.profile-page main section {
     padding: 1.5rem;
 }
 
-.profile main section h2{
+.profile-page main section h2 {
     text-align: center;
 }
 
-img.profile-pic {
+.profile-page main section:first-of-type img {
     display: block;
     border-radius: 50%;
     max-width: 20rem;
     margin: 0.2rem auto;
 }
-.profile ul:first-of-type {
+.profile-page ul:first-of-type {
     width: 24rem;
     margin: 5rem auto;
 }
-.profile [class^="icon-"],
-.profile [class*=" icon-"] {
+.profile-page [class^="icon-"],
+.profile-page [class*=" icon-"] {
     text-indent: -9999rem;
     display: inline-block;
     width: 3.5rem;
     font-size: 3rem;
 }
+.profile-page [class^="icon-"] a,
+.profile-page [class*=" icon-"] a {
+    transform: translateY(0);
+    transition: all 0.3s;
+}
 
-.profile [class^="icon-"]:before,
-.profile [class*=" icon-"]:before {
+.profile-page [class^="icon-"]:before,
+.profile-page [class*=" icon-"]:before {
     position: absolute;
     text-indent: 9999rem;
 }
 
+.profile-page button {
+    width: 100%;
+}
+
 @media screen and (min-width: 750px) {
-    .profile main {
+    .profile-page main {
         display: grid;
         grid-gap: 2rem;
         grid-template-columns: 50% 50%;
         grid-template-areas:    'title title'
                                 'content sidebar';
-        margin-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
+        padding-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin - maybe ask Éric*/
     }
 
-    .profile main section:first-of-type {
+    .profile-page [class^="icon-"] a:hover,
+    .profile-page [class*=" icon-"] a:hover {
+        transform: translateY(-0.2rem);
+    }
+
+    .profile-page main section:first-of-type {
         grid-area: content;
     }
 
-    .profile main section:nth-of-type(2) {
+    .profile-page main section:nth-of-type(2) {
         grid-area: sidebar;
+    }
+    .profile-page ul:nth-of-type(2) {
+        max-width: 70%;
+        margin: auto;
+    }
+    .profile-page .checkbox {
+        transform: translateX(50%);
     }
 }

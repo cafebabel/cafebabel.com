@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
+{% block body_class %}profile-page{% endblock %}
 {% block body %}
-{% block body_class %}profile{% endblock %}
 {% if user.profile %}
 <h1>{{ user }}'s profile</h1>
 {% else %}
@@ -10,7 +10,7 @@
 
   <section>
     <h2>About</h2>
-    <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder" class=profile-pic> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
+    <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder"> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
       <ul>
           <li class=icon-twitter>Twitter<a data-edit-name=socials-twitter href="{{ user.profile.socials.twitter }}"></a></li>
           <li class=icon-facebook>Facebook<a data-edit-name=socials-facebook href="{{ user.profile.socials.facebook }}"></a></li>
@@ -51,6 +51,16 @@
   </section>
   <section>
     <h2>Contributions</h2>
+    <article>
+        <img src="http://m.cafebabel.com/cache/27/f3/27f3816aed817cb844a51012de66c8fa.jpg?cache=1280x500" alt="Lisbon digital nomad cover">
+        <time>11th Octobre 2017</time>
+        <h3>Lisbon: Nomad's land</h3>
+    </article>
+    <article>
+        <img src="http://m.cafebabel.com/cache/27/f3/27f3816aed817cb844a51012de66c8fa.jpg?cache=1280x500" alt="Lisbon digital nomad cover">
+        <time>11th Octobre 2017</time>
+        <h3>Lisbon: Nomad's land</h3>
+    </article>
   </section>
 
     <script>
