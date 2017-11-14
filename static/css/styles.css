@@ -39,7 +39,7 @@ img.profile-pic {
 }
 .profile ul:first-of-type {
     width: 24rem;
-    margin: 1rem auto;
+    margin: 5rem auto;
 }
 .profile [class^="icon-"],
 .profile [class*=" icon-"] {
