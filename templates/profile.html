@@ -20,12 +20,16 @@
           <li class=icon-pinterest2>Pinterest<a data-edit-name=socials-pinterest href="{{ user.profile.socials.pinterest }}"></a></li>
       </ul>
       <ul>
-      <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
-      <li>Website: <span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
+      <li><h3>Full name:</h3><span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
+      <li><h3>Website:</h3><span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
+      <li>
+        <h3>Bio:</h3>
+            <p>
+                <span data-edit-name=about data-edit-type=textarea>{{ user.profile.about or '' }}</span>
+            </p>
+      </li>
     </ul>
-    <p>
-      <span data-edit-name=about data-edit-type=textarea>{{ user.profile.about or '' }}</span>
-    </p>
+
 
 
 

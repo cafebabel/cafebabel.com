@@ -1,12 +1,7 @@
 /* Profile page */
 
 .profile main {
-    display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: 50% 50%;
-    grid-template-areas:    'title title'
-                            'content sidebar';
-    margin-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
+    display: block;
 }
 
 .profile h1 {
@@ -15,16 +10,9 @@
     text-align: center;
     grid-area: title;
 }
+
 .profile main section {
     padding: 1.5rem;
-}
-
-.profile main section:first-of-type {
-    grid-area: content;
-}
-
-.profile main section:nth-of-type(2) {
-    grid-area: sidebar;
 }
 
 .profile main section h2{
@@ -53,4 +41,23 @@ img.profile-pic {
 .profile [class*=" icon-"]:before {
     position: absolute;
     text-indent: 9999rem;
+}
+
+@media screen and (min-width: 750px) {
+    .profile main {
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:    'title title'
+                                'content sidebar';
+        margin-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
+    }
+
+    .profile main section:first-of-type {
+        grid-area: content;
+    }
+
+    .profile main section:nth-of-type(2) {
+        grid-area: sidebar;
+    }
 }
