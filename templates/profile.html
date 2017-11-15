@@ -12,12 +12,12 @@
     <h2>About</h2>
     <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder"> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
       <ul>
-          <li class=icon-twitter>Twitter<a data-edit-name=socials-twitter href="{{ user.profile.socials.twitter }}"></a></li>
-          <li class=icon-facebook>Facebook<a data-edit-name=socials-facebook href="{{ user.profile.socials.facebook }}"></a></li>
-          <li class=icon-instagram>Instagram<a data-edit-name=socials-instagram href="{{ user.profile.socials.instagram }}"></a></li>
-          <li class=icon-medium>Medium<a data-edit-name=socials-medium href="{{ user.profile.socials.medium }}"></a></li>
-          <li class=icon-flickr2>Flickr<a data-edit-name=socials-flickr href="{{ user.profile.socials.flickr }}"></a></li>
-          <li class=icon-pinterest2>Pinterest<a data-edit-name=socials-pinterest href="{{ user.profile.socials.pinterest }}"></a></li>
+          <li><a data-edit-name=socials-twitter href="{{ user.profile.socials.twitter }}" class=icon-twitter></a></li>
+          <li><a data-edit-name=socials-facebook href="{{ user.profile.socials.facebook }}" class=icon-facebook></a></li>
+          <li><a data-edit-name=socials-instagram href="{{ user.profile.socials.instagram }}" class=icon-instagram></a></li>
+          <li><a data-edit-name=socials-medium href="{{ user.profile.socials.medium }}" class=icon-medium></a></li>
+          <li><a data-edit-name=socials-flickr href="{{ user.profile.socials.flickr }}" class=icon-flickr2></a></li>
+          <li><a data-edit-name=socials-pinterest href="{{ user.profile.socials.pinterest }}" class=icon-pinterest2></a></li>
       </ul>
       <ul>
       <li><h3>Full name:</h3><span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
