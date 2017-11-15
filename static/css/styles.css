@@ -43,43 +43,43 @@ summary {
 
 @font-face {
     font-family: 'vremena_grotesk';
-    src: url('/static/fonts/vremenagroteskbook-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagroteskbook-webfont.woff') format('woff');
+    src: url('../fonts/vremenagroteskbook-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskbook-webfont.woff') format('woff');
     font-weight: 100;
     font-style: normal;
 }
 @font-face {
     font-family: 'vremena_grotesk';
-    src: url('/static/fonts/vremenagroteskbookitalic-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagroteskbookitalic-webfont.woff') format('woff');
+    src: url('../fonts/vremenagroteskbookitalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskbookitalic-webfont.woff') format('woff');
     font-weight: 100;
     font-style: italic;
 }
 @font-face {
     font-family: 'vremena_grotesk';
-    src: url('/static/fonts/vremenagrotesk-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagrotesk-webfont.woff') format('woff');
+    src: url('../fonts/vremenagrotesk-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagrotesk-webfont.woff') format('woff');
     font-weight: 200;
     font-style: normal;
 }
 @font-face {
     font-family: 'vremena_grotesk';
-    src: url('/static/fonts/vremenagroteskitalic-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagroteskitalic-webfont.woff') format('woff');
+    src: url('../fonts/vremenagroteskitalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskitalic-webfont.woff') format('woff');
     font-weight: 200;
     font-style: italic;
 }
 @font-face {
     font-family: 'vremena_grotesk';
-    src: url('/static/fonts/vremenagroteskmedium-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagroteskmedium-webfont.woff') format('woff');
+    src: url('../fonts/vremenagroteskmedium-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskmedium-webfont.woff') format('woff');
     font-weight: 400;
     font-style: normal;
 }
 @font-face {
     font-family: 'vremena_grotesk';
-    src: url('/static/fonts/vremenagroteskmediumitalic-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagroteskmediumitalic-webfont.woff') format('woff');
+    src: url('../fonts/vremenagroteskmediumitalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskmediumitalic-webfont.woff') format('woff');
     font-weight: 400;
     font-style: italic;
 }
@@ -92,8 +92,8 @@ summary {
 }
 @font-face {
     font-family: 'vremena_grotesk';
-    src: url('/static/fonts/vremenagroteskbolditalic-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagroteskbolditalic-webfont.woff') format('woff');
+    src: url('../fonts/vremenagroteskbolditalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskbolditalic-webfont.woff') format('woff');
     font-weight: 800;
     font-style: italic;
 }
@@ -102,15 +102,15 @@ summary {
 
 @font-face {
     font-family: 'sporting_grotesque';
-    src: url('/static/fonts/sporting_grotesque_normal-webfont.woff2') format('woff2'),
-    url('/static/fonts/sporting_grotesque_normal-webfont.woff') format('woff');
+    src: url('../fonts/sporting_grotesque_normal-webfont.woff2') format('woff2'),
+    url('../fonts/sporting_grotesque_normal-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'sporting_grotesque';
-    src: url('/static/fonts/sporting_grotesque_gras-webfont.woff2') format('woff2'),
-    url('/static/fonts/sporting_grotesque_gras-webfont.woff') format('woff');
+    src: url('../fonts/sporting_grotesque_gras-webfont.woff2') format('woff2'),
+    url('../fonts/sporting_grotesque_gras-webfont.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
@@ -119,11 +119,11 @@ summary {
 
 @font-face {
     font-family: 'icomoon';
-    src:  url('/static/fonts/icomoon.eot?8rv96k');
-    src:  url('/static/fonts/icomoon.eot?8rv96k#iefix') format('embedded-opentype'),
-    url('/static/fonts/icomoon.ttf?8rv96k') format('truetype'),
-    url('/static/fonts/icomoon.woff?8rv96k') format('woff'),
-    url('/static/fonts/icomoon.svg?8rv96k#icomoon') format('svg');
+    src:  url('../fonts/icomoon.eot?8rv96k');
+    src:  url('../fonts/icomoon.eot?8rv96k#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?8rv96k') format('truetype'),
+    url('../fonts/icomoon.woff?8rv96k') format('woff'),
+    url('../fonts/icomoon.svg?8rv96k#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -611,6 +611,12 @@ button.menu-button + nav a {
     max-width: 20rem;
     margin: 0.2rem auto;
 }
+
+.profile-page main section:first-of-type h3 {
+    font-weight: 100;
+    font-size: 1.4rem;
+}
+
 .profile-page main ul:first-of-type {
     width: 24rem;
     margin: 5rem auto;
@@ -622,7 +628,6 @@ button.menu-button + nav a {
 
 .profile-page [class^="icon-"],
 .profile-page [class*=" icon-"] {
-    display: inline-block;
     width: 3.5rem;
     font-size: 3rem;
 }
@@ -630,6 +635,7 @@ button.menu-button + nav a {
 .profile-page [class^="icon-"]:before,
 .profile-page [class*=" icon-"]:before {
     position: absolute;
+    bottom: 0;
     transition: all 0.3s;
 }
 
@@ -638,7 +644,7 @@ button.menu-button + nav a {
 
 }
 
-.profile-page button {
+.profile-page main section button {
     width: 100%;
 }
 
