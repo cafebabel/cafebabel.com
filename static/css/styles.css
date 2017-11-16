@@ -39,6 +39,12 @@ summary {
     display: block;
 }
 
+main {
+    display: block;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
 /* Vremena Grotesk */
 
 @font-face {
@@ -169,7 +175,6 @@ summary {
     content: '\e900';
 }
 
-
 /* General */
 
 body,
@@ -191,6 +196,9 @@ textarea {
 h1 {
     font-size: 4.2rem;
     margin: 4rem 0;
+    border: 0.3rem solid #00283C;
+    padding: 5rem;
+    text-align: center;
 }
 
 h2 {
@@ -250,19 +258,32 @@ li a {
     position: relative;
 }
 
+label {
+    display: block;
+}
+
 input,
-button {
-    border: 0.1rem solid #00283C;
+textarea {
+    border: none;
+    border-bottom: 0.1rem solid #00283C;
     padding: 2rem;
     margin: 2rem 0;
     background: #fff;
     display: block;
-    width: 30rem;
+    width: 100%;
     transition: border-color .3s;
 }
+
+textarea {
+    max-width: 100%;
+    min-width: 100%;
+    height: 6.9rem;
+}
+
 input:focus,
 textarea:focus {
-    border: 0.1rem solid #bde513;
+    border: none;
+    border-bottom: 0.1rem solid #bde513;
     outline: none;
     transition: border-color .3s;
 }
@@ -280,12 +301,15 @@ button {
     cursor: pointer;
     background-color: #00283C;
     color: #fff;
+    width: 100%;
 }
 input[type=submit]:hover,
 button:hover {
     background-color: #fff;
     color:  #00283C;
+    border: 0.1rem solid #00283C;
 }
+
 input[type=submit],
 input[type=submit]:hover,
 button,
@@ -294,13 +318,18 @@ button:hover {
 }
 
 form[name=login_user_form] {
-    background-color: #fffff8;
-    border: 0.1rem solid #bde513;
     padding: 2rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+    form[name=login_user_form] {
+        width: 50%;
+    }
 }
 
 #signin input[type=text],
@@ -379,15 +408,6 @@ label:hover:before {
     transition: border-color .3s;
 }
 
-textarea {
-    padding: 1.5rem;
-    border: 0.1rem solid #00283C;
-    min-width: 30rem;
-    min-height: 15rem;
-    max-width: 100%;
-    transition: border-color .3s;
-}
-
 select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-after-with-css-in-webkit */
     padding: 1rem 3rem 1rem 1rem;
     margin:5rem 0;
@@ -400,12 +420,18 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
     appearance: none;
 }
 
-label[for=field-language] {
+label[for=field-language],
+label[for=media-type],
+label[for=format],
+label[for=section] {
     position: relative;
     display: inline-block;
 }
 
-label[for=field-language]:after {
+label[for=field-language]:after,
+label[for=media-type]:after,
+label[for=format]:after,
+label[for=section]:after {
     position: absolute;
     font-family: 'icomoon';
     content: '\ea3e';
@@ -591,12 +617,6 @@ button.menu-button + nav a {
 
 /* Profile page */
 
-.profile-page main {
-    display: block;
-    max-width: 120rem;
-    margin: 0 auto;
-}
-
 .profile-page h1 {
     border: 0.3rem solid #00283C;
     padding: 5rem;
@@ -624,11 +644,8 @@ button.menu-button + nav a {
     font-size: 1.4rem;
 }
 
-.profile-page main section:nth-of-type(2) article{
+.profile-page main section:nth-of-type(2) article {
     margin-bottom: 5rem;
-}
-.profile-page main section:nth-of-type(2) article time {
-    font-size: 1.3rem;
 }
 
 .profile-page main section:nth-of-type(2) h3 {
@@ -662,10 +679,6 @@ button.menu-button + nav a {
 
 }
 
-.profile-page main section button {
-    width: 100%;
-}
-
 @media screen and (min-width: 750px) {
     .profile-page main {
         display: grid;
@@ -688,4 +701,38 @@ button.menu-button + nav a {
     .profile-page main section:nth-of-type(2) {
         grid-area: sidebar;
     }
+}
+
+/* Pitch page */
+
+.pitch-page form {
+    max-width: 75rem;
+    margin: 0 auto;
+}
+
+.pitch-page h3 {
+    max-width:120rem;
+    margin:2rem auto 4rem auto;
+}
+
+.pitch-page label > p {
+    font-size: 1.3rem;
+    font-weight: 100;
+    font-style: italic;
+    margin: 0;
+}
+
+.pitch-page button {
+    display: block;
+    max-width: 75rem;
+    margin: 2rem auto;
+}
+
+.pitch-page button a {
+    color: #fff;
+    transition: all .3s;
+}
+
+.pitch-page button:hover a {
+    color: #00283C;
 }
