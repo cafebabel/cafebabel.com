@@ -1,0 +1,691 @@
+/* Normalize */
+
+* {
+    box-sizing: border-box;
+}
+
+::selection {
+    background: #bde513;
+}
+
+:focus {
+    outline: none;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: sans-serif;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+}
+
+body {
+    margin: 4rem 2rem;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+/* Vremena Grotesk */
+
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('../fonts/vremenagroteskbook-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskbook-webfont.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('../fonts/vremenagroteskbookitalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskbookitalic-webfont.woff') format('woff');
+    font-weight: 100;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('../fonts/vremenagrotesk-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagrotesk-webfont.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('../fonts/vremenagroteskitalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskitalic-webfont.woff') format('woff');
+    font-weight: 200;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('../fonts/vremenagroteskmedium-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskmedium-webfont.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('../fonts/vremenagroteskmediumitalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskmediumitalic-webfont.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('/static/fonts/vremenagroteskbold-webfont.woff2') format('woff2'),
+    url('/static/fonts/vremenagroteskbold-webfont.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'vremena_grotesk';
+    src: url('../fonts/vremenagroteskbolditalic-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskbolditalic-webfont.woff') format('woff');
+    font-weight: 800;
+    font-style: italic;
+}
+
+/* Sporting grotesque */
+
+@font-face {
+    font-family: 'sporting_grotesque';
+    src: url('../fonts/sporting_grotesque_normal-webfont.woff2') format('woff2'),
+    url('../fonts/sporting_grotesque_normal-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'sporting_grotesque';
+    src: url('../fonts/sporting_grotesque_gras-webfont.woff2') format('woff2'),
+    url('../fonts/sporting_grotesque_gras-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Icomoon */
+
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?8rv96k');
+    src:  url('../fonts/icomoon.eot?8rv96k#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?8rv96k') format('truetype'),
+    url('../fonts/icomoon.woff?8rv96k') format('woff'),
+    url('../fonts/icomoon.svg?8rv96k#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    color: #00283C;
+}
+.icon-checkmark:before {
+    content: '\ea10';
+}
+.icon-arrow-down2:before {
+    content: '\ea3e';
+}
+.icon-facebook:before {
+    content: '\ea90';
+}
+.icon-instagram:before {
+    content: '\ea92';
+}
+.icon-twitter:before {
+    content: '\ea96';
+}
+.icon-youtube:before {
+    content: '\ea9d';
+}
+.icon-flickr2:before {
+    content: '\eaa4';
+}
+.icon-linkedin2:before {
+    content: '\eaca';
+}
+.icon-pinterest2:before {
+    content: '\ead2';
+}
+.icon-medium:before {
+    content: '\e900';
+}
+
+
+/* General */
+
+body,
+button,
+input,
+select,
+textarea {
+    color: #00283C;
+    font-family: 'vremena_grotesk', sans-serif;
+    font-size: 1.9rem;
+    line-height: 1.5;
+    font-weight:200;
+    font-style: normal;
+    border-radius: 0;
+}
+
+/* Titles */
+
+h1 {
+    font-size: 4.2rem;
+    margin: 4rem 0;
+}
+
+h2 {
+    font-size: 3.2rem;
+    margin: 2rem 0 4rem;
+}
+
+h3 {
+    font-size: 2.8rem;
+    margin: 3rem 0;
+}
+
+h4 {
+    font-size: 2.4rem;
+    margin: 2.5rem 0;
+}
+
+h5 {
+    font-size: 2.2rem;
+    margin: 2rem 0;
+}
+
+h6 {
+    font-size: 2.0rem;
+    margin: 2rem 0;
+}
+
+p {
+    margin: 0 0 4rem;
+}
+
+blockquote {
+    font-family: 'sporting_grotesque', sans-serif;
+    font-size: 2.8rem;
+    margin: 5rem 0;
+    padding: 0 0 0 6rem;
+    font-style: normal;
+}
+
+time {
+    font-weight: 100;
+    font-size: 1.4rem;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+li {
+    text-align: left;
+    position: relative;
+}
+li a {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+}
+
+input,
+button {
+    border: 0.1rem solid #00283C;
+    padding: 2rem;
+    margin: 2rem 0;
+    background: #fff;
+    display: block;
+    width: 30rem;
+    transition: border-color .3s;
+}
+input:focus,
+textarea:focus {
+    border: 0.1rem solid #bde513;
+    outline: none;
+    transition: border-color .3s;
+}
+input::placeholder {
+    font-family: 'vremena_grotesk', sans-serif;
+    color: #00283C;
+}
+input:focus::placeholder {
+    color:#bde513;
+}
+input[type=submit],
+button {
+    text-align: center;
+    padding: 2rem 4rem;
+    cursor: pointer;
+    background-color: #00283C;
+    color: #fff;
+}
+input[type=submit]:hover,
+button:hover {
+    background-color: #fff;
+    color:  #00283C;
+}
+input[type=submit],
+input[type=submit]:hover,
+button,
+button:hover {
+    transition: all 0.25s ease-in-out;
+}
+
+form[name=login_user_form] {
+    background-color: #fffff8;
+    border: 0.1rem solid #bde513;
+    padding: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#signin input[type=text],
+#signin input[type=email] {
+    border: none;
+    border-bottom: 0.1rem solid #bde513;
+    background-color: transparent;
+    padding:1rem 1rem 1rem 0;
+}
+
+label[for=styleguide],
+label[for=remember] {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+}
+
+.checkbox {
+    flex-direction: row-reverse;
+    display: inline-flex;
+    justify-content: flex-start;
+    margin: 5rem 0;
+}
+
+[type=checkbox] {
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+    width: 3.5rem;
+}
+
+[type=checkbox]:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0.1rem solid #00283C;
+    background: #f8f8f8;
+    transition: border-color .3s;
+}
+
+[type=checkbox]:after {
+    font-family: 'icomoon';
+    content: '\ea10';
+    text-transform: none;
+    line-height: 2.6rem;
+    font-size: 2.2rem;
+    width: 3.7rem;
+    height: 3.7rem;
+    text-align: center;
+    margin-left: -0.4rem;
+    display: inline-block;
+    overflow: hidden;
+    color: #bde513;
+    transition: all .2s;
+}
+
+[type=checkbox]:not(:checked):after {
+    opacity: 0;
+    transform: scale(0);
+}
+
+[type=checkbox]:checked:after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[type=checkbox]:focus:before {
+    border: 0.1rem solid #bde513;
+}
+
+label:hover:before {
+    border : 0.1rem solid #bde513 !important;
+    transition: border-color .3s;
+}
+
+textarea {
+    padding: 1.5rem;
+    border: 0.1rem solid #00283C;
+    min-width: 30rem;
+    min-height: 15rem;
+    max-width: 100%;
+    transition: border-color .3s;
+}
+
+select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-after-with-css-in-webkit */
+    padding: 1rem 3rem 1rem 1rem;
+    margin:5rem 0;
+    background: transparent;
+    border: 0.1rem solid #00283C;
+    cursor: pointer;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+label[for=field-language] {
+    position: relative;
+    display: inline-block;
+}
+
+label[for=field-language]:after {
+    position: absolute;
+    font-family: 'icomoon';
+    content: '\ea3e';
+    right: 1.2rem;
+    top: 6.2rem;
+    z-index: -1;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select:focus {
+    outline: none;
+}
+
+/* Images */
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Links */
+
+a,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+    color: #00283C;
+    text-decoration: none;
+}
+
+p a {
+    position: relative;
+}
+
+p a:after {
+    position: absolute;
+    top: 1rem;
+    bottom: 0.5rem;
+    right: 0;
+    left: 0;
+    display: block;
+    background-color: #bde513;
+    overflow: hidden;
+    content: '';
+    transform: translateY(35%);
+    transition: all .3s;
+    z-index: -1;
+}
+
+p a:hover:after {
+    top: 0;
+    bottom: 0.5rem;
+    transform: translateY(0);
+    transition: all .3s;
+}
+
+/* Logo */
+
+.logo img {
+    width: 10rem;
+    display: block;
+    margin: 4.7rem auto;
+    transition: all .2s;
+}
+
+.logo img:hover {
+    transform: translateY(-2px);
+}
+
+/* Menu */
+
+button.menu-button {
+    position: fixed;
+    display: block;
+    top: 1rem;
+    left: 1rem;
+    width: 9.5rem;
+    height: 9.5rem;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+button.menu-button:focus {
+    outline: none;
+}
+
+button.menu-button:before,
+button.menu-button:after {
+    content: '';
+    height: 0.3rem;
+    width: 3.5rem;
+    margin: 0;
+    left: 3rem;
+    background: #00283C;
+    position: absolute;
+    display: block;
+    transition: all .3s ease-in-out;
+}
+
+button.menu-button:before {
+    top: 4rem;
+}
+
+button.menu-button:after {
+    bottom: 4rem;
+}
+
+button.menu-button.active:before {
+    top: 4.6rem;
+    transform: rotate(45deg);
+}
+button.menu-button.active:after {
+    bottom: 4.5rem;
+    transform: rotate(-45deg);
+}
+
+button.menu-button + nav {
+    background: white;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    font-size: 6vw;
+    opacity: 0;
+    z-index: -1;
+    transition: all .3s;
+}
+
+button.menu-button + nav ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+button.menu-button + nav ul li {
+    text-align: center;
+}
+
+button.menu-button + nav ul li a {
+    position: relative;
+    display: inline-block;
+}
+
+button.menu-button + nav ul li a:after {
+    content: '';
+    position: absolute;
+    height: 0.2rem;
+    background-color: #00283C;
+    left: 0;
+    bottom: 0.5rem;
+    width: 0;
+    transition: all .3s;
+}
+
+button.menu-button + nav ul li a:hover:after {
+    width: 100%;
+}
+
+button.menu-button.active + nav {
+    display: block;
+    opacity: 1;
+    z-index: 1;
+}
+
+button.menu-button.active + nav ul li {
+    padding-bottom: 0;
+}
+
+button.menu-button + nav a {
+    display: block;
+}
+
+/* Profile page */
+
+.profile-page main {
+    display: block;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+.profile-page h1 {
+    border: 0.3rem solid #00283C;
+    padding: 5rem;
+    text-align: center;
+    grid-area: title;
+}
+
+.profile-page main section {
+    padding: 1.5rem;
+}
+
+.profile-page main section h2 {
+    text-align: center;
+}
+
+.profile-page main section:first-of-type img {
+    display: block;
+    border-radius: 50%;
+    max-width: 20rem;
+    margin: 0.2rem auto;
+}
+
+.profile-page main section:first-of-type h3 {
+    font-weight: 100;
+    font-size: 1.4rem;
+}
+
+.profile-page main section:nth-of-type(2) article{
+    margin-bottom: 5rem;
+}
+.profile-page main section:nth-of-type(2) article time {
+    font-size: 1.3rem;
+}
+
+.profile-page main section:nth-of-type(2) h3 {
+    margin: 0;
+}
+
+.profile-page main ul:first-of-type {
+    width: 24rem;
+    margin: 5rem auto;
+}
+
+.profile-page main ul:first-of-type li {
+    display: inline-block;
+}
+
+.profile-page [class^="icon-"],
+.profile-page [class*=" icon-"] {
+    width: 3.5rem;
+    font-size: 3rem;
+}
+
+.profile-page [class^="icon-"]:before,
+.profile-page [class*=" icon-"]:before {
+    position: absolute;
+    bottom: 0;
+    transition: all 0.3s;
+}
+
+.profile-page [class^="icon-"]:hover:before,
+.profile-page [class*=" icon-"]:hover:before {
+
+}
+
+.profile-page main section button {
+    width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+    .profile-page main {
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:    'title title'
+                                'content sidebar';
+        padding-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin - maybe ask Éric*/
+    }
+
+    .profile-page [class^="icon-"]:hover:before,
+    .profile-page [class*=" icon-"]:hover:before {
+        transform: translateY(-0.2rem);
+    }
+
+    .profile-page main section:first-of-type {
+        grid-area: content;
+    }
+
+    .profile-page main section:nth-of-type(2) {
+        grid-area: sidebar;
+    }
+}
