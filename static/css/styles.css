@@ -22,7 +22,7 @@ html {
 }
 
 body {
-    margin: 4rem 2rem;
+    margin: 0;
 }
 
 article,
@@ -41,10 +41,14 @@ summary {
 
 main {
     display: block;
+    width: 100%;
+    background-color: #fff;
+}
+
+#content {
     max-width: 120rem;
     margin: 0 auto 70rem auto;
-    background-color: #fff;
-    padding-bottom: 50px;
+    padding-bottom: 7rem;
 }
 
 /* Vremena Grotesk */
@@ -682,7 +686,7 @@ button.menu-button + nav a {
 }
 
 @media screen and (min-width: 750px) {
-    .profile-page main {
+    .profile-page main #content {
         display: grid;
         grid-gap: 2rem;
         grid-template-columns: 50% 50%;
@@ -755,7 +759,7 @@ footer {
 
 footer p {
     position: absolute;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
 }
