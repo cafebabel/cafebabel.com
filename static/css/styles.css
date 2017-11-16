@@ -42,7 +42,9 @@ summary {
 main {
     display: block;
     max-width: 120rem;
-    margin: 0 auto;
+    margin: 0 auto 70rem auto;
+    background-color: #fff;
+    padding-bottom: 50px;
 }
 
 /* Vremena Grotesk */
@@ -735,4 +737,24 @@ button.menu-button + nav a {
 
 .pitch-page button:hover a {
     color: #00283C;
+}
+
+/* Footer */
+
+footer {
+    width: 100%;
+    height: 70rem;
+    font-size: 4rem;
+    background-color: #00283C;
+    background: linear-gradient(to bottom right, #002f4b, #30799B); /* https://codepen.io/alexcarpenter/pen/LveDx?q=gradient&limit=all&type=type-pens */
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+footer p {
+    margin: 5rem;
+    text-align: center;
 }
