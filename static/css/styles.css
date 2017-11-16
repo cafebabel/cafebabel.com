@@ -230,6 +230,11 @@ blockquote {
     font-style: normal;
 }
 
+time {
+    font-weight: 100;
+    font-size: 1.4rem;
+}
+
 ul {
     list-style: none;
     margin: 0;
@@ -418,7 +423,9 @@ select:focus {
 }
 
 /* Images */
+
 img {
+    display: block;
     max-width: 100%;
     height: auto;
 }
@@ -617,6 +624,17 @@ button.menu-button + nav a {
     font-size: 1.4rem;
 }
 
+.profile-page main section:nth-of-type(2) article{
+    margin-bottom: 5rem;
+}
+.profile-page main section:nth-of-type(2) article time {
+    font-size: 1.3rem;
+}
+
+.profile-page main section:nth-of-type(2) h3 {
+    margin: 0;
+}
+
 .profile-page main ul:first-of-type {
     width: 24rem;
     margin: 5rem auto;
@@ -669,12 +687,5 @@ button.menu-button + nav a {
 
     .profile-page main section:nth-of-type(2) {
         grid-area: sidebar;
-    }
-    .profile-page ul:nth-of-type(2) {
-        max-width: 70%;
-        margin: auto;
-    }
-    .profile-page .checkbox {
-        transform: translateX(50%);
     }
 }
