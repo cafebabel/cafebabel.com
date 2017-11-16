@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>Pending drafts</h1>
+
+{% for article in articles %}
+<article>
+  <h3>{{ article.title }}</h3>
+  <a href={{ url_for('draft.draft_detail', draft_id=article.id, slug=article.slug) }}>Read</a>
+</article>
+{% endfor %}
+{% endblock %}

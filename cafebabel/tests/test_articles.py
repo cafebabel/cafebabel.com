@@ -1,3 +1,4 @@
+from copy import deepcopy
 from http import HTTPStatus
 from pathlib import Path
 from io import BytesIO
@@ -253,6 +254,32 @@ def test_delete_inexistent_article_should_return_404(client, editor, article):
     response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
+
+def test_editor_access_drafts_list(client, editor, article):
+    login(client, editor.email, 'secret')
+    response = client.get('/draft/list/')
+    assert response.status_code == HTTPStatus.OK
+    assert article.title in response.get_data(as_text=True)
+
+
+def test_author_cannot_access_drafts_list(client, user, article):
+    login(client, user.email, 'secret')
+    response = client.get('/draft/list/')
+    assert response.status_code == HTTPStatus.FORBIDDEN
+
+
+def test_drafts_list_only_displays_drafts(client, editor, article):
+    published = deepcopy(article)
+    published.id = None
+    published.title = 'published article'
+    published.status = 'published'
+    published.save()
+    login(client, editor.email, 'secret')
+    response = client.get('/draft/list/')
+    assert response.status_code == HTTPStatus.OK
+    content = response.get_data(as_text=True)
+    assert article.title in content
+    assert published.title not in content
 
 def test_access_published_article_should_link_translations(client, article,
                                                            translation):
