@@ -11,14 +11,14 @@ from .. import app
 
 def test_create_draft_should_display_form(client, editor):
     login(client, editor.email, 'secret')
-    response = client.get('/article/draft/')
+    response = client.get('/article/draft/new/')
     assert response.status_code == 200
     assert '<input id=title' in response.get_data(as_text=True)
 
 
 def test_create_draft_should_generate_article(client, editor):
     login(client, editor.email, 'secret')
-    response = client.post('/article/draft/', data={
+    response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
@@ -32,7 +32,7 @@ def test_create_draft_should_generate_article(client, editor):
 
 def test_create_published_draft_should_display_article(client, editor):
     login(client, editor.email, 'secret')
-    response = client.post('/article/draft/', data={
+    response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
@@ -41,7 +41,7 @@ def test_create_published_draft_should_display_article(client, editor):
     }, follow_redirects=True)
     assert response.status_code == 200
     body = response.get_data(as_text=True)
-    assert request.url_rule.endpoint == 'article.article_detail'
+    assert request.url_rule.endpoint == 'article.detail'
     assert '<h1>Test article</h1>' in body
     assert '<p>Article body</p>' in body
 
@@ -77,7 +77,7 @@ def test_draft_image_should_save_and_render(client, editor):
         'language': 'en',
         'image': (image, 'image-name.jpg'),
     }
-    response = client.post('/article/draft/', data=data,
+    response = client.post('/article/draft/new/', data=data,
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK

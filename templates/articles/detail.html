@@ -34,7 +34,7 @@
   {% endblock %}
   {% if current_user.has_role('editor') and article.is_published %}
     <p>
-      <a class=button href={{ url_for('article.article_edit_form', article_id=article.id) }}>Edit this article</a>
+      <a class=button href={{ url_for('article.edit', article_id=article.id) }}>Edit this article</a>
     </p>
   {% endif %}
 

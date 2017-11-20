@@ -40,7 +40,7 @@
         <img src={{ article.image_url }}>
         {% endif %}
         <p>Article in {{ article.language }}</p>
-        <a href={{ url_for('article.article_detail', article_id=article.id, slug=article.slug) }}>Read</a>
+        <a href={{ url_for('article.detail', article_id=article.id, slug=article.slug) }}>Read</a>
       </article></li>
       {% endfor %}
     </ul>

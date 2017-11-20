@@ -13,12 +13,11 @@ blueprint = Blueprint('article', __name__)
 
 # Only route with the slug for SEO purpose.
 @blueprint.route('/<slug>-<regex("\w{24}"):article_id>/')
-def article_detail(slug, article_id):
+def detail(slug, article_id):
     article = Article.objects.get_or_404(id=article_id, status='published')
     if article.slug != slug:
         return redirect(
-            url_for('.article_detail', article_id=article.id,
-                    slug=article.slug),
+            url_for('.detail', article_id=article.id, slug=article.slug),
             code=HTTPStatus.MOVED_PERMANENTLY)
     if article.is_translation:
         translations = Translation.objects(
@@ -38,23 +37,20 @@ def article_detail(slug, article_id):
                            translations_publisheds=translations_publisheds)
 
 
-@blueprint.route('/<regex("\w{24}"):article_id>/', methods=['post'])
+@blueprint.route(
+    '/<regex("\w{24}"):article_id>/edit/', methods=['get', 'post'])
 @login_required
 @editor_required
-def article_edit(article_id):
+def edit(article_id):
     article = Article.objects.get_or_404(id=article_id, status='published')
-    article = Article._save_article(
-        request.form.to_dict(), request.files, article)
-    flash('Your article was successfully saved.')
-    return redirect(
-        url_for('.article_detail', article_id=article.id, slug=article.slug))
 
+    if request.method == 'POST':
+        article = Article._save_article(
+            request.form.to_dict(), request.files, article)
+        flash('Your article was successfully saved.')
+        return redirect(
+            url_for('.detail', article_id=article.id, slug=article.slug))
 
-@blueprint.route('/<regex("\w{24}"):article_id>/form/')
-@login_required
-@editor_required
-def article_edit_form(article_id):
-    article = Article.objects.get_or_404(id=article_id, status='published')
     authors = User.objects.all()
     return render_template(
         'articles/edit.html', article=article, authors=authors)
@@ -63,7 +59,7 @@ def article_edit_form(article_id):
 @blueprint.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
 @fresh_login_required
 @editor_required
-def article_delete(article_id):
+def delete(article_id):
     article = Article.objects.get_or_404(id=article_id)
     article.delete()
     flash('Article was deleted.', 'success')

@@ -15,8 +15,7 @@ class Translation(Article):
         if self.is_draft:
             return url_for('translation.detail', id=self.id)
         else:
-            return url_for('article.article_detail',
-                           slug=self.slug,
+            return url_for('article.detail', slug=self.slug,
                            article_id=self.id)
 
     @property
