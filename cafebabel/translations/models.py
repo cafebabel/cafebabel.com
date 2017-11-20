@@ -13,7 +13,7 @@ class Translation(Article):
     @property
     def detail_url(self):
         if self.is_draft:
-            return url_for('translation.translation_detail', id=self.id)
+            return url_for('translation.detail', id=self.id)
         else:
             return url_for('article.article_detail',
                            slug=self.slug,

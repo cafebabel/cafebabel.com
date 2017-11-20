@@ -11,9 +11,9 @@ from .models import Translation
 blueprint = Blueprint('translation', __name__)
 
 
-@blueprint.route('/', methods=['get', 'post'])
+@blueprint.route('/new/', methods=['get', 'post'])
 @login_required
-def translation_create():
+def create():
     translated_from = request.args.get('from')
     language = request.args.get('lang')
     if not translated_from:
@@ -46,14 +46,14 @@ def translation_create():
 
 
 @blueprint.route('/<regex("\w{24}"):id>/')
-def translation_detail(id):
+def detail(id):
     translation = Translation.objects.get_or_404(id=id, status='draft')
     return render_template('translations/detail.html', translation=translation)
 
 
 @blueprint.route('/<regex("\w{24}"):id>/edit/', methods=['get', 'post'])
 @login_required
-def translation_edit(id):
+def edit(id):
     translation = Translation.objects.get_or_404(id=id, status='draft')
 
     if request.method == 'POST':

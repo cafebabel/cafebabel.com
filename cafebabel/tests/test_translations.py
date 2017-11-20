@@ -24,7 +24,8 @@ def test_translation_query_should_retrieve_all(app, article, translation):
 def test_translation_creation_should_display_form(app, client, user, article):
     login(client, user.email, 'secret')
     language = app.config['LANGUAGES'][1][0]
-    response = client.get(f'/translation/?lang={language}&from={article.id}')
+    response = client.get(
+        f'/translation/new/?lang={language}&from={article.id}')
     assert response.status_code == HTTPStatus.OK
     text = response.get_data(as_text=True)
     assert '<textarea id=body name=body required></textarea>' in text
@@ -32,7 +33,8 @@ def test_translation_creation_should_display_form(app, client, user, article):
 
 def test_translation_creation_requires_login(app, client, article):
     language = app.config['LANGUAGES'][1][0]
-    response = client.get(f'/translation/?lang={language}&from={article.id}')
+    response = client.get(
+        f'/translation/new/?lang={language}&from={article.id}')
     assert response.status_code == HTTPStatus.FOUND
     assert '/login?next=%2Ftranslation%2F' in response.headers.get('Location')
 
@@ -40,11 +42,12 @@ def test_translation_creation_requires_login(app, client, article):
 def test_translation_creation_required_parameters(app, client, user, article):
     login(client, user.email, 'secret')
     language = app.config['LANGUAGES'][1][0]
-    response = client.get(f'/translation/?from={article.id}')
+    response = client.get(f'/translation/new/?from={article.id}')
     assert response.status_code == HTTPStatus.NOT_FOUND
-    response = client.get(f'/translation/?lang={language}')
+    response = client.get(f'/translation/new/?lang={language}')
     assert response.status_code == HTTPStatus.NOT_FOUND
-    response = client.get(f'/translation/?lang={language}&from={article.id}$')
+    response = client.get(
+        f'/translation/new/?lang={language}&from={article.id}$')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
@@ -57,7 +60,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
         'body': 'body',
     }
     response = client.post(
-        f'/translation/?lang={language}&from={article.id}', data=data)
+        f'/translation/new/?lang={language}&from={article.id}', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
@@ -79,7 +82,7 @@ def test_translation_creation_already_existing(app, client, user, article):
         'body': 'Article body',
     }
     response = client.post(
-        f'/translation/?lang={language}&from={article.id}', data=data)
+        f'/translation/new/?lang={language}&from={article.id}', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert ('Existing translation already exists.'
             in response.get_data(as_text=True))
@@ -92,7 +95,8 @@ def test_translation_creation_same_as_article(app, client, user, article):
         'body': 'Article body',
     }
     response = client.post(
-        f'/translation/?lang={article.language}&from={article.id}', data=data)
+        f'/translation/new/?lang={article.language}&from={article.id}',
+        data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert ('Original article in the same language.'
             in response.get_data(as_text=True))
@@ -106,7 +110,7 @@ def test_translation_creation_unknown_article(app, client, user, article):
         'body': 'Article body',
     }
     response = client.post(
-        f'/translation/?lang={language}&from=foo{article.id}', data=data)
+        f'/translation/new/?lang={language}&from=foo{article.id}', data=data)
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 

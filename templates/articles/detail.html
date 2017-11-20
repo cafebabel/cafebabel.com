@@ -50,10 +50,10 @@
       {% if article.language != language[0] and language[0] not in translations_langs %}
         {% if article.is_translation %}
           {% if language[0] != article.translated_from.language %}
-            <li><a href={{ url_for('translation.translation_create') }}?lang={{language[0]}}&from={{ article.translated_from.id }}>{{ language[1] }}</a></li>
+            <li><a href={{ url_for('translation.create') }}?lang={{language[0]}}&from={{ article.translated_from.id }}>{{ language[1] }}</a></li>
           {% endif %}
         {% else %}
-          <li><a href={{ url_for('translation.translation_create') }}?lang={{language[0]}}&from={{ article.id }}>{{ language[1] }}</a></li>
+          <li><a href={{ url_for('translation.create') }}?lang={{language[0]}}&from={{ article.id }}>{{ language[1] }}</a></li>
         {% endif %}
       {% endif %}
     {% endfor %}
@@ -72,7 +72,7 @@
     <p>Review this article in:</p>
     <ul>
       {% for translation in translations_drafts %}
-        <li>{{ translation.language }}: <a href={{ url_for('translation.translation_detail', id=translation.id) }}>{{ translation.title }}</a></li>
+        <li>{{ translation.language }}: <a href={{ url_for('translation.detail', id=translation.id) }}>{{ translation.title }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}

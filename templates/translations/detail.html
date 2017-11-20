@@ -32,7 +32,7 @@
 
   {% if current_user.has_role('editor') or translation.translator == current_user %}
     <p>
-      <a class=button href={{ url_for('translation.translation_edit', id=translation.id) }}>Edit this translation</a>
+      <a class=button href={{ url_for('translation.edit', id=translation.id) }}>Edit this translation</a>
     </p>
   {% endif %}
 </article>
