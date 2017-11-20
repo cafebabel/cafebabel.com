@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request
 from flask_login import login_required
 
 from ...core.helpers import editor_required
@@ -20,7 +20,7 @@ def create():
 
     article = Article()
     authors = User.objects.all()
-    return render_template('articles/edit.html', article=article,
+    return render_template('articles/drafts/create.html', article=article,
                            authors=authors)
 
 
@@ -34,11 +34,11 @@ def edit(draft_id):
         return redirect(article.detail_url)
 
     authors = User.objects.all()
-    return render_template('articles/edit.html', article=article,
+    return render_template('articles/drafts/edit.html', article=article,
                            authors=authors)
 
 
 @blueprint.route('/<regex("\w{24}"):draft_id>/')
 def detail(draft_id):
     article = Article.objects.get_or_404(id=draft_id, status='draft')
-    return render_template('articles/draft_detail.html', article=article)
+    return render_template('articles/drafts/detail.html', article=article)
