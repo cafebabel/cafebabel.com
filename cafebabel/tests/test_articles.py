@@ -346,6 +346,6 @@ def test_access_published_article_should_link_translations(client, article,
     assert response.status_code == HTTPStatus.OK
     assert '<p>Translate this article in:</p>' in text
     assert ((f'<li><a href={url_for("translation.create")}'
-             f'?lang=it&from={article.id}>Italiano</a></li>') in text)
+             f'?lang=it&original={article.id}>Italiano</a></li>') in text)
     assert ((f'<li><a href={url_for("translation.create")}'
-             f'?lang=fr&from={article.id}>Français</a></li>') not in text)
+             f'?lang=fr&original={article.id}>Français</a></li>') not in text)

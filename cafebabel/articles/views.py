@@ -122,9 +122,9 @@ def article_detail(slug, article_id):
             code=HTTPStatus.MOVED_PERMANENTLY)
     if article.is_translation:
         translations = Translation.objects(
-            translated_from=article.translated_from.id)
+            original_article=article.original_article.id)
     else:
-        translations = Translation.objects(translated_from=article.id)
+        translations = Translation.objects(original_article=article.id)
     translations_langs = [translation.language for translation in translations]
     translations_drafts = [translation for translation in translations
                            if translation.is_draft]

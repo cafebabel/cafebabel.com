@@ -20,14 +20,14 @@
   {{ translation.body|markdown }}
 
   <p>
-    Created on <time>{{ translation.translated_from.creation_date.date() }}</time> by {{ translation.author }}
+    Created on <time>{{ translation.original_article.creation_date.date() }}</time> by {{ translation.author }}
     {% if translation.category %}
       in category {{ translation.category }}
     {% endif %}
   </p>
 
   <p>
-    Translated from <a href="{{ translation.translated_from.detail_url }}">{{ translation.translated_from.title }}</a> by {{ translation.translator }}.
+    Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a> by {{ translation.translator }}.
   </p>
 
   {% if current_user.has_role('editor') or translation.translator == current_user %}

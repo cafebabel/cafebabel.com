@@ -14,20 +14,20 @@ blueprint = Blueprint('translation', __name__)
 @blueprint.route('/new/', methods=['get', 'post'])
 @login_required
 def create():
-    translated_from = request.args.get('from')
+    original_article = request.args.get('original')
     language = request.args.get('lang')
-    if not translated_from:
+    if not original_article:
         abort(HTTPStatus.NOT_FOUND, 'You must specify a valid article.')
     if not language or language not in dict(app.config['LANGUAGES']):
         abort(HTTPStatus.NOT_FOUND, 'You must specify a valid language.')
-    article = Article.objects.get_or_404(id=translated_from)
+    article = Article.objects.get_or_404(id=original_article)
 
     if request.method == 'POST':
         data = request.form.to_dict()
         try:
             translation = Translation.objects.create(
                 translator=current_user.id,
-                translated_from=article.id,
+                original_article=article.id,
                 status='draft',
                 editor=article.editor,
                 author=article.author,

@@ -25,7 +25,7 @@ def test_translation_creation_should_display_form(app, client, user, article):
     login(client, user.email, 'secret')
     language = app.config['LANGUAGES'][1][0]
     response = client.get(
-        f'/article/translation/new/?lang={language}&from={article.id}')
+        f'/article/translation/new/?lang={language}&original={article.id}')
     assert response.status_code == HTTPStatus.OK
     text = response.get_data(as_text=True)
     assert '<textarea id=body name=body required></textarea>' in text
@@ -34,7 +34,7 @@ def test_translation_creation_should_display_form(app, client, user, article):
 def test_translation_creation_requires_login(app, client, article):
     language = app.config['LANGUAGES'][1][0]
     response = client.get(
-        f'/article/translation/new/?lang={language}&from={article.id}')
+        f'/article/translation/new/?lang={language}&original={article.id}')
     assert response.status_code == HTTPStatus.FOUND
     assert ('/login?next=%2Farticle%2Ftranslation%2F'
             in response.headers.get('Location'))
@@ -43,12 +43,12 @@ def test_translation_creation_requires_login(app, client, article):
 def test_translation_creation_required_parameters(app, client, user, article):
     login(client, user.email, 'secret')
     language = app.config['LANGUAGES'][1][0]
-    response = client.get(f'/article/translation/new/?from={article.id}')
+    response = client.get(f'/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.NOT_FOUND
     response = client.get(f'/article/translation/new/?lang={language}')
     assert response.status_code == HTTPStatus.NOT_FOUND
     response = client.get(
-        f'/article/translation/new/?lang={language}&from={article.id}$')
+        f'/article/translation/new/?lang={language}&original={article.id}$')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
@@ -61,7 +61,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
         'body': 'body',
     }
     response = client.post(
-        f'/article/translation/new/?lang={language}&from={article.id}',
+        f'/article/translation/new/?lang={language}&original={article.id}',
         data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
@@ -75,8 +75,9 @@ def test_translation_creation_already_existing(app, client, user, article):
     login(client, user.email, 'secret')
     language = app.config['LANGUAGES'][1][0]
     translation = Translation(
-        title='foo', summary='summary', body='bar', translated_from=article.id,
-        translator=user.id, language=language, status='published')
+        title='foo', summary='summary', body='bar',
+        original_article=article.id, translator=user.id, language=language,
+        status='published')
     translation.save()
     data = {
         'title': 'Test article',
@@ -84,7 +85,7 @@ def test_translation_creation_already_existing(app, client, user, article):
         'body': 'Article body',
     }
     response = client.post(
-        f'/article/translation/new/?lang={language}&from={article.id}',
+        f'/article/translation/new/?lang={language}&original={article.id}',
         data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert ('Existing translation already exists.'
@@ -98,7 +99,8 @@ def test_translation_creation_same_as_article(app, client, user, article):
         'body': 'Article body',
     }
     response = client.post(
-        f'/article/translation/new/?lang={article.language}&from={article.id}',
+        (f'/article/translation/new/'
+         f'?lang={article.language}&original={article.id}'),
         data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert ('Original article in the same language.'
@@ -113,7 +115,7 @@ def test_translation_creation_unknown_article(app, client, user, article):
         'body': 'Article body',
     }
     response = client.post(
-        f'/article/translation/new/?lang={language}&from=foo{article.id}',
+        f'/article/translation/new/?lang={language}&original=foo{article.id}',
         data=data)
     assert response.status_code == HTTPStatus.NOT_FOUND
 
@@ -123,11 +125,11 @@ def test_translation_access_draft_should_return_200(client, translation):
     assert response.status_code == HTTPStatus.OK
 
 
-def test_translation_access_have_translated_from_link(client, translation):
+def test_translation_access_have_original_article_link(client, translation):
     response = client.get(f'/article/translation/{translation.id}/')
     text = response.get_data(as_text=True)
     assert ((f'Translated from '
-             f'<a href="/draft/{translation.translated_from.id}/">title')
+             f'<a href="/draft/{translation.original_article.id}/">title')
             in text)
 
 
@@ -214,7 +216,7 @@ def test_translation_published_should_have_translator(client, translation):
     text = response.get_data(as_text=True)
     assert response.status_code == HTTPStatus.OK
     assert ((f'Translated from '
-             f'<a href="/draft/{translation.translated_from.id}/">title')
+             f'<a href="/draft/{translation.original_article.id}/">title')
             in text)
     assert f'by {translation.translator}.' in text
 
@@ -222,7 +224,7 @@ def test_translation_published_should_have_translator(client, translation):
 def test_translation_published_should_have_reference(client, translation):
     translation.status = 'published'
     translation.save()
-    article = translation.translated_from
+    article = translation.original_article
     article.status = 'published'
     article.save()
     response = client.get(f'/article/{article.slug}-{article.id}/')

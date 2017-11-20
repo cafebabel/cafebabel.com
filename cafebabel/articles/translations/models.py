@@ -8,7 +8,7 @@ from ...articles.models import Article
 
 class Translation(Article):
     translator = db.ReferenceField(User, required=True)
-    translated_from = db.ReferenceField('Article', required=True)
+    original_article = db.ReferenceField('Article', required=True)
 
     @property
     def detail_url(self):
@@ -27,20 +27,20 @@ class Translation(Article):
     def image_url(self):
         if self.has_image:
             return (f'{app.config.get("ARTICLES_IMAGES_URL")}/'
-                    f'{self.translated_from.id}')
+                    f'{self.original_article.id}')
 
     def clean(self):
         super().clean()
         try:
             translations = Translation.objects.filter(
-                translated_from=self.translated_from, language=self.language)
+                original_article=self.original_article, language=self.language)
             if (translations and
                     (len(translations) > 1 or translations[0].id != self.id)):
                 raise ValidationError('Existing translation already exists.')
         except Translation.DoesNotExist:
             pass
         try:
-            Article.objects.get(id=self.translated_from.id,
+            Article.objects.get(id=self.original_article.id,
                                 language=self.language)
             raise ValidationError('Original article in the same language.')
         except Article.DoesNotExist:

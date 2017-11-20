@@ -65,4 +65,4 @@ def translation(user, article):
         language=fr,
         body='body text',
         translator=user.id,
-        translated_from=article.id)
+        original_article=article.id)
