@@ -43,6 +43,7 @@ main {
     display: block;
     width: 100%;
     background-color: #fff;
+    min-height: 100vh; /* https://stackoverflow.com/questions/1509589/full-viewport-height-scaling-div-just-css-no-js-possible */
 }
 
 #content {
