@@ -281,7 +281,7 @@ def test_update_article_with_user_should_return_403(client, user, article):
     response = client.post(f'/article/{article.id}/', data=data)
     assert response.status_code == HTTPStatus.FORBIDDEN
     article.reload()
-    assert article.title == 'title'
+    assert article.title == 'article title'
 
 
 def test_update_unpublished_article_should_return_404(client, user, editor,
@@ -294,7 +294,7 @@ def test_update_unpublished_article_should_return_404(client, user, editor,
     response = client.post(f'/article/{article.id}/', data=data)
     assert response.status_code == HTTPStatus.NOT_FOUND
     article.reload()
-    assert article.title == 'title'
+    assert article.title == 'article title'
 
 
 def test_delete_article_should_return_200(client, editor, article):

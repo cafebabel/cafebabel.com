@@ -1,13 +1,13 @@
 from pathlib import Path
-from tempfile import mkdtemp
 
 import pytest
+from flask_security.confirmable import confirm_user
+
 from cafebabel import app as myapp
 from cafebabel.articles.models import Article
 from cafebabel.core.commands import _dropdb, _initdb
 from cafebabel.articles.translations.models import Translation
 from cafebabel.users.models import Role, User, user_datastore
-from flask_security.confirmable import confirm_user
 
 
 def pytest_runtest_setup():
@@ -20,9 +20,7 @@ def pytest_runtest_teardown():
 
 @pytest.fixture
 def app():
-    myapp.config['MONGODB_DB'] = 'tests'
-    myapp.config['WTF_CSRF_ENABLED'] = False
-    myapp.config['ARTICLES_IMAGES_PATH'] = Path(mkdtemp())
+    myapp.config.from_pyfile(Path(__file__).parent / 'settings.tests.py')
     return myapp
 
 
@@ -50,7 +48,7 @@ def admin():
 def article():
     en = myapp.config['LANGUAGES'][0][0]
     return Article.objects.create(
-        title='title',
+        title='article title',
         summary='summary text',
         language=en,
         body='body text')

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% block body_class %}profile-page{% endblock %}
 {% block body %}
 {% if user.profile %}
 <h1>{{ user }}'s profile</h1>
@@ -8,25 +9,43 @@
 {% endif %}
 
   <section>
-    <ul>
-      <li>Full name: <span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
-      <li>Website: <span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
-    </ul>
-
     <h2>About</h2>
-    <p>
-      <span data-edit-name=about data-edit-type=textarea>{{ user.profile.about or '' }}</span>
-    </p>
-
-    <h2>Social accounts</h2>
-    <ul>
-      <li>Twitter: <span data-edit-name=socials-twitter>{{ user.profile.socials.twitter }}</span></li>
-      <li>Facebook: <span data-edit-name=socials-facebook>{{ user.profile.socials.facebook }}</span></li>
-      <li>Medium: <span data-edit-name=socials-medium>{{ user.profile.socials.medium }}</span></li>
-      <li>Flickr: <span data-edit-name=socials-flickr>{{ user.profile.socials.flickr }}</span></li>
-      <li>Pinterest: <span data-edit-name=socials-pinterest>{{ user.profile.socials.pinterest }}</span></li>
-      <li>Instagram<span data-edit-name=socials-instagram>{{ user.profile.socials.instagram }}</span></li>
+    <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder"> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
+      <ul>
+          <li><a data-edit-name=socials-twitter href="{{ user.profile.socials.twitter }}" class=icon-twitter></a></li>
+          <li><a data-edit-name=socials-facebook href="{{ user.profile.socials.facebook }}" class=icon-facebook></a></li>
+          <li><a data-edit-name=socials-instagram href="{{ user.profile.socials.instagram }}" class=icon-instagram></a></li>
+          <li><a data-edit-name=socials-medium href="{{ user.profile.socials.medium }}" class=icon-medium></a></li>
+          <li><a data-edit-name=socials-flickr href="{{ user.profile.socials.flickr }}" class=icon-flickr2></a></li>
+          <li><a data-edit-name=socials-pinterest href="{{ user.profile.socials.pinterest }}" class=icon-pinterest2></a></li>
+      </ul>
+      <ul>
+      <li><h3>Full name:</h3><span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
+      <li><h3>Website:</h3><span data-edit-name=website data-edit-attrs="type=url"><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
+      <li>
+        <h3>Bio:</h3>
+            <p>
+                <span data-edit-name=about data-edit-type=textarea>{{ user.profile.about or '' }}</span>
+            </p>
+      </li>
     </ul>
+
+    <h2>Articles</h2>
+    <ul>
+      {% for article in articles %}
+      <li><article>
+        <h3>{{ article.title }}</h3>
+        <p class=summary>{{ article.summary }}</p>
+        {% if article.has_image %}
+        <img src={{ article.image_url }}>
+        {% endif %}
+        <p>Article in {{ article.language }}</p>
+        <a href={{ url_for('article.article_detail', article_id=article.id, slug=article.slug) }}>Read</a>
+      </article></li>
+      {% endfor %}
+    </ul>
+
+
 
 
 {% if edit %}
@@ -47,6 +66,16 @@
   </section>
   <section>
     <h2>Contributions</h2>
+    <article>
+        <img src="http://m.cafebabel.com/cache/27/f3/27f3816aed817cb844a51012de66c8fa.jpg?cache=1280x500" alt="Lisbon digital nomad cover">
+        <time>Published on October 11th 2017</time>
+        <h3>Lisbon: Nomad's land</h3>
+    </article>
+    <article>
+        <img src="http://m.cafebabel.com/cache/27/f3/27f3816aed817cb844a51012de66c8fa.jpg?cache=1280x500" alt="Lisbon digital nomad cover">
+        <time>Published on October 11th 2017</time>
+        <h3>Lisbon: Nomad's land</h3>
+    </article>
   </section>
 
     <script>
