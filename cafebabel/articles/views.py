@@ -8,7 +8,7 @@ from .. import app, mail
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
-from ..translations.models import Translation
+from .translations.models import Translation
 
 proposal_bp = Blueprint('proposal', __name__)
 draft_bp = Blueprint('draft', __name__)

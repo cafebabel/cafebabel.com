@@ -1,9 +1,9 @@
 from flask import url_for
 from mongoengine import signals, ValidationError
 
-from .. import app, db
-from ..users.models import User
-from ..articles.models import Article
+from ... import app, db
+from ...users.models import User
+from ...articles.models import Article
 
 
 class Translation(Article):

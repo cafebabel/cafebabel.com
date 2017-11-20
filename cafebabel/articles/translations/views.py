@@ -4,8 +4,8 @@ from flask import Blueprint, abort, flash, redirect, render_template, request
 from flask_login import current_user, login_required
 from mongoengine import errors
 
-from .. import app
-from ..articles.models import Article
+from ... import app
+from ..models import Article
 from .models import Translation
 
 blueprint = Blueprint('translation', __name__)
@@ -41,14 +41,15 @@ def create():
         flash('Your translation was successfully created.')
         return redirect(translation.detail_url)
 
-    return render_template('translations/create.html',
+    return render_template('articles/translations/create.html',
                            article=article, language=language)
 
 
 @blueprint.route('/<regex("\w{24}"):id>/')
 def detail(id):
     translation = Translation.objects.get_or_404(id=id, status='draft')
-    return render_template('translations/detail.html', translation=translation)
+    return render_template('articles/translations/detail.html',
+                           translation=translation)
 
 
 @blueprint.route('/<regex("\w{24}"):id>/edit/', methods=['get', 'post'])
@@ -61,4 +62,5 @@ def edit(id):
         flash('Your translation was successfully updated.')
         return redirect(translation.detail_url)
 
-    return render_template('translations/update.html', translation=translation)
+    return render_template('articles/translations/update.html',
+                           translation=translation)
