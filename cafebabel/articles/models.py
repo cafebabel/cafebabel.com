@@ -2,6 +2,7 @@ import datetime
 from http import HTTPStatus
 
 from flask import abort, url_for
+from flask_login import current_user
 from mongoengine import errors, queryset, signals
 
 from .. import app, db
@@ -98,6 +99,26 @@ class Article(db.Document):
     @classmethod
     def delete_image_file(cls, sender, document, **kwargs):
         document.delete_image()
+
+    def _save_article(data, files, article):
+        if current_user.has_role('editor'):
+            if not article.editor:
+                data['editor'] = current_user.id
+            if data.get('author'):
+                data['author'] = User.objects.get(id=data.get('author'))
+        else:
+            if data.get('author'):
+                del data['author']
+            if data.get('editor'):
+                del data['editor']
+        for field, value in data.items():
+            setattr(article, field, value)
+        if data.get('delete-image'):
+            article.delete_image()
+        image = files.get('image')
+        if image:
+            article.attach_image(image)
+        return article.save()
 
 
 signals.pre_save.connect(Article.update_publication_date, sender=Article)

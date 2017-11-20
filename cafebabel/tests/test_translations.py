@@ -129,7 +129,7 @@ def test_translation_access_have_original_article_link(client, translation):
     response = client.get(f'/article/translation/{translation.id}/')
     text = response.get_data(as_text=True)
     assert ((f'Translated from '
-             f'<a href="/draft/{translation.original_article.id}/">'
+             f'<a href="/article/draft/{translation.original_article.id}/">'
              f'article title')
             in text)
 
@@ -217,7 +217,7 @@ def test_translation_published_should_have_translator(client, translation):
     text = response.get_data(as_text=True)
     assert response.status_code == HTTPStatus.OK
     assert ((f'Translated from '
-             f'<a href="/draft/{translation.original_article.id}/">'
+             f'<a href="/article/draft/{translation.original_article.id}/">'
              f'article title')
             in text)
     assert f'by {translation.translator}.' in text

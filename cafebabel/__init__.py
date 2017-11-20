@@ -19,14 +19,15 @@ from .core.routing import RegexConverter  # noqa: E402
 app.url_map.converters['regex'] = RegexConverter
 
 from .articles import views as articles_views  # noqa: F401, F801
-from .articles.translations import views as translations_views  # noqa: F401, F801
+from .articles.drafts import views as drafts_views  # noqa: F401, F801
 from .articles.proposals import views as proposals_views  # noqa: F401, F801
+from .articles.translations import views as translations_views  # noqa: F401, F801
 from .api import views  # noqa: F401, F801
 from .core import commands, views  # noqa: F401, F801
 from .users import views  # noqa: F401, F801
 
-app.register_blueprint(articles_views.draft_bp, url_prefix='/draft')
-app.register_blueprint(articles_views.article_bp, url_prefix='/article')
+app.register_blueprint(drafts_views.blueprint, url_prefix='/article/draft')
+app.register_blueprint(articles_views.blueprint, url_prefix='/article')
 app.register_blueprint(
     proposals_views.blueprint, url_prefix='/article/proposal')
 app.register_blueprint(
