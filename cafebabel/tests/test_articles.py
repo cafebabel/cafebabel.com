@@ -10,12 +10,6 @@ from .utils import login
 from .. import app
 
 
-def test_proposal_sends_email_to_editor(app, client):
-    response = client.get('/proposal/')
-    assert response.status_code == 200
-    assert 'action=/proposal/' in response.get_data(as_text=True)
-
-
 def test_create_draft_should_display_form(client, editor):
     login(client, editor.email, 'secret')
     response = client.get('/draft/')

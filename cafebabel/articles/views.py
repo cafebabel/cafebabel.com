@@ -2,15 +2,12 @@ from http import HTTPStatus
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, fresh_login_required, login_required
-from flask_mail import Message
 
-from .. import app, mail
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
 from .translations.models import Translation
 
-proposal_bp = Blueprint('proposal', __name__)
 draft_bp = Blueprint('draft', __name__)
 article_bp = Blueprint('article', __name__)
 
@@ -34,32 +31,6 @@ def _save_article(data, article):
     if image:
         article.attach_image(image)
     return article.save()
-
-
-@proposal_bp.route('/')
-def proposal_create_form():
-    return render_template('articles/proposal.html')
-
-
-@proposal_bp.route('/', methods=['post'])
-def proposal_create():
-    data = request.form
-    msg = Message(f'Article proposal: {data["topic"]}',
-                  sender=data['email'],
-                  recipients=[
-                      app.config['EDITOR_EMAILS'][data.get('language', 'en')]
-                  ],
-                  body=f'''
-Name: {data['name']}
-City: {data['city']}
-Angle: {data['angle']}
-Format: {data['format']}
-Additional infos: {data['additional']}
-                  ''',
-                  )
-    mail.send(msg)
-    flash('Your proposal was successfully send.', 'success')
-    return redirect(url_for('home'))
 
 
 @draft_bp.route('/')

@@ -1,6 +1,7 @@
 from pathlib import Path
 
 DEBUG = True
+TESTING = True
 SECRET_KEY = 'TODO'
 
 MONGODB_SETTINGS = {
