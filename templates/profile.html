@@ -30,6 +30,21 @@
       </li>
     </ul>
 
+    <h2>Articles</h2>
+    <ul>
+      {% for article in articles %}
+      <li><article>
+        <h3>{{ article.title }}</h3>
+        <p class=summary>{{ article.summary }}</p>
+        {% if article.has_image %}
+        <img src={{ article.image_url }}>
+        {% endif %}
+        <p>Article in {{ article.language }}</p>
+        <a href={{ url_for('article.article_detail', article_id=article.id, slug=article.slug) }}>Read</a>
+      </article></li>
+      {% endfor %}
+    </ul>
+
 
 
 
