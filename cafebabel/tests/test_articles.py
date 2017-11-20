@@ -109,19 +109,17 @@ def test_published_article_should_offer_social_sharing(client, article):
     assert 'facebook.com/sharer' in response.get_data(as_text=True)
 
 
-def test_visitor_cannot_change_editor_nor_author(client, editor, user):
-    draft = Article.objects.create(title='My draft', summary='Summary',
-                                   body='Content', language='en',
-                                   status='draft', author=user, editor=editor)
-    client.post(f'/draft/{draft.id}/edit/', data={
+def test_visitor_cannot_change_editor_nor_author(client, editor, user,
+                                                 article):
+    article.modify(status='draft', author=user, editor=editor)
+    client.post(f'/draft/{article.id}/edit/', data={
         'title': 'Updated draft',
         'author': editor,
-        # 'editor': user.id,
     })
-    draft = Article.objects.get(id=draft.id)
-    assert draft.title == 'Updated draft'
-    assert draft.author == user
-    assert editor == editor
+    article.reload()
+    assert article.title == 'Updated draft'
+    assert article.author == user
+    assert article.editor == editor
 
 
 def test_access_published_article_should_return_200(client, article):
