@@ -10,11 +10,11 @@ from ..users.models import User
 from .models import Article
 from .translations.models import Translation
 
-blueprint = Blueprint('article', __name__)
+articles = Blueprint('articles', __name__)
 
 
 # Only route with the slug for SEO purpose.
-@blueprint.route('/<slug>-<regex("\w{24}"):article_id>/')
+@articles.route('/<slug>-<regex("\w{24}"):article_id>/')
 def detail(slug, article_id):
     article = Article.objects.get_or_404(id=article_id, status='published')
     if article.slug != slug:
@@ -39,7 +39,7 @@ def detail(slug, article_id):
                            translations_publisheds=translations_publisheds)
 
 
-@blueprint.route(
+@articles.route(
     '/<regex("\w{24}"):article_id>/edit/', methods=['get', 'post'])
 @login_required
 @editor_required
@@ -57,7 +57,7 @@ def edit(article_id):
         'articles/edit.html', article=article, authors=authors)
 
 
-@blueprint.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
+@articles.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
 @fresh_login_required
 @editor_required
 def delete(article_id):
@@ -67,7 +67,7 @@ def delete(article_id):
     return redirect(url_for('home'))
 
 
-@blueprint.route('/to_translate/')
+@articles.route('/to_translate/')
 def to_translate():
     english = app.config['LANGUAGES'][0]
     current_language = request.args.get('in', english[0])

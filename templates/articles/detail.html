@@ -34,7 +34,7 @@
   {% endblock %}
   {% if current_user.has_role('editor') and article.is_published %}
     <p>
-      <a class=button href={{ url_for('article.edit', article_id=article.id) }}>Edit this article</a>
+      <a class=button href={{ url_for('articles.edit', article_id=article.id) }}>Edit this article</a>
     </p>
   {% endif %}
 
@@ -50,10 +50,10 @@
       {% if article.language != language[0] and language[0] not in translations_langs %}
         {% if article.is_translation %}
           {% if language[0] != article.original_article.language %}
-            <li><a href={{ url_for('translation.create') }}?lang={{language[0]}}&original={{ article.original_article.id }}>{{ language[1] }}</a></li>
+            <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.original_article.id }}>{{ language[1] }}</a></li>
           {% endif %}
         {% else %}
-          <li><a href={{ url_for('translation.create') }}?lang={{language[0]}}&original={{ article.id }}>{{ language[1] }}</a></li>
+          <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>{{ language[1] }}</a></li>
         {% endif %}
       {% endif %}
     {% endfor %}
@@ -72,7 +72,7 @@
     <p>Review this article in:</p>
     <ul>
       {% for translation in translations_drafts %}
-        <li>{{ translation.language }}: <a href={{ url_for('translation.detail', id=translation.id) }}>{{ translation.title }}</a></li>
+        <li>{{ translation.language }}: <a href={{ url_for('translations.detail', id=translation.id) }}>{{ translation.title }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}

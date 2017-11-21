@@ -41,7 +41,7 @@ def test_create_published_draft_should_display_article(client, editor):
     }, follow_redirects=True)
     assert response.status_code == 200
     body = response.get_data(as_text=True)
-    assert request.url_rule.endpoint == 'article.detail'
+    assert request.url_rule.endpoint == 'articles.detail'
     assert '<h1>Test article</h1>' in body
     assert '<p>Article body</p>' in body
 

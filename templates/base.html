@@ -38,9 +38,9 @@
     {% endif %}
   {% endif %}
 {% endif %}
-    <li><a href={{ url_for('proposal.create') }}>Suggest an article</a></li>
+    <li><a href={{ url_for('proposals.create') }}>Suggest an article</a></li>
     {% if current_user.has_role('editor') %}
-    <li><a href={{ url_for('draft.create') }}>Write an article</a></li>
+    <li><a href={{ url_for('drafts.create') }}>Write an article</a></li>
     {% endif %}
   </ul>
 </nav>

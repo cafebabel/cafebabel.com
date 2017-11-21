@@ -5,10 +5,10 @@ from ...core.helpers import editor_required
 from ...users.models import User
 from ..models import Article
 
-blueprint = Blueprint('draft', __name__)
+drafts = Blueprint('drafts', __name__)
 
 
-@blueprint.route('/new/', methods=['get', 'post'])
+@drafts.route('/new/', methods=['get', 'post'])
 @editor_required
 @login_required
 def create():
@@ -23,7 +23,7 @@ def create():
                            authors=authors)
 
 
-@blueprint.route('/<regex("\w{24}"):draft_id>/edit/', methods=['get', 'post'])
+@drafts.route('/<regex("\w{24}"):draft_id>/edit/', methods=['get', 'post'])
 def edit(draft_id):
     article = Article.objects.get_or_404(id=draft_id)
     if request.method == 'POST':
@@ -36,7 +36,7 @@ def edit(draft_id):
                            authors=authors)
 
 
-@blueprint.route('/<regex("\w{24}"):draft_id>/')
+@drafts.route('/<regex("\w{24}"):draft_id>/')
 def detail(draft_id):
     article = Article.objects.get_or_404(id=draft_id, status='draft')
     return render_template('articles/drafts/detail.html', article=article)

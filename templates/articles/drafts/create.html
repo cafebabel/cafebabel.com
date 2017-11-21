@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-  <form method=post action={{ url_for('draft.create') }} enctype=multipart/form-data>
+  <form method=post action={{ url_for('drafts.create') }} enctype=multipart/form-data>
   <div class=text>
     <label for=title>Title</label>
     <input id=title name=title required>

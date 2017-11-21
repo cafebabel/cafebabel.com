@@ -8,10 +8,10 @@ from ... import app
 from ..models import Article
 from .models import Translation
 
-blueprint = Blueprint('translation', __name__)
+translations = Blueprint('translations', __name__)
 
 
-@blueprint.route('/new/', methods=['get', 'post'])
+@translations.route('/new/', methods=['get', 'post'])
 @login_required
 def create():
     original_article = request.args.get('original')
@@ -45,14 +45,14 @@ def create():
                            article=article, language=language)
 
 
-@blueprint.route('/<regex("\w{24}"):id>/')
+@translations.route('/<regex("\w{24}"):id>/')
 def detail(id):
     translation = Translation.objects.get_or_404(id=id, status='draft')
     return render_template('articles/translations/detail.html',
                            translation=translation)
 
 
-@blueprint.route('/<regex("\w{24}"):id>/edit/', methods=['get', 'post'])
+@translations.route('/<regex("\w{24}"):id>/edit/', methods=['get', 'post'])
 @login_required
 def edit(id):
     translation = Translation.objects.get_or_404(id=id, status='draft')

@@ -239,9 +239,9 @@ def test_access_published_article_should_link_translations(client, article,
     text = response.get_data(as_text=True)
     assert response.status_code == HTTPStatus.OK
     assert '<p>Translate this article in:</p>' in text
-    assert ((f'<li><a href={url_for("translation.create")}'
+    assert ((f'<li><a href={url_for("translations.create")}'
              f'?lang=it&original={article.id}>Italiano</a></li>') in text)
-    assert ((f'<li><a href={url_for("translation.create")}'
+    assert ((f'<li><a href={url_for("translations.create")}'
              f'?lang=fr&original={article.id}>Français</a></li>') not in text)
 
 

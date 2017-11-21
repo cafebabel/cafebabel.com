@@ -3,7 +3,7 @@ from flask_mail import Message
 
 from ... import app, mail
 
-blueprint = Blueprint('proposal', __name__)
+proposals = Blueprint('proposals', __name__)
 
 BODY_EMAIL_TEMPLATE = '''
 Name: {data[name]}
@@ -14,7 +14,7 @@ Additional infos: {data[additional]}
 '''
 
 
-@blueprint.route('/new/', methods=['get', 'post'])
+@proposals.route('/new/', methods=['get', 'post'])
 def create():
     if request.method == 'POST':
         data = request.form
