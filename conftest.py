@@ -5,8 +5,8 @@ from flask_security.confirmable import confirm_user
 
 from cafebabel import app as myapp
 from cafebabel.articles.models import Article
-from cafebabel.core.commands import _dropdb, _initdb
 from cafebabel.articles.translations.models import Translation
+from cafebabel.core.commands import _dropdb, _initdb
 from cafebabel.users.models import Role, User, user_datastore
 
 
