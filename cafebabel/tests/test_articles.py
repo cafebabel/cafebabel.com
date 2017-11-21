@@ -269,6 +269,11 @@ def test_article_to_translate_should_filter_by_language(client):
     assert '<a href=/article/to_translate/?in=en>English</a>' in text
 
 
+def test_article_to_translate_with_unknown_language(client):
+    response = client.get(f'/article/to_translate/?in=xx')
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
 def test_article_to_translate_should_have_translation_links(client, article):
     french = app.config['LANGUAGES'][1][0]
     article.modify(language=french)

@@ -74,7 +74,7 @@ def to_translate():
     current_language = request.args.get('in', english[0])
     LANGUAGES_DICT = dict(app.config['LANGUAGES'])
     if current_language not in LANGUAGES_DICT:
-        abort(HTTPStatus.NOT_FOUND, 'You must specify a valid language.')
+        abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid language.')
     articles = Article.objects.filter(language__ne=current_language)
     return render_template(
         'articles/to_translate.html', articles=articles,

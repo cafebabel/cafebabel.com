@@ -17,9 +17,9 @@ def create():
     original_article = request.args.get('original')
     language = request.args.get('lang')
     if not original_article:
-        abort(HTTPStatus.NOT_FOUND, 'You must specify a valid article.')
+        abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid article.')
     if not language or language not in dict(app.config['LANGUAGES']):
-        abort(HTTPStatus.NOT_FOUND, 'You must specify a valid language.')
+        abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid language.')
     article = Article.objects.get_or_404(id=original_article)
 
     if request.method == 'POST':

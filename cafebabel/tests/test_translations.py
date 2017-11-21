@@ -44,9 +44,9 @@ def test_translation_creation_required_parameters(app, client, user, article):
     login(client, user.email, 'secret')
     language = app.config['LANGUAGES'][1][0]
     response = client.get(f'/article/translation/new/?original={article.id}')
-    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.status_code == HTTPStatus.BAD_REQUEST
     response = client.get(f'/article/translation/new/?lang={language}')
-    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.status_code == HTTPStatus.BAD_REQUEST
     response = client.get(
         f'/article/translation/new/?lang={language}&original={article.id}$')
     assert response.status_code == HTTPStatus.NOT_FOUND
