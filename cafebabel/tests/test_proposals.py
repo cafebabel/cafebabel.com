@@ -6,7 +6,7 @@ from .. import mail
 def test_proposal_display_form(app, client):
     response = client.get('/article/proposal/new/')
     assert response.status_code == 200
-    assert '<form action= method=post>' in response.get_data(as_text=True)
+    assert '<form action=. method=post>' in response.get_data(as_text=True)
 
 
 def test_proposal_send_email(app, client):

@@ -59,10 +59,10 @@ def test_translation_creation_should_redirect(app, client, user, article):
         'title': 'title',
         'summary': 'summary',
         'body': 'body',
+        'original': article.id,
+        'language': language
     }
-    response = client.post(
-        f'/article/translation/new/?lang={language}&original={article.id}',
-        data=data)
+    response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
@@ -83,10 +83,10 @@ def test_translation_creation_already_existing(app, client, user, article):
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
+        'original': article.id,
+        'language': language
     }
-    response = client.post(
-        f'/article/translation/new/?lang={language}&original={article.id}',
-        data=data)
+    response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert ('Existing translation already exists.'
             in response.get_data(as_text=True))
@@ -97,11 +97,10 @@ def test_translation_creation_same_as_article(app, client, user, article):
     data = {
         'title': 'Test article',
         'body': 'Article body',
+        'original': article.id,
+        'language': article.language
     }
-    response = client.post(
-        (f'/article/translation/new/'
-         f'?lang={article.language}&original={article.id}'),
-        data=data)
+    response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert ('Original article in the same language.'
             in response.get_data(as_text=True))
@@ -113,10 +112,10 @@ def test_translation_creation_unknown_article(app, client, user, article):
     data = {
         'title': 'Test article',
         'body': 'Article body',
+        'original': f'foo{article.id}',
+        'language': language
     }
-    response = client.post(
-        f'/article/translation/new/?lang={language}&original=foo{article.id}',
-        data=data)
+    response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 

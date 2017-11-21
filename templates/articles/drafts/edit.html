@@ -2,7 +2,7 @@
 
 {% block body %}
 <form method=post action={{ url_for('drafts.edit', draft_id=article.id) }} enctype=multipart/form-data>
-  <input type=hidden name=id value="{{article.id}}">
+  <input type=hidden name=id value="{{ article.id }}">
   <div class=text>
     <label for=title>Title</label>
     <input id=title name=title value="{{ article.title }}" required>

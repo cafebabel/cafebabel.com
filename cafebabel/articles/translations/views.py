@@ -14,16 +14,9 @@ translations = Blueprint('translations', __name__)
 @translations.route('/new/', methods=['get', 'post'])
 @login_required
 def create():
-    original_article = request.args.get('original')
-    language = request.args.get('lang')
-    if not original_article:
-        abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid article.')
-    if not language or language not in dict(app.config['LANGUAGES']):
-        abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid language.')
-    article = Article.objects.get_or_404(id=original_article)
-
     if request.method == 'POST':
         data = request.form.to_dict()
+        article = Article.objects.get_or_404(id=data.pop('original'))
         try:
             translation = Translation.objects.create(
                 translator=current_user.id,
@@ -33,7 +26,6 @@ def create():
                 author=article.author,
                 has_image=article.has_image,
                 category=article.category,
-                language=language,
                 **data
             )
         except errors.ValidationError as e:
@@ -44,6 +36,13 @@ def create():
         flash('Your translation was successfully created.')
         return redirect(translation.detail_url)
 
+    original_article = request.args.get('original')
+    language = request.args.get('lang')
+    if not original_article:
+        abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid article.')
+    if not language or language not in dict(app.config['LANGUAGES']):
+        abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid language.')
+    article = Article.objects.get_or_404(id=original_article)
     return render_template('articles/translations/create.html',
                            article=article, language=language)
 
@@ -65,5 +64,5 @@ def edit(id):
         flash('Your translation was successfully updated.')
         return redirect(translation.detail_url)
 
-    return render_template('articles/translations/update.html',
+    return render_template('articles/translations/edit.html',
                            translation=translation)
