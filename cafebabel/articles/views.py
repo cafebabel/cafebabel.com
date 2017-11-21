@@ -54,10 +54,15 @@ def proposal_create():
                       app.config['EDITOR_EMAILS'][data.get('language', 'en')]
                   ],
                   body=f'''
+Language: {{data['language']}}
 Name: {data['name']}
-City: {data['city']}
+Email: {{data['email']}}
+city: {{data['city']}}
+topic: {data['topic']}
 Angle: {data['angle']}
+Media: {data['media']}
 Format: {data['format']}
+Section: {data['section']}
 Additional infos: {data['additional']}
                   ''',
                   )
