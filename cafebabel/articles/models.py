@@ -63,10 +63,14 @@ class Article(db.Document):
         return False
 
     def is_translated_in(self, language):
-        from .translations.models import Translation  # TODO: circular :/
+        """This implementation is quite naive and inefficient
+
+        given that it performs one query per language.
+        TODO: turn into a cacheable list of translations when necessary.
+        """
+        from .translations.models import Translation  # NOQA: circular :/
         return bool(Translation.objects
-                    .filter(original_article=self, language=language)
-                    .only('id').first())
+                    .filter(original_article=self, language=language).count())
 
     @property
     def image_url(self):
