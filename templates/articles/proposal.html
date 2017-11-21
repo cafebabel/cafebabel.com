@@ -23,36 +23,30 @@
     <label for=field_topic>Topic in a sentence *<p>ex: Digital nomads in Lisbon</p></label><input name=topic id=field_topic required>
     <label for=field_angle>Pitch your story<p>ex: I want to meet young people/ participants of the three major digital nomad communities/ events in Lisbon and use their personal stories as an insight to describe the digital nomads landscape in Portugal</p></label><input name=angle id=field_angle>
     <hr>
-    <div class=select>
-        <label for=media-type>Media
-            <select name=media id=media-type required>
-                <option value=text>Text</option>
-                <option value=video>Video</option>
-                <option value=photo>Photo Gallery</option>
-            </select>
-        </label>
-    </div>
-    <div class=select>
-        <label for=format>Format
-            <select name=format id=format required>
-                <option value=interview>Interview</option>
-                <option value=portrait>Portrait</option>
-                <option value=feature>Feature</option>
-                <option value=data>Data</option>
-                <option value=other>Other?</option>
-            </select>
-        </label>
-    </div>
-    <div class=select>
-        <label for=section>Format
-            <select name=section id=section required>
-                <option value=creative>Creative</option>
-                <option value=impact>Impact</option>
-                <option value=experience>Experience</option>
-                <option value=raw>Raw</option>
-            </select>
-        </label>
-    </div>
+    <label for=media-type>Media
+        <select name=media id=media-type required>
+            <option value=text>Text</option>
+            <option value=video>Video</option>
+            <option value=photo>Photo Gallery</option>
+        </select>
+    </label>
+    <label for=format>Format
+        <select name=format id=format required>
+            <option value=interview>Interview</option>
+            <option value=portrait>Portrait</option>
+            <option value=feature>Feature</option>
+            <option value=data>Data</option>
+            <option value=other>Other?</option>
+        </select>
+    </label>
+    <label for=section>Section
+        <select name=section id=section required>
+            <option value=creative>Creative</option>
+            <option value=impact>Impact</option>
+            <option value=experience>Experience</option>
+            <option value=raw>Raw</option>
+        </select>
+    </label>
     <label for=field_additional>Additional informations</label><textarea name=additional id=field_additional></textarea>
 
     <button type=submit>Suggest this article</button>

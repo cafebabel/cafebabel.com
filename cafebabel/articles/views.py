@@ -11,6 +11,7 @@ from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
 
+
 proposal_bp = Blueprint(
     'proposal', __name__, template_folder='templates/articles')
 draft_bp = Blueprint(
