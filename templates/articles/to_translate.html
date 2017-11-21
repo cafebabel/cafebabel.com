@@ -21,7 +21,13 @@
         <ul>
         {% for language in get_languages() %}
           {% if article.language != language[0] and not article.is_translated_in(language[0]) %}
-            <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>Translate in {{ language[1] }}</a></li>
+            {% if article.is_translation %}
+              {% if not article.original_article.language == language[0] %}
+                <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>Translate in {{ language[1] }}</a></li>
+              {% endif %}
+            {% else %}
+              <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>Translate in {{ language[1] }}</a></li>
+            {% endif %}
           {% endif %}
         {% endfor %}
         </ul>

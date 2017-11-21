@@ -286,6 +286,18 @@ def test_article_to_translate_should_have_translation_links(client, article):
             not in text)
 
 
+def test_translation_to_translate_should_not_have_original_language(
+        client, article, translation):
+    response = client.get(f'/article/to_translate/')
+    text = response.get_data(as_text=True)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=en&original={article.id}>Translate in English</a>'
+            not in text)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=fr&original={article.id}>Translate in Français</a>'
+            not in text)
+
+
 def test_article_to_translate_should_have_only_other_links(client, article):
     french = app.config['LANGUAGES'][1][0]
     article.modify(language=french)
