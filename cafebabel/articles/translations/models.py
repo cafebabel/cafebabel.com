@@ -8,7 +8,8 @@ from ...articles.models import Article
 
 class Translation(Article):
     translator = db.ReferenceField(User, required=True)
-    original_article = db.ReferenceField('Article', required=True)
+    original_article = db.ReferenceField(
+        'Article', required=True, unique_with='language')
 
     @property
     def detail_url(self):
@@ -30,14 +31,6 @@ class Translation(Article):
 
     def clean(self):
         super().clean()
-        try:
-            translations = Translation.objects.filter(
-                original_article=self.original_article, language=self.language)
-            if (translations and
-                    (len(translations) > 1 or translations[0].id != self.id)):
-                raise ValidationError('Existing translation already exists.')
-        except Translation.DoesNotExist:
-            pass
         try:
             Article.objects.get(id=self.original_article.id,
                                 language=self.language)

@@ -38,6 +38,9 @@ def create():
             )
         except errors.ValidationError as e:
             abort(HTTPStatus.BAD_REQUEST, str(e))
+        except errors.NotUniqueError as e:
+            abort(HTTPStatus.BAD_REQUEST,
+                  'Existing translation already exists.')
         flash('Your translation was successfully created.')
         return redirect(translation.detail_url)
 
