@@ -22,7 +22,7 @@ html {
 }
 
 body {
-    margin: 4rem 2rem;
+    margin: 0;
 }
 
 article,
@@ -41,8 +41,21 @@ summary {
 
 main {
     display: block;
+    width: 100%;
+    background-color: #fff;
+    min-height: 100vh; /* https://stackoverflow.com/questions/1509589/full-viewport-height-scaling-div-just-css-no-js-possible */
+}
+
+#content {
     max-width: 120rem;
-    margin: 0 auto;
+    margin: 0 auto 70rem auto;
+    padding: 2rem 2rem 7rem 2rem;
+}
+
+@media screen and (min-width: 1200px) {
+    #content {
+        padding: 0 0 7rem 0;
+    }
 }
 
 /* Vremena Grotesk */
@@ -298,6 +311,7 @@ input[type=submit],
 button {
     text-align: center;
     padding: 2rem 4rem;
+    margin-bottom: 2rem;
     cursor: pointer;
     background-color: #00283C;
     color: #fff;
@@ -615,6 +629,12 @@ button.menu-button + nav a {
     display: block;
 }
 
+/* Informations flash */
+
+.flashes {
+    background-color: #fff;
+}
+
 /* Profile page */
 
 .profile-page h1 {
@@ -680,7 +700,7 @@ button.menu-button + nav a {
 }
 
 @media screen and (min-width: 750px) {
-    .profile-page main {
+    .profile-page main #content {
         display: grid;
         grid-gap: 2rem;
         grid-template-columns: 50% 50%;
@@ -735,4 +755,54 @@ button.menu-button + nav a {
 
 .pitch-page button:hover a {
     color: #00283C;
+}
+
+/* Article page */
+
+.article-page article p {
+    max-width: 75rem;
+    margin: 0 auto 5rem auto;
+}
+
+.article-page article h1 + p {
+    text-align: center;
+}
+
+.article-page article h1 + p time {
+    font-style: italic;
+    font-family: serif;
+    font-size: 1.9rem;
+}
+
+.article-page article h3 {
+    text-align: center;
+    max-width: 75rem;
+    margin: 3rem auto 5rem auto;
+}
+
+.article-page article .summary {
+    max-width: 100%;
+    margin: 3rem auto 5rem auto;
+    font-size: 2.8rem;
+}
+
+/* Footer */
+
+footer {
+    width: 100%;
+    height: 70rem;
+    font-size: 4rem;
+    background: linear-gradient(to bottom right, #002f4b, #30799B); /* https://codepen.io/alexcarpenter/pen/LveDx?q=gradient&limit=all&type=type-pens */
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+footer p {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
 }
