@@ -8,14 +8,14 @@ from .utils import login
 
 
 def test_translation_query_should_retrieve_all(app, article, translation):
-    french = app.config['LANGUAGES'][1][0]
+    language = app.config['LANGUAGES'][1][0]
     article2 = Article.objects.create(
         title='title',
         summary='summary text',
-        language=french,
+        language=language,
         body='body text')
-    assert Article.objects.filter(language=french).count() == 2
-    articles = Article.objects.filter(language=french).only('id')
+    assert Article.objects.filter(language=language).count() == 2
+    articles = Article.objects.filter(language=language).only('id')
     assert article2.id in [a.id for a in articles]
     assert translation.id in [a.id for a in articles]
     assert article.id not in [a.id for a in articles]
