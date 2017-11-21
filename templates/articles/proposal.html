@@ -6,45 +6,53 @@
   <h1>Contribute</h1>
   <h3>Wanna be part of Cafébabel project? That’s the right place</h3>
   <form action={{ url_for('proposal.proposal_create') }} method=post>
-    <label for=field-language>Mother tongue
-      <select name=language id=field-language required>
-        <option value=en>English</option>
-        <option value=fr>French</option>
-        <option value=it>Italian</option>
-        <option value=de>German</option>
-        <option value=es>Spanish</option>
-      </select>
-    </label>
+    <div class=select>
+        <label for=field-language>Mother tongue
+            <select name=language id=field-language required>
+                <option value=en>English</option>
+                <option value=fr>French</option>
+                <option value=it>Italian</option>
+                <option value=de>German</option>
+                <option value=es>Spanish</option>
+            </select>
+        </label>
+    </div>
     <label for=field_name>Name *</label><input name=name id=field_name required>
     <label for=field_email>Contact *</label><input type=email name=email id=field_email required>
     <label for=field_city>City</label><input name=city id=field_city>
     <label for=field_topic>Topic in a sentence *<p>ex: Digital nomads in Lisbon</p></label><input name=topic id=field_topic required>
     <label for=field_angle>Pitch your story<p>ex: I want to meet young people/ participants of the three major digital nomad communities/ events in Lisbon and use their personal stories as an insight to describe the digital nomads landscape in Portugal</p></label><input name=angle id=field_angle>
     <hr>
-    <label for=media-type>Media
-        <select name=media id=media-type required>
-            <option value=text>Text</option>
-            <option value=video>Video</option>
-            <option value=photo>Photo Gallery</option>
-        </select>
-    </label>
-    <label for=format>Format
-        <select name=format id=format required>
-            <option value=interview>Interview</option>
-            <option value=portrait>Portrait</option>
-            <option value=feature>Feature</option>
-            <option value=data>Data</option>
-            <option value=other>Other?</option>
-        </select>
-    </label>
-    <label for=section>Format
-        <select name=section id=section required>
-            <option value=creative>Creative</option>
-            <option value=impact>Impact</option>
-            <option value=experience>Experience</option>
-            <option value=raw>Raw</option>
-        </select>
-    </label>
+    <div class=select>
+        <label for=media-type>Media
+            <select name=media id=media-type required>
+                <option value=text>Text</option>
+                <option value=video>Video</option>
+                <option value=photo>Photo Gallery</option>
+            </select>
+        </label>
+    </div>
+    <div class=select>
+        <label for=format>Format
+            <select name=format id=format required>
+                <option value=interview>Interview</option>
+                <option value=portrait>Portrait</option>
+                <option value=feature>Feature</option>
+                <option value=data>Data</option>
+                <option value=other>Other?</option>
+            </select>
+        </label>
+    </div>
+    <div class=select>
+        <label for=section>Format
+            <select name=section id=section required>
+                <option value=creative>Creative</option>
+                <option value=impact>Impact</option>
+                <option value=experience>Experience</option>
+                <option value=raw>Raw</option>
+            </select>
+        </label>
+    </div>
     <!--<label for=field_format>Format</label><input name=format id=field_format> select dropdown menu instead-->
     <label for=field_additional>Additional informations</label><textarea name=additional id=field_additional></textarea>
 
