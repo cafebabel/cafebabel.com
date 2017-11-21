@@ -46,21 +46,21 @@ def admin():
 
 @pytest.fixture
 def article():
-    en = myapp.config['LANGUAGES'][0][0]
+    language = myapp.config['LANGUAGES'][0][0]
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        language=en,
+        language=language,
         body='body text')
 
 
 @pytest.fixture
 def translation(user, article):
-    fr = myapp.config['LANGUAGES'][1][0]
+    language = myapp.config['LANGUAGES'][1][0]
     return Translation.objects.create(
         title='title',
         summary='summary text',
-        language=fr,
+        language=language,
         body='body text',
         translator=user.id,
         original_article=article.id)

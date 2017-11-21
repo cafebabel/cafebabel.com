@@ -69,8 +69,8 @@ def delete(article_id):
 
 @articles.route('/to_translate/')
 def to_translate():
-    english = app.config['LANGUAGES'][0]
-    current_language = request.args.get('in', english[0])
+    default = app.config['LANGUAGES'][0]
+    current_language = request.args.get('in', default[0])
     LANGUAGES_DICT = dict(app.config['LANGUAGES'])
     if current_language not in LANGUAGES_DICT:
         abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid language.')
