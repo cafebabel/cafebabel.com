@@ -109,9 +109,11 @@ class Article(db.Document):
     def delete_image_file(cls, sender, document, **kwargs):
         document.delete_image()
 
-    def _save_article(data, files, article):
+    def save_from_request(self, request):
+        data = request.form.to_dict()
+        files = request.files
         if current_user.has_role('editor'):
-            if not article.editor:
+            if not self.editor:
                 data['editor'] = current_user.id
             if data.get('author'):
                 data['author'] = User.objects.get(id=data.get('author'))
@@ -121,13 +123,13 @@ class Article(db.Document):
             if data.get('editor'):
                 del data['editor']
         for field, value in data.items():
-            setattr(article, field, value)
+            setattr(self, field, value)
         if data.get('delete-image'):
-            article.delete_image()
+            self.delete_image()
         image = files.get('image')
         if image:
-            article.attach_image(image)
-        return article.save()
+            self.attach_image(image)
+        return self.save()
 
 
 signals.pre_save.connect(Article.update_publication_date, sender=Article)

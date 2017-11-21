@@ -47,8 +47,7 @@ def edit(article_id):
     article = Article.objects.get_or_404(id=article_id, status='published')
 
     if request.method == 'POST':
-        article = Article._save_article(
-            request.form.to_dict(), request.files, article)
+        article.save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(
             url_for('.detail', article_id=article.id, slug=article.slug))

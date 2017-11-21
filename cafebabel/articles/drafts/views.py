@@ -13,8 +13,7 @@ blueprint = Blueprint('draft', __name__)
 @login_required
 def create():
     if request.method == 'POST':
-        article = Article._save_article(
-            request.form.to_dict(), request.files, Article())
+        article = Article().save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
 
@@ -28,8 +27,7 @@ def create():
 def edit(draft_id):
     article = Article.objects.get_or_404(id=draft_id)
     if request.method == 'POST':
-        article = Article._save_article(
-            request.form.to_dict(), request.files, article)
+        article.save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
 
