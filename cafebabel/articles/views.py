@@ -67,7 +67,7 @@ def delete(article_id):
     return redirect(url_for('home'))
 
 
-@articles.route('/to_translate/')
+@articles.route('/to-translate/')
 def to_translate():
     default = app.config['LANGUAGES'][0]
     current_language = request.args.get('in', default[0])
@@ -76,5 +76,5 @@ def to_translate():
         abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid language.')
     articles = Article.objects.filter(language__ne=current_language)
     return render_template(
-        'articles/to_translate.html', articles=articles,
+        'articles/to-translate.html', articles=articles,
         current_language=(current_language, LANGUAGES_DICT[current_language]))

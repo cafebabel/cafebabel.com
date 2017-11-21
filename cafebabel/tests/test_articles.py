@@ -251,33 +251,33 @@ def test_article_should_know_its_translations(client, article, translation):
 
 
 def test_article_to_translate_should_return_200(client):
-    response = client.get(f'/article/to_translate/')
+    response = client.get(f'/article/to-translate/')
     assert response.status_code == HTTPStatus.OK
 
 
 def test_article_to_translate_should_have_other_languages(client):
-    response = client.get(f'/article/to_translate/')
+    response = client.get(f'/article/to-translate/')
     text = response.get_data(as_text=True)
-    assert '<a href=/article/to_translate/?in=fr>Français</a>' in text
-    assert '<a href=/article/to_translate/?in=en>English</a>' not in text
+    assert '<a href=/article/to-translate/?in=fr>Français</a>' in text
+    assert '<a href=/article/to-translate/?in=en>English</a>' not in text
 
 
 def test_article_to_translate_should_filter_by_language(client):
-    response = client.get(f'/article/to_translate/?in=fr')
+    response = client.get(f'/article/to-translate/?in=fr')
     text = response.get_data(as_text=True)
-    assert '<a href=/article/to_translate/?in=fr>Français</a>' not in text
-    assert '<a href=/article/to_translate/?in=en>English</a>' in text
+    assert '<a href=/article/to-translate/?in=fr>Français</a>' not in text
+    assert '<a href=/article/to-translate/?in=en>English</a>' in text
 
 
 def test_article_to_translate_with_unknown_language(client):
-    response = client.get(f'/article/to_translate/?in=xx')
+    response = client.get(f'/article/to-translate/?in=xx')
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
 
 def test_article_to_translate_should_have_translation_links(client, article):
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
-    response = client.get(f'/article/to_translate/')
+    response = client.get(f'/article/to-translate/')
     text = response.get_data(as_text=True)
     assert (f'<a href=/article/translation/new/'
             f'?lang=en&original={article.id}>Translate in English</a>' in text)
@@ -288,7 +288,7 @@ def test_article_to_translate_should_have_translation_links(client, article):
 
 def test_translation_to_translate_should_not_have_original_language(
         client, article, translation):
-    response = client.get(f'/article/to_translate/')
+    response = client.get(f'/article/to-translate/')
     text = response.get_data(as_text=True)
     assert (f'<a href=/article/translation/new/'
             f'?lang=en&original={article.id}>Translate in English</a>'
@@ -301,6 +301,6 @@ def test_translation_to_translate_should_not_have_original_language(
 def test_article_to_translate_should_have_only_other_links(client, article):
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
-    response = client.get(f'/article/to_translate/?in=fr')
+    response = client.get(f'/article/to-translate/?in=fr')
     text = response.get_data(as_text=True)
     assert 'Translate in ' not in text
