@@ -55,6 +55,16 @@ def article():
 
 
 @pytest.fixture
+def published_article():
+    return Article.objects.create(
+        status='published',
+        title='published title',
+        summary='summary text',
+        language=myapp.config['LANGUAGES'][0][0],
+        body='body text')
+
+
+@pytest.fixture
 def translation(user, article):
     language = myapp.config['LANGUAGES'][1][0]
     return Translation.objects.create(

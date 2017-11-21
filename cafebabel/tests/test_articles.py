@@ -1,4 +1,3 @@
-from copy import deepcopy
 from http import HTTPStatus
 from pathlib import Path
 from io import BytesIO
@@ -36,14 +35,15 @@ def test_proposal_sends_email_to_editor(app, client):
     assert get_flashed_messages() == ['Your proposal was successfully sent.']
 
 
-def test_published_article_should_offer_social_sharing(client, article):
-    article.status = 'published'
-    article.save()
-    response = client.get(f'/article/{article.slug}-{article.id}/')
+def test_published_article_should_offer_social_sharing(client,
+                                                       published_article):
+    response = client.get(f'/article/{published_article.slug}-'
+                          f'{published_article.id}/')
     assert response.status_code == 200
     assert 'facebook.com/sharer' in response.get_data(as_text=True)
 
 
+<<<<<<< HEAD
 def test_access_published_article_should_return_200(client, article):
     article.status = 'published'
     article.save()
@@ -55,50 +55,85 @@ def test_access_published_draft_should_return_404(client, article):
     article.status = 'published'
     article.save()
     response = client.get(f'/article/draft/{article.id}/')
-    assert response.status_code == HTTPStatus.NOT_FOUND
+=======
+def test_visitor_cannot_change_editor_nor_author(client, editor, user):
+    draft = Article.objects.create(title='My draft', body='Content',
+                                   language='en', status='draft',
+                                   author=user, editor=editor)
+    client.post(f'/draft/{draft.id}/edit/', data={
+        'title': 'Updated draft',
+        'author': editor,
+        # 'editor': user.id,
+    })
+    draft = Article.objects.get(id=draft.id)
+    assert draft.title == 'Updated draft'
+    assert draft.author == user
+    assert editor == editor
 
 
-def test_access_article_with_large_slug_should_return_200(client, article):
-    article.status = 'published'
-    article.slug = 'quite-large-slug-with-dashes'
-    article.save()
-    response = client.get(f'/article/{article.slug}-{article.id}/')
+def test_access_published_article_should_return_200(client, published_article):
+    response = client.get(f'/article/{published_article.slug}-'
+                          f'{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
 
 
-def test_published_article_should_display_content(client, article, user):
-    article.status = 'published'
+def test_access_published_draft_should_return_404(client, published_article):
+    response = client.get(f'/draft/{published_article.id}/')
+>>>>>>> refactored published article fixture
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_access_article_with_large_slug_should_return_200(client,
+                                                          published_article):
+    published_article.slug = 'quite-large-slug-with-dashes'
+    published_article.save()
+    response = client.get(f'/article/{published_article.slug}-'
+                          f'{published_article.id}/')
+    assert response.status_code == HTTPStatus.OK
+
+
+def test_published_article_should_display_content(client, published_article,
+                                                  user):
     article.author = user
-    article.save()
-    response = client.get(f'/article/{article.slug}-{article.id}/')
+    response = client.get(f'/article/{published_article.slug}-'
+                          f'{published_article.id}/')
     assert response.status_code == 200
     content = response.get_data(as_text=True)
-    assert f'<h1>{article.title}</h1>' in content
-    assert f'<title>{article.title}' in content
-    assert f'<meta name=description content="{article.summary}"' in content
-    assert f'<p class=summary>{article.summary}</p>' in content
-    assert f'<p>{article.body}</p>' in content
-    assert f'<time>{article.creation_date.date()}</time>' in content
-    assert f'<span>{article.language}</span>' in content
-    assert f'{article.author.profile.name}' in content
-    assert (f'href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
-            f'article%2F{article.slug}-{article.id}%2F&text={article.title}'
-            f'&via=cafebabel_eng"' in content)
-    assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
-            f'localhost%2Farticle%2F{article.slug}-{article.id}%2F"'
+    assert f'<h1>{published_article.title}</h1>' in content
+    assert f'<title>{published_article.title}' in content
+    assert (f'<meta name=description content="{published_article.summary}"'
             in content)
+    assert f'<p class=summary>{published_article.summary}</p>' in content
+    assert f'<p>{published_article.body}</p>' in content
+    assert f'<time>{published_article.creation_date.date()}</time>' in content
+    assert f'<span>{published_article.language}</span>' in content
+    assert f'{published_article.author.profile.name}' in content
+    assert (f'href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
+            f'article%2F{published_article.slug}-{published_article.id}%2F'
+            f'&text={published_article.title}&via=cafebabel_eng"' in content)
+    assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
+            f'localhost%2Farticle%2F{published_article.slug}-'
+            f'{published_article.id}%2F"' in content)
     assert '1 min' in content
 
 
+<<<<<<< HEAD
 def test_published_article_should_render_markdown(client):
     article = Article.objects.create(title='My title',
                                      summary='Summary',
                                      body='## Body title\n> quote me',
                                      status='published', language='en')
     response = client.get(f'/article/{article.slug}-{article.id}/')
+=======
+def test_published_article_should_render_markdown(client, published_article):
+    published_article.body = '## Body title\n> quote me'
+    published_article.save()
+    response = client.get(f'/article/{published_article.slug}-'
+                          f'{published_article.id}/')
+>>>>>>> refactored published article fixture
     assert response.status_code == 200
     content = response.get_data(as_text=True)
-    assert f'<h1>{article.title}</h1>' in content
+    assert f'<h1>{published_article.title}</h1>' in content
     assert f'<h2>Body title</h2>' in content
     assert f'<blockquote>\n<p>quote me</p>\n</blockquote>' in content
 
@@ -118,10 +153,8 @@ def test_access_no_id_should_return_404(client):
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_access_old_slug_article_should_return_301(client, article):
-    article.status = 'published'
-    article.save()
-    response = client.get(f'/article/wrong-slug-{article.id}/')
+def test_access_old_slug_article_should_return_301(client, published_article):
+    response = client.get(f'/article/wrong-slug-{published_article.id}/')
     assert response.status_code == HTTPStatus.MOVED_PERMANENTLY
 
 
@@ -133,11 +166,15 @@ def test_access_article_form_regular_user_should_return_403(client, user,
 
 
 def test_access_published_article_form_should_return_200(client, editor,
-                                                         article):
+                                                         published_article):
     login(client, editor.email, 'secret')
+<<<<<<< HEAD
     article.status = 'published'
     article.save()
     response = client.get(f'/article/{article.id}/edit/')
+=======
+    response = client.get(f'/article/{published_article.id}/form/')
+>>>>>>> refactored published article fixture
     assert response.status_code == HTTPStatus.OK
 
 
@@ -154,29 +191,29 @@ def test_access_no_article_form_should_return_404(client, editor):
 
 
 def test_update_published_article_should_return_200(client, user, editor,
-                                                    article):
+                                                    published_article):
     login(client, editor.email, 'secret')
-    article.status = 'published'
-    article.save()
     data = {
         'title': 'updated',
         'author': user.id
     }
+<<<<<<< HEAD
     response = client.post(f'/article/{article.id}/edit/', data=data,
+=======
+    response = client.post(f'/article/{published_article.id}/', data=data,
+>>>>>>> refactored published article fixture
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
-    article.reload()
-    assert article.title == 'updated'
-    assert article.author == user
-    assert article.editor == editor
+    published_article.reload()
+    assert published_article.title == 'updated'
+    assert published_article.author == user
+    assert published_article.editor == editor
 
 
 def test_update_article_with_image_should_return_200(client, user, editor,
-                                                     article):
+                                                     published_article):
     login(client, editor.email, 'secret')
-    article.status = 'published'
-    article.save()
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image_content = BytesIO(content.read())
     data = {
@@ -189,27 +226,26 @@ def test_update_article_with_image_should_return_200(client, user, editor,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
-    article.reload()
-    assert article.title == 'updated'
-    assert article.author == user
-    assert article.editor == editor
-    assert article.has_image
-    assert (Path(app.config.get('ARTICLES_IMAGES_PATH') / str(article.id))
-            .exists())
+    published_article.reload()
+    assert published_article.title == 'updated'
+    assert published_article.author == user
+    assert published_article.editor == editor
+    assert published_article.has_image
+    assert (Path(app.config.get('ARTICLES_IMAGES_PATH')
+                 / str(published_article.id)).exists())
 
 
-def test_update_article_with_user_should_return_403(client, user, article):
+def test_update_article_with_user_should_return_403(client, user,
+                                                    published_article):
     login(client, user.email, 'secret')
-    article.status = 'published'
-    article.save()
     data = {
         'title': 'updated',
         'author': user.id
     }
     response = client.post(f'/article/{article.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.FORBIDDEN
-    article.reload()
-    assert article.title == 'article title'
+    published_article.reload()
+    assert published_article.title == 'published title'
 
 
 def test_update_unpublished_article_should_return_404(client, user, editor,
@@ -268,12 +304,8 @@ def test_author_cannot_access_drafts_list(client, user, article):
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
-def test_drafts_list_only_displays_drafts(client, editor, article):
-    published = deepcopy(article)
-    published.id = None
-    published.title = 'published article'
-    published.status = 'published'
-    published.save()
+def test_drafts_list_only_displays_drafts(client, editor, article,
+                                          published_article):
     login(client, editor.email, 'secret')
     response = client.get('/draft/list/')
     assert response.status_code == HTTPStatus.OK
