@@ -38,7 +38,7 @@
     </p>
   {% endif %}
 
-  {% if article.original_article %}
+  {% if article.is_translation %}
     <p>
       Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a> by {{ article.translator }}.
     </p>
