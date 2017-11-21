@@ -185,24 +185,6 @@ def test_translation_update_values_should_redirect(client, user, translation):
             ['Your translation was successfully updated.'])
 
 
-def test_translation_update_empty_summary(client, user, translation):
-    login(client, user.email, 'secret')
-    data = {
-        'title': translation.title,
-        'summary': '',
-        'body': translation.body,
-    }
-    response = client.post(
-        f'/article/translation/{translation.id}/edit/', data=data)
-    assert response.status_code == HTTPStatus.FOUND
-    translation = Translation.objects.first()
-    assert (response.headers.get('Location') ==
-            f'http://localhost/article/translation/{translation.id}/')
-    assert translation.summary == ''
-    assert (get_flashed_messages() ==
-            ['Your translation was successfully updated.'])
-
-
 def test_translation_published_should_return_200(client, translation):
     translation.status = 'published'
     translation.save()
