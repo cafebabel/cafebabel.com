@@ -434,18 +434,12 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
     appearance: none;
 }
 
-label[for=field-language],
-label[for=media-type],
-label[for=format],
-label[for=section] {
+.select label {
     position: relative;
     display: inline-block;
 }
 
-label[for=field-language]:after,
-label[for=media-type]:after,
-label[for=format]:after,
-label[for=section]:after {
+.select label:after {
     position: absolute;
     font-family: 'icomoon';
     content: '\ea3e';
