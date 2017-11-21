@@ -62,6 +62,12 @@ class Article(db.Document):
     def is_translation(self):
         return False
 
+    def is_translated_in(self, language):
+        from .translations.models import Translation  # TODO: circular :/
+        return bool(Translation.objects
+                    .filter(original_article=self, language=language)
+                    .only('id').first())
+
     @property
     def image_url(self):
         if self.has_image:

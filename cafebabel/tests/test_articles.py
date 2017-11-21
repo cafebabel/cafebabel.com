@@ -243,3 +243,47 @@ def test_access_published_article_should_link_translations(client, article,
              f'?lang=it&original={article.id}>Italiano</a></li>') in text)
     assert ((f'<li><a href={url_for("translation.create")}'
              f'?lang=fr&original={article.id}>Français</a></li>') not in text)
+
+
+def test_article_should_know_its_translations(client, article, translation):
+    assert article.is_translated_in(translation.language)
+    assert not article.is_translated_in('es')
+
+
+def test_article_to_translate_should_return_200(client):
+    response = client.get(f'/article/to_translate/')
+    assert response.status_code == HTTPStatus.OK
+
+
+def test_article_to_translate_should_have_other_languages(client):
+    response = client.get(f'/article/to_translate/')
+    text = response.get_data(as_text=True)
+    assert '<a href=/article/to_translate/?in=fr>Français</a>' in text
+    assert '<a href=/article/to_translate/?in=en>English</a>' not in text
+
+
+def test_article_to_translate_should_filter_by_language(client):
+    response = client.get(f'/article/to_translate/?in=fr')
+    text = response.get_data(as_text=True)
+    assert '<a href=/article/to_translate/?in=fr>Français</a>' not in text
+    assert '<a href=/article/to_translate/?in=en>English</a>' in text
+
+
+def test_article_to_translate_should_have_translation_links(client, article):
+    french = app.config['LANGUAGES'][1][0]
+    article.modify(language=french)
+    response = client.get(f'/article/to_translate/')
+    text = response.get_data(as_text=True)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=en&original={article.id}>Translate in English</a>' in text)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=fr&original={article.id}>Translate in Français</a>'
+            not in text)
+
+
+def test_article_to_translate_should_have_only_other_links(client, article):
+    french = app.config['LANGUAGES'][1][0]
+    article.modify(language=french)
+    response = client.get(f'/article/to_translate/?in=fr')
+    text = response.get_data(as_text=True)
+    assert 'Translate in ' not in text

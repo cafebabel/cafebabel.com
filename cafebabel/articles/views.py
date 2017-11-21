@@ -1,8 +1,10 @@
 from http import HTTPStatus
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import (Blueprint, abort, flash, redirect, render_template, request,
+                   url_for)
 from flask_login import fresh_login_required, login_required
 
+from .. import app
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
@@ -64,3 +66,16 @@ def delete(article_id):
     article.delete()
     flash('Article was deleted.', 'success')
     return redirect(url_for('home'))
+
+
+@blueprint.route('/to_translate/')
+def to_translate():
+    english = app.config['LANGUAGES'][0]
+    current_language = request.args.get('in', english[0])
+    LANGUAGES_DICT = dict(app.config['LANGUAGES'])
+    if current_language not in LANGUAGES_DICT:
+        abort(HTTPStatus.NOT_FOUND, 'You must specify a valid language.')
+    articles = Article.objects.filter(language__ne=current_language)
+    return render_template(
+        'articles/to_translate.html', articles=articles,
+        current_language=(current_language, LANGUAGES_DICT[current_language]))
