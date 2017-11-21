@@ -2,7 +2,7 @@
 
 {% block body %}
   {{ super() }}
-  <a class=button href={{ url_for('draft.draft_edit', draft_id=article.id) }}>Edit this draft</a>
+  <a class=button href={{ url_for('drafts.edit', draft_id=article.id) }}>Edit this draft</a>
 {% endblock %}
 
 {% block share_nav %}{% endblock %}

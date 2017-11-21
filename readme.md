@@ -40,6 +40,12 @@ re-initializing the database.
 If existing, the file `settings.local.py` at the root of the project will
 override the default `settings.py` configuration.
 
+Do not forget to create the folder dedicated to statics, by default:
+
+```
+mkdir -p static/uploads/articles
+```
+
 
 ## Running the project
 

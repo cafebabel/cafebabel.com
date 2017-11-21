@@ -15,14 +15,16 @@
   <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
   {% endif %}
 
-  {% if article.summary %}
   <p class=summary>{{ article.summary }}</p>
-  {% endif %}
 
   {{ article.body|markdown }}
 
   <p>
-    Published on <time>{{ article.creation_date.date() }}</time> by {{ article.author }}
+    Published on <time>{{ article.creation_date.date() }}</time>
+    by {{ article.author }}
+    {% if article.category %}
+      in category {{ article.category }}
+    {% endif %}
   </p>
   {% block share_nav %}
   <nav class=share>
@@ -31,7 +33,49 @@
   </nav>
   {% endblock %}
   {% if current_user.has_role('editor') and article.is_published %}
-    <a class=button href={{ url_for('article.article_edit_form', article_id=article.id) }}>Edit this article</a>
+    <p>
+      <a class=button href={{ url_for('articles.edit', article_id=article.id) }}>Edit this article</a>
+    </p>
   {% endif %}
+
+  {% if article.is_translation %}
+    <p>
+      Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a> by {{ article.translator }}.
+    </p>
+  {% endif %}
+
+  <p>Translate this article in:</p>
+  <ul>
+    {% for language in get_languages() %}
+      {% if article.language != language[0] and language[0] not in translations_langs %}
+        {% if article.is_translation %}
+          {% if language[0] != article.original_article.language %}
+            <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.original_article.id }}>{{ language[1] }}</a></li>
+          {% endif %}
+        {% else %}
+          <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>{{ language[1] }}</a></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  {% if translations_publisheds %}
+    <p>Read this article in:</p>
+    <ul>
+      {% for translation in translations_publisheds %}
+        <li>{{ translation.language }}: <a href={{ translation.detail_url }}>{{ translation.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if translations_drafts %}
+    <p>Review this article in:</p>
+    <ul>
+      {% for translation in translations_drafts %}
+        <li>{{ translation.language }}: <a href={{ url_for('translations.detail', id=translation.id) }}>{{ translation.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
 </article>
 {% endblock %}

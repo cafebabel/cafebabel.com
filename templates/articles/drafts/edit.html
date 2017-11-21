@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-<form method=post action={{ url_for('articles.edit', article_id=article.id) }} enctype=multipart/form-data>
+<form method=post action={{ url_for('drafts.edit', draft_id=article.id) }} enctype=multipart/form-data>
   <input type=hidden name=id value="{{ article.id }}">
   <div class=text>
     <label for=title>Title</label>
@@ -27,8 +27,8 @@
   <div class=select>
     <label for=status>Status</label>
     <select id=status name=status required>
-      <option value=draft>Draft</option>
-      <option value=published selected>Published</option>
+      <option value=draft selected>Draft</option>
+      <option value=published>Published</option>
     </select>
   </div>
   <div class=select>
@@ -64,7 +64,7 @@
 
 {% if current_user.has_role('editor') %}
 <form method=post action={{ url_for('articles.delete', article_id=article.id) }}>
-  <input type=submit value="Delete this article">
+  <input type=submit value="Delete this draft">
 </form>
 {% endif %}
 {% endblock %}

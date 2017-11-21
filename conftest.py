@@ -5,6 +5,7 @@ from flask_security.confirmable import confirm_user
 
 from cafebabel import app as myapp
 from cafebabel.articles.models import Article
+from cafebabel.articles.translations.models import Translation
 from cafebabel.core.commands import _dropdb, _initdb
 from cafebabel.users.models import Role, User, user_datastore
 
@@ -45,8 +46,21 @@ def admin():
 
 @pytest.fixture
 def article():
+    language = myapp.config['LANGUAGES'][0][0]
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        language=myapp.config['LANGUAGES'][0][0],
+        language=language,
         body='body text')
+
+
+@pytest.fixture
+def translation(user, article):
+    language = myapp.config['LANGUAGES'][1][0]
+    return Translation.objects.create(
+        title='title',
+        summary='summary text',
+        language=language,
+        body='body text',
+        translator=user.id,
+        original_article=article.id)

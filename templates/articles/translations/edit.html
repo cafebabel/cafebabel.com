@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>Updating translation in {{ translation.language }} for article “{{ translation.original_article.title }}”</h1>
+
+<form method=post action=.>
+  <div class=text>
+    <label for=title>Title</label>
+    <input id=title name=title value="{{ translation.title }}" required>
+  </div>
+  <div class=textarea>
+    <label for=summary>Summary</label>
+    <textarea id=summary name=summary required>{{ translation.summary }}</textarea>
+  </div>
+  <div class=textarea>
+    <label for=body>Body</label>
+    <textarea id=body name=body required>{{ translation.body }}</textarea>
+  </div>
+  {% if current_user.has_role('editor') %}
+    <div class=select>
+      <label for=status>Status</label>
+      <select id=status name=status required>
+        <option value=draft{% if translation.is_draft %} selected{% endif %}>Draft</option>
+        <option value=published{% if translation.is_published %} selected{% endif %}>Published</option>
+      </select>
+    </div>
+  {% endif %}
+  <input type=submit value="Update">
+</form>
+{% endblock %}

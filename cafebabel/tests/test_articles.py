@@ -2,95 +2,12 @@ from http import HTTPStatus
 from pathlib import Path
 from io import BytesIO
 
-from flask import request
+from flask import url_for
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
 from .utils import login
 from .. import app
-
-
-def test_proposal_sends_email_to_editor(app, client):
-    response = client.get('/proposal/')
-    assert response.status_code == 200
-    assert 'action=/proposal/' in response.get_data(as_text=True)
-
-
-def test_create_draft_should_display_form(client, editor):
-    login(client, editor.email, 'secret')
-    response = client.get('/draft/')
-    assert response.status_code == 200
-    assert '<input id=title' in response.get_data(as_text=True)
-
-
-def test_create_draft_should_generate_article(client, editor):
-    login(client, editor.email, 'secret')
-    response = client.post('/draft/', data={
-        'title': 'Test article',
-        'language': 'en',
-        'body': 'Article body',
-    }, follow_redirects=True)
-    assert response.status_code == 200
-    body = response.get_data(as_text=True)
-    assert '<h1>Test article</h1>' in body
-    assert '<p>Article body</p>' in body
-
-
-def test_create_published_draft_should_display_article(client, editor):
-    login(client, editor.email, 'secret')
-    response = client.post('/draft/', data={
-        'title': 'Test article',
-        'language': 'en',
-        'body': 'Article body',
-        'status': 'published',
-    }, follow_redirects=True)
-    assert response.status_code == 200
-    body = response.get_data(as_text=True)
-    assert request.url_rule.endpoint == 'article.article_detail'
-    assert '<h1>Test article</h1>' in body
-    assert '<p>Article body</p>' in body
-
-
-def test_draft_editing_should_update_content(client, editor):
-    login(client, editor.email, 'secret')
-    data = {'title': 'My article', 'language': 'en', 'body': 'Article body'}
-    draft = Article.objects.create(**data)
-    updated_data = data.copy()
-    updated_data['language'] = 'fr'
-    response = client.post(f'/draft/{draft.id}/edit/',
-                           data=updated_data, follow_redirects=True)
-    assert response.status_code == 200
-    updated_draft = Article.objects.get(id=draft.id)
-    assert updated_draft.id == draft.id
-    assert updated_draft.language == 'fr'
-    assert updated_draft.title == 'My article'
-
-
-def test_draft_image_should_save_and_render(client, editor):
-    login(client, editor.email, 'secret')
-    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
-        image = BytesIO(content.read())
-    data = {
-        'title': 'My article',
-        'language': 'en',
-        'body': 'Article body',
-        'image': (image, 'image-name.jpg'),
-    }
-    response = client.post('/draft/', data=data,
-                           content_type='multipart/form-data',
-                           follow_redirects=True)
-    assert response.status_code == HTTPStatus.OK
-    article = Article.objects.first()
-    assert article.has_image
-    assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
-                str(article.id)).exists()
-    assert f'<img src="{article.image_url}"' in response.get_data(as_text=True)
-
-
-def test_draft_should_not_offer_social_sharing(client, article):
-    response = client.get(f'/draft/{article.id}/')
-    assert response.status_code == 200
-    assert 'facebook.com/sharer' not in response.get_data(as_text=True)
 
 
 def test_published_article_should_offer_social_sharing(client, article):
@@ -99,21 +16,6 @@ def test_published_article_should_offer_social_sharing(client, article):
     response = client.get(f'/article/{article.slug}-{article.id}/')
     assert response.status_code == 200
     assert 'facebook.com/sharer' in response.get_data(as_text=True)
-
-
-def test_visitor_cannot_change_editor_nor_author(client, editor, user):
-    draft = Article.objects.create(title='My draft', body='Content',
-                                   language='en', status='draft',
-                                   author=user, editor=editor)
-    client.post(f'/draft/{draft.id}/edit/', data={
-        'title': 'Updated draft',
-        'author': editor,
-        # 'editor': user.id,
-    })
-    draft = Article.objects.get(id=draft.id)
-    assert draft.title == 'Updated draft'
-    assert draft.author == user
-    assert editor == editor
 
 
 def test_access_published_article_should_return_200(client, article):
@@ -126,7 +28,7 @@ def test_access_published_article_should_return_200(client, article):
 def test_access_published_draft_should_return_404(client, article):
     article.status = 'published'
     article.save()
-    response = client.get(f'/draft/{article.id}/')
+    response = client.get(f'/article/draft/{article.id}/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
@@ -164,6 +66,7 @@ def test_published_article_should_display_content(client, article, user):
 
 def test_published_article_should_render_markdown(client):
     article = Article.objects.create(title='My title',
+                                     summary='Summary',
                                      body='## Body title\n> quote me',
                                      status='published', language='en')
     response = client.get(f'/article/{article.slug}-{article.id}/')
@@ -199,7 +102,7 @@ def test_access_old_slug_article_should_return_301(client, article):
 def test_access_article_form_regular_user_should_return_403(client, user,
                                                             article):
     login(client, user.email, 'secret')
-    response = client.get(f'/article/{article.id}/form/')
+    response = client.get(f'/article/{article.id}/edit/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
@@ -208,19 +111,19 @@ def test_access_published_article_form_should_return_200(client, editor,
     login(client, editor.email, 'secret')
     article.status = 'published'
     article.save()
-    response = client.get(f'/article/{article.id}/form/')
+    response = client.get(f'/article/{article.id}/edit/')
     assert response.status_code == HTTPStatus.OK
 
 
 def test_access_draft_article_form_should_return_404(client, editor, article):
     login(client, editor.email, 'secret')
-    response = client.get(f'/article/{article.id}/form/')
+    response = client.get(f'/article/{article.id}/edit/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
 def test_access_no_article_form_should_return_404(client, editor):
     login(client, editor.email, 'secret')
-    response = client.get(f'/article/foobarbazquxquuxquuzcorg/form/')
+    response = client.get(f'/article/foobarbazquxquuxquuzcorg/edit/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
@@ -233,7 +136,7 @@ def test_update_published_article_should_return_200(client, user, editor,
         'title': 'updated',
         'author': user.id
     }
-    response = client.post(f'/article/{article.id}/', data=data,
+    response = client.post(f'/article/{article.id}/edit/', data=data,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
@@ -255,7 +158,7 @@ def test_update_article_with_image_should_return_200(client, user, editor,
         'author': user.id,
         'image': (image_content, 'image-name.jpg')
     }
-    response = client.post(f'/article/{article.id}/', data=data,
+    response = client.post(f'/article/{article.id}/edit/', data=data,
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
@@ -277,7 +180,7 @@ def test_update_article_with_user_should_return_403(client, user, article):
         'title': 'updated',
         'author': user.id
     }
-    response = client.post(f'/article/{article.id}/', data=data)
+    response = client.post(f'/article/{article.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.FORBIDDEN
     article.reload()
     assert article.title == 'article title'
@@ -290,7 +193,7 @@ def test_update_unpublished_article_should_return_404(client, user, editor,
         'title': 'updated',
         'author': user.id
     }
-    response = client.post(f'/article/{article.id}/', data=data)
+    response = client.post(f'/article/{article.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.NOT_FOUND
     article.reload()
     assert article.title == 'article title'
@@ -324,3 +227,80 @@ def test_delete_inexistent_article_should_return_404(client, editor, article):
     login(client, editor.email, 'secret')
     response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_access_published_article_should_link_translations(client, article,
+                                                           translation):
+    article.status = 'published'
+    article.save()
+    translation.status = 'published'
+    translation.save()
+    response = client.get(f'/article/{article.slug}-{article.id}/')
+    text = response.get_data(as_text=True)
+    assert response.status_code == HTTPStatus.OK
+    assert '<p>Translate this article in:</p>' in text
+    assert ((f'<li><a href={url_for("translations.create")}'
+             f'?lang=it&original={article.id}>Italiano</a></li>') in text)
+    assert ((f'<li><a href={url_for("translations.create")}'
+             f'?lang=fr&original={article.id}>Français</a></li>') not in text)
+
+
+def test_article_should_know_its_translations(client, article, translation):
+    assert article.is_translated_in(translation.language)
+    assert not article.is_translated_in('es')
+
+
+def test_article_to_translate_should_return_200(client):
+    response = client.get(f'/article/to-translate/')
+    assert response.status_code == HTTPStatus.OK
+
+
+def test_article_to_translate_should_have_other_languages(client):
+    response = client.get(f'/article/to-translate/')
+    text = response.get_data(as_text=True)
+    assert '<a href=/article/to-translate/?in=fr>Français</a>' in text
+    assert '<a href=/article/to-translate/?in=en>English</a>' not in text
+
+
+def test_article_to_translate_should_filter_by_language(client):
+    response = client.get(f'/article/to-translate/?in=fr')
+    text = response.get_data(as_text=True)
+    assert '<a href=/article/to-translate/?in=fr>Français</a>' not in text
+    assert '<a href=/article/to-translate/?in=en>English</a>' in text
+
+
+def test_article_to_translate_with_unknown_language(client):
+    response = client.get(f'/article/to-translate/?in=xx')
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_article_to_translate_should_have_translation_links(client, article):
+    language = app.config['LANGUAGES'][1][0]
+    article.modify(language=language)
+    response = client.get(f'/article/to-translate/')
+    text = response.get_data(as_text=True)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=en&original={article.id}>Translate in English</a>' in text)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=fr&original={article.id}>Translate in Français</a>'
+            not in text)
+
+
+def test_translation_to_translate_should_not_have_original_language(
+        client, article, translation):
+    response = client.get(f'/article/to-translate/')
+    text = response.get_data(as_text=True)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=en&original={article.id}>Translate in English</a>'
+            not in text)
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=fr&original={article.id}>Translate in Français</a>'
+            not in text)
+
+
+def test_article_to_translate_should_have_only_other_links(client, article):
+    language = app.config['LANGUAGES'][1][0]
+    article.modify(language=language)
+    response = client.get(f'/article/to-translate/?in=fr')
+    text = response.get_data(as_text=True)
+    assert 'Translate in ' not in text

@@ -18,14 +18,18 @@ from .core.routing import RegexConverter  # noqa: E402
 
 app.url_map.converters['regex'] = RegexConverter
 
-from .articles import views as articles_views  # noqa: F401, F801
+from .articles.views import articles  # noqa: F402
+from .articles.drafts.views import drafts  # noqa: F402
+from .articles.proposals.views import proposals  # noqa: F402
+from .articles.translations.views import translations  # noqa: F402
 from .api import views  # noqa: F401, F801
 from .core import commands, views  # noqa: F401, F801
 from .users import views  # noqa: F401, F801
 
-app.register_blueprint(articles_views.proposal_bp, url_prefix='/proposal')
-app.register_blueprint(articles_views.draft_bp, url_prefix='/draft')
-app.register_blueprint(articles_views.article_bp, url_prefix='/article')
+app.register_blueprint(articles, url_prefix='/article')
+app.register_blueprint(drafts, url_prefix='/article/draft')
+app.register_blueprint(proposals, url_prefix='/article/proposal')
+app.register_blueprint(translations, url_prefix='/article/translation')
 
 # Dev specific packages
 try:

@@ -39,7 +39,6 @@ SECURITY_REGISTER_USER_TEMPLATE = 'auth/register.html'
 SECURITY_SEND_CONFIRMATION_TEMPLATE = 'auth/confirmation.html'
 EXPLAIN_TEMPLATE_LOADING = False
 
-DEBUG_TB_ENABLED = True
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 DEBUG_TB_PANELS = [
     'flask_debugtoolbar.panels.request_vars.RequestVarsDebugPanel',
