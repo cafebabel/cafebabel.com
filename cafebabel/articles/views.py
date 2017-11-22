@@ -60,7 +60,6 @@ Name: {data['name']}
 Email: {{data['email']}}
 city: {{data['city']}}
 topic: {data['topic']}
-Angle: {data['angle']}
 Media: {data['media']}
 Format: {data['format']}
 Section: {data['section']}
