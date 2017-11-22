@@ -23,8 +23,8 @@ from .articles.drafts.views import drafts  # noqa: F402
 from .articles.proposals.views import proposals  # noqa: F402
 from .articles.translations.views import translations  # noqa: F402
 from .api import views  # noqa: F401, F801
-from .core import commands, views  # noqa: F401, F801
-from .users import views  # noqa: F401, F801
+from .core import commands, views  # noqa: F401, F811
+from .users import views  # noqa: F401, F811
 
 app.register_blueprint(articles, url_prefix='/article')
 app.register_blueprint(drafts, url_prefix='/article/draft')
@@ -35,7 +35,7 @@ app.register_blueprint(translations, url_prefix='/article/translation')
 try:
     from flask_debugtoolbar import DebugToolbarExtension
     toolbar = DebugToolbarExtension(app)
-except ModuleNotFoundError:
+except ModuleNotFoundError:  # noqa: F821
     pass
 
 
