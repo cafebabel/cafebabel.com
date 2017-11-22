@@ -11,6 +11,7 @@ from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
 
+
 proposal_bp = Blueprint(
     'proposal', __name__, template_folder='templates/articles')
 draft_bp = Blueprint(
@@ -54,10 +55,14 @@ def proposal_create():
                       app.config['EDITOR_EMAILS'][data.get('language', 'en')]
                   ],
                   body=f'''
+Language: {{data['language']}}
 Name: {data['name']}
-City: {data['city']}
-Angle: {data['angle']}
+Email: {{data['email']}}
+city: {{data['city']}}
+topic: {data['topic']}
+Media: {data['media']}
 Format: {data['format']}
+Section: {data['section']}
 Additional infos: {data['additional']}
                   ''',
                   )

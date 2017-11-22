@@ -22,7 +22,7 @@ html {
 }
 
 body {
-    margin: 4rem 2rem;
+    margin: 0;
 }
 
 article,
@@ -37,6 +37,25 @@ nav,
 section,
 summary {
     display: block;
+}
+
+main {
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    min-height: 100vh; /* https://stackoverflow.com/questions/1509589/full-viewport-height-scaling-div-just-css-no-js-possible */
+}
+
+#content {
+    max-width: 120rem;
+    margin: 0 auto 70rem auto;
+    padding: 2rem 2rem 7rem 2rem;
+}
+
+@media screen and (min-width: 1200px) {
+    #content {
+        padding: 0 0 7rem 0;
+    }
 }
 
 /* Vremena Grotesk */
@@ -169,7 +188,6 @@ summary {
     content: '\e900';
 }
 
-
 /* General */
 
 body,
@@ -191,6 +209,9 @@ textarea {
 h1 {
     font-size: 4.2rem;
     margin: 4rem 0;
+    border: 0.3rem solid #00283C;
+    padding: 5rem;
+    text-align: center;
 }
 
 h2 {
@@ -250,19 +271,32 @@ li a {
     position: relative;
 }
 
+label {
+    display: block;
+}
+
 input,
-button {
-    border: 0.1rem solid #00283C;
+textarea {
+    border: none;
+    border-bottom: 0.1rem solid #00283C;
     padding: 2rem;
     margin: 2rem 0;
     background: #fff;
     display: block;
-    width: 30rem;
+    width: 100%;
     transition: border-color .3s;
 }
+
+textarea {
+    max-width: 100%;
+    min-width: 100%;
+    height: 6.9rem;
+}
+
 input:focus,
 textarea:focus {
-    border: 0.1rem solid #bde513;
+    border: none;
+    border-bottom: 0.1rem solid #bde513;
     outline: none;
     transition: border-color .3s;
 }
@@ -277,15 +311,19 @@ input[type=submit],
 button {
     text-align: center;
     padding: 2rem 4rem;
+    margin-bottom: 2rem;
     cursor: pointer;
     background-color: #00283C;
     color: #fff;
+    width: 100%;
 }
 input[type=submit]:hover,
 button:hover {
     background-color: #fff;
     color:  #00283C;
+    border: 0.1rem solid #00283C;
 }
+
 input[type=submit],
 input[type=submit]:hover,
 button,
@@ -294,13 +332,18 @@ button:hover {
 }
 
 form[name=login_user_form] {
-    background-color: #fffff8;
-    border: 0.1rem solid #bde513;
     padding: 2rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+    form[name=login_user_form] {
+        width: 50%;
+    }
 }
 
 #signin input[type=text],
@@ -379,15 +422,6 @@ label:hover:before {
     transition: border-color .3s;
 }
 
-textarea {
-    padding: 1.5rem;
-    border: 0.1rem solid #00283C;
-    min-width: 30rem;
-    min-height: 15rem;
-    max-width: 100%;
-    transition: border-color .3s;
-}
-
 select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-after-with-css-in-webkit */
     padding: 1rem 3rem 1rem 1rem;
     margin:5rem 0;
@@ -400,12 +434,12 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
     appearance: none;
 }
 
-label[for=field-language] {
+.select label {
     position: relative;
     display: inline-block;
 }
 
-label[for=field-language]:after {
+.select label:after {
     position: absolute;
     font-family: 'icomoon';
     content: '\ea3e';
@@ -589,13 +623,13 @@ button.menu-button + nav a {
     display: block;
 }
 
-/* Profile page */
+/* Informations flash */
 
-.profile-page main {
-    display: block;
-    max-width: 120rem;
-    margin: 0 auto;
+.flashes {
+    background-color: #fff;
 }
+
+/* Profile page */
 
 .profile-page h1 {
     border: 0.3rem solid #00283C;
@@ -624,11 +658,8 @@ button.menu-button + nav a {
     font-size: 1.4rem;
 }
 
-.profile-page main section:nth-of-type(2) article{
+.profile-page main section:nth-of-type(2) article {
     margin-bottom: 5rem;
-}
-.profile-page main section:nth-of-type(2) article time {
-    font-size: 1.3rem;
 }
 
 .profile-page main section:nth-of-type(2) h3 {
@@ -662,12 +693,8 @@ button.menu-button + nav a {
 
 }
 
-.profile-page main section button {
-    width: 100%;
-}
-
 @media screen and (min-width: 750px) {
-    .profile-page main {
+    .profile-page main #content {
         display: grid;
         grid-gap: 2rem;
         grid-template-columns: 50% 50%;
@@ -688,4 +715,88 @@ button.menu-button + nav a {
     .profile-page main section:nth-of-type(2) {
         grid-area: sidebar;
     }
+}
+
+/* Pitch page */
+
+.pitch-page form {
+    max-width: 75rem;
+    margin: 0 auto;
+}
+
+.pitch-page h3 {
+    max-width:120rem;
+    margin:2rem auto 4rem auto;
+}
+
+.pitch-page label > p {
+    font-size: 1.3rem;
+    font-weight: 100;
+    font-style: italic;
+    margin: 0;
+}
+
+.pitch-page button {
+    display: block;
+    max-width: 75rem;
+    margin: 2rem auto;
+}
+
+.pitch-page button a {
+    color: #fff;
+    transition: all .3s;
+}
+
+.pitch-page button:hover a {
+    color: #00283C;
+}
+
+/* Article page */
+
+.article-page article p {
+    max-width: 75rem;
+    margin: 0 auto 5rem auto;
+}
+
+.article-page article h1 + p {
+    text-align: center;
+}
+
+.article-page article h1 + p time {
+    font-style: italic;
+    font-family: serif;
+    font-size: 1.9rem;
+}
+
+.article-page article h3 {
+    text-align: center;
+    max-width: 75rem;
+    margin: 3rem auto 5rem auto;
+}
+
+.article-page article .summary {
+    max-width: 100%;
+    margin: 3rem auto 5rem auto;
+    font-size: 2.8rem;
+}
+
+/* Footer */
+
+footer {
+    width: 100%;
+    height: 70rem;
+    font-size: 4rem;
+    background: linear-gradient(to bottom right, #002f4b, #30799B); /* https://codepen.io/alexcarpenter/pen/LveDx?q=gradient&limit=all&type=type-pens */
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+footer p {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
 }
