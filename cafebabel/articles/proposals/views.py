@@ -6,11 +6,15 @@ from ... import app, mail
 proposals = Blueprint('proposals', __name__)
 
 BODY_EMAIL_TEMPLATE = '''
-Name: {data[name]}
-City: {data[city]}
-Angle: {data[angle]}
-Format: {data[format]}
-Additional infos: {data[additional]}
+Language: {language}
+Name: {name}
+Email: {email}
+City: {city}
+Topic: {topic}
+Media: {media}
+Format: {format}
+Section: {section}
+Addiction comment: {additional}
 '''
 
 
@@ -24,7 +28,7 @@ def create():
             recipients=[
                 app.config['EDITOR_EMAILS'][data.get('language', 'en')]
             ],
-            body=BODY_EMAIL_TEMPLATE.format(data=data)
+            body=BODY_EMAIL_TEMPLATE.format(**data)
         )
         mail.send(msg)
         flash('Your proposal was successfully sent.', 'success')
