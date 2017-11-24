@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% block body_class %}translate-list-page{% endblock %}
 {% block body %}
 <section>
   <h1>Articles to translate in {{ current_language[1] }}</h1>
@@ -17,6 +18,10 @@
   {% for article in articles %}
     <li>
       <article>
+        {% if article.has_image %}
+            <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
+        {% endif %}
+        <time>Published on {{ article.creation_date.date() }}</time>
         <h2>{{ article.title }}</h2>
         <ul>
         {% for language in get_languages() %}

@@ -437,6 +437,7 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
 .select label {
     position: relative;
     display: inline-block;
+    z-index: 0;
 }
 
 .select label:after {
@@ -623,12 +624,6 @@ button.menu-button + nav a {
     display: block;
 }
 
-/* Informations flash */
-
-.flashes {
-    background-color: #fff;
-}
-
 /* Profile page */
 
 .profile-page h1 {
@@ -778,6 +773,27 @@ button.menu-button + nav a {
     max-width: 100%;
     margin: 3rem auto 5rem auto;
     font-size: 2.8rem;
+}
+
+textarea#body {
+    min-height: 80rem;
+}
+
+/* Flash infos */
+
+.flashes {
+    position: fixed;
+    background: white;
+    padding: 2rem;
+    border: 0.1rem solid;
+    left: 50%;
+    bottom: 5rem;
+    transform: translate(-50%, 0);
+    transition: all .1s ease-out;
+}
+
+.flashes.hidden {
+    bottom: -10rem;
 }
 
 /* Footer */
