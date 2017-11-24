@@ -495,13 +495,10 @@ a:hover:after {
 }
 
 .article-page article p a:after {
-    content: '';
-    position: absolute;
     height: 50%;
     top: 1rem;
     bottom: 0;
     right: 0;
-    left: 0;
     width: 100%;
     display: block;
     background-color: #bde513;
