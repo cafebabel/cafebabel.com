@@ -48,6 +48,31 @@
     </p>
   {% endif %}
 
+    <div class=article-language-selector>
+        <h3>LANGUAGES:</h3>
+        <ul>
+            {% if article.is_translation %}
+                <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ translation.language }}</a></li>
+            {% endif %}
+            {% if translations_publisheds %}
+                {% for translation in translations_publisheds %}
+                <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
+                {% endfor %}
+            {% endif %}
+                {% for language in get_languages() %}
+                    {% if article.language != language[0] and language[0] not in translations_langs %}
+                        {% if article.is_translation %}
+                            {% if language[0] != article.original_article.language %}
+                                <li class=to-translate-languages><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.original_article.id }}>{{ language[1] }}</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li class=to-translate-languages><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>{{ language[1] }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+        </ul>
+    </div>
+
   <p>Translate this article in:</p>
   <ul>
     {% for language in get_languages() %}

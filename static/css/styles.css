@@ -795,6 +795,10 @@ textarea#body {
     min-height: 80rem;
 }
 
+.article-language-selector {
+    border: 1px solid;
+}
+
 /* Flash infos */
 
 .flashes {
