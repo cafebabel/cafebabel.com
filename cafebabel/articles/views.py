@@ -13,7 +13,7 @@ from .translations.models import Translation
 articles = Blueprint('articles', __name__)
 
 
-@draft_bp.route('/list/')
+@draft_bp.route('/')
 @editor_required
 @login_required
 def draft_list():
