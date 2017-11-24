@@ -476,28 +476,44 @@ a:active {
     text-decoration: none;
 }
 
-p a {
+a {
     position: relative;
 }
 
-p a:after {
+a:after {
+    content: '';
     position: absolute;
+    height: 0.2rem;
+    background-color: #00283C;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    transition: all .3s;
+}
+a:hover:after {
+    width: 100%;
+}
+
+.article-page article p a:after {
+    content: '';
+    position: absolute;
+    height: 50%;
     top: 1rem;
-    bottom: 0.5rem;
+    bottom: 0;
     right: 0;
     left: 0;
+    width: 100%;
     display: block;
     background-color: #bde513;
     overflow: hidden;
-    content: '';
     transform: translateY(35%);
     transition: all .3s;
     z-index: -1;
 }
 
-p a:hover:after {
+.article-page article p a:hover:after {
+    height: 90%;
     top: 0;
-    bottom: 0.5rem;
     transform: translateY(0);
     transition: all .3s;
 }
