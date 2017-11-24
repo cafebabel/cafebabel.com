@@ -314,6 +314,7 @@ button {
     margin-bottom: 2rem;
     cursor: pointer;
     background-color: #00283C;
+    border: 0.1rem solid #00283C;
     color: #fff;
     width: 100%;
 }
