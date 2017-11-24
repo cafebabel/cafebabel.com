@@ -786,7 +786,6 @@ textarea#body {
     background: white;
     padding: 2rem;
     border: 0.1rem solid;
-    opacity: 0.9;
     left: 50%;
     bottom: 5rem;
     transform: translate(-50%, 0);
