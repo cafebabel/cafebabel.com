@@ -478,6 +478,7 @@ a:active {
 
 a {
     position: relative;
+    z-index: 0;
 }
 
 a:after {
@@ -802,6 +803,11 @@ textarea#body {
     display: inline-block;
     padding: 1rem;
     border: 0.1rem solid;
+}
+
+.share {
+    width: 15rem;
+    margin: 0 auto;
 }
 
 /* Flash infos */

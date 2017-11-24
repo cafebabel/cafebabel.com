@@ -11,11 +11,7 @@
     {% endif %}
     <h1>{{ article.title }}</h1>
 
-    <p><time>Published on {{ article.creation_date.date() }}</time> — by {{ article.author }}</p>
-
-    <p class=reading-time>Reading time: {{ article.body|reading_time }} min.</p>
-
-    <p>Article in <span>{{ article.language }}</span></p>
+    <p><time>Published on {{ article.creation_date.date() }}</time> — by {{ article.author }}<br>Reading time: {{ article.body|reading_time }} min — Article in <span>{{ article.language }}</span></p>
 
     <div class=article-language-selector>
         <ul>
@@ -70,30 +66,6 @@
     <p>
       Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a> by {{ article.translator }}.
     </p>
-  {% endif %}
-
-  <p>Translate this article in:</p>
-  <ul>
-    {% for language in get_languages() %}
-      {% if article.language != language[0] and language[0] not in translations_langs %}
-        {% if article.is_translation %}
-          {% if language[0] != article.original_article.language %}
-            <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.original_article.id }}>{{ language[1] }}</a></li>
-          {% endif %}
-        {% else %}
-          <li><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>{{ language[1] }}</a></li>
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-  </ul>
-
-  {% if translations_publisheds %}
-    <p>Read this article in:</p>
-    <ul>
-      {% for translation in translations_publisheds %}
-        <li>{{ translation.language }}: <a href={{ translation.detail_url }}>{{ translation.title }}</a></li>
-      {% endfor %}
-    </ul>
   {% endif %}
 
   {% if translations_drafts %}
