@@ -17,7 +17,7 @@ articles = Blueprint('articles', __name__)
 @editor_required
 @login_required
 def draft_list():
-    articles = Article.objects.get(status='draft')
+    articles = Article.objects(status='draft')
     return render_template('articles/draft_list.html', articles=articles)
 
 

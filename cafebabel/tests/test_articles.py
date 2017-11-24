@@ -94,7 +94,7 @@ def test_access_article_with_large_slug_should_return_200(client,
 
 def test_published_article_should_display_content(client, published_article,
                                                   user):
-    article.author = user
+    published_article.author = user
     response = client.get(f'/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert response.status_code == 200
@@ -245,7 +245,7 @@ def test_update_article_with_user_should_return_403(client, user,
     response = client.post(f'/article/{article.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.FORBIDDEN
     published_article.reload()
-    assert published_article.title == 'published title'
+    assert published_article.title == 'article title'
 
 
 def test_update_unpublished_article_should_return_404(client, user, editor,
@@ -306,6 +306,7 @@ def test_author_cannot_access_drafts_list(client, user, article):
 
 def test_drafts_list_only_displays_drafts(client, editor, article,
                                           published_article):
+    published_article.modify(title='published article')
     login(client, editor.email, 'secret')
     response = client.get('/draft/list/')
     assert response.status_code == HTTPStatus.OK
