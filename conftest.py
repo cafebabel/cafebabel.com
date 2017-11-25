@@ -1,5 +1,4 @@
 from pathlib import Path
-from copy import deepcopy
 
 import pytest
 from flask_security.confirmable import confirm_user
@@ -56,12 +55,14 @@ def article(user):
 
 
 @pytest.fixture
-def published_article(article):
-    published = deepcopy(article)
-    published.id = None
-    published.status = 'published'
-    published.save()
-    return published
+def published_article(user):
+    return Article.objects.create(
+        title='article title',
+        summary='summary text',
+        author=user,
+        language=myapp.config['LANGUAGES'][0][0],
+        body='body text',
+        status='published')
 
 
 @pytest.fixture
