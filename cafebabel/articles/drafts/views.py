@@ -8,6 +8,14 @@ from ..models import Article
 drafts = Blueprint('drafts', __name__)
 
 
+@drafts.route('/')
+@editor_required
+@login_required
+def list():
+    articles = Article.objects(status='draft')
+    return render_template('articles/drafts/list.html', articles=articles)
+
+
 @drafts.route('/new/', methods=['get', 'post'])
 @editor_required
 @login_required

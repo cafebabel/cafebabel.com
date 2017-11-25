@@ -88,7 +88,7 @@ def test_translation_creation_already_existing(app, client, user, article):
     }
     response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert ('Existing translation already exists.'
+    assert ('A translation already exists.'
             in response.get_data(as_text=True))
 
 

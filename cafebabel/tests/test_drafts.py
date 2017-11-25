@@ -112,3 +112,27 @@ def test_access_published_draft_should_return_404(client, article):
     article.save()
     response = client.get(f'/article/draft/{article.id}/')
     assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_editor_access_drafts_list(client, editor, article):
+    login(client, editor.email, 'secret')
+    response = client.get('/article/draft/')
+    assert response.status_code == HTTPStatus.OK
+    assert article.title in response.get_data(as_text=True)
+
+
+def test_author_cannot_access_drafts_list(client, user):
+    login(client, user.email, 'secret')
+    response = client.get('/article/draft/')
+    assert response.status_code == HTTPStatus.FORBIDDEN
+
+
+def test_drafts_list_only_displays_drafts(client, editor, article,
+                                          published_article):
+    published_article.modify(title='published article')
+    login(client, editor.email, 'secret')
+    response = client.get('/article/draft/')
+    assert response.status_code == HTTPStatus.OK
+    content = response.get_data(as_text=True)
+    assert article.title in content
+    assert published_article.title not in content
