@@ -10,10 +10,6 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-<a href={{ url_for('home') }} class=logo>
-  <img src=https://rawgit.com/cafebabel/styleguide/master/img/logo-cafebabel.svg alt="logo Cafébabel">
-</a>
-
 <button class=menu-button></button>
 
 {% if current_user.is_authenticated %}
@@ -50,6 +46,9 @@
 {% include "security/_messages.html" %}
 
 <main>
+  <a href={{ url_for('home') }} class=logo>
+    <img src=https://rawgit.com/cafebabel/styleguide/master/img/logo-cafebabel.svg alt="logo Cafébabel">
+  </a>
   <div id=content>
 {% block body %}{% endblock %}
   </div>

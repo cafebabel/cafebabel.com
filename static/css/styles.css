@@ -48,7 +48,7 @@ main {
 
 #content {
     max-width: 120rem;
-    margin: 0 auto 70rem auto;
+    margin: 10rem auto 70rem auto;
     padding: 2rem 2rem 7rem 2rem;
 }
 
@@ -519,15 +519,21 @@ a:hover:after {
 
 /* Logo */
 
-.logo img {
+.logo {
     width: 10rem;
     display: block;
-    margin: 4.7rem auto;
     transition: all .2s;
+    top: 4.7rem;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.logo img:hover {
-    transform: translateY(-2px);
+a.logo:after {
+    display: none;
+}
+
+.logo:hover {
+    top: 4.5rem;
 }
 
 /* Menu */
@@ -698,11 +704,6 @@ button.menu-button + nav a {
     transition: all 0.3s;
 }
 
-.profile-page [class^="icon-"]:hover:before,
-.profile-page [class*=" icon-"]:hover:before {
-
-}
-
 @media screen and (min-width: 750px) {
     .profile-page main #content {
         display: grid;
@@ -716,6 +717,11 @@ button.menu-button + nav a {
     .profile-page [class^="icon-"]:hover:before,
     .profile-page [class*=" icon-"]:hover:before {
         transform: translateY(-0.2rem);
+    }
+
+    .profile-page [class^="icon-"]:hover:after,
+    .profile-page [class*=" icon-"]:hover:after {
+        width: 0;
     }
 
     .profile-page main section:first-of-type {
