@@ -45,13 +45,24 @@ def admin():
 
 
 @pytest.fixture
-def article():
-    language = myapp.config['LANGUAGES'][0][0]
+def article(user):
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        language=language,
+        author=user,
+        language=myapp.config['LANGUAGES'][0][0],
         body='body text')
+
+
+@pytest.fixture
+def published_article(user):
+    return Article.objects.create(
+        title='article title',
+        summary='summary text',
+        author=user,
+        language=myapp.config['LANGUAGES'][0][0],
+        body='body text',
+        status='published')
 
 
 @pytest.fixture
