@@ -588,7 +588,7 @@ button.menu-button + nav {
     bottom: 0;
     left: 0;
     position: fixed;
-    font-size: 6vw;
+    font-size: 5vw;
     opacity: 0;
     z-index: -1;
     transition: all .3s;
@@ -778,6 +778,10 @@ button.menu-button + nav a {
     font-size: 1.9rem;
 }
 
+.article-page article ul li span {
+    color: #bde513;
+}
+
 .article-page article h3 {
     text-align: center;
     max-width: 75rem;
@@ -809,6 +813,19 @@ textarea#body {
 .share {
     width: 15rem;
     margin: 0 auto;
+}
+
+/* Translation list page */
+
+.translate-list-page ul {
+    max-width: 75rem;
+    margin: 2rem auto 5rem auto;
+}
+
+.translate-list-page ul:first-of-type li {
+    display: inline-block;
+    padding: 1rem;
+    border: 0.1rem solid;
 }
 
 /* Flash infos */

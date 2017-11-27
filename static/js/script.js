@@ -10,7 +10,6 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
 })
 
 /* animation flash info */
-
 setTimeout(() => {
     document.querySelector('.flashes').classList.add('hidden');
 }, 3000);
