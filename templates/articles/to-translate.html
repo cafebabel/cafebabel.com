@@ -6,7 +6,7 @@
   <h1>Articles to translate in {{ current_language[1] }}</h1>
 
   <p>Change language:</p>
-  <ul>
+  <ul class=to-translate-language>
     {% for language in get_languages() %}
       {% if current_language[0] != language[0] %}
         <li><a href={{ url_for('articles.to_translate') }}?in={{language[0]}}>{{ language[1] }}</a></li>
