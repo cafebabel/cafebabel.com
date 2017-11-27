@@ -418,10 +418,10 @@ label[for=remember] {
     border: 0.1rem solid #bde513;
 }
 
-label:hover:before {
+/*.select label:hover:before {
     border : 0.1rem solid #bde513 !important;
     transition: border-color .3s;
-}
+}*/
 
 select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-after-with-css-in-webkit */
     padding: 1rem 3rem 1rem 1rem;
@@ -702,6 +702,52 @@ button.menu-button + nav a {
     position: absolute;
     bottom: 0;
     transition: all 0.3s;
+}
+
+.profile-page main .social-networks label {
+    position: absolute;
+    border: 0.1rem solid #00283C;
+    margin-top: 1rem;
+    padding-left: 3rem;
+    display: none;
+    transition: all .3s;
+}
+
+.profile-page main .social-networks label.active {
+    display: block;
+}
+
+.profile-page main .social-networks label input {
+    border: none;
+    margin: 0;
+}
+
+.profile-page main .social-networks label:after, .profile-page main .social-networks label:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: '';
+    position: absolute;
+}
+
+.profile-page main .social-networks label:after {
+    border-color: rgba(255, 255, 255, 0); /* http://www.cssarrowplease.com/ */
+    border-bottom-color: white;
+    border-width: 1rem;
+    margin-left: -1rem;
+}
+.profile-page main .social-networks label:before,
+.profile-page main .social-networks label:hover:before {
+    border-color: rgba(0, 40, 60, 0);
+    border-bottom-color: #00283C;
+    border-width: 1.1rem;
+    margin-left: -1.1rem;
+}
+
+.profile-page main .social-networks label .icon-twitter:before {
+    top: 2.4rem;
+    font-size: 2rem;
+    left: 2rem;
 }
 
 @media screen and (min-width: 750px) {

@@ -13,3 +13,10 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
 setTimeout(() => {
     document.querySelector('.flashes').classList.add('hidden');
 }, 3000);
+
+/* display profile social network field on click */
+const socialIcon = document.querySelector('.social-networks li');
+socialIcon.addEventListener('click', (event) => {
+    event.preventDefault();
+    this.document.querySelector('label').classList.toggle('active');
+});

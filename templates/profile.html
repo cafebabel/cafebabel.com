@@ -11,13 +11,49 @@
   <section>
     <h2>About</h2>
     <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder"> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
-      <ul>
-          <li><a data-edit-name=socials-twitter href="{{ user.profile.socials.twitter }}" class=icon-twitter></a></li>
-          <li><a data-edit-name=socials-facebook href="{{ user.profile.socials.facebook }}" class=icon-facebook></a></li>
-          <li><a data-edit-name=socials-instagram href="{{ user.profile.socials.instagram }}" class=icon-instagram></a></li>
-          <li><a data-edit-name=socials-medium href="{{ user.profile.socials.medium }}" class=icon-medium></a></li>
-          <li><a data-edit-name=socials-flickr href="{{ user.profile.socials.flickr }}" class=icon-flickr2></a></li>
-          <li><a data-edit-name=socials-pinterest href="{{ user.profile.socials.pinterest }}" class=icon-pinterest2></a></li>
+      <ul class=social-networks>
+          <li>
+              <a data-edit-name=socials-twitter href="{{ user.profile.socials.twitter }}" class=icon-twitter></a>
+              <label for=social-twitter>
+                  <span class=icon-twitter></span>
+                  <input type=url id=social-twitter>
+              </label>
+          </li>
+          <li>
+              <a data-edit-name=socials-facebook href="{{ user.profile.socials.facebook }}" class=icon-facebook></a>
+              <label for=social-facebook>
+                  <span class=icon-facebook></span>
+                  <input type=url id=social-facebook>
+              </label>
+          </li>
+          <li>
+              <a data-edit-name=socials-instagram href="{{ user.profile.socials.instagram }}" class=icon-instagram></a>
+              <label for=social-instagram>
+                  <span class=icon-instagram></span>
+                  <input type=url id=social-instagram>
+              </label>
+          </li>
+          <li>
+              <a data-edit-name=socials-medium href="{{ user.profile.socials.medium }}" class=icon-medium></a>
+              <label for=social-medium>
+                  <span class=icon-medium></span>
+                  <input type=url id=social-medium>
+              </label>
+          </li>
+          <li>
+              <a data-edit-name=socials-flickr href="{{ user.profile.socials.flickr }}" class=icon-flickr2></a>
+              <label for=social-flickr>
+                  <span class=icon-flickr2></span>
+                  <input type=url id=social-flickr>
+              </label>
+          </li>
+          <li>
+              <a data-edit-name=socials-pinterest href="{{ user.profile.socials.pinterest }}" class=icon-pinterest2></a>
+              <label for=social-pinterest>
+                  <span class=icon-pinterest2></span>
+                  <input type=url id=social-pinterest>
+              </label>
+          </li>
       </ul>
       <ul>
       <li><h3>Full name:</h3><span data-edit-name=name data-edit-attrs="required">{{ user.profile.name or '' }}</span></li>
