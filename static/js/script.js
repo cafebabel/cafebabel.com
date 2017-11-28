@@ -1,4 +1,4 @@
-/* Preloader fadeOut */
+/* Preloader fadeout when page is loaded */
 window.onload = function() {
     const preloader = document.getElementsByClassName('preloader')[0];
     preloader.className += ' fadeout';
@@ -31,13 +31,14 @@ socialIcon.addEventListener('click', (event) => {
 });
 
 /* animation logo fields */
-const loginField = document.querySelector('form[name=login_user_form] .text input');
-loginField.addEventListener('focus', (event) => {
-    console.log('FOCUSS');
-    loginField.parentNode.classList.add('active completed');
+const loginField = document.querySelector('.text input');
+loginField.addEventListener('focus', event => {
+    console.log('focus')
+    event.target.parent.classList.add('active', 'complete');
 });
-loginField.addEventListener('focusout', (event) => {
-    if(this.value === '')
-        this.parentNode.classList.remove("completed");
-    this.parentNode.classList.remove("active");
+loginField.addEventListener('blur', event => {
+    if(event.target.value === '') {
+    event.target.classList.remove('completed', 'active');
+    }
 })
+
