@@ -418,11 +418,6 @@ label[for=remember] {
     border: 0.1rem solid #bde513;
 }
 
-/*.select label:hover:before {
-    border : 0.1rem solid #bde513 !important;
-    transition: border-color .3s;
-}*/
-
 select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-after-with-css-in-webkit */
     padding: 1rem 3rem 1rem 1rem;
     margin:5rem 0;
@@ -430,6 +425,7 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
     border: 0.1rem solid #00283C;
     cursor: pointer;
     border-radius: 0;
+    min-width: 15rem;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -891,6 +887,7 @@ textarea#body {
     bottom: 5rem;
     transform: translate(-50%, 0);
     transition: all .1s ease-out;
+    z-index: 2;
 }
 
 .flashes.hidden {
