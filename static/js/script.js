@@ -20,3 +20,15 @@ socialIcon.addEventListener('click', (event) => {
     event.preventDefault();
     this.document.querySelector('label').classList.toggle('active');
 });
+
+/* animation logo fields */
+const loginField = document.querySelector('form[name=login_user_form] .text input');
+loginField.addEventListener('focus', (event) => {
+    console.log('FOCUSS');
+    loginField.parentNode.classList.add('active completed');
+});
+loginField.addEventListener('focusout', (event) => {
+    if(this.value === '')
+        this.parentNode.classList.remove("completed");
+    this.parentNode.classList.remove("active");
+})

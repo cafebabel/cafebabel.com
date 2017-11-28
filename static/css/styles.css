@@ -157,10 +157,13 @@ main {
     line-height: 1;
     color: #00283C;
 }
+.icon-profile:before {
+    content: '\e902';
+}
 .icon-checkmark:before {
     content: '\ea10';
 }
-.icon-arrow-down2:before {
+.icon-arrow-down:before {
     content: '\ea3e';
 }
 .icon-facebook:before {
@@ -175,13 +178,13 @@ main {
 .icon-youtube:before {
     content: '\ea9d';
 }
-.icon-flickr2:before {
+.icon-flickr:before {
     content: '\eaa4';
 }
-.icon-linkedin2:before {
+.icon-linkedin:before {
     content: '\eaca';
 }
-.icon-pinterest2:before {
+.icon-pinterest:before {
     content: '\ead2';
 }
 .icon-medium:before {
@@ -332,7 +335,8 @@ button:hover {
     transition: all 0.25s ease-in-out;
 }
 
-form[name=login_user_form] {
+form[name=login_user_form],
+form[name=change_password_form] {
     padding: 2rem;
     position: absolute;
     top: 50%;
@@ -341,8 +345,82 @@ form[name=login_user_form] {
     width: 100%;
 }
 
+/* login form field animation on focus */
+form[name=login_user_form] .text,
+form[name=login_user_form] .password,
+form[name=change_password_form] .text,
+form[name=change_password_form] .password {
+    position: relative;
+}
+
+form[name=login_user_form] .text label,
+form[name=login_user_form] .password label,
+form[name=change_password_form] .text label,
+form[name=change_password_form] .password label {
+    transform: translateY(7rem);
+    color: #00283C;
+    transition: all .3s;
+}
+
+form[name=login_user_form] .text input,
+form[name=login_user_form] .password input,
+form[name=change_password_form] .text input,
+form[name=change_password_form] .password input {
+    position: relative;
+    background: transparent;
+}
+
+form[name=login_user_form] .text:after,
+form[name=login_user_form] .password:after,
+form[name=change_password_form] .text:after,
+form[name=change_password_form] .password:after,
+form[name=login_user_form] .text:before,
+form[name=login_user_form] .password:before,
+form[name=change_password_form] .text:before,
+form[name=change_password_form] .password:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 0.1rem;
+    background-color: #00283C;
+    bottom: 0;
+    transition: all .3s;
+}
+
+form[name=login_user_form] .text:after,
+form[name=login_user_form] .password:after,
+form[name=change_password_form] .text:after,
+form[name=change_password_form] .password:after {
+    background-color: #bde513;
+    width: 0;
+}
+
+form[name=login_user_form] .text.active:after,
+form[name=login_user_form] .password.active:after,
+form[name=change_password_form] .text.active:after,
+form[name=change_password_form] .password.active:after {
+    width: 100%;
+}
+
+form[name=login_user_form] .text.active label,
+form[name=login_user_form] .password.active label,
+form[name=change_password_form] .text.active label,
+form[name=change_password_form] .password.active label {
+    color: #bde513;
+}
+
+form[name=login_user_form] .text.completed label,
+form[name=login_user_form] .password.completed label,
+form[name=change_password_form] .text.completed label,
+form[name=change_password_form] .password.completed label {
+    font-size: 1.4rem;
+    transform: translateY(0);
+}
+
 @media screen and (min-width: 750px) {
-    form[name=login_user_form] {
+    form[name=login_user_form],
+    form[name=change_password_form] {
         width: 50%;
     }
 }
@@ -794,7 +872,7 @@ button.menu-button + nav a {
     margin: 0;
 }
 
-.pitch-page button {
+.pitch-page main button {
     display: block;
     max-width: 75rem;
     margin: 2rem auto;
