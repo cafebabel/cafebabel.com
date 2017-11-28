@@ -612,7 +612,7 @@ a.logo:after {
 
 /* Preloader */
 
-.preloader {
+#preloader {
     position: absolute;
     top: 0;
     right: 0;
@@ -622,14 +622,14 @@ a.logo:after {
     transition: opacity .3s;
     z-index: 2;
 }
-.preloader img {
+#preloader img {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
 
-.preloader.fadeout {
+#preloader.fadeout {
     opacity: 0;
 }
 
