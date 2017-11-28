@@ -1,3 +1,12 @@
+/* Preloader fadeOut */
+window.onload = function() {
+    const preloader = document.getElementsByClassName('preloader')[0];
+    preloader.className += ' fadeout';
+    setTimeout(function(){
+        preloader.style.display = 'none';
+    }, 300);
+}; /* There might be a simplier way to do it, I just got help from here : https://stackoverflow.com/questions/19838955/jquery-loading-screen-into-pure-javascript */
+
 /* open menu */
 const menuButton = document.querySelector('button.menu-button');
 menuButton.addEventListener('click', () => {
