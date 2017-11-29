@@ -2,10 +2,10 @@
 window.onload = function() {
     const preloader = document.querySelector('#preloader');
     preloader.classList.add('fadeout');
-    setTimeout(function(){
-        preloader.style.display = 'none';
+    setTimeout(() => {
+        preloader.classList.add('hidden')
     }, 300);
-} /* There might be a simplier way to do it, I just got help from here : https://stackoverflow.com/questions/19838955/jquery-loading-screen-into-pure-javascript */
+}
 
 /* open menu */
 const menuButton = document.querySelector('button.menu-button');
@@ -19,9 +19,12 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
 })
 
 /* animation flash info */
-setTimeout(() => {
-    document.querySelector('.flashes').classList.add('hidden')
-}, 3000)
+const flashes = document.querySelector('.flashes');
+if (flashes) {
+    setTimeout(() => {
+        flashes.classList.add('hidden')
+    }, 3000)
+}
 
 /* display profile social network field on click */
 const socialIcon = document.querySelector('.social-networks li');
@@ -30,15 +33,16 @@ socialIcon.addEventListener('click', (event) => {
     this.document.querySelector('label').classList.toggle('active')
 });
 
-/* animation logo fields */
-const loginField = document.querySelector('.text input');
-loginField.addEventListener('focus', event => {
+/* animation login fields */
+Array.from(document.querySelectorAll('form[name=login_user_form] input')).forEach(input => {
+    const parent = input.parentElement
+    input.addEventListener('focus', _ => {
     console.log('focus')
-    event.target.parent.classList.add('active', 'complete')
-})
-loginField.addEventListener('blur', event => {
-    if(event.target.value === '') {
-    event.target.classList.remove('completed', 'active')
-    }
+    parent.classList.add('active', 'completed')
+    })
+input.addEventListener('blur', _ => {
+    if (input.value) return
+parent.classList.remove('active', 'completed')
+    })
 })
 

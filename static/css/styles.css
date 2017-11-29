@@ -338,11 +338,8 @@ button:hover {
 form[name=login_user_form],
 form[name=change_password_form] {
     padding: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 100%;
+    margin: 0 auto;
 }
 
 /* login form field animation on focus */
@@ -631,6 +628,10 @@ a.logo:after {
 
 #preloader.fadeout {
     opacity: 0;
+}
+
+#preloader.hidden {
+    display: none;
 }
 
 /* Menu */
