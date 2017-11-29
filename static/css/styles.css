@@ -412,7 +412,7 @@ form[name=login_user_form] .password.completed label,
 form[name=change_password_form] .text.completed label,
 form[name=change_password_form] .password.completed label {
     font-size: 1.4rem;
-    transform: translateY(0);
+    transform: translateY(2.5rem);
 }
 
 @media screen and (min-width: 750px) {

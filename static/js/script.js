@@ -1,14 +1,12 @@
 /* Preloader fadeout when page is loaded */
-window.onload = function() {
-    const preloader = document.querySelector('#preloader');
-    preloader.classList.add('fadeout');
-    setTimeout(() => {
-        preloader.classList.add('hidden')
-    }, 300);
-}
+const preloader = document.querySelector('#preloader')
+preloader.classList.add('fadeout')
+setTimeout(() => {
+    preloader.classList.add('hidden')
+}, 300)
 
 /* open menu */
-const menuButton = document.querySelector('button.menu-button');
+const menuButton = document.querySelector('button.menu-button')
 menuButton.addEventListener('click', () => {
     menuButton.classList.toggle('active')
 })
@@ -19,7 +17,7 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
 })
 
 /* animation flash info */
-const flashes = document.querySelector('.flashes');
+const flashes = document.querySelector('.flashes')
 if (flashes) {
     setTimeout(() => {
         flashes.classList.add('hidden')
@@ -27,22 +25,28 @@ if (flashes) {
 }
 
 /* display profile social network field on click */
-const socialIcon = document.querySelector('.social-networks li');
-socialIcon.addEventListener('click', (event) => {
-    event.preventDefault();
-    this.document.querySelector('label').classList.toggle('active')
-});
+const socialIcon = document.querySelector('.social-networks li')
+Array.from(document.socialIcon.forEach(li => {
+    if (socialIcon) {
+        socialIcon.addEventListener('click', (event) => {
+            event.preventDefault()
+        this.document.querySelector('label').classList.toggle('active')
+        })
+    }
+}
 
 /* animation login fields */
 Array.from(document.querySelectorAll('form[name=login_user_form] input')).forEach(input => {
     const parent = input.parentElement
-    input.addEventListener('focus', _ => {
-    console.log('focus')
+    console.log('hey')
+    if (input.value) {
+        parent.classList.add('active', 'completed')
+    }
+    input.addEventListener('focus', () => {
     parent.classList.add('active', 'completed')
     })
-input.addEventListener('blur', _ => {
+input.addEventListener('blur', () => {
     if (input.value) return
-parent.classList.remove('active', 'completed')
+        parent.classList.remove('active', 'completed')
     })
 })
-
