@@ -342,6 +342,44 @@ form[name=change_password_form] {
     margin: 0 auto;
 }
 
+form[name=login_user_form] ul li {
+    text-align: center;
+    font-size: 1.2rem;
+    color: red;
+}
+
+form[name=login_user_form] ul {
+    padding: 1rem;
+    border: 0.1rem solid red;
+    background-color: white;
+    position: absolute;
+    bottom: -35%;
+    width: 100%;
+    z-index: 1;
+}
+
+form[name=login_user_form]:after, form[name=login_user_form]:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: '';
+    position: absolute;
+}
+
+form[name=login_user_form]:after {
+    border-color: rgba(255, 255, 255, 0); /* http://www.cssarrowplease.com/ */
+    border-bottom-color: white;
+    border-width: 1rem;
+    margin-left: -1rem;
+}
+form[name=login_user_form]:before,
+form[name=login_user_form]:hover:before {
+    border-color: rgba(0, 40, 60, 0);
+    border-bottom-color: #00283C;
+    border-width: 1.1rem;
+    margin-left: -1.1rem;
+}
+
 /* login form field animation on focus */
 form[name=login_user_form] .text,
 form[name=login_user_form] .password,
@@ -427,7 +465,7 @@ form[name=change_password_form] .password.completed label {
     border: none;
     border-bottom: 0.1rem solid #bde513;
     background-color: transparent;
-    padding:1rem 1rem 1rem 0;
+    padding: 1rem 1rem 1rem 0;
 }
 
 label[for=styleguide],

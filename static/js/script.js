@@ -26,19 +26,17 @@ if (flashes) {
 
 /* display profile social network field on click */
 const socialIcon = document.querySelector('.social-networks li')
-Array.from(document.socialIcon.forEach(li => {
-    if (socialIcon) {
-        socialIcon.addEventListener('click', (event) => {
-            event.preventDefault()
-        this.document.querySelector('label').classList.toggle('active')
-        })
-    }
+if (socialIcon) {
+    socialIcon.addEventListener('click', (event) => {
+        event.preventDefault()
+    this.document.querySelector('label').classList.toggle('active')
+    })
 }
+
 
 /* animation login fields */
 Array.from(document.querySelectorAll('form[name=login_user_form] input')).forEach(input => {
     const parent = input.parentElement
-    console.log('hey')
     if (input.value) {
         parent.classList.add('active', 'completed')
     }
