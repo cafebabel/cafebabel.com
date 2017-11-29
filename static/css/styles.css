@@ -342,12 +342,6 @@ form[name=change_password_form] {
     margin: 0 auto;
 }
 
-form[name=login_user_form] ul li {
-    text-align: center;
-    font-size: 1.2rem;
-    color: red;
-}
-
 form[name=login_user_form] ul {
     padding: 1rem;
     border: 0.1rem solid red;
@@ -358,24 +352,30 @@ form[name=login_user_form] ul {
     z-index: 1;
 }
 
-form[name=login_user_form]:after, form[name=login_user_form]:before {
+form[name=login_user_form] ul li {
+    text-align: center;
+    font-size: 1.2rem;
+    color: red;
+}
+
+form[name=login_user_form] ul:after, form[name=login_user_form]:before {
+    content: '';
     bottom: 100%;
     left: 50%;
     border: solid transparent;
-    content: '';
     position: absolute;
 }
 
-form[name=login_user_form]:after {
-    border-color: rgba(255, 255, 255, 0); /* http://www.cssarrowplease.com/ */
+form[name=login_user_form] ul:after {
+    border-color: rgba(255, 255, 255, 0);
     border-bottom-color: white;
     border-width: 1rem;
     margin-left: -1rem;
 }
-form[name=login_user_form]:before,
-form[name=login_user_form]:hover:before {
-    border-color: rgba(0, 40, 60, 0);
-    border-bottom-color: #00283C;
+form[name=login_user_form] ul:before,
+form[name=login_user_form] ul:hover:before {
+    border-color: rgba(255, 0, 0, 0);
+    border-bottom-color: red;
     border-width: 1.1rem;
     margin-left: -1.1rem;
 }
