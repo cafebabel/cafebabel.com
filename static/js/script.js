@@ -27,12 +27,13 @@ if (flashes) {
 /* display profile social network field on click */
 const socialIcon = document.querySelector('.social-networks li')
 if (socialIcon) {
-    socialIcon.addEventListener('click', (event) => {
-        event.preventDefault()
-    this.document.querySelector('label').classList.toggle('active')
+    Array.from(document.querySelector('.social-networks li')).forEach((li) => {
+            socialIcon.addEventListener('click', (event) => {
+                event.preventDefault()
+            document.querySelector('label').classList.toggle('active')
+        })
     })
 }
-
 
 /* animation login fields */
 Array.from(document.querySelectorAll('form[name=login_user_form] input')).forEach(input => {

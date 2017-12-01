@@ -358,7 +358,7 @@ form[name=login_user_form] ul li {
     color: red;
 }
 
-form[name=login_user_form] ul:after, form[name=login_user_form]:before {
+form[name=login_user_form] ul:after, form[name=login_user_form] ul:before {
     content: '';
     bottom: 100%;
     left: 50%;
