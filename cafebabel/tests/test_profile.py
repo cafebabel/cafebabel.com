@@ -16,7 +16,7 @@ def test_author_profile_has_no_list_of_drafts(client, user, article):
     login(client, user.email, 'secret')
     response = client.get(f'/profile/{user.id}/')
     assert response.status_code == 200
-    assert article.title not in response.get_data(as_text=True)
+    assert article.title not in response
 
 
 def test_author_profile_has_list_of_published_articles(client, user, article):
@@ -26,4 +26,4 @@ def test_author_profile_has_list_of_published_articles(client, user, article):
     article.save()
     response = client.get(f'/profile/{user.id}/')
     assert response.status_code == 200
-    assert article.title in response.get_data(as_text=True)
+    assert article.title in response

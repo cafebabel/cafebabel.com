@@ -1,10 +1,9 @@
 import datetime
 
-from flask_security import (MongoEngineUserDatastore, RoleMixin, Security,
-                            UserMixin)
+from flask_security import RoleMixin, UserMixin
 from mongoengine import signals
 
-from .. import app, db
+from .. import db
 
 
 class Role(db.Document, RoleMixin):
@@ -59,6 +58,3 @@ class User(db.Document, UserMixin):
 
 
 signals.post_save.connect(User.post_save, sender=User)
-
-user_datastore = MongoEngineUserDatastore(db, User, Role)
-security = Security(app, user_datastore)

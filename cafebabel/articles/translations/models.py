@@ -1,7 +1,7 @@
-from flask import url_for
+from flask import current_app, url_for
 from mongoengine import signals, ValidationError
 
-from ... import app, db
+from ... import db
 from ...users.models import User
 from ...articles.models import Article
 
@@ -26,7 +26,7 @@ class Translation(Article):
     @property
     def image_url(self):
         if self.has_image:
-            return (f'{app.config.get("ARTICLES_IMAGES_URL")}/'
+            return (f'{current_app.config.get("ARTICLES_IMAGES_URL")}/'
                     f'{self.original_article.id}')
 
     def clean(self):

@@ -1,10 +1,10 @@
 from http import HTTPStatus
 
-from flask import Blueprint, abort, flash, redirect, render_template, request
+from flask import (Blueprint, abort, current_app, flash, redirect,
+                   render_template, request)
 from flask_login import current_user, login_required
 from mongoengine import errors
 
-from ... import app
 from ..models import Article
 from .models import Translation
 
@@ -40,7 +40,7 @@ def create():
     language = request.args.get('lang')
     if not original_article:
         abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid article.')
-    if not language or language not in dict(app.config['LANGUAGES']):
+    if not language or language not in dict(current_app.config['LANGUAGES']):
         abort(HTTPStatus.BAD_REQUEST, 'You must specify a valid language.')
     article = Article.objects.get_or_404(id=original_article)
     return render_template('articles/translations/create.html',

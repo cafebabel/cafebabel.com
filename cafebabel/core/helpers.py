@@ -3,18 +3,13 @@ import unicodedata
 from functools import wraps
 from http import HTTPStatus
 from math import ceil
-from urllib.parse import quote_plus
-
-from jinja2.filters import do_wordcount
 
 import markdown as markdownlib
 from flask import Markup, abort
 from flask_login import current_user
+from jinja2.filters import do_wordcount
 
-from .. import app
 
-
-@app.template_filter()
 def slugify(value):
     value = (unicodedata.normalize('NFKD', str(value))
              .encode('ascii', 'ignore').decode('ascii'))
@@ -22,28 +17,13 @@ def slugify(value):
     return re.sub('[-\s]+', '-', value)
 
 
-@app.template_filter()
 def markdown(value):
     return Markup(markdownlib.markdown(value))
 
 
-@app.template_filter()
 def reading_time(text):
     words = do_wordcount(text)
     return ceil(words / 250)
-
-
-app.add_template_filter(quote_plus, 'quote_plus')
-
-
-@app.context_processor
-def add_template_helpers():
-    return dict(
-        get_languages=lambda: app.config.get('LANGUAGES', tuple()),
-        get_categories=lambda: app.config.get('CATEGORIES', []),
-        article_image_url=(lambda a:
-            f'{app.config.get("ARTICLES_IMAGES_URL")}/{a.id}'),
-    )
 
 
 def editor_required(func):

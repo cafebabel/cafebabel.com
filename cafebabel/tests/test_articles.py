@@ -7,8 +7,8 @@ from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
 from .utils import login
-from .. import app, mail
-    
+from .. import mail
+
 
 def test_access_published_article_should_return_200(client, article):
     article.status = 'published'
@@ -38,23 +38,22 @@ def test_published_article_should_display_content(client, published_article,
     response = client.get(f'/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert response.status_code == 200
-    content = response.get_data(as_text=True)
-    assert f'<h1>{published_article.title}</h1>' in content
-    assert f'<title>{published_article.title}' in content
+    assert f'<h1>{published_article.title}</h1>' in response
+    assert f'<title>{published_article.title}' in response
     assert (f'<meta name=description content="{published_article.summary}"'
-            in content)
-    assert f'<p class=summary>{published_article.summary}</p>' in content
-    assert f'<p>{published_article.body}</p>' in content
-    assert f'<time>{published_article.creation_date.date()}</time>' in content
-    assert f'<span>{published_article.language}</span>' in content
-    assert f'{published_article.author.profile.name}' in content
+            in response)
+    assert f'<p class=summary>{published_article.summary}</p>' in response
+    assert f'<p>{published_article.body}</p>' in response
+    assert f'<time>{published_article.creation_date.date()}</time>' in response
+    assert f'<span>{published_article.language}</span>' in response
+    assert f'{published_article.author.profile.name}' in response
     assert (f'href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
             f'article%2F{published_article.slug}-{published_article.id}%2F'
-            f'&text={published_article.title}&via=cafebabel_eng"' in content)
+            f'&text={published_article.title}&via=cafebabel_eng"' in response)
     assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
             f'localhost%2Farticle%2F{published_article.slug}-'
-            f'{published_article.id}%2F"' in content)
-    assert '1 min' in content
+            f'{published_article.id}%2F"' in response)
+    assert '1 min' in response
 
 
 def test_published_article_should_render_markdown(client, published_article):
@@ -63,10 +62,9 @@ def test_published_article_should_render_markdown(client, published_article):
     response = client.get(f'/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert response.status_code == 200
-    content = response.get_data(as_text=True)
-    assert f'<h1>{published_article.title}</h1>' in content
-    assert f'<h2>Body title</h2>' in content
-    assert f'<blockquote>\n<p>quote me</p>\n</blockquote>' in content
+    assert f'<h1>{published_article.title}</h1>' in response
+    assert f'<h2>Body title</h2>' in response
+    assert f'<blockquote>\n<p>quote me</p>\n</blockquote>' in response
 
 
 def test_access_no_article_should_return_404(client):
@@ -104,7 +102,7 @@ def test_access_no_article_form_should_return_404(client, editor):
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_update_published_article_should_return_200(client, user, editor,
+def test_update_published_article_should_return_200(app, client, user, editor,
                                                     published_article):
     login(client, editor.email, 'secret')
     data = {
@@ -121,7 +119,7 @@ def test_update_published_article_should_return_200(client, user, editor,
     assert published_article.author == user
 
 
-def test_update_article_with_image_should_return_200(client, user, editor,
+def test_update_article_with_image_should_return_200(app, client, user, editor,
                                                      published_article):
     login(client, editor.email, 'secret')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
@@ -208,13 +206,13 @@ def test_access_published_article_should_link_translations(client, article,
     translation.status = 'published'
     translation.save()
     response = client.get(f'/article/{article.slug}-{article.id}/')
-    text = response.get_data(as_text=True)
     assert response.status_code == HTTPStatus.OK
-    assert '<p>Translate this article in:</p>' in text
+    assert '<p>Translate this article in:</p>' in response
     assert ((f'<li><a href={url_for("translations.create")}'
-             f'?lang=it&original={article.id}>Italiano</a></li>') in text)
+             f'?lang=it&original={article.id}>Italiano</a></li>') in response)
     assert ((f'<li><a href={url_for("translations.create")}'
-             f'?lang=fr&original={article.id}>Français</a></li>') not in text)
+             f'?lang=fr&original={article.id}>Français</a></li>')
+            not in response)
 
 
 def test_article_should_know_its_translations(client, article, translation):
@@ -229,16 +227,14 @@ def test_article_to_translate_should_return_200(client):
 
 def test_article_to_translate_should_have_other_languages(client):
     response = client.get(f'/article/to-translate/')
-    text = response.get_data(as_text=True)
-    assert '<a href=/article/to-translate/?in=fr>Français</a>' in text
-    assert '<a href=/article/to-translate/?in=en>English</a>' not in text
+    assert '<a href=/article/to-translate/?in=fr>Français</a>' in response
+    assert '<a href=/article/to-translate/?in=en>English</a>' not in response
 
 
 def test_article_to_translate_should_filter_by_language(client):
     response = client.get(f'/article/to-translate/?in=fr')
-    text = response.get_data(as_text=True)
-    assert '<a href=/article/to-translate/?in=fr>Français</a>' not in text
-    assert '<a href=/article/to-translate/?in=en>English</a>' in text
+    assert '<a href=/article/to-translate/?in=fr>Français</a>' not in response
+    assert '<a href=/article/to-translate/?in=en>English</a>' in response
 
 
 def test_article_to_translate_with_unknown_language(client):
@@ -246,33 +242,33 @@ def test_article_to_translate_with_unknown_language(client):
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
 
-def test_article_to_translate_should_have_translation_links(client, article):
+def test_article_to_translate_should_have_translation_links(
+        app, client, article):
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
     response = client.get(f'/article/to-translate/')
-    text = response.get_data(as_text=True)
     assert (f'<a href=/article/translation/new/'
-            f'?lang=en&original={article.id}>Translate in English</a>' in text)
+            f'?lang=en&original={article.id}>Translate in English</a>'
+            in response)
     assert (f'<a href=/article/translation/new/'
             f'?lang=fr&original={article.id}>Translate in Français</a>'
-            not in text)
+            not in response)
 
 
 def test_translation_to_translate_should_not_have_original_language(
         client, article, translation):
     response = client.get(f'/article/to-translate/')
-    text = response.get_data(as_text=True)
     assert (f'<a href=/article/translation/new/'
             f'?lang=en&original={article.id}>Translate in English</a>'
-            not in text)
+            not in response)
     assert (f'<a href=/article/translation/new/'
             f'?lang=fr&original={article.id}>Translate in Français</a>'
-            not in text)
+            not in response)
 
 
-def test_article_to_translate_should_have_only_other_links(client, article):
+def test_article_to_translate_should_have_only_other_links(
+        app, client, article):
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
     response = client.get(f'/article/to-translate/?in=fr')
-    text = response.get_data(as_text=True)
-    assert 'Translate in ' not in text
+    assert 'Translate in ' not in response

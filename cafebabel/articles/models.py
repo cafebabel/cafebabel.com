@@ -1,11 +1,11 @@
 import datetime
 from http import HTTPStatus
 
-from flask import abort, url_for
+from flask import abort, current_app, url_for
 from flask_login import current_user
 from mongoengine import errors, queryset, signals
 
-from .. import app, db
+from .. import db
 from ..core.helpers import slugify
 from ..users.models import User
 
@@ -75,12 +75,13 @@ class Article(db.Document):
     @property
     def image_url(self):
         if self.has_image:
-            return f'{app.config.get("ARTICLES_IMAGES_URL")}/{self.id}'
+            return f'{current_app.config.get("ARTICLES_IMAGES_URL")}/{self.id}'
 
     def delete_image(self):
         if not self.has_image:
             return
-        (app.config.get('ARTICLES_IMAGES_PATH') / str(self.id)).unlink()
+        (current_app.config.get('ARTICLES_IMAGES_PATH') /
+         str(self.id)).unlink()
         self.has_image = False
         self.save()
 
@@ -101,7 +102,8 @@ class Article(db.Document):
         if document._upload_image:
             document.has_image = True
             document._upload_image.save(
-                str(app.config.get('ARTICLES_IMAGES_PATH') / str(document.id)))
+                str(current_app.config.get('ARTICLES_IMAGES_PATH') /
+                    str(document.id)))
             document._upload_image = None
             document.save()
 

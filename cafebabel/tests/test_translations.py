@@ -27,8 +27,7 @@ def test_translation_creation_should_display_form(app, client, user, article):
     response = client.get(
         f'/article/translation/new/?lang={language}&original={article.id}')
     assert response.status_code == HTTPStatus.OK
-    text = response.get_data(as_text=True)
-    assert '<textarea id=body name=body required></textarea>' in text
+    assert '<textarea id=body name=body required></textarea>' in response
 
 
 def test_translation_creation_requires_login(app, client, article):
@@ -88,8 +87,7 @@ def test_translation_creation_already_existing(app, client, user, article):
     }
     response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert ('A translation already exists.'
-            in response.get_data(as_text=True))
+    assert 'A translation already exists.' in response
 
 
 def test_translation_creation_same_as_article(app, client, user, article):
@@ -102,8 +100,7 @@ def test_translation_creation_same_as_article(app, client, user, article):
     }
     response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert ('Original article in the same language.'
-            in response.get_data(as_text=True))
+    assert 'Original article in the same language.' in response
 
 
 def test_translation_creation_unknown_article(app, client, user, article):
@@ -126,17 +123,14 @@ def test_translation_access_draft_should_return_200(client, translation):
 
 def test_translation_access_have_original_article_link(client, translation):
     response = client.get(f'/article/translation/{translation.id}/')
-    text = response.get_data(as_text=True)
     assert ((f'Translated from '
              f'<a href="/article/draft/{translation.original_article.id}/">'
-             f'article title')
-            in text)
+             f'article title') in response)
 
 
 def test_translation_access_have_translator(client, translation):
     response = client.get(f'/article/translation/{translation.id}/')
-    text = response.get_data(as_text=True)
-    assert f'by {translation.translator}.' in text
+    assert f'by {translation.translator}.' in response
 
 
 def test_translation_access_published_should_return_404(client, translation):
@@ -155,8 +149,8 @@ def test_translation_update_should_display_form(client, user, translation):
     login(client, user.email, 'secret')
     response = client.get(f'/article/translation/{translation.id}/edit/')
     assert response.status_code == HTTPStatus.OK
-    text = response.get_data(as_text=True)
-    assert '<textarea id=body name=body required>body text</textarea>' in text
+    assert ('<textarea id=body name=body required>body text</textarea>'
+            in response)
 
 
 def test_translation_update_requires_login(client, translation):
@@ -195,13 +189,11 @@ def test_translation_published_should_have_translator(client, translation):
     translation.status = 'published'
     translation.save()
     response = client.get(f'/article/{translation.slug}-{translation.id}/')
-    text = response.get_data(as_text=True)
     assert response.status_code == HTTPStatus.OK
     assert ((f'Translated from '
              f'<a href="/article/draft/{translation.original_article.id}/">'
-             f'article title')
-            in text)
-    assert f'by {translation.translator}.' in text
+             f'article title') in response)
+    assert f'by {translation.translator}.' in response
 
 
 def test_translation_published_should_have_reference(client, translation):
@@ -211,8 +203,7 @@ def test_translation_published_should_have_reference(client, translation):
     article.status = 'published'
     article.save()
     response = client.get(f'/article/{article.slug}-{article.id}/')
-    text = response.get_data(as_text=True)
     assert response.status_code == HTTPStatus.OK
-    assert '<p>Read this article in:</p>' in text
+    assert '<p>Read this article in:</p>' in response
     assert ((f'<li>{translation.language}: <a href={translation.detail_url}>'
-             f'{translation.title}</a></li>') in text)
+             f'{translation.title}</a></li>') in response)
