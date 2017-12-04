@@ -27,9 +27,10 @@ if (flashes) {
 /* display profile social network field on click */
 const socialIcon = document.querySelector('.social-networks li')
 if (socialIcon) {
-    Array.from(document.querySelector('.social-networks li')).forEach((li) => {
-            socialIcon.addEventListener('click', (event) => {
-                event.preventDefault()
+    Array.from(socialIcon).forEach((li) => {
+        console.log('oink')
+        li.addEventListener('click', (event) => {
+            event.preventDefault()
             document.querySelector('label').classList.toggle('active')
         })
     })

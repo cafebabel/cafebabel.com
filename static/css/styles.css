@@ -336,13 +336,18 @@ button:hover {
 }
 
 form[name=login_user_form],
-form[name=change_password_form] {
+form[name=change_password_form],
+form[name=register_user_form],
+form[name=forgot_password_form] {
     padding: 2rem;
     width: 100%;
     margin: 0 auto;
 }
 
-form[name=login_user_form] ul {
+form[name=login_user_form] ul,
+form[name=change_password_form] ul,
+form[name=register_user_form] ul,
+form[name=forgot_password_form] ul {
     padding: 1rem;
     border: 0.1rem solid red;
     background-color: white;
@@ -352,13 +357,19 @@ form[name=login_user_form] ul {
     z-index: 1;
 }
 
-form[name=login_user_form] ul li {
+form[name=login_user_form] ul li,
+form[name=change_password_form] ul li,
+form[name=register_user_form] ul li,
+form[name=forgot_password_form] ul li {
     text-align: center;
     font-size: 1.2rem;
     color: red;
 }
 
-form[name=login_user_form] ul:after, form[name=login_user_form] ul:before {
+form[name=login_user_form] ul:after, form[name=login_user_form] ul:before,
+form[name=change_password_form] ul:after, form[name=change_password_form] ul:before,
+form[name=register_user_form] ul:after, form[name=register_user_form] ul:before,
+form[name=forgot_password_form] ul:after, form[name=forgot_password_form] ul:before {
     content: '';
     bottom: 100%;
     left: 50%;
@@ -366,14 +377,23 @@ form[name=login_user_form] ul:after, form[name=login_user_form] ul:before {
     position: absolute;
 }
 
-form[name=login_user_form] ul:after {
+form[name=login_user_form] ul:after,
+form[name=change_password_form] ul:after,
+form[name=register_user_form] ul:after,
+form[name=forgot_password_form] ul:after {
     border-color: rgba(255, 255, 255, 0);
     border-bottom-color: white;
     border-width: 1rem;
     margin-left: -1rem;
 }
 form[name=login_user_form] ul:before,
-form[name=login_user_form] ul:hover:before {
+form[name=login_user_form] ul:hover:before,
+form[name=change_password_form] ul:before,
+form[name=change_password_form] ul:hover:before,
+form[name=register_user_form] ul:before,
+form[name=register_user_form] ul:hover:before,
+form[name=forgot_password_form] ul:before,
+form[name=forgot_password_form] ul:hover:before {
     border-color: rgba(255, 0, 0, 0);
     border-bottom-color: red;
     border-width: 1.1rem;
@@ -455,7 +475,9 @@ form[name=change_password_form] .password.completed label {
 
 @media screen and (min-width: 750px) {
     form[name=login_user_form],
-    form[name=change_password_form] {
+    form[name=change_password_form],
+    form[name=register_user_form],
+    form[name=forgot_password_form] {
         width: 50%;
     }
 }
