@@ -1,5 +1,5 @@
 /* Preloader fadeout when page is loaded */
-const preloader = document.querySelector('#preloader')
+var preloader = document.querySelector('#preloader')
 preloader.classList.add('fadeout')
 setTimeout(() => {
     preloader.classList.add('hidden')
@@ -25,12 +25,13 @@ if (flashes) {
 }
 
 /* display profile social network field on click */
-const socialIcon = document.querySelector('.social-networks li a')
-if (socialIcon) {
-    Array.from(socialIcon).forEach((li) => {
-        li.addEventListener('click', (event) => {
+const socialIcons = Array.from(document.querySelectorAll('.social-networks li'))
+if (socialIcons) {
+    socialIcons.forEach(socialIcon => {
+        socialIcon.querySelector('a').addEventListener('click', (event) => {
             event.preventDefault()
-            document.querySelector('label').classList.toggle('active')
+            socialIcons.forEach((li) => li.classList.remove('active'))
+            socialIcon.classList.add('active')
         })
     })
 }
@@ -38,14 +39,15 @@ if (socialIcon) {
 /* animation login fields */
 Array.from(document.querySelectorAll('form[name=login_user_form] > div > input')).forEach(input => {
     const parent = input.parentElement
-    input.addEventListener('focus', () => {
-        parent.classList.add('active', 'completed')
-    })
+    console.log(parent)
     input.addEventListener('change', () => {
         parent.classList.add('active', 'completed')
     })
+    input.addEventListener('focus', () => {
+        parent.classList.add('active', 'completed')
+    })
     input.addEventListener('blur', () => {
-    if (input.value) return
+        if (input.value) return
         parent.classList.remove('active', 'completed')
     })
 })
