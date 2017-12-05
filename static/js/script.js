@@ -30,8 +30,14 @@ if (socialIcons) {
     socialIcons.forEach(socialIcon => {
         socialIcon.querySelector('a').addEventListener('click', (event) => {
             event.preventDefault()
-            socialIcons.forEach((li) => li.classList.remove('active'))
-            socialIcon.classList.add('active')
+            const SocialsClick = socialIcon.querySelector('a').contains(event.target)
+            if (SocialsClick) {
+                socialIcons.forEach((li) => li.classList.remove('active'))
+                socialIcon.classList.add('active')
+                socialIcon.querySelector('input').focus()
+            } else {
+                socialIcon.classList.remove('active')
+            }
         })
     })
 }

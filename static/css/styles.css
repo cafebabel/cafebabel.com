@@ -811,11 +811,11 @@ button.menu-button + nav a {
 
 .profile-page main ul:first-of-type li {
     display: inline-block;
+    width: 3.5rem;
 }
 
 .profile-page [class^="icon-"],
 .profile-page [class*=" icon-"] {
-    width: 3.5rem;
     font-size: 3rem;
 }
 
@@ -826,14 +826,61 @@ button.menu-button + nav a {
     transition: all 0.3s;
 }
 
-.profile-page main .social-networks label {
+.profile-page main .social-networks li label {
     position: absolute;
     border: 0.1rem solid #00283C;
+    background-color: white;
     margin-top: 1rem;
     padding-left: 3rem;
-    left: -65%;
+    left: -2.5rem;
     display: none;
     transition: all .3s;
+    z-index: 1;
+}
+
+.profile-page main .social-networks li:nth-of-type(2) label {
+    left: -6.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(2) label:after,
+.profile-page main .social-networks li:nth-of-type(2) label:before {
+    left: 28%;
+}
+
+.profile-page main .social-networks li:nth-of-type(3) label {
+    left: -10.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(3) label:after,
+.profile-page main .social-networks li:nth-of-type(3) label:before {
+    left: 42%;
+}
+
+.profile-page main .social-networks li:nth-of-type(4) label {
+    left: -14.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(4) label:after,
+.profile-page main .social-networks li:nth-of-type(4) label:before {
+    left: 56%;
+}
+
+.profile-page main .social-networks li:nth-of-type(5) label {
+    left: -18.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(5) label:after,
+.profile-page main .social-networks li:nth-of-type(5) label:before {
+    left: 71%;
+}
+
+.profile-page main .social-networks li:nth-of-type(6) label {
+    left: -22.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(6) label:after,
+.profile-page main .social-networks li:nth-of-type(6) label:before {
+    left: 85%;
 }
 
 .profile-page main .social-networks .active label {
@@ -868,10 +915,16 @@ button.menu-button + nav a {
     margin-left: -1.1rem;
 }
 
-.profile-page main .social-networks label .icon-twitter:before {
+.profile-page main .social-networks label [class^="icon-"]:before,
+.profile-page main .social-networks label [class*=" icon-"]:before {
     top: 2.4rem;
     font-size: 2rem;
     left: 2rem;
+}
+
+.profile-page [class^="icon-"]:hover:after,
+.profile-page [class*=" icon-"]:hover:after {
+    width: 0;
 }
 
 @media screen and (min-width: 750px) {
@@ -887,11 +940,6 @@ button.menu-button + nav a {
     .profile-page [class^="icon-"]:hover:before,
     .profile-page [class*=" icon-"]:hover:before {
         transform: translateY(-0.2rem);
-    }
-
-    .profile-page [class^="icon-"]:hover:after,
-    .profile-page [class*=" icon-"]:hover:after {
-        width: 0;
     }
 
     .profile-page main section:first-of-type {
