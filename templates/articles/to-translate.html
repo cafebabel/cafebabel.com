@@ -8,14 +8,14 @@
     <h1>
       Articles to translate from
       <select id=from name=from required>
-        {% for language in get_languages() %}
-        <option value={{ language[0] }}{% if from_language[0] == language[0] %} selected{% endif %}>{{ language[1] }}</option>
+        {% for language_code, language_label in get_languages() %}
+        <option value={{ language_code }}{% if from_language_code == language_code %} selected{% endif %}>{{ language_label }}</option>
         {% endfor %}
       </select>
       to
       <select id=to name=to required>
-        {% for language in get_languages() %}
-        <option value={{ language[0] }}{% if to_language[0] == language[0] %} selected{% endif %}>{{ language[1] }}</option>
+        {% for language_code, language_label in get_languages() %}
+        <option value={{ language_code }}{% if to_language_code == language_code %} selected{% endif %}>{{ language_label }}</option>
         {% endfor %}
       </select>
     </h1>
@@ -24,7 +24,7 @@
 
   <ul>
   {% for article in articles %}
-    {% if not article.is_translated_in(to_language[0]) %}
+    {% if not article.is_translated_in(to_language_code) %}
       <li>
         <article>
           {% if article.has_image %}
@@ -34,11 +34,11 @@
           <h2>{{ article.title }}</h2>
           <ul>
             {% if article.is_translation %}
-              {% if article.original_article.language != to_language[0] %}
-                <li><a href={{ url_for('translations.create') }}?lang={{ to_language[0] }}&original={{ article.original_article.id }}>Translate in {{ to_language[1] }}</a></li>
+              {% if article.original_article.language != to_language_code %}
+                <li><a href={{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}>Translate in {{ to_language_label }}</a></li>
               {% endif %}
             {% else %}
-              <li><a href={{ url_for('translations.create') }}?lang={{ to_language[0] }}&original={{ article.id }}>Translate in {{ to_language[1] }}</a></li>
+              <li><a href={{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}>Translate in {{ to_language_label }}</a></li>
             {% endif %}
           </ul>
         </article>

@@ -82,5 +82,5 @@ def to_translate():
     articles = Article.objects.filter(language=from_language)
     return render_template(
         'articles/to-translate.html', articles=articles,
-        from_language=(from_language, languages[from_language]),
-        to_language=(to_language, languages[to_language]))
+        from_language_code=from_language,
+        to_language_code=to_language, to_language_label=languages[to_language])
