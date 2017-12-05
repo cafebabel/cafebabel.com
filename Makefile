@@ -21,6 +21,7 @@ deploy:
 	@echo "> Fetching master branch and updating sources."
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
+	${remote} "pkill flask && ~/start-preprod.sh &"
 
 install:
 	@echo "> Installing sources, dependencies and database."
