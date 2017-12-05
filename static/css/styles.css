@@ -336,19 +336,13 @@ button:hover {
     transition: all 0.25s ease-in-out;
 }
 
-form[name=login_user_form],
-form[name=change_password_form],
-form[name=register_user_form],
-form[name=forgot_password_form] {
+.authentication-form {
     padding: 2rem;
     width: 100%;
     margin: 0 auto;
 }
 
-form[name=login_user_form] ul,
-form[name=change_password_form] ul,
-form[name=register_user_form] ul,
-form[name=forgot_password_form] ul {
+.authentication-form ul {
     padding: 1rem;
     border: 0.1rem solid red;
     background-color: white;
@@ -358,23 +352,14 @@ form[name=forgot_password_form] ul {
     z-index: 1;
 }
 
-form[name=login_user_form] ul li,
-form[name=change_password_form] ul li,
-form[name=register_user_form] ul li,
-form[name=forgot_password_form] ul li {
+.authentication-form ul li {
     text-align: center;
     font-size: 1.2rem;
     color: red;
 }
 
-form[name=login_user_form] ul:after,
-form[name=login_user_form] ul:before,
-form[name=change_password_form] ul:after,
-form[name=change_password_form] ul:before,
-form[name=register_user_form] ul:after,
-form[name=register_user_form] ul:before,
-form[name=forgot_password_form] ul:after,
-form[name=forgot_password_form] ul:before {
+.authentication-form ul:after,
+.authentication-form ul:before {
     content: '';
     bottom: 100%;
     left: 50%;
@@ -382,23 +367,14 @@ form[name=forgot_password_form] ul:before {
     position: absolute;
 }
 
-form[name=login_user_form] ul:after,
-form[name=change_password_form] ul:after,
-form[name=register_user_form] ul:after,
-form[name=forgot_password_form] ul:after {
+.authentication-form ul:after {
     border-color: rgba(255, 255, 255, 0);
     border-bottom-color: white;
     border-width: 1rem;
     margin-left: -1rem;
 }
-form[name=login_user_form] ul:before,
-form[name=login_user_form] ul:hover:before,
-form[name=change_password_form] ul:before,
-form[name=change_password_form] ul:hover:before,
-form[name=register_user_form] ul:before,
-form[name=register_user_form] ul:hover:before,
-form[name=forgot_password_form] ul:before,
-form[name=forgot_password_form] ul:hover:before {
+.authentication-form ul:before,
+.authentication-form ul:hover:before {
     border-color: rgba(255, 0, 0, 0);
     border-bottom-color: red;
     border-width: 1.1rem;
@@ -406,38 +382,28 @@ form[name=forgot_password_form] ul:hover:before {
 }
 
 /* login form field animation on focus */
-form[name=login_user_form] .text,
-form[name=login_user_form] .password,
-form[name=change_password_form] .text,
-form[name=change_password_form] .password {
+.authentication-form .text,
+.authentication-form .password {
     position: relative;
 }
 
-form[name=login_user_form] .text label,
-form[name=login_user_form] .password label,
-form[name=change_password_form] .text label,
-form[name=change_password_form] .password label {
+.authentication-form .text label,
+.authentication-form .password label {
     transform: translateY(7rem);
     color: #00283C;
     transition: all .3s;
 }
 
-form[name=login_user_form] .text input,
-form[name=login_user_form] .password input,
-form[name=change_password_form] .text input,
-form[name=change_password_form] .password input {
+.authentication-form .text input,
+.authentication-form .password input {
     position: relative;
     background: transparent;
 }
 
-form[name=login_user_form] .text:after,
-form[name=login_user_form] .password:after,
-form[name=change_password_form] .text:after,
-form[name=change_password_form] .password:after,
-form[name=login_user_form] .text:before,
-form[name=login_user_form] .password:before,
-form[name=change_password_form] .text:before,
-form[name=change_password_form] .password:before {
+.authentication-form .text:after,
+.authentication-form .password:after,
+.authentication-form .text:before,
+.authentication-form .password:before {
     content: '';
     position: absolute;
     display: block;
@@ -448,41 +414,30 @@ form[name=change_password_form] .password:before {
     transition: all .3s;
 }
 
-form[name=login_user_form] .text:after,
-form[name=login_user_form] .password:after,
-form[name=change_password_form] .text:after,
-form[name=change_password_form] .password:after {
+.authentication-form .text:after,
+.authentication-form .password:after {
     background-color: #bde513;
     width: 0;
 }
 
-form[name=login_user_form] .text.active:after,
-form[name=login_user_form] .password.active:after,
-form[name=change_password_form] .text.active:after,
-form[name=change_password_form] .password.active:after {
+.authentication-form .text.active:after,
+.authentication-form .password.active:after {
     width: 100%;
 }
 
-form[name=login_user_form] .text.active label,
-form[name=login_user_form] .password.active label,
-form[name=change_password_form] .text.active label,
-form[name=change_password_form] .password.active label {
+.authentication-form .text.active label,
+.authentication-form .password.active label {
     color: #bde513;
 }
 
-form[name=login_user_form] .text.completed label,
-form[name=login_user_form] .password.completed label,
-form[name=change_password_form] .text.completed label,
-form[name=change_password_form] .password.completed label {
+.authentication-form .text.completed label,
+.authentication-form .password.completed label {
     font-size: 1.4rem;
     transform: translateY(2.5rem);
 }
 
 @media screen and (min-width: 750px) {
-    form[name=login_user_form],
-    form[name=change_password_form],
-    form[name=register_user_form],
-    form[name=forgot_password_form] {
+    .authentication-form {
         width: 50%;
     }
 }
@@ -876,22 +831,24 @@ button.menu-button + nav a {
     border: 0.1rem solid #00283C;
     margin-top: 1rem;
     padding-left: 3rem;
+    left: -65%;
     display: none;
     transition: all .3s;
 }
 
-.profile-page main .social-networks label.active {
+.profile-page main .social-networks .active label {
     display: block;
 }
 
 .profile-page main .social-networks label input {
     border: none;
     margin: 0;
+    width: auto;
 }
 
 .profile-page main .social-networks label:after, .profile-page main .social-networks label:before {
     bottom: 100%;
-    left: 50%;
+    left: 10%;
     border: solid transparent;
     content: '';
     position: absolute;

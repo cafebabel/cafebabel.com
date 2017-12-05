@@ -30,28 +30,28 @@
               <a data-edit-name=socials-instagram href="{{ user.profile.socials.instagram }}" class=icon-instagram></a>
               <label for=socials-instagram>
                   <span class=icon-instagram></span>
-                  <input type=url id=socials-instagram>
+                  <input type=url id=socials-instagram name=socials-instagram value="{{ user.profile.socials.instagram }}">
               </label>
           </li>
           <li>
               <a data-edit-name=socials-medium href="{{ user.profile.socials.medium }}" class=icon-medium></a>
               <label for=socials-medium>
                   <span class=icon-medium></span>
-                  <input type=url id=socials-medium>
+                  <input type=url id=socials-medium name=socials-medium value="{{ user.profile.socials.medium }}">
               </label>
           </li>
           <li>
               <a data-edit-name=socials-flickr href="{{ user.profile.socials.flickr }}" class=icon-flickr></a>
               <label for=socials-flickr>
                   <span class=icon-flickr></span>
-                  <input type=url id=socials-flickr>
+                  <input type=url id=socials-flickr name=socials-flickr value="{{ user.profile.socials.flickr }}">
               </label>
           </li>
           <li>
               <a data-edit-name=socials-pinterest href="{{ user.profile.socials.pinterest }}" class=icon-pinterest></a>
               <label for=socials-pinterest>
                   <span class=icon-pinterest></span>
-                  <input type=url id=socials-pinterest>
+                  <input type=url id=socials-pinterest name=socials-pinterest value="{{ user.profile.socials.pinterest }}">
               </label>
           </li>
       </ul>
@@ -84,15 +84,15 @@
 
   </section>
   <section>
-    <h2>Contributions</h2>
+      <h2>Contributions</h2>
       {% for article in articles %}
       <article>
           <a href={{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}>
-              {% if article.has_image %}
-                <img src={{ article.image_url }}>
-              {% endif %}
-              <h3>{{ article.title }}</h3>
-              <p>Article in {{ article.language }}</p>
+          {% if article.has_image %}
+          <img src={{ article.image_url }} alt="Image for {{ article.title }}">
+          {% endif %}
+          <h3>{{ article.title }}</h3>
+          <p>Article in {{ article.language }}</p>
           </a>
       </article>
       {% endfor %}

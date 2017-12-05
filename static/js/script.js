@@ -37,9 +37,8 @@ if (socialIcons) {
 }
 
 /* animation login fields */
-Array.from(document.querySelectorAll('form[name=login_user_form] > div > input')).forEach(input => {
+Array.from(document.querySelectorAll('.authentication-form > div > input')).forEach(input => {
     const parent = input.parentElement
-    console.log(parent)
     input.addEventListener('change', () => {
         parent.classList.add('active', 'completed')
     })
