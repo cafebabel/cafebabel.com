@@ -48,7 +48,7 @@ main {
 
 #content {
     max-width: 120rem;
-    margin: 0 auto 70rem auto;
+    margin: 10rem auto 70rem auto;
     padding: 2rem 2rem 7rem 2rem;
 }
 
@@ -157,10 +157,13 @@ main {
     line-height: 1;
     color: #00283C;
 }
+.icon-profile:before {
+    content: '\e902';
+}
 .icon-checkmark:before {
     content: '\ea10';
 }
-.icon-arrow-down2:before {
+.icon-arrow-down:before {
     content: '\ea3e';
 }
 .icon-facebook:before {
@@ -175,13 +178,13 @@ main {
 .icon-youtube:before {
     content: '\ea9d';
 }
-.icon-flickr2:before {
+.icon-flickr:before {
     content: '\eaa4';
 }
-.icon-linkedin2:before {
+.icon-linkedin:before {
     content: '\eaca';
 }
-.icon-pinterest2:before {
+.icon-pinterest:before {
     content: '\ead2';
 }
 .icon-medium:before {
@@ -222,6 +225,7 @@ h2 {
 h3 {
     font-size: 2.8rem;
     margin: 3rem 0;
+    line-height: 1.4;
 }
 
 h4 {
@@ -314,6 +318,7 @@ button {
     margin-bottom: 2rem;
     cursor: pointer;
     background-color: #00283C;
+    border: 0.1rem solid #00283C;
     color: #fff;
     width: 100%;
 }
@@ -331,17 +336,108 @@ button:hover {
     transition: all 0.25s ease-in-out;
 }
 
-form[name=login_user_form] {
+.authentication-form {
     padding: 2rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.authentication-form ul {
+    padding: 1rem;
+    border: 0.1rem solid red;
+    background-color: white;
     position: absolute;
-    top: 50%;
+    bottom: -35%;
+    width: 100%;
+    z-index: 1;
+}
+
+.authentication-form ul li {
+    text-align: center;
+    font-size: 1.2rem;
+    color: red;
+}
+
+.authentication-form ul:after,
+.authentication-form ul:before {
+    content: '';
+    bottom: 100%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    border: solid transparent;
+    position: absolute;
+}
+
+.authentication-form ul:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: white;
+    border-width: 1rem;
+    margin-left: -1rem;
+}
+.authentication-form ul:before,
+.authentication-form ul:hover:before {
+    border-color: rgba(255, 0, 0, 0);
+    border-bottom-color: red;
+    border-width: 1.1rem;
+    margin-left: -1.1rem;
+}
+
+/* login form field animation on focus */
+.authentication-form .text,
+.authentication-form .password {
+    position: relative;
+}
+
+.authentication-form .text label,
+.authentication-form .password label {
+    transform: translateY(7rem);
+    color: #00283C;
+    transition: all .3s;
+}
+
+.authentication-form .text input,
+.authentication-form .password input {
+    position: relative;
+    background: transparent;
+}
+
+.authentication-form .text:after,
+.authentication-form .password:after,
+.authentication-form .text:before,
+.authentication-form .password:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 0.1rem;
+    background-color: #00283C;
+    bottom: 0;
+    transition: all .3s;
+}
+
+.authentication-form .text:after,
+.authentication-form .password:after {
+    background-color: #bde513;
+    width: 0;
+}
+
+.authentication-form .text.active:after,
+.authentication-form .password.active:after {
     width: 100%;
 }
 
+.authentication-form .text.active label,
+.authentication-form .password.active label {
+    color: #bde513;
+}
+
+.authentication-form .text.completed label,
+.authentication-form .password.completed label {
+    font-size: 1.4rem;
+    transform: translateY(2.5rem);
+}
+
 @media screen and (min-width: 750px) {
-    form[name=login_user_form] {
+    .authentication-form {
         width: 50%;
     }
 }
@@ -351,7 +447,7 @@ form[name=login_user_form] {
     border: none;
     border-bottom: 0.1rem solid #bde513;
     background-color: transparent;
-    padding:1rem 1rem 1rem 0;
+    padding: 1rem 1rem 1rem 0;
 }
 
 label[for=styleguide],
@@ -417,11 +513,6 @@ label[for=remember] {
     border: 0.1rem solid #bde513;
 }
 
-label:hover:before {
-    border : 0.1rem solid #bde513 !important;
-    transition: border-color .3s;
-}
-
 select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-after-with-css-in-webkit */
     padding: 1rem 3rem 1rem 1rem;
     margin:5rem 0;
@@ -429,6 +520,7 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
     border: 0.1rem solid #00283C;
     cursor: pointer;
     border-radius: 0;
+    min-width: 15rem;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -495,6 +587,10 @@ a:hover:after {
     width: 100%;
 }
 
+button a:after {
+    content: none;
+}
+
 .article-page article p a:after {
     height: 50%;
     top: 1rem;
@@ -518,15 +614,48 @@ a:hover:after {
 
 /* Logo */
 
-.logo img {
+.logo {
     width: 10rem;
     display: block;
-    margin: 4.7rem auto;
     transition: all .2s;
+    top: 4.7rem;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.logo img:hover {
-    transform: translateY(-2px);
+a.logo:after {
+    display: none;
+}
+
+.logo:hover {
+    top: 4.5rem;
+}
+
+/* Preloader */
+
+#preloader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    transition: opacity .3s;
+    z-index: 2;
+}
+#preloader img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#preloader.fadeout {
+    opacity: 0;
+}
+
+#preloader.hidden {
+    display: none;
 }
 
 /* Menu */
@@ -587,7 +716,7 @@ button.menu-button + nav {
     bottom: 0;
     left: 0;
     position: fixed;
-    font-size: 6vw;
+    font-size: 5vw;
     opacity: 0;
     z-index: -1;
     transition: all .3s;
@@ -682,11 +811,11 @@ button.menu-button + nav a {
 
 .profile-page main ul:first-of-type li {
     display: inline-block;
+    width: 3.5rem;
 }
 
 .profile-page [class^="icon-"],
 .profile-page [class*=" icon-"] {
-    width: 3.5rem;
     font-size: 3rem;
 }
 
@@ -697,9 +826,105 @@ button.menu-button + nav a {
     transition: all 0.3s;
 }
 
-.profile-page [class^="icon-"]:hover:before,
-.profile-page [class*=" icon-"]:hover:before {
+.profile-page main .social-networks li label {
+    position: absolute;
+    border: 0.1rem solid #00283C;
+    background-color: white;
+    margin-top: 1rem;
+    padding-left: 3rem;
+    left: -2.5rem;
+    display: none;
+    transition: all .3s;
+    z-index: 1;
+}
 
+.profile-page main .social-networks li:nth-of-type(2) label {
+    left: -6.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(2) label:after,
+.profile-page main .social-networks li:nth-of-type(2) label:before {
+    left: 28%;
+}
+
+.profile-page main .social-networks li:nth-of-type(3) label {
+    left: -10.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(3) label:after,
+.profile-page main .social-networks li:nth-of-type(3) label:before {
+    left: 42%;
+}
+
+.profile-page main .social-networks li:nth-of-type(4) label {
+    left: -14.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(4) label:after,
+.profile-page main .social-networks li:nth-of-type(4) label:before {
+    left: 56%;
+}
+
+.profile-page main .social-networks li:nth-of-type(5) label {
+    left: -18.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(5) label:after,
+.profile-page main .social-networks li:nth-of-type(5) label:before {
+    left: 71%;
+}
+
+.profile-page main .social-networks li:nth-of-type(6) label {
+    left: -22.5rem;
+}
+
+.profile-page main .social-networks li:nth-of-type(6) label:after,
+.profile-page main .social-networks li:nth-of-type(6) label:before {
+    left: 85%;
+}
+
+.profile-page main .social-networks .active label {
+    display: block;
+}
+
+.profile-page main .social-networks label input {
+    border: none;
+    margin: 0;
+    width: auto;
+}
+
+.profile-page main .social-networks label:after, .profile-page main .social-networks label:before {
+    bottom: 100%;
+    left: 10%;
+    border: solid transparent;
+    content: '';
+    position: absolute;
+}
+
+.profile-page main .social-networks label:after {
+    border-color: rgba(255, 255, 255, 0); /* http://www.cssarrowplease.com/ */
+    border-bottom-color: white;
+    border-width: 1rem;
+    margin-left: -1rem;
+}
+.profile-page main .social-networks label:before,
+.profile-page main .social-networks label:hover:before {
+    border-color: rgba(0, 40, 60, 0);
+    border-bottom-color: #00283C;
+    border-width: 1.1rem;
+    margin-left: -1.1rem;
+}
+
+.profile-page main .social-networks label [class^="icon-"]:before,
+.profile-page main .social-networks label [class*=" icon-"]:before {
+    top: 2.4rem;
+    font-size: 2rem;
+    left: 2rem;
+}
+
+.profile-page [class^="icon-"]:hover:after,
+.profile-page [class*=" icon-"]:hover:after {
+    width: 0;
 }
 
 @media screen and (min-width: 750px) {
@@ -745,7 +970,7 @@ button.menu-button + nav a {
     margin: 0;
 }
 
-.pitch-page button {
+.pitch-page main button {
     display: block;
     max-width: 75rem;
     margin: 2rem auto;
@@ -775,6 +1000,10 @@ button.menu-button + nav a {
     font-style: italic;
     font-family: serif;
     font-size: 1.9rem;
+}
+
+.article-page article ul li span {
+    color: #bde513;
 }
 
 .article-page article h3 {
@@ -810,6 +1039,19 @@ textarea#body {
     margin: 0 auto;
 }
 
+/* Translation list page */
+
+.translate-list-page ul {
+    max-width: 75rem;
+    margin: 2rem auto 5rem auto;
+}
+
+.translate-list-page .to-translate-language li {
+    display: inline-block;
+    padding: 1rem;
+    border: 0.1rem solid;
+}
+
 /* Flash infos */
 
 .flashes {
@@ -821,6 +1063,7 @@ textarea#body {
     bottom: 5rem;
     transform: translate(-50%, 0);
     transition: all .1s ease-out;
+    z-index: 2;
 }
 
 .flashes.hidden {

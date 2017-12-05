@@ -10,10 +10,6 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-<a href={{ url_for('home') }} class=logo>
-  <img src=https://rawgit.com/cafebabel/styleguide/master/img/logo-cafebabel.svg alt="logo Cafébabel">
-</a>
-
 <button class=menu-button></button>
 
 {% if current_user.is_authenticated %}
@@ -50,6 +46,9 @@
 {% include "security/_messages.html" %}
 
 <main>
+  <a href={{ url_for('home') }} class=logo>
+    <img src=/static/img/logo-cafebabel.svg alt="logo Cafébabel">
+  </a>
   <div id=content>
 {% block body %}{% endblock %}
   </div>
@@ -58,5 +57,8 @@
 <footer>
   <p>© Cafébabel — 2017</p>
 </footer>
+<div id=preloader>
+    <img src=/static/img/preloader-A.gif alt="preloader coffee grinder">
+</div>
 
 <script src=/static/js/script.js></script>

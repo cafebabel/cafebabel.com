@@ -10,7 +10,8 @@ from .models import User
 @login_required
 def profile():
     user = current_user
-    return render_template('profile.html', user=user, edit=True)
+    articles = Article.objects.filter(author=user.id, status='published')
+    return render_template('profile.html', user=user, edit=True, articles=articles)
 
 
 @app.route('/profile/<id>/')
