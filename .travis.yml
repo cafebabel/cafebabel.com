@@ -1,0 +1,15 @@
+language: python
+services: mongodb
+python:
+  - '3.6'
+install:
+  - python setup.py develop
+  - pip install -r requirements-dev.txt
+script: py.test -vv
+branches:
+  only:
+    - master
+notifications:
+  email:
+    on_failure: always
+    on_success: never
