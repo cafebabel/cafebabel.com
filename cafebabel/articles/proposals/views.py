@@ -1,7 +1,8 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, url_for)
 from flask_mail import Message
 
-from ... import app, mail
+from ... import mail
 
 proposals = Blueprint('proposals', __name__)
 
@@ -26,12 +27,12 @@ def create():
             f'Article proposal: {data["topic"]}',
             sender=data['email'],
             recipients=[
-                app.config['EDITOR_EMAILS'][data.get('language', 'en')]
+                current_app.config['EDITOR_EMAILS'][data.get('language', 'en')]
             ],
             body=BODY_EMAIL_TEMPLATE.format(**data.to_dict())
         )
         mail.send(msg)
         flash('Your proposal was successfully sent.', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('cores.home'))
 
     return render_template('articles/proposals/create.html')

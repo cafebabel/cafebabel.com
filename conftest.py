@@ -1,33 +1,45 @@
-from pathlib import Path
-
 import pytest
 from flask_security.confirmable import confirm_user
 
-from cafebabel import app as myapp
+from cafebabel import create_app
 from cafebabel.articles.models import Article
 from cafebabel.articles.translations.models import Translation
-from cafebabel.core.commands import _dropdb, _initdb
-from cafebabel.users.models import Role, User, user_datastore
+from cafebabel.users.models import Role, User
+
+test_app = create_app('config.TestingConfig')
 
 
 def pytest_runtest_setup():
-    _initdb()
+    Role.objects.create(name='editor')
+    admin_role = Role.objects.create(name='admin')
+    admin_user = test_app.user_datastore.create_user(
+        email='admin@example.com', password='password')
+    test_app.user_datastore.add_role_to_user(admin_user, admin_role)
 
 
 def pytest_runtest_teardown():
-    _dropdb()
+    Role.drop_collection()
+    User.drop_collection()
+    Article.drop_collection()
 
 
-@pytest.fixture
-def app():
-    myapp.config.from_pyfile(Path(__file__).parent / 'settings.tests.py')
-    return myapp
+@pytest.fixture(scope='session')
+def app(request):
+    """Session-wide test `Flask` application."""
+    ctx = test_app.app_context()
+    ctx.push()
+
+    def tearDown():
+        ctx.pop()
+
+    request.addfinalizer(tearDown)
+    return test_app
 
 
 @pytest.fixture
 def user():
     user = User.objects.create(email='testy@example.com', password='secret')
-    with myapp.app_context():
+    with test_app.app_context():
         confirm_user(user)
     return user
 
@@ -35,7 +47,7 @@ def user():
 @pytest.fixture
 def editor(user):
     editor_role = Role.objects.get(name='editor')
-    user_datastore.add_role_to_user(user, editor_role)
+    test_app.user_datastore.add_role_to_user(user, editor_role)
     return user
 
 
@@ -50,7 +62,7 @@ def article(user):
         title='article title',
         summary='summary text',
         author=user,
-        language=myapp.config['LANGUAGES'][0][0],
+        language=test_app.config['LANGUAGES'][0][0],
         body='body text')
 
 
@@ -60,14 +72,14 @@ def published_article(user):
         title='article title',
         summary='summary text',
         author=user,
-        language=myapp.config['LANGUAGES'][0][0],
+        language=test_app.config['LANGUAGES'][0][0],
         body='body text',
         status='published')
 
 
 @pytest.fixture
 def translation(user, article):
-    language = myapp.config['LANGUAGES'][1][0]
+    language = test_app.config['LANGUAGES'][1][0]
     return Translation.objects.create(
         title='title',
         summary='summary text',

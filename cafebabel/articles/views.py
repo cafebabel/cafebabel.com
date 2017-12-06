@@ -1,10 +1,9 @@
 from http import HTTPStatus
 
-from flask import (Blueprint, abort, flash, redirect, render_template, request,
-                   url_for)
+from flask import (Blueprint, abort, current_app, flash, redirect,
+                   render_template, request, url_for)
 from flask_login import fresh_login_required, login_required
 
-from .. import app
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
@@ -64,12 +63,12 @@ def delete(article_id):
     article = Article.objects.get_or_404(id=article_id)
     article.delete()
     flash('Article was deleted.', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('cores.home'))
 
 
 @articles.route('/to-translate/')
 def to_translate():
-    languages = dict(app.config['LANGUAGES'])
+    languages = dict(current_app.config['LANGUAGES'])
     languages_keys = list(languages.keys())
     from_language = request.args.get('from', languages_keys[0])
     to_language = request.args.get('to', languages_keys[1])

@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from ..users.models import Role, user_datastore
+from ..users.models import Role
 from .utils import login, logout
 
 
@@ -10,9 +10,9 @@ def test_user_has_no_default_roles(user):
     assert not user.has_role('whatever')
 
 
-def test_user_add_custom_role(user):
+def test_user_add_custom_role(app, user):
     editor = Role.objects.get(name='editor')
-    user_datastore.add_role_to_user(user=user, role=editor)
+    app.user_datastore.add_role_to_user(user=user, role=editor)
     assert user.has_role('editor')
     assert not user.has_role('admin')
     assert not user.has_role('whatever')

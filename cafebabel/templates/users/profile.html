@@ -74,11 +74,11 @@
     <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor', False) %}checked{% endif %}>
   </div>
   {% endif %}
-  <form class=user-save data-method=put action={{ url_for('api_user_put') }}>
+  <form class=user-save data-method=put action={{ url_for('apis.user_put') }}>
     <button type=submit>Save my profile</button>
   </form>
 
-  <form class=user-delete data-method=delete action={{ url_for('api_user_delete', id=user.idstr) }}>
+  <form class=user-delete data-method=delete action={{ url_for('apis.user_delete', id=user.idstr) }}>
     <button type=submit>Delete my profile</button>
   </form>
 

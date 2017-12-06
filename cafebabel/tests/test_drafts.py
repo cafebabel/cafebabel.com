@@ -6,14 +6,13 @@ from flask import request
 
 from ..articles.models import Article
 from .utils import login
-from .. import app
 
 
 def test_create_draft_should_display_form(client, editor):
     login(client, editor.email, 'secret')
     response = client.get('/article/draft/new/')
     assert response.status_code == 200
-    assert '<input id=title' in response.get_data(as_text=True)
+    assert '<input id=title' in response
 
 
 def test_create_draft_should_generate_article(client, editor):
@@ -25,9 +24,8 @@ def test_create_draft_should_generate_article(client, editor):
         'language': 'en',
     }, follow_redirects=True)
     assert response.status_code == 200
-    body = response.get_data(as_text=True)
-    assert '<h1>Test article</h1>' in body
-    assert '<p>Article body</p>' in body
+    assert '<h1>Test article</h1>' in response
+    assert '<p>Article body</p>' in response
 
 
 def test_create_published_draft_should_display_article(client, editor):
@@ -40,10 +38,9 @@ def test_create_published_draft_should_display_article(client, editor):
         'status': 'published',
     }, follow_redirects=True)
     assert response.status_code == 200
-    body = response.get_data(as_text=True)
     assert request.url_rule.endpoint == 'articles.detail'
-    assert '<h1>Test article</h1>' in body
-    assert '<p>Article body</p>' in body
+    assert '<h1>Test article</h1>' in response
+    assert '<p>Article body</p>' in response
 
 
 def test_draft_editing_should_update_content(client, editor):
@@ -66,7 +63,7 @@ def test_draft_editing_should_update_content(client, editor):
     assert updated_draft.title == 'My article'
 
 
-def test_draft_image_should_save_and_render(client, editor):
+def test_draft_image_should_save_and_render(app, client, editor):
     login(client, editor.email, 'secret')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image = BytesIO(content.read())
@@ -85,13 +82,13 @@ def test_draft_image_should_save_and_render(client, editor):
     assert article.has_image
     assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
                 str(article.id)).exists()
-    assert f'<img src="{article.image_url}"' in response.get_data(as_text=True)
+    assert f'<img src="{article.image_url}"' in response
 
 
 def test_draft_should_not_offer_social_sharing(client, article):
     response = client.get(f'/article/draft/{article.id}/')
     assert response.status_code == 200
-    assert 'facebook.com/sharer' not in response.get_data(as_text=True)
+    assert 'facebook.com/sharer' not in response
 
 
 def test_visitor_cannot_change_editor_nor_author(client, editor, user,
@@ -118,7 +115,7 @@ def test_editor_access_drafts_list(client, editor, article):
     login(client, editor.email, 'secret')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.OK
-    assert article.title in response.get_data(as_text=True)
+    assert article.title in response
 
 
 def test_author_cannot_access_drafts_list(client, user):
@@ -133,6 +130,5 @@ def test_drafts_list_only_displays_drafts(client, editor, article,
     login(client, editor.email, 'secret')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.OK
-    content = response.get_data(as_text=True)
-    assert article.title in content
-    assert published_article.title not in content
+    assert article.title in response
+    assert published_article.title not in response

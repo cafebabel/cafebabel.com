@@ -23,22 +23,31 @@ source ./venv/bin/activate
 pip install -e .
 ```
 
+### Setting the application
+
+Set the `FLASK_APP` environment variable, it can be `dev.py` or `prod.py`
+for instance. You can create another file for a particular env though.
+
+```
+export FLASK_APP=dev.py
+```
+
+
+
 ### Installing the database
 
 Install and launch MongoDB on default port (27017) or tune it in your
-_settings.local.py_ (see [Configuring section](#Configuring)).
+_instance/config.local.py_ (see [Configuring section](#Configuring)).
 
 ```
 flask initdb
 ```
 
-> You may reset your database by deleting the _/cafebabel.db_ file and
-re-initializing the database.
 
 ### Configuring
 
-If existing, the file `settings.local.py` at the root of the project will
-override the default `settings.py` configuration.
+If existing, the file `instance/config.local.py` at the root of
+the project will override the default `config.py` configuration.
 
 Do not forget to create the folder dedicated to statics, by default:
 
@@ -50,8 +59,6 @@ mkdir -p static/uploads/articles
 ## Running the project
 
 ```
-export FLASK_APP=cafebabel
-export FLASK_DEBUG=1
 flask run
 ```
 
