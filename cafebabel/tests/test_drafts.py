@@ -34,7 +34,7 @@ def test_create_published_draft_should_display_article(client, editor):
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'de',
+        'language': 'en',
         'status': 'published',
     }, follow_redirects=True)
     assert response.status_code == 200
@@ -49,7 +49,7 @@ def test_draft_editing_should_update_content(client, editor):
         'title': 'My article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'es',
+        'language': 'en',
     }
     draft = Article.objects.create(**data)
     updated_data = data.copy()
@@ -71,7 +71,7 @@ def test_draft_image_should_save_and_render(app, client, editor):
         'title': 'My article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'pr',
+        'language': 'en',
         'image': (image, 'image-name.jpg'),
     }
     response = client.post('/article/draft/new/', data=data,

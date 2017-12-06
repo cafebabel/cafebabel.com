@@ -199,12 +199,11 @@ def test_access_published_article_should_link_translations(client, article,
     translation.save()
     response = client.get(f'/article/{article.slug}-{article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert '<p>Translate this article in:</p>' in response
-    assert ((f'<li><a href={url_for("translations.create")}'
-             f'?lang=it&original={article.id}>Italiano</a></li>') in response)
-    assert ((f'<li><a href={url_for("translations.create")}'
-             f'?lang=fr&original={article.id}>Français</a></li>')
-            not in response)
+    assert ((f'<li class=translated-language><a href=/article/'
+             f'title-{translation.id}/>fr</a></li>') in response)
+    assert ((f'<li class=to-translate-languages>'
+             f'<a href={url_for("translations.create")}'
+             f'?lang=es&original={article.id}>Español</a></li>') in response)
 
 
 def test_article_should_know_its_translations(client, article, translation):

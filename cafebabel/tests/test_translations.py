@@ -179,8 +179,7 @@ def test_translation_update_values_should_redirect(client, user, translation):
 
 
 def test_translation_published_should_return_200(client, translation):
-    translation.status = 'published'
-    translation.save()
+    translation.modify(status='published')
     response = client.get(f'/article/{translation.slug}-{translation.id}/')
     assert response.status_code == HTTPStatus.OK
 
@@ -197,13 +196,10 @@ def test_translation_published_should_have_translator(client, translation):
 
 
 def test_translation_published_should_have_reference(client, translation):
-    translation.status = 'published'
-    translation.save()
+    translation.modify(status='published')
     article = translation.original_article
-    article.status = 'published'
-    article.save()
+    article.modify(status='published')
     response = client.get(f'/article/{article.slug}-{article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert '<p>Read this article in:</p>' in response
-    assert ((f'<li>{translation.language}: <a href={translation.detail_url}>'
-             f'{translation.title}</a></li>') in response)
+    assert ((f'<li class=translated-language><a href='
+             f'/article/title-{translation.id}/>') in response)

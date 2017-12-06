@@ -17,7 +17,7 @@
         <ul>
             <li><span>{{ article.language }}</span></li>
             {% if article.is_translation %}
-                <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ translation.language }}</a></li>
+                <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.language }}</a></li>
             {% endif %}
             {% if translations_publisheds %}
                 {% for translation in translations_publisheds %}
