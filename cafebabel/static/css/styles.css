@@ -796,7 +796,7 @@ button.menu-button + nav a {
     margin: 0;
     height: 100%;
     cursor: pointer;
-    opacity: 0.2;
+    opacity: 0;
 }
 
 .create-article-page .textarea {
