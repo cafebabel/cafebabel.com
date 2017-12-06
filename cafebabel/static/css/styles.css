@@ -535,6 +535,7 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
 .select label:after {
     position: absolute;
     font-family: 'icomoon';
+    font-size: 1.9rem;
     content: '\ea3e';
     right: 1.2rem;
     top: 6.2rem;
@@ -672,7 +673,7 @@ button.menu-button {
     padding: 0;
     margin: 0;
     cursor: pointer;
-    z-index: 2;
+    z-index: 3;
 }
 
 button.menu-button:focus {
@@ -756,7 +757,7 @@ button.menu-button + nav ul li a:hover:after {
 button.menu-button.active + nav {
     display: block;
     opacity: 1;
-    z-index: 1;
+    z-index: 2;
 }
 
 button.menu-button.active + nav ul li {
@@ -1040,6 +1041,10 @@ textarea#body {
 }
 
 /* Translation list page */
+
+.translate-list-page .select {
+    display: inline-block;
+}
 
 .translate-list-page ul {
     max-width: 75rem;
