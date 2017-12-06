@@ -2,19 +2,11 @@ from http import HTTPStatus
 from pathlib import Path
 from io import BytesIO
 
-from flask import url_for, request
+from flask import url_for
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
 from .utils import login
-from .. import mail
-
-
-def test_access_published_article_should_return_200(client, article):
-    article.status = 'published'
-    article.save()
-    response = client.get(f'/article/{article.slug}-{article.id}/')
-    assert response.status_code == HTTPStatus.OK
 
 
 def test_access_published_article_should_return_200(client, published_article):
@@ -139,8 +131,8 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert published_article.author == user
     assert published_article.editor == editor
     assert published_article.has_image
-    assert (Path(app.config.get('ARTICLES_IMAGES_PATH')
-                 / str(published_article.id)).exists())
+    assert (Path(app.config.get('ARTICLES_IMAGES_PATH') /
+                 str(published_article.id)).exists())
 
 
 def test_update_article_with_user_should_return_403(client, user,
@@ -225,20 +217,20 @@ def test_article_to_translate_should_return_200(client):
     assert response.status_code == HTTPStatus.OK
 
 
-def test_article_to_translate_should_have_other_languages(client):
+def test_article_to_translate_should_have_default_languages(client):
     response = client.get(f'/article/to-translate/')
-    assert '<a href=/article/to-translate/?in=fr>Français</a>' in response
-    assert '<a href=/article/to-translate/?in=en>English</a>' not in response
+    assert '<option value=en selected>English</option>' in response
+    assert '<option value=fr selected>Français</option>' in response
 
 
 def test_article_to_translate_should_filter_by_language(client):
-    response = client.get(f'/article/to-translate/?in=fr')
-    assert '<a href=/article/to-translate/?in=fr>Français</a>' not in response
-    assert '<a href=/article/to-translate/?in=en>English</a>' in response
+    response = client.get(f'/article/to-translate/?from=fr&to=es')
+    assert '<option value=fr selected>Français</option>' in response
+    assert '<option value=es selected>Español</option>' in response
 
 
 def test_article_to_translate_with_unknown_language(client):
-    response = client.get(f'/article/to-translate/?in=xx')
+    response = client.get(f'/article/to-translate/?from=xx@to=yy')
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
 
@@ -246,7 +238,7 @@ def test_article_to_translate_should_have_translation_links(
         app, client, article):
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
-    response = client.get(f'/article/to-translate/')
+    response = client.get(f'/article/to-translate/?from=fr&to=en')
     assert (f'<a href=/article/translation/new/'
             f'?lang=en&original={article.id}>Translate in English</a>'
             in response)
@@ -257,6 +249,7 @@ def test_article_to_translate_should_have_translation_links(
 
 def test_translation_to_translate_should_not_have_original_language(
         client, article, translation):
+    # Keep the `translation` fixture, even if not refered to.
     response = client.get(f'/article/to-translate/')
     assert (f'<a href=/article/translation/new/'
             f'?lang=en&original={article.id}>Translate in English</a>'
@@ -266,9 +259,21 @@ def test_translation_to_translate_should_not_have_original_language(
             not in response)
 
 
+def test_translation_to_translate_should_have_original_language(
+        app, client, article, translation):
+    # Keep the `article` fixture, even if not refered to.
+    language = app.config['LANGUAGES'][1][0]
+    translation.modify(language=language)
+    response = client.get(f'/article/to-translate/?from=fr&to=es')
+    assert (f'<a href=/article/translation/new/'
+            f'?lang=es&original={translation.original_article.id}>'
+            f'Translate in Español</a>'
+            in response)
+
+
 def test_article_to_translate_should_have_only_other_links(
         app, client, article):
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
-    response = client.get(f'/article/to-translate/?in=fr')
+    response = client.get(f'/article/to-translate/?from=en&to=fr')
     assert 'Translate in ' not in response

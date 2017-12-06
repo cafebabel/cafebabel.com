@@ -11,10 +11,11 @@
     {% endif %}
     <h1>{{ article.title }}</h1>
 
-    <p><time>Published on {{ article.creation_date.date() }}</time> — by {{ article.author }}<br>Reading time: {{ article.body|reading_time }} min — Article in <span>{{ article.language }}</span></p>
+    <p><time>Published on {{ article.creation_date.date() }}</time> — by {{ article.author }}<br>Reading time: {{ article.body|reading_time }} min</p>
 
     <div class=article-language-selector>
         <ul>
+            <li><span>{{ article.language }}</span></li>
             {% if article.is_translation %}
                 <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ translation.language }}</a></li>
             {% endif %}
