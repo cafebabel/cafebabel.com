@@ -56,3 +56,19 @@ Array.from(document.querySelectorAll('.authentication-form > div > input')).forE
         parent.classList.remove('active', 'completed')
     })
 })
+
+/* highlight file upload area on hover or dragenter */
+function addListenerMulti(element, events, fn) {
+    events.split(' ').forEach(event => element.addEventListener(event, fn, false)) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
+}
+const fileInput = document.querySelector('.file input')
+const dropArea = document.querySelector('.file')
+addListenerMulti(fileInput, 'dragenter focus click', () => {
+    dropArea.classList.add('active')
+})
+addListenerMulti(fileInput, 'dragleave blur drop', () => {
+    dropArea.classList.remove('active')
+})
+fileInput.addEventListener('change', () => {
+    document.querySelector('.file label').innerHTML(' ')
+})

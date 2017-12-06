@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
+{% block body_class %}create-article-page{% endblock %}
 {% block body %}
   <form method=post action={{ url_for('drafts.create') }} enctype=multipart/form-data>
-  <div class=text>
+  <div class=file>
+    <label for=image>Click here to add a cover picture<br>or<br>Drag & drop your pic here</label>
+    <input type=file id=image name=image>
+  </div>
+  <h1 class=text>
     <label for=title>Title</label>
     <input id=title name=title required>
-  </div>
+  </h1>
   <div class=select>
     <label for=language>Language
       <select id=language name=language required>
@@ -51,10 +56,6 @@
     <label for=body>Body</label>
     <textarea id=body name=body required></textarea>
     {% include "articles/markdown-helper.html" %}
-  </div>
-  <div class=file>
-    <label for=image>Image</label>
-    <input type=file id=image name=image>
   </div>
   <input type=submit value="Save">
 </form>
