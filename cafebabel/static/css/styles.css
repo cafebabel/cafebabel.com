@@ -157,6 +157,9 @@ main {
     line-height: 1;
     color: #00283C;
 }
+.icon-file:before {
+    content: '\e927';
+}
 .icon-profile:before {
     content: '\e902';
 }
@@ -785,7 +788,7 @@ button.menu-button + nav a {
 }
 
 .create-article-page canvas.active {
-    opacity: .8;
+    opacity: .6;
 }
 
 .create-article-page .file label {
@@ -793,7 +796,14 @@ button.menu-button + nav a {
     top: 50%;
     left: 50%;
     text-align: center;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
+}
+
+.create-article-page .file label:before {
+    font-family: icomoon;
+    content: '\e927';
+    display: block;
+    font-size: 4rem;
 }
 
 .create-article-page small {
@@ -809,14 +819,35 @@ button.menu-button + nav a {
     opacity: 0;
 }
 
-.create-article-page .text label {
-    display: none;
+.create-article-page h1.text {
+    position: relative;
 }
+
+.create-article-page .text label {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: auto;
+    cursor: text;
+    transition: all .2s;
+}
+
+.create-article-page .text.active label {
+    font-size: 1.9rem;
+    top: 2rem;
+}
+
 .create-article-page .text input {
     border: none;
     font-size: 4.2rem;
     font-weight: 600;
+    padding: 0;
+    margin: 0;
     text-align: center;
+}
+
+.create-article-page .select {
+    display: inline-block;
 }
 
 .create-article-page .textarea {

@@ -57,6 +57,18 @@ Array.from(document.querySelectorAll('.authentication-form > div > input')).forE
     })
 })
 
+/* animation title field create article */
+Array.from(document.querySelectorAll('h1.text input')).forEach(inputh1 => {
+    const h1 = inputh1.parentElement
+    inputh1.addEventListener('focus', () => {
+        h1.classList.add('active')
+    })
+    inputh1.addEventListener('blur', () => {
+        if (inputh1.value) return
+        h1.classList.remove('active')
+    })
+})
+
 /* highlight file upload area on hover or dragenter */
 function addListenerMulti(element, events, fn) {
     events.split(' ').forEach(event => element.addEventListener(event, fn, false)) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
@@ -73,39 +85,4 @@ if (fileInput) {
     fileInput.addEventListener('change', () => {
         document.querySelector('.file label').innerHTML(' ')
     })
-}
-
-/* tv noise effect https://codepen.io/eugene-bulkin/pen/zEgyH how to know how "heavy" is it? */
-const canvas = document.querySelector('canvas')
-if (canvas) {
-    const context = canvas.getContext('2d')
-
-    function resize() {
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
-    }
-    resize();
-    window.onresize = resize
-
-    function noise(context) {
-        var w = context.canvas.width,
-            h = context.canvas.height,
-            idata = context.createImageData(w, h),
-            buffer32 = new Uint32Array(idata.data.buffer),
-            len = buffer32.length,
-            i = 0
-        for(; i < len;)
-            buffer32[i++] = ((50 * Math.random())|0) << 24
-        context.putImageData(idata, 0, 0)
-    }
-    var toggle = true;
-    (function loop() {
-        toggle = !toggle
-        if (toggle) {
-            requestAnimationFrame(loop)
-            return
-        }
-        noise(context)
-        requestAnimationFrame(loop)
-    })();
 }
