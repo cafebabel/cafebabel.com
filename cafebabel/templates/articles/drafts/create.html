@@ -3,13 +3,14 @@
 {% block body_class %}create-article-page{% endblock %}
 {% block body %}
   <form method=post action={{ url_for('drafts.create') }} enctype=multipart/form-data>
+  <canvas></canvas>
   <div class=file>
-    <label for=image>Click here to add a cover picture<br>or<br>Drag & drop your pic here</label>
+    <label for=image>Click here to add a cover picture<br>or<br>Drag & drop your pic here <small>Recommended file size: less than 1Mo</small></label>
     <input type=file id=image name=image>
   </div>
   <h1 class=text>
     <label for=title>Title</label>
-    <input id=title name=title required>
+    <input id=title name=title required placeholder=Title>
   </h1>
   <div class=select>
     <label for=language>Language
