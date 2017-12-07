@@ -7,6 +7,7 @@ from mongoengine import errors, queryset, signals
 
 from .. import db
 from ..core.helpers import slugify
+from ..core.mixins import UploadableImageMixin
 from ..users.models import User
 
 
@@ -19,20 +20,18 @@ class ArticleQuerySet(queryset.QuerySet):
             abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
 
 
-class Article(db.Document):
+class Article(db.Document, UploadableImageMixin):
     title = db.StringField(required=True)
     slug = db.StringField(required=True)
     language = db.StringField(max_length=2, required=True)
     category = db.StringField()
     summary = db.StringField(required=True)
     body = db.StringField(required=True)
-    has_image = db.BooleanField(default=False)
     status = db.StringField(default='draft')
     editor = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
-    _upload_image = None
 
     meta = {
         'allow_inheritance': True,
@@ -41,6 +40,12 @@ class Article(db.Document):
 
     def __str__(self):
         return self.title
+
+    def get_images_url(self):
+        return current_app.config.get('ARTICLES_IMAGES_URL')
+
+    def get_images_path(self):
+        return current_app.config.get('ARTICLES_IMAGES_PATH')
 
     @property
     def detail_url(self):
@@ -72,22 +77,6 @@ class Article(db.Document):
         return bool(Translation.objects
                     .filter(original_article=self, language=language).count())
 
-    @property
-    def image_url(self):
-        if self.has_image:
-            return f'{current_app.config.get("ARTICLES_IMAGES_URL")}/{self.id}'
-
-    def delete_image(self):
-        if not self.has_image:
-            return
-        (current_app.config.get('ARTICLES_IMAGES_PATH') /
-         str(self.id)).unlink()
-        self.has_image = False
-        self.save()
-
-    def attach_image(self, image):
-        self._upload_image = image
-
     @classmethod
     def update_publication_date(cls, sender, document, **kwargs):
         if document.is_published and not document.publication_date:
@@ -96,20 +85,6 @@ class Article(db.Document):
     @classmethod
     def update_slug(cls, sender, document, **kwargs):
         document.slug = slugify(document.title)
-
-    @classmethod
-    def store_image(cls, sender, document, **kwargs):
-        if document._upload_image:
-            document.has_image = True
-            document._upload_image.save(
-                str(current_app.config.get('ARTICLES_IMAGES_PATH') /
-                    str(document.id)))
-            document._upload_image = None
-            document.save()
-
-    @classmethod
-    def delete_image_file(cls, sender, document, **kwargs):
-        document.delete_image()
 
     def save_from_request(self, request):
         data = request.form.to_dict()
