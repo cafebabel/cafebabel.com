@@ -790,6 +790,9 @@ button.share-button:before {
     font-size: 3rem;
     color: #00283C;
 }
+button.share-button:after {
+    content: '';
+}
 
 @keyframes heartbeat {
     0% {
@@ -895,6 +898,11 @@ button.share-button.active:after {
     padding: 0;
     margin: 0;
     text-align: center;
+}
+
+.create-article-page .article-settings {
+    max-width: 75rem;
+    margin: auto;
 }
 
 .create-article-page .select {
