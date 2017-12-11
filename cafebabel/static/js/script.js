@@ -6,9 +6,18 @@ setTimeout(() => {
 }, 300)
 
 /* open menu */
-const menuButton = document.querySelector('button.menu-button')
-menuButton.addEventListener('click', () => {
-    menuButton.classList.toggle('active')
+Array.from(document.querySelectorAll('button.menu')).forEach(button => {
+    button.addEventListener('click', () => {
+    const activeButton = document.querySelector('button.active.menu')
+        if (activeButton) {
+            activeButton.classList.remove('active')
+            if (activeButton !== button) {
+                button.classList.add('active')
+            }
+        } else {
+            button.classList.add('active')
+        }
+    })
 })
 
 /* external link in new tab */

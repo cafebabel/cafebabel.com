@@ -166,6 +166,9 @@ main {
 .icon-checkmark:before {
     content: '\ea10';
 }
+.icon-heart:before {
+    content: '\e9da';
+}
 .icon-arrow-down:before {
     content: '\ea3e';
 }
@@ -664,11 +667,11 @@ a.logo:after {
 
 /* Menu */
 
-button.menu-button {
+button.menu-button,
+button.share-button {
     position: fixed;
     display: block;
     top: 1rem;
-    left: 1rem;
     width: 9.5rem;
     height: 9.5rem;
     border: none;
@@ -679,12 +682,22 @@ button.menu-button {
     z-index: 3;
 }
 
-button.menu-button:focus {
+button.menu-button {
+    left: 1rem;
+}
+
+button.share-button {
+    right: 1rem;
+}
+
+button.menu:focus {
     outline: none;
 }
 
 button.menu-button:before,
-button.menu-button:after {
+button.menu-button:after,
+button.share-button.active:before,
+button.share-button.active:after {
     content: '';
     height: 0.3rem;
     width: 3.5rem;
@@ -704,16 +717,16 @@ button.menu-button:after {
     bottom: 4rem;
 }
 
-button.menu-button.active:before {
+button.menu.active:before {
     top: 4.6rem;
     transform: rotate(45deg);
 }
-button.menu-button.active:after {
+button.menu.active:after {
     bottom: 4.5rem;
     transform: rotate(-45deg);
 }
 
-button.menu-button + nav {
+button.menu + nav {
     background: white;
     top: 0;
     right: 0;
@@ -726,23 +739,23 @@ button.menu-button + nav {
     transition: all .3s;
 }
 
-button.menu-button + nav ul {
+button.menu + nav ul {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-button.menu-button + nav ul li {
+button.menu + nav ul li {
     text-align: center;
 }
 
-button.menu-button + nav ul li a {
+button.menu + nav ul li a {
     position: relative;
     display: inline-block;
 }
 
-button.menu-button + nav ul li a:after {
+button.menu + nav ul li a:after {
     content: '';
     position: absolute;
     height: 0.2rem;
@@ -753,22 +766,60 @@ button.menu-button + nav ul li a:after {
     transition: all .3s;
 }
 
-button.menu-button + nav ul li a:hover:after {
+button.menu + nav ul li a:hover:after {
     width: 100%;
 }
 
-button.menu-button.active + nav {
+button.menu.active + nav {
     display: block;
     opacity: 1;
     z-index: 2;
 }
 
-button.menu-button.active + nav ul li {
+button.menu.active + nav ul li {
     padding-bottom: 0;
 }
 
-button.menu-button + nav a {
+button.menu + nav a {
     display: block;
+}
+
+button.share-button:before {
+    font-family: 'icomoon';
+    content: '\e9da';
+    font-size: 3rem;
+    color: #00283C;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(.8);
+    }
+    50% {
+        transform: scale(1);
+    }
+    75% {
+        transform: scale(.8);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+button.share-button:hover {
+    animation: heartbeat 1s infinite;
+}
+
+button.share-button.active:hover {
+    animation: none;
+}
+
+button.share-button.active:before,
+button.share-button.active:after {
+    font-family: sans-serif;
 }
 
 /* Editing place page */
