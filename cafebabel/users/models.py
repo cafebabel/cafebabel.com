@@ -1,6 +1,7 @@
 import datetime
 
 from flask_security import RoleMixin, UserMixin
+from flask_login import current_user
 from mongoengine import signals
 
 from .. import db
@@ -18,7 +19,11 @@ class UserProfile(db.EmbeddedDocument):
     about = db.StringField()
 
     def __str__(self):
-        return self.name
+        return self.name or 'Anonymous'
+
+    @classmethod
+    def get_document(cls, document):
+        return document.profile
 
 
 class User(db.Document, UserMixin):
@@ -38,6 +43,9 @@ class User(db.Document, UserMixin):
     def idstr(self):
         # Otherwise returns an ObjectID, not good in url_for.
         return str(self.id)
+
+    def is_me(self):
+        return self == current_user
 
     def to_dict(self):
         return {

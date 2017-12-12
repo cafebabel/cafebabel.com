@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block body_class %}profile-page{% endblock %}
+{% block body %}
+<h1>{{ user }}'s profile</h1>
+
+<section>
+  <h2>About</h2>
+  {% if user.is_me() or current_user.has_role('editor') %}
+  <a href={{ url_for('users.edit', id=user.id) }}>Edit this profile</a>
+  {% endif %}
+  <img src=https://rawgit.com/cafebabel/styleguide/master/img/profile-pic-placeholder.jpg alt="Profile pic placeholder"> <!-- #US14 https://github.com/cafebabel/cafebabel.com/issues/14 -->
+    <ul class=social-networks>
+        <li>
+            <a href="{{ user.profile.socials.twitter }}" class=icon-twitter></a>
+            <label for=social-twitter>
+                <span class=icon-twitter></span>
+                <input type=url id=social-twitter name=socials-twitter value="{{ user.profile.socials.twitter }}">
+            </label>
+        </li>
+        <li>
+            <a href="{{ user.profile.socials.facebook }}" class=icon-facebook></a>
+            <label for=socials-facebook>
+                <span class=icon-facebook></span>
+                <input type=url id=socials-facebook name=socials-facebook value="{{ user.profile.socials.facebook }}">
+            </label>
+        </li>
+        <li>
+            <a href="{{ user.profile.socials.instagram }}" class=icon-instagram></a>
+            <label for=socials-instagram>
+                <span class=icon-instagram></span>
+                <input type=url id=socials-instagram name=socials-instagram value="{{ user.profile.socials.instagram }}">
+            </label>
+        </li>
+        <li>
+            <a href="{{ user.profile.socials.medium }}" class=icon-medium></a>
+            <label for=socials-medium>
+                <span class=icon-medium></span>
+                <input type=url id=socials-medium name=socials-medium value="{{ user.profile.socials.medium }}">
+            </label>
+        </li>
+        <li>
+            <a href="{{ user.profile.socials.flickr }}" class=icon-flickr></a>
+            <label for=socials-flickr>
+                <span class=icon-flickr></span>
+                <input type=url id=socials-flickr name=socials-flickr value="{{ user.profile.socials.flickr }}">
+            </label>
+        </li>
+        <li>
+            <a href="{{ user.profile.socials.pinterest }}" class=icon-pinterest></a>
+            <label for=socials-pinterest>
+                <span class=icon-pinterest></span>
+                <input type=url id=socials-pinterest name=socials-pinterest value="{{ user.profile.socials.pinterest }}">
+            </label>
+        </li>
+    </ul>
+    <ul>
+    <li><h3>Full name:</h3><span>{{ user.profile.name or '' }}</span></li>
+    <li><h3>Website:</h3><span><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
+    <li>
+      <h3>Bio:</h3>
+          <p>
+              <span>{{ user.profile.about or '' }}</span>
+          </p>
+    </li>
+  </ul>
+</section>
+{% endblock %}

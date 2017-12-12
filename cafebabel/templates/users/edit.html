@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% macro social_field(name) %}
+<li>
+  <a href=# class=icon-{{ name }}></a>
+  <label for=social-{{ name }}>
+    <span class=icon-{{ name }}></span>
+    <input type=url id=social-{{ name }} name=socials-{{ name }} value="{{ user.profile.socials.get(name) }}">
+  </label>
+</li>
+{% endmacro %}
+
+{% block body_class %}profile-page{% endblock %}
+{% block body %}
+{% if user.profile %}
+<h1>{{ user }}'s profile</h1>
+{% else %}
+<h1>Create a profile</h1>
+{% endif %}
+
+<section>
+  <h2>About</h2>
+  <form method=post action=.>
+    <ul class=social-networks>
+      {{ social_field('twitter') }}
+      {{ social_field('facebook') }}
+      {{ social_field('instagram') }}
+      {{ social_field('medium') }}
+      {{ social_field('flickr') }}
+      {{ social_field('pinterest') }}
+    </ul>
+    <div class=text>
+      <label for=name>Full name</label>
+      <input type=text id=name name=name value="{{ user.profile.name }}" required>
+    </div>
+    <div class=url>
+      <label for=website>Website</label>
+      <input type=url id=website name=website value="{{ user.profile.website }}">
+    </div>
+    <div class=textarea>
+      <label for=about>Bio</label>
+      <textarea id=about name=about>{{ user.profile.about }}</textarea>
+    </div>
+    <input type=submit value="Save this profile">
+  </form>
+</section>
+
+<section>
+  <h2>Contributions</h2>
+  {% for article in articles %}
+  <article>
+    <a href={{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}>
+      {% if article.has_image %}
+      <img src={{ article.image_url }} alt="Image for {{ article.title }}">
+      {% endif %}
+      <h3>{{ article.title }}</h3>
+      <p>Article in {{ article.language }}</p>
+    </a>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}
