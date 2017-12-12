@@ -12,17 +12,17 @@ def test_confirm_user_creates_default_profile(app):
     assert user.profile.name == user.email
 
 
-def test_author_profile_has_no_list_of_drafts(client, user, article):
-    login(client, user.email, 'secret')
-    response = client.get(f'/profile/{user.id}/')
+def test_user_profile_has_list_of_published_articles_no_draft(client, article):
+    response = client.get(f'/profile/{article.author.id}/')
     assert response.status_code == 200
     assert article.title not in response
 
 
-def test_author_profile_has_list_of_published_articles(
-        client, user, published_article):
+def test_author_profile_has_list_of_published_articles_and_drafts(
+        client, user, article, published_article):
     login(client, user.email, 'secret')
     published_article.modify(author=user)
-    response = client.get(f'/profile/')
+    response = client.get(f'/profile/', follow_redirects=True)
     assert response.status_code == 200
+    assert article.title in response
     assert published_article.title in response

@@ -37,7 +37,8 @@ def edit(id):
 @users.route('/<id>/')
 def detail(id):
     user = User.objects.get_or_404(id=id)
-    articles = Article.objects.filter(author=user)
-    if user != current_user:
-        articles.filter(status='published')
+    filters = {'author': user}
+    if not user.is_me():
+        filters['status'] = 'published'
+    articles = Article.objects(**filters)
     return render_template('users/detail.html', user=user, articles=articles)

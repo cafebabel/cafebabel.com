@@ -31,7 +31,7 @@ def test_unauthenticated_user_cannot_access_login_required_page(client):
 
 def test_authenticated_user_can_access_login_required_page(client, user):
     login(client, user.email, 'secret')
-    response = client.get('/profile/')
+    response = client.get('/profile/', follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert b'<h1>testy@example.com\'s profile</h1>' in response.data
 

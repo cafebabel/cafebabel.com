@@ -55,8 +55,8 @@
         </li>
     </ul>
     <ul>
-    <li><h3>Full name:</h3><span>{{ user.profile.name or '' }}</span></li>
-    <li><h3>Website:</h3><span><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
+    <li><h3>Full name:</h3> <span>{{ user.profile.name or '' }}</span></li>
+    <li><h3>Website:</h3> <span><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
     <li>
       <h3>Bio:</h3>
           <p>
@@ -64,5 +64,11 @@
           </p>
     </li>
   </ul>
+</section>
+
+<section>
+  {% for article in articles %}
+  {% include "articles/_card.html" %}
+  {% endfor %}
 </section>
 {% endblock %}
