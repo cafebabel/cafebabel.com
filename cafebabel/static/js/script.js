@@ -67,7 +67,7 @@ Array.from(document.querySelectorAll('.authentication-form > div > input')).forE
 })
 
 /* animation title field create article */
-Array.from(document.querySelectorAll('h1.text input')).forEach(inputh1 => {
+Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
     const h1 = inputh1.parentElement
     inputh1.addEventListener('focus', () => {
         h1.classList.add('active')

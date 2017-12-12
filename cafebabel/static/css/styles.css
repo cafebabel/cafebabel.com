@@ -667,8 +667,8 @@ a.logo:after {
 
 /* Menu */
 
-button.menu-button,
-button.share-button {
+button.menu,
+button.menu {
     position: fixed;
     display: block;
     top: 1rem;
@@ -688,6 +688,11 @@ button.menu-button {
 
 button.share-button {
     right: 1rem;
+}
+
+button.language-button {
+    left: 10.5rem;
+    color: #00283C;
 }
 
 button.menu:focus {
@@ -873,11 +878,11 @@ button.share-button.active:after {
     opacity: 0;
 }
 
-.create-article-page h1.text {
+.create-article-page h1.edit {
     position: relative;
 }
 
-.create-article-page .text label {
+.create-article-page .edit label {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
@@ -886,12 +891,12 @@ button.share-button.active:after {
     transition: all .2s;
 }
 
-.create-article-page .text.active label {
+.create-article-page .edit.active label {
     font-size: 1.9rem;
     top: 2rem;
 }
 
-.create-article-page .text input {
+.create-article-page .edit input {
     border: none;
     font-size: 4.2rem;
     font-weight: 600;
