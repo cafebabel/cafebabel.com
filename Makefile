@@ -26,7 +26,7 @@ install:
 	ssh ${server} "git clone https://github.com/cafebabel/cafebabel.com.git ~/src"
 	ssh ${server} "python3.6 -m venv ~/venv"
 	ssh ${server} "${goto_src} && mkdir logs"
-	ssh ${server} "${goto_src} && mkdir -p static/uploads/articles"
+	ssh ${server} "${goto_src} && mkdir -p cafebabel/static/uploads/{articles,users}"
 	ssh ${server} "${goto_src} && pip install -r requirements.txt"
 
 reset-db:

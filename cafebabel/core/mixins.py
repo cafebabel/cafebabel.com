@@ -8,6 +8,9 @@ class UploadableImageMixin:
     has_image = db.BooleanField(default=False)
     _upload_image = None
 
+    def get_id(self):
+        return self.id
+
     def get_images_url(self):
         raise NotImplemented()
 
@@ -17,16 +20,23 @@ class UploadableImageMixin:
     @property
     def image_url(self):
         if self.has_image:
-            return f'{self.get_images_url()}/{self.id}'
+            return f'{self.get_images_url()}/{self.get_id()}'
 
     @property
     def image_path(self):
-        if not self.id:
+        if not self.get_id():
             return
-        return self.get_images_path() / str(self.id)
+        return self.get_images_path() / str(self.get_id())
 
     def attach_image(self, image):
         self._upload_image = image
+
+    def delete_image(self):
+        if not self.has_image:
+            return
+        self.image_path.unlink()
+        self.has_image = False
+        self.save()
 
     @classmethod
     def store_image(cls, sender, document, **kwargs):
@@ -39,10 +49,3 @@ class UploadableImageMixin:
     @classmethod
     def delete_image_file(cls, sender, document, **kwargs):
         document.delete_image()
-
-    def delete_image(self):
-        if not self.has_image:
-            return
-        self.image_path.unlink()
-        self.has_image = False
-        self.save()

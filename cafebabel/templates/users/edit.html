@@ -7,7 +7,21 @@
 
 <section>
   <h2>About</h2>
-  <form method=post action=.>
+  <form method=post action=. enctype=multipart/form-data>
+    <div class=file>
+      <label for=image>Picture</label>
+      <input id=image type=file name=image>
+    </div>
+    {% if user.profile.has_image %}
+    <img src={{ user.profile.image_url }} alt="My picture">
+    <div class=checkbox>
+      <label for=delete>
+        <input type=checkbox name=delete value=1>
+        Delete this picture
+      </label>
+    </div>
+    {% endif %}
+
     <ul class=social-networks>
       {{ social_field('twitter') }}
       {{ social_field('facebook') }}

@@ -25,6 +25,8 @@ def edit(id):
                                 for k, v in request.form.items()
                                 if k.startswith('socials-')}
         image = request.files.get('image')
+        if request.form.get('delete'):
+            user.profile.delete_image()
         if image:
             user.profile.attach_image(image)
         user.save()
