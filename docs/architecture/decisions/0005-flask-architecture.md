@@ -20,4 +20,4 @@ An architecture based on https://github.com/stephane/flask-skeleton
 
 ## Consequences
 
-Beaking change, mostly for configurations.
+Breaking change, mostly for configurations.

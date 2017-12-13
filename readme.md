@@ -15,6 +15,9 @@
 ```
 python3 -m venv ./venv
 source ./venv/bin/activate
+mkdir -p static/uploads/articles
+export FLASK_APP=cafebabel
+export FLASK_DEBUG=1
 ```
 
 ### Installing the dependencies
@@ -32,8 +35,6 @@ for instance. You can create another file for a particular env though.
 export FLASK_APP=dev.py
 ```
 
-
-
 ### Installing the database
 
 Install and launch MongoDB on default port (27017) or tune it in your
@@ -49,18 +50,15 @@ flask initdb
 If existing, the file `instance/config.local.py` at the root of
 the project will override the default `config.py` configuration.
 
-Do not forget to create the folder dedicated to statics, by default:
-
-```
-mkdir -p static/uploads/articles
-```
-
 
 ## Running the project
 
 ```
 flask run
 ```
+
+As previously for `flask initdb`, make sure you have exported the `FLASK_APP`
+environment variable.
 
 
 ## Running a dummy mail server
@@ -75,7 +73,8 @@ sudo python -m smtpd -n -c DebuggingServer localhost:25
 In order to deploy to the staging server, you should have an SSH access
 to the server.
 
-Your server must have python3.6 installed.
+Your server must have python3.6 installed, MongoDB running and the
+_settings.py_ (or _settings.local.py_) file properly setup.
 
 Installation can be processed with `make install`.
 Deploying will run through `make deploy`.
