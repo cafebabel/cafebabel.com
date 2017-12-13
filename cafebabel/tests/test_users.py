@@ -38,6 +38,17 @@ def test_authenticated_user_can_access_login_required_page(client, user):
     assert b'<h1>testy@example.com\'s profile</h1>' in response.data
 
 
+def test_visitor_cannot_edit_user_profile(client, user):
+    response = client.get(f'/profile/{user.id}/edit/')
+    assert response.status_code == HTTPStatus.UNAUTHORIZED
+
+
+def test_editor_can_edit_user_profile(client, user, editor):
+    login(client, editor.email, 'secret')
+    response = client.get(f'/profile/{user.id}/edit/')
+    assert response.status_code == HTTPStatus.OK
+
+
 def test_logout_user_cannot_access_login_required_page(client, user):
     login(client, user.email, 'secret')
     logout(client)

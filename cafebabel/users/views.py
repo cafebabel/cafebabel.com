@@ -1,4 +1,5 @@
-from flask import Blueprint, flash, render_template, redirect, url_for, request
+from flask import (Blueprint, flash, render_template, redirect, url_for,
+                   request, abort)
 from flask_login import login_required, current_user
 
 from ..articles.models import Article
@@ -17,6 +18,8 @@ def me():
 @users.route('/<id>/edit/', methods=['get', 'post'])
 def edit(id):
     user = User.objects.get_or_404(id=id)
+    if not (user.is_me() or user.has_role('editor')):
+        abort(401, 'You cannot edit this profile.')
     if request.method == 'POST':
         fields = ['name', 'website', 'about']
         for f in fields:

@@ -52,7 +52,7 @@ class User(db.Document, UserMixin):
         return str(self.id)
 
     def is_me(self):
-        return self == current_user
+        return hasattr(current_user, 'id') and self.id == current_user.id
 
     def to_dict(self):
         return {
