@@ -17,9 +17,10 @@
       <label for=language>
         <select id=language name=language required>
           <optgroup label=Language>
-          {% for language in get_languages() %}
-          <option value={{language[0]}}>{{ language[1] }}</option>
-          {% endfor %}
+            {% for language in get_languages() %}
+            <option value={{language[0]}}>{{ language[1] }}</option>
+            {% endfor %}
+          </optgroup>
         </select>
       </label>
     </div>

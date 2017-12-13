@@ -1,58 +1,9 @@
 {% extends "base.html" %}
 
+{% block body_class %}create-article-page{% endblock %}
 {% block body %}
 <form method=post action={{ url_for('articles.edit', article_id=article.id) }} enctype=multipart/form-data>
   <input type=hidden name=id value="{{ article.id }}">
-  <div class=text>
-    <label for=title>Title</label>
-    <input id=title name=title value="{{ article.title }}" required>
-  </div>
-  <div class=select>
-    <label for=language>Language
-      <select id=language name=language required>
-        {% for language in get_languages() %}
-        <option value={{language[0]}}{% if article.language == language[0] %} selected{% endif %}>{{ language[1] }}</option>
-        {% endfor %}
-      </select>
-    </label>
-  </div>
-  <div class=select>
-    <label for=category>Category
-      <select id=category name=category required>
-        {% for category in get_categories() %}
-        <option value={{ category }}{% if article.category == category %} selected{% endif %}>{{ category }}</option>
-        {% endfor %}
-      </select>
-    </label>
-  </div>
-  {% if current_user.has_role('editor') %}
-  <div class=select>
-    <label for=status>Status
-      <select id=status name=status required>
-        <option value=draft>Draft</option>
-        <option value=published selected>Published</option>
-      </select>
-    </label>
-  </div>
-  <div class=select>
-    <label for=author>Author
-      <select id=author name=author required>
-        {% for author in authors %}
-        <option value={{author.id}} {% if article.author == author %}selected{% endif %}>{{ author }}</option>
-        {% endfor %}
-      </select>
-    </label>
-  </div>
-  {% endif %}
-  <div class=textarea>
-    <label for=summary>Summary</label>
-    <textarea id=summary name=summary required>{{ article.summary }}</textarea>
-  </div>
-  <div class=textarea>
-    <label for=body>Body</label>
-    <textarea id=body name=body required>{{ article.body }}</textarea>
-    {% include "articles/markdown-helper.html" %}
-  </div>
   <div class=file>
     <label for=image>Image</label>
     {% if article.has_image %}
@@ -63,6 +14,66 @@
     </div>
     {% endif %}
     <input type=file id=image name=image>
+  </div>
+    <h1 class='edit active'>
+        <label for=title>Title</label>
+        <input id=title name=title value="{{ article.title }}" required>
+    </h1>
+    <div class=article-settings>
+        <div class=select>
+            <label for=language>
+                <select id=language name=language required>
+                    <optgroup label=Language>
+                        {% for language in get_languages() %}
+                        <option value={{language[0]}}{% if article.language == language[0] %} selected{% endif %}>{{ language[1] }}</option>
+                        {% endfor %}
+                    </optgroup>
+                </select>
+            </label>
+        </div>
+        <div class=select>
+            <label for=category>
+                <select id=category name=category required>
+                    <optgroup label=Category>
+                        {% for category in get_categories() %}
+                        <option value={{ category }}{% if article.category == category %} selected{% endif %}>{{ category }}</option>
+                        {% endfor %}
+                    </optgroup>
+                </select>
+            </label>
+        </div>
+        {% if current_user.has_role('editor') %}
+        <div class=select>
+            <label for=status>
+                <select id=status name=status required>
+                    <optgroup label=Status>
+                        <option value=draft selected>Draft</option>
+                        <option value=published>Published</option>
+                    </optgroup>
+                </select>
+            </label>
+        </div>
+        <div class=select>
+            <label for=author>
+                <select id=author name=author required>
+                    <optgroup label=Author>
+                        {% for author in authors %}
+                        <option value={{author.id}} {% if article.author == author %}selected{% endif %}>{{ author }}</option>
+                        {% endfor %}
+                    </optgroup>
+                </select>
+            </label>
+        </div>
+        {% endif %}
+    </div>
+  <div class=textarea>
+    <label for=summary>Summary</label>
+    <textarea id=summary name=summary required>{{ article.summary }}</textarea>
+  </div>
+  <div class=textarea>
+    <label for=body>Body</label>
+    <textarea id=body name=body required>{{ article.body }}</textarea>
+    {% include "articles/markdown-helper.html" %}
   </div>
   <input type=submit value="Save">
 </form>
