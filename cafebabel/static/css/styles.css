@@ -521,12 +521,11 @@ label[for=remember] {
 
 select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-after-with-css-in-webkit */
     padding: 1rem 3rem 1rem 1rem;
-    margin:5rem 0;
+    margin: 5rem 0;
     background: transparent;
     border: 0.1rem solid #00283C;
     cursor: pointer;
-    border-radius: 0;
-    min-width: 15rem;
+    width: 100%;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -534,7 +533,6 @@ select { /* https://stackoverflow.com/questions/3532649/problem-with-select-and-
 
 .select label {
     position: relative;
-    display: inline-block;
     z-index: 0;
 }
 
@@ -554,6 +552,16 @@ select::-ms-expand {
 
 select:focus {
     outline: none;
+}
+
+@media screen and (min-width: 750px) {
+    select {
+        width: auto;
+        min-width: 15rem;
+    }
+    .select label {
+        display: inline-block;
+    }
 }
 
 /* Images */
@@ -625,7 +633,7 @@ button a:after {
     width: 10rem;
     display: block;
     transition: all .2s;
-    top: 4.7rem;
+    top: 3.7rem;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -667,13 +675,12 @@ a.logo:after {
 
 /* Menu */
 
-button.menu,
 button.menu {
     position: fixed;
     display: block;
     top: 1rem;
-    width: 9.5rem;
-    height: 9.5rem;
+    width: 7.5rem;
+    height: 7.5rem;
     border: none;
     background: transparent;
     padding: 0;
@@ -682,16 +689,16 @@ button.menu {
     z-index: 3;
 }
 
-button.menu-button {
+button.main-menu {
     left: 1rem;
 }
 
-button.share-button {
+button.follow {
     right: 1rem;
 }
 
-button.language-button {
-    left: 10.5rem;
+button.language {
+    left: 8.5rem;
     color: #00283C;
 }
 
@@ -699,35 +706,35 @@ button.menu:focus {
     outline: none;
 }
 
-button.menu-button:before,
-button.menu-button:after,
-button.share-button.active:before,
-button.share-button.active:after {
+button.main-menu:before,
+button.main-menu:after,
+button.follow.active:before,
+button.follow.active:after {
     content: '';
     height: 0.3rem;
     width: 3.5rem;
     margin: 0;
-    left: 3rem;
+    left: 2rem;
     background: #00283C;
     position: absolute;
     display: block;
     transition: all .3s ease-in-out;
 }
 
-button.menu-button:before {
-    top: 4rem;
+button.main-menu:before {
+    top: 3rem;
 }
 
-button.menu-button:after {
-    bottom: 4rem;
+button.main-menu:after {
+    bottom: 3rem;
 }
 
 button.menu.active:before {
-    top: 4.6rem;
+    top: 3.6rem;
     transform: rotate(45deg);
 }
 button.menu.active:after {
-    bottom: 4.5rem;
+    bottom: 3.6rem;
     transform: rotate(-45deg);
 }
 
@@ -789,13 +796,13 @@ button.menu + nav a {
     display: block;
 }
 
-button.share-button:before {
+button.follow:before {
     font-family: 'icomoon';
     content: '\e9da';
     font-size: 3rem;
     color: #00283C;
 }
-button.share-button:after {
+button.follow:after {
     content: '';
 }
 
@@ -817,16 +824,16 @@ button.share-button:after {
     }
 }
 
-button.share-button:hover {
+button.follow:hover {
     animation: heartbeat 1s infinite;
 }
 
-button.share-button.active:hover {
+button.follow.active:hover {
     animation: none;
 }
 
-button.share-button.active:before,
-button.share-button.active:after {
+button.follow.active:before,
+button.follow.active:after {
     font-family: sans-serif;
 }
 
@@ -908,10 +915,26 @@ button.share-button.active:after {
 .create-article-page .article-settings {
     max-width: 75rem;
     margin: auto;
+    text-align: justify;
 }
 
-.create-article-page .select {
-    display: inline-block;
+.create-article-page .article-settings:after { /* https://codepen.io/gcyrillus/pen/ruhCg */
+    content: '';
+    padding-right: 100%;
+}
+
+.create-article-page select {
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 750px) {
+    .create-article-page select {
+        margin-bottom: 5rem;
+    }
+
+    .create-article-page .select {
+        display: inline-block;
+    }
 }
 
 .create-article-page .textarea {
@@ -1103,7 +1126,7 @@ button.share-button.active:after {
     }
 }
 
-/* Pitch page */
+/* Pitch page / suggest article page */
 
 .pitch-page form {
     max-width: 75rem;
@@ -1135,6 +1158,16 @@ button.share-button.active:after {
 
 .pitch-page button:hover a {
     color: #00283C;
+}
+
+.pitch-page .select label:after {
+    top: 9rem;
+}
+
+@media screen and (min-width: 750px) {
+    .pitch-page .select label:after {
+        top: 6.2rem;
+    }
 }
 
 /* Article page */

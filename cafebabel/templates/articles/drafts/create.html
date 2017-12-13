@@ -3,7 +3,7 @@
 {% block body_class %}create-article-page{% endblock %}
 {% block body %}
   <form method=post action={{ url_for('drafts.create') }} enctype=multipart/form-data>
-  <canvas></canvas>
+  <canvas class=noise></canvas>
   <div class=file>
     <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>Recommended file size: less than 1Mo</small></label>
     <input type=file id=image name=image>

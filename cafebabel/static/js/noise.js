@@ -1,5 +1,5 @@
 /* tv noise effect https://codepen.io/eugene-bulkin/pen/zEgyH */
-const canvas = document.querySelector('canvas')
+const canvas = document.querySelector('.noise')
 if (canvas) {
     const context = canvas.getContext('2d')
 

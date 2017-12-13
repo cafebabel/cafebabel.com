@@ -10,7 +10,7 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-<button class="menu menu-button"></button>
+<button class="menu main-menu"></button>
 
 {% if current_user.is_authenticated %}
 <nav>
@@ -43,7 +43,7 @@
   </ul>
 </nav>
 
-<button class="menu language-button">EN</button>
+<button class="menu language">EN</button>
 
 <nav>
     <ul>
@@ -55,7 +55,7 @@
     </ul>
 </nav>
 
-<button class="menu share-button"></button>
+<button class="menu follow"></button>
 
 <nav>
     <ul>
