@@ -28,7 +28,7 @@ install:
 	-${remote} "git clone https://github.com/cafebabel/cafebabel.com.git ${src_dir}"
 	-${remote} "python3.6 -m venv ${venv_dir}"
 	-${remote} "${goto_src} && mkdir logs"
-	ssh ${server} "${goto_src} && mkdir -p cafebabel/static/uploads/{articles,users}"
+	-${remote} "${goto_src} && mkdir -p cafebabel/static/uploads/{articles,users}"
 	make reset-db
 	make deploy
 

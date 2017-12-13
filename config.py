@@ -90,4 +90,5 @@ class TestingConfig(BaseConfig):
     }
     WTF_CSRF_ENABLED = False
     ARTICLES_IMAGES_PATH = Path(mkdtemp())
+    USERS_IMAGES_PATH = Path(mkdtemp())
     DEBUG_TB_ENABLED = False
