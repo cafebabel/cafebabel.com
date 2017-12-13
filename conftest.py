@@ -4,7 +4,7 @@ from flask_security.confirmable import confirm_user
 from cafebabel import create_app
 from cafebabel.articles.models import Article
 from cafebabel.articles.translations.models import Translation
-from cafebabel.users.models import Role, User
+from cafebabel.users.models import Role, User, UserProfile
 
 test_app = create_app('config.TestingConfig')
 
@@ -38,9 +38,12 @@ def app(request):
 
 @pytest.fixture
 def user():
-    user = User.objects.create(email='testy@example.com', password='secret')
+    user = User(email='testy@example.com', password='secret')
+    user.profile = UserProfile()
+    user.save()
     with test_app.app_context():
         confirm_user(user)
+    user.reload()
     return user
 
 

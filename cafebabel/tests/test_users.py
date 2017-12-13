@@ -1,4 +1,6 @@
 from http import HTTPStatus
+from io import BytesIO
+from pathlib import Path
 
 from ..users.models import Role
 from .utils import login, logout
@@ -41,3 +43,18 @@ def test_logout_user_cannot_access_login_required_page(client, user):
     logout(client)
     response = client.get('/profile/')
     assert response.status_code == HTTPStatus.FOUND
+
+
+def test_profile_image_should_save_and_render(app, client, user):
+    login(client, user.email, 'secret')
+    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
+        image = BytesIO(content.read())
+    data = {'image': (image, 'image-name.jpg')}
+    response = client.post(f'/profile/{user.id}/edit/', data=data,
+                           content_type='multipart/form-data',
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    user.reload()
+    assert user.profile.has_image
+    assert Path(app.config.get('USERS_IMAGES_PATH') / str(user.id)).exists()
+    assert f'<img src={user.profile.image_url}' in response
