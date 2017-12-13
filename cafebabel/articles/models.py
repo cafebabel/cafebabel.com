@@ -11,15 +11,6 @@ from ..core.mixins import UploadableImageMixin
 from ..users.models import User
 
 
-class ArticleQuerySet(queryset.QuerySet):
-
-    def get_or_404(self, id, **extras):
-        try:
-            return self.get(id=id, **extras)
-        except (Article.DoesNotExist, errors.ValidationError):
-            abort(HTTPStatus.NOT_FOUND, 'No article matches this id.')
-
-
 class Article(db.Document, UploadableImageMixin):
     title = db.StringField(required=True)
     slug = db.StringField(required=True)
@@ -34,8 +25,7 @@ class Article(db.Document, UploadableImageMixin):
     publication_date = db.DateTimeField()
 
     meta = {
-        'allow_inheritance': True,
-        'queryset_class': ArticleQuerySet
+        'allow_inheritance': True
     }
 
     def __str__(self):
