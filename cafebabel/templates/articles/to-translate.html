@@ -40,15 +40,15 @@
           {% endif %}
           <time>Published on {{ article.creation_date.date() }}</time>
           <h2>{{ article.title }}</h2>
-          <ul>
+
             {% if article.is_translation %}
               {% if article.original_article.language != to_language_code %}
-                <li><a href={{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}>Translate in {{ to_language_label }}</a></li>
+                <a href={{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}><button>Translate in {{ to_language_label }}</button></a>
               {% endif %}
             {% else %}
-              <li><a href={{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}>Translate in {{ to_language_label }}</a></li>
+              <a href={{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}><button>Translate in {{ to_language_label }}</button></a>
             {% endif %}
-          </ul>
+
         </article>
       </li>
     {% endif %}

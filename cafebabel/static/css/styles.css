@@ -226,6 +226,7 @@ h1 {
 h2 {
     font-size: 3.2rem;
     margin: 2rem 0 4rem;
+    line-height: 4rem;
 }
 
 h3 {
@@ -555,13 +556,13 @@ select:focus {
 }
 
 @media screen and (min-width: 750px) {
-    select {
+    /*select {
         width: auto;
         min-width: 15rem;
     }
     .select label {
         display: inline-block;
-    }
+    }*/
 }
 
 /* Images */
@@ -1134,8 +1135,8 @@ button.follow.active:after {
 }
 
 .pitch-page h3 {
-    max-width:120rem;
-    margin:2rem auto 4rem auto;
+    text-align: center;
+    margin-bottom: 8rem;
 }
 
 .pitch-page label > p {
@@ -1160,14 +1161,18 @@ button.follow.active:after {
     color: #00283C;
 }
 
+.pitch-page select {
+    margin-top: 1rem;
+}
+
 .pitch-page .select label:after {
-    top: 9rem;
+    top: 5rem;
 }
 
 @media screen and (min-width: 750px) {
-    .pitch-page .select label:after {
+    /*.pitch-page .select label:after {
         top: 6.2rem;
-    }
+    }*/
 }
 
 /* Article page */
@@ -1226,13 +1231,30 @@ textarea#body {
 
 /* Translation list page */
 
+.translate-list-page h2 {
+    margin: 1rem 0;
+}
+
 .translate-list-page .select {
     display: inline-block;
+}
+
+.translate-list-page input {
+    margin-bottom: 8rem;
 }
 
 .translate-list-page ul {
     max-width: 75rem;
     margin: 2rem auto 5rem auto;
+}
+
+.translate-list-page ul article a {
+    width: 100%;
+    margin: 2rem 0 8rem;
+}
+
+.translate-list-page ul article a:hover:after {
+    width: 0;
 }
 
 .translate-list-page .to-translate-language li {
