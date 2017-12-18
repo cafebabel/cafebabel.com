@@ -11,7 +11,7 @@ users = Blueprint('users', __name__)
 
 @users.route('/')
 @login_required
-def me():
+def my_profile():
     return redirect(url_for('.detail', id=current_user.id))
 
 
