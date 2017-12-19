@@ -319,7 +319,8 @@ input:focus::placeholder {
     color:#bde513;
 }
 input[type=submit],
-button {
+button,
+.button {
     text-align: center;
     padding: 2rem 4rem;
     margin-bottom: 2rem;
@@ -329,8 +330,10 @@ button {
     color: #fff;
     width: 100%;
 }
+
 input[type=submit]:hover,
-button:hover {
+button:hover,
+.button:hover {
     background-color: #fff;
     color:  #00283C;
     border: 0.1rem solid #00283C;
@@ -339,7 +342,8 @@ button:hover {
 input[type=submit],
 input[type=submit]:hover,
 button,
-button:hover {
+button:hover,
+.button {
     transition: all 0.25s ease-in-out;
 }
 
@@ -605,6 +609,10 @@ a:hover:after {
 
 button a:after {
     content: none;
+}
+
+a.button {
+    color: #fff;
 }
 
 .article-page article p a:after {
@@ -977,7 +985,7 @@ button.follow.active:after {
 }
 
 .profile-page main section:nth-of-type(2) h3 {
-    margin: 0;
+    margin: 1rem 0;
 }
 
 .profile-page main ul:first-of-type {
@@ -1167,12 +1175,6 @@ button.follow.active:after {
 
 .pitch-page .select label:after {
     top: 5rem;
-}
-
-@media screen and (min-width: 750px) {
-    /*.pitch-page .select label:after {
-        top: 6.2rem;
-    }*/
 }
 
 /* Article page */

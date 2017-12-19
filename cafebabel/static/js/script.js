@@ -54,6 +54,9 @@ if (socialIcons) {
 /* animation login fields */
 Array.from(document.querySelectorAll('.authentication-form > div > input')).forEach(input => {
     const parent = input.parentElement
+    if (input.value) {
+        parent.classList.add('active', 'completed')
+    }
     input.addEventListener('change', () => {
         parent.classList.add('active', 'completed')
     })
