@@ -10,7 +10,7 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-<button class=menu-button></button>
+<button class="menu main-menu"></button>
 
 {% if current_user.is_authenticated %}
 <nav>
@@ -43,6 +43,29 @@
   </ul>
 </nav>
 
+<button class="menu language">EN</button>
+
+<nav>
+    <ul>
+        <li><a href=#>EN</a></li>
+        <li><a href=#>FR</a></li>
+        <li><a href=#>DE</a></li>
+        <li><a href=#>IT</a></li>
+        <li><a href=#>ES</a></li>
+    </ul>
+</nav>
+
+<button class="menu follow"></button>
+
+<nav>
+    <ul>
+        <li><a href=#>Facebook</a></li>
+        <li><a href=#>Twitter</a></li>
+        <li><a href=#>Insta</a></li>
+        <li><a href=#>LinkedIn</a></li>
+        <li><a href=#>Youtube</a></li>
+    </ul>
+</nav>
 {% include "security/_messages.html" %}
 
 <main>
@@ -62,3 +85,4 @@
 </div>
 
 <script src=/static/js/script.js></script>
+<script src=/static/js/noise.js></script>
