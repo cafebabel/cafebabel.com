@@ -1,4 +1,4 @@
-{% from "users/macros.html" import social_field with context %}
+{% from "users/profile-macros.html" import social_field with context %}
 {% extends 'base.html' %}
 
 {% block body_class %}profile-page edit{% endblock %}
@@ -30,6 +30,7 @@
       {{ social_field('flickr') }}
       {{ social_field('pinterest') }}
     </ul>
+
     <div class=text>
       <label for=name>Full name</label>
       <input type=text id=name name=name value="{{ user.profile.name }}" required>

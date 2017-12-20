@@ -1,4 +1,4 @@
-{% from "users/macros.html" import social_field with context %}
+{% from "users/profile-macros.html" import social_field with context %}
 {% extends 'base.html' %}
 
 {% block body_class %}profile-page{% endblock %}
@@ -14,6 +14,7 @@
   <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
   {% endif %}
 
+  {% if user.profile.socials %}
   <ul class=social-networks>
     {{ social_field('twitter') if user.profile.socials.twitter }}
     {{ social_field('facebook') if user.profile.socials.facebook }}
@@ -22,6 +23,7 @@
     {{ social_field('flickr') if user.profile.socials.flickr }}
     {{ social_field('pinterest') if user.profile.socials.pinterest }}
   </ul>
+  {% endif %}
 
   <ul>
     <li><h3>Full name:</h3> <span>{{ user.profile.name or '' }}</span></li>
