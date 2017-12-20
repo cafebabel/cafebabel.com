@@ -88,11 +88,11 @@
       {% for article in articles %}
       <article>
           <a href={{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}>
-          {% if article.has_image %}
-          <img src={{ article.image_url }} alt="Image for {{ article.title }}">
-          {% endif %}
-          <h3>{{ article.title }}</h3>
-          <p>Article in {{ article.language }}</p>
+              {% if article.has_image %}
+              <img src={{ article.image_url }} alt="Image for {{ article.title }}">
+              {% endif %}
+              <h3>{{ article.title }}</h3>
+              <p>Article in {{ article.language }}</p>
           </a>
       </article>
       {% endfor %}
