@@ -17,8 +17,8 @@ def list():
 
 
 @drafts.route('/new/', methods=['get', 'post'])
-@editor_required
 @login_required
+@editor_required
 def create():
     if request.method == 'POST':
         article = Article().save_from_request(request)
