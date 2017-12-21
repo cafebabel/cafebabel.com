@@ -442,6 +442,10 @@ button:hover,
     transform: translateY(2.5rem);
 }
 
+.authentication-form > div > input:-webkit-autofill {
+    content: '\feff'
+}
+
 @media screen and (min-width: 750px) {
     .authentication-form {
         width: 50%;
