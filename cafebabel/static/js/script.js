@@ -34,7 +34,7 @@ if (flashes) {
 }
 
 /* display profile social network field on click */
-const socialIcons = Array.from(document.querySelectorAll('.social-networks li'))
+const socialIcons = Array.from(document.querySelectorAll('.edit .social-networks li'))
 if (socialIcons) {
     socialIcons.forEach(socialIcon => {
         socialIcon.querySelector('a').addEventListener('click', (event) => {

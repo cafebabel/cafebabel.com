@@ -60,8 +60,11 @@ class BaseConfig:
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
     ARTICLES_IMAGES_URL = '/static/uploads/articles'
-    ARTICLES_IMAGES_PATH = (
-        Path(__file__).parent / 'static' / 'uploads' / 'articles')
+    ARTICLES_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
+                            / 'uploads' / 'articles')
+    USERS_IMAGES_URL = '/static/uploads/users'
+    USERS_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
+                         / 'uploads' / 'users')
 
 
 class DevelopmentConfig(BaseConfig):
@@ -87,4 +90,5 @@ class TestingConfig(BaseConfig):
     }
     WTF_CSRF_ENABLED = False
     ARTICLES_IMAGES_PATH = Path(mkdtemp())
+    USERS_IMAGES_PATH = Path(mkdtemp())
     DEBUG_TB_ENABLED = False

@@ -1,0 +1,56 @@
+{% from "users/profile-macros.html" import social_field with context %}
+{% extends 'base.html' %}
+
+{% block body_class %}profile-page edit{% endblock %}
+{% block body %}
+<h1>{{ user }}'s profile</h1>
+
+<section>
+  <h2>About</h2>
+  <form method=post action=. enctype=multipart/form-data>
+    <div class=file>
+      <label for=image>Picture</label>
+      <input id=image type=file name=image>
+    </div>
+    {% if user.profile.has_image %}
+    <img src={{ user.profile.image_url }} alt="My picture">
+    <div class=checkbox>
+      <label for=delete>
+        <input type=checkbox name=delete value=1>
+        Delete this picture
+      </label>
+    </div>
+    {% endif %}
+
+    <ul class=social-networks>
+      {{ social_field('twitter') }}
+      {{ social_field('facebook') }}
+      {{ social_field('instagram') }}
+      {{ social_field('medium') }}
+      {{ social_field('flickr') }}
+      {{ social_field('pinterest') }}
+    </ul>
+
+    <div class=text>
+      <label for=name>Full name</label>
+      <input type=text id=name name=name value="{{ user.profile.name }}" required>
+    </div>
+    <div class=url>
+      <label for=website>Website</label>
+      <input type=url id=website name=website value="{{ user.profile.website }}">
+    </div>
+    <div class=textarea>
+      <label for=about>Bio</label>
+      <textarea id=about name=about>{{ user.profile.about }}</textarea>
+    </div>
+    <input type=submit value="Save this profile">
+  </form>
+</section>
+
+<section>
+  <h2>Contributions</h2>
+  {% for article in articles %}
+    {% include "articles/_card.html" %}
+  {% endfor %}
+</section>
+{% endblock %}

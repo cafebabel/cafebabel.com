@@ -1,0 +1,15 @@
+{% for article in articles %}
+<article>
+  {% if article.is_published %}
+  <a href={{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}>
+  {% else %}
+  <a href={{ url_for('drafts.detail', draft_id=article.id) }}>
+  {% endif %}
+    {% if article.has_image %}
+    <img src={{ article.image_url }} alt="Image for {{ article.title }}">
+    {% endif %}
+    <h3>{{ article.title }}</h3>
+    <p>Article in {{ article.language }}</p>
+  </a>
+</article>
+{% endfor %}
