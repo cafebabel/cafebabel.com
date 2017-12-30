@@ -8,6 +8,12 @@ from ..articles.models import Article
 from .utils import login
 
 
+def test_create_draft_requires_authentication(client):
+    response = client.get('/article/draft/new/')
+    assert response.status_code == HTTPStatus.FOUND
+    assert '/login' in response.headers.get('Location')
+
+
 def test_create_draft_should_display_form(client, editor):
     login(client, editor.email, 'secret')
     response = client.get('/article/draft/new/')
