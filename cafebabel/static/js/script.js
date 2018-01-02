@@ -55,12 +55,13 @@ function activateInput(input) {
   const parent = input.parentElement
   parent.classList.add('active', 'completed')
 }
+
 function deactivateInput(input) {
   const parent = input.parentElement
   parent.classList.remove('active', 'completed')
 }
 
-/* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/38269071 comm ben */
+/* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
 const autofillContent = `"${String.fromCharCode(0xFEFF)}"`
 function checkAutofill(input) {
   if (!input.value) {
