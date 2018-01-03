@@ -1,5 +1,4 @@
 from flask import Blueprint, flash, redirect, render_template, request
-from flask_login import login_required
 
 from ...core.helpers import editor_required
 from ...users.models import User
@@ -10,14 +9,12 @@ drafts = Blueprint('drafts', __name__)
 
 @drafts.route('/')
 @editor_required
-@login_required
 def list():
     articles = Article.objects(status='draft')
     return render_template('articles/drafts/list.html', articles=articles)
 
 
 @drafts.route('/new/', methods=['get', 'post'])
-@login_required
 @editor_required
 def create():
     if request.method == 'POST':

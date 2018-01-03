@@ -177,6 +177,13 @@ def test_delete_article_regular_user_should_return_403(client, user, article):
     assert Article.objects.all().count() == 1
 
 
+def test_delete_article_no_user_should_redirect(client, user, article):
+    response = client.post(f'/article/{article.id}/delete/')
+    assert response.status_code == HTTPStatus.FOUND
+    assert '/login' in response.headers.get('Location')
+    assert Article.objects.all().count() == 1
+
+
 def test_delete_incorrect_id_should_return_404(client, editor, article):
     login(client, editor.email, 'secret')
     response = client.post(f'/article/{article.id}foo/delete/')

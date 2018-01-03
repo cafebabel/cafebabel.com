@@ -2,7 +2,6 @@ from http import HTTPStatus
 
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
-from flask_login import fresh_login_required, login_required
 
 from ..core.helpers import editor_required
 from ..users.models import User
@@ -40,7 +39,6 @@ def detail(slug, article_id):
 
 @articles.route(
     '/<regex("\w{24}"):article_id>/edit/', methods=['get', 'post'])
-@login_required
 @editor_required
 def edit(article_id):
     article = Article.objects.get_or_404(id=article_id, status='published')
@@ -57,8 +55,7 @@ def edit(article_id):
 
 
 @articles.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
-@fresh_login_required
-@editor_required
+@editor_required(fresh=True)
 def delete(article_id):
     article = Article.objects.get_or_404(id=article_id)
     article.delete()
