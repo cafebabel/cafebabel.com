@@ -98,6 +98,7 @@ def register_template_filters(app):
     app.add_template_filter(helpers.to_json_filter, 'to_json')
     app.add_template_filter(helpers.markdown, 'markdown')
     app.add_template_filter(helpers.reading_time, 'reading_time')
+    app.add_template_filter(helpers.obfuscate_email, 'obfuscate_email')
 
 
 def register_context_processors(app):

@@ -11,6 +11,10 @@ from flask_login import current_user, fresh_login_required, login_required
 from jinja2.filters import do_wordcount
 
 
+def obfuscate_email(value):
+    return value.replace('.', '&#46;').replace('a', '&#x61;')
+
+
 def slugify(value):
     value = (unicodedata.normalize('NFKD', str(value))
              .encode('ascii', 'ignore').decode('ascii'))
