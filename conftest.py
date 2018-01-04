@@ -48,8 +48,13 @@ def user():
 
 
 @pytest.fixture
-def editor(user):
+def editor():
     editor_role = Role.objects.get(name='editor')
+    user = User(email='editor@example.com', password='secret')
+    user.profile = UserProfile()
+    user.save()
+    with test_app.app_context():
+        confirm_user(user)
     test_app.user_datastore.add_role_to_user(user, editor_role)
     return user
 

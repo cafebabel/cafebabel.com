@@ -43,6 +43,12 @@
       <label for=about>Bio</label>
       <textarea id=about name=about>{{ user.profile.about or '' }}</textarea>
     </div>
+    {% if current_user.has_role('editor') %}
+    <div class=checkbox>
+      <label for=editor>Editor role</label>
+      <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor') %}checked{% endif %}>
+    </div>
+    {% endif %}
     <input type=submit value="Save this profile">
   </form>
 </section>

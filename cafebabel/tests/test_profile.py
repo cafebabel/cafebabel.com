@@ -1,4 +1,6 @@
+from flask import current_app
 from flask_security.confirmable import confirm_user
+from http import HTTPStatus
 
 from .utils import login
 from ..users.models import User
@@ -14,7 +16,7 @@ def test_confirm_user_creates_default_profile(app):
 
 def test_user_profile_has_list_of_published_articles_no_draft(client, article):
     response = client.get(f'/profile/{article.author.id}/')
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert article.title not in response
 
 
@@ -23,6 +25,42 @@ def test_author_profile_has_list_of_published_articles_and_drafts(
     login(client, user.email, 'secret')
     published_article.modify(author=user)
     response = client.get(f'/profile/', follow_redirects=True)
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert article.title in response
     assert published_article.title in response
+
+
+def test_editor_can_promote_user_as_editor(client, user, editor):
+    login(client, editor.email, 'secret')
+    response = client.get(f'/profile/{user.id}/edit/')
+    assert response.status_code == HTTPStatus.OK
+    assert not user.has_role('editor')
+    assert 'name=editor' in response
+    response = client.post(f'/profile/{user.id}/edit/', data={
+        'editor': 'on',
+    })
+    user.reload()
+    assert user.has_role('editor')
+
+
+def test_editor_can_remove_editor_role(client, user, editor):
+    login(client, editor.email, 'secret')
+    current_app.user_datastore.add_role_to_user(user, 'editor')
+    response = client.post(f'/profile/{user.id}/edit/', data={
+        'editor': '',
+    })
+    user.reload()
+    assert not user.has_role('editor')
+
+
+def test_user_cannot_promote_as_editor(client, user):
+    login(client, user.email, 'secret')
+    response = client.get(f'/profile/{user.id}/edit/')
+    assert response.status_code == HTTPStatus.OK
+    assert not user.has_role('editor')
+    assert 'name=editor' not in response
+    response = client.post(f'/profile/{user.id}/edit/', data={
+        'editor': 'on',
+    })
+    user.reload()
+    assert not user.has_role('editor')
