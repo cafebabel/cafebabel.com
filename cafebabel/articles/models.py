@@ -62,9 +62,15 @@ class Article(db.Document, UploadableImageMixin):
         given that it performs one query per language.
         TODO: turn into a cacheable list of translations when necessary.
         """
+        return bool(self.get_translation(language))
+
+    def get_translation(self, language):
         from .translations.models import Translation  # NOQA: circular :/
-        return bool(Translation.objects
-                    .filter(original_article=self, language=language).count())
+        try:
+            return (Translation.objects
+                    .get(original_article=self, language=language))
+        except Translation.DoesNotExist:
+            return None
 
     @classmethod
     def update_publication_date(cls, sender, document, **kwargs):
