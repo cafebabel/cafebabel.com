@@ -1,5 +1,5 @@
 from flask import (Blueprint, flash, render_template, redirect, url_for,
-                   request, abort)
+                   request, abort, current_app)
 from flask_login import login_required, current_user
 
 from ..articles.models import Article
@@ -18,7 +18,7 @@ def my_profile():
 @users.route('/<id>/edit/', methods=['get', 'post'])
 def edit(id):
     user = User.objects.get_or_404(id=id)
-    if not (user.is_me() or user.has_role('editor')):
+    if not (user.is_me() or current_user.has_role('editor')):
         abort(401, 'You cannot edit this profile.')
     if request.method == 'POST':
         fields = ['name', 'website', 'about']
@@ -27,6 +27,14 @@ def edit(id):
         user.profile.socials = {k.split('-')[1]: v
                                 for k, v in request.form.items()
                                 if k.startswith('socials-')}
+        # Editor role
+        if current_user.has_role('editor'):
+            if request.form.get('editor'):
+                current_app.user_datastore.add_role_to_user(user, 'editor')
+            else:
+                current_app.user_datastore.remove_role_from_user(user,
+                                                                 'editor')
+        # Image upload
         image = request.files.get('image')
         if request.form.get('delete'):
             user.profile.delete_image()
