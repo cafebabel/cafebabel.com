@@ -98,6 +98,7 @@ def register_template_filters(app):
     app.add_template_filter(helpers.to_json_filter, 'to_json')
     app.add_template_filter(helpers.markdown, 'markdown')
     app.add_template_filter(helpers.reading_time, 'reading_time')
+    app.add_template_filter(helpers.obfuscate_email, 'obfuscate_email')
 
 
 def register_context_processors(app):
@@ -107,7 +108,6 @@ def register_context_processors(app):
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories=lambda: app.config.get('CATEGORIES', []),
-            editor_emails=app.config.get('EDITOR_EMAILS'),
             article_image_url=(
                 lambda a: f'{app.config.get("ARTICLES_IMAGES_URL")}/{a.id}')
         )

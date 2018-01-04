@@ -3,6 +3,7 @@ from flask import (Blueprint, current_app, flash, redirect, render_template,
 from flask_mail import Message
 
 from ... import mail
+from ...core.helpers import obfuscate_email
 
 proposals = Blueprint('proposals', __name__)
 
@@ -35,4 +36,12 @@ def create():
         flash('Your proposal was successfully sent.', 'success')
         return redirect(url_for('cores.home'))
 
-    return render_template('articles/proposals/create.html')
+    editor_emails = {
+        lang: obfuscate_email(email)
+        for lang, email in current_app.config['EDITOR_EMAILS'].items()}
+
+    return render_template(
+        'articles/proposals/create.html',
+        EDITORS_EMAIL_DEFAULT=current_app.config['EDITORS_EMAIL_DEFAULT'],
+        editor_emails=editor_emails
+    )

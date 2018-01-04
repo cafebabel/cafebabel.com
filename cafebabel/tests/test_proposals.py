@@ -9,6 +9,13 @@ def test_proposal_display_form(app, client):
     assert '<form action=. method=post>' in response
 
 
+def test_proposal_display_emails(app, client):
+    response = client.get('/article/proposal/new/')
+    assert response.status_code == 200
+    assert 'href=m&#x61;ilto:editors%40c&#x61;feb&#x61;bel&#46;com' in response
+    assert '"fr": "red&#x61;ction@c&#x61;feb&#x61;bel&#46;com"' in response
+
+
 def test_proposal_send_email(app, client):
     mail.init_app(app)  # Re-load using test configuration.
     with mail.record_messages() as outbox:
