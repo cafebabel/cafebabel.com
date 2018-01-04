@@ -30,6 +30,18 @@ def test_translation_creation_should_display_form(app, client, user, article):
     assert '<textarea id=body name=body required></textarea>' in response
 
 
+def test_translation_creation_should_limit_languages(app, client, user,
+                                                     translation):
+    login(client, user.email, 'secret')
+    response = client.get(f'/article/draft/{translation.original_article.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert ('href=/article/translation/new/?lang='
+            f'{app.config["LANGUAGES"][2][0]}' in response)
+    assert (f'href=/article/translation/new/?lang={translation.language}'
+            not in response)
+    assert f'value={translation.original_article.language}' not in response
+
+
 def test_translation_creation_requires_login(app, client, article):
     language = app.config['LANGUAGES'][1][0]
     response = client.get(
@@ -87,7 +99,8 @@ def test_translation_creation_already_existing(app, client, user, article):
     }
     response = client.post(f'/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert 'A translation already exists.' in response
+    assert ('A translation refering to the same article with this language '
+            'already exists.' in response)
 
 
 def test_translation_creation_same_as_article(app, client, user, article):
