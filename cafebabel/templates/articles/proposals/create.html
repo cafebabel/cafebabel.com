@@ -57,13 +57,13 @@
 
     <button type=submit>Suggest this article</button>
   </form>
-  <a class="button proposal-email" href=m&#x61;ilto:{{config.EDITORS_EMAIL_DEFAULT|urlencode|replace('.', '&#46;')|replace('a', '&#x61;')|safe}}>Or send your proposal by email</a>
+  <a class="button proposal-email" href=m&#x61;ilto:{{ EDITORS_EMAIL_DEFAULT|urlencode|replace('.', '&#46;')|replace('a', '&#x61;')|safe }}>Or send your proposal by email</a>
   <script>
-     const editorEmail = {{ editor_emails|to_json }}
+     const editorEmails = {{ EDITOR_EMAILS|to_json }}
      const link = document.querySelector('.proposal-email')
      document.querySelector('#field-language').addEventListener('change', (event) => {
          const selectedLanguage = event.target.value
-         link.href = `mailto:${editorEmail[selectedLanguage]}`
+         link.href = `mailto:${editorEmails[selectedLanguage]}`
      })
   </script>
 </section>

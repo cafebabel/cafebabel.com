@@ -35,4 +35,8 @@ def create():
         flash('Your proposal was successfully sent.', 'success')
         return redirect(url_for('cores.home'))
 
-    return render_template('articles/proposals/create.html')
+    return render_template(
+        'articles/proposals/create.html',
+        EDITORS_EMAIL_DEFAULT=current_app.config['EDITORS_EMAIL_DEFAULT'],
+        EDITOR_EMAILS=current_app.config['EDITOR_EMAILS']
+    )
