@@ -27,6 +27,14 @@ class Article(db.Document, UploadableImageMixin):
         'allow_inheritance': True
     }
 
+    @property
+    def translations(self):
+        if not self._translations:
+            from .translations.models import Translation  # NOQA: circular :/
+            self._translations = (Translation.objects(original_article=self)
+                                  .all())
+        return self._translations
+
     def __str__(self):
         return self.title
 

@@ -216,3 +216,8 @@ def test_translation_published_should_have_reference(client, translation):
     assert response.status_code == HTTPStatus.OK
     assert ((f'<li class=translated-language><a href='
              f'/article/title-{translation.id}/>') in response)
+
+
+def test_article_model_has_translations_property(translation):
+    article = translation.original_article
+    assert article.translations == [translation]
