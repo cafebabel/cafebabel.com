@@ -18,7 +18,7 @@ def slugify(value):
     return re.sub('[-\s]+', '-', value)
 
 
-def json_filter(value):
+def to_json_filter(value):
     return Markup(json.dumps(value))
 
 
