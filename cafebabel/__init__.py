@@ -50,7 +50,6 @@ def register_blueprints(app):
 
     app.url_map.converters['regex'] = RegexConverter
 
-    from .api.views import apis
     from .articles.views import articles
     from .articles.drafts.views import drafts
     from .articles.proposals.views import proposals
@@ -59,7 +58,6 @@ def register_blueprints(app):
     from .users.views import users
 
     app.register_blueprint(cores, url_prefix='/')
-    app.register_blueprint(apis, url_prefix='/api')
     app.register_blueprint(articles, url_prefix='/article')
     app.register_blueprint(drafts, url_prefix='/article/draft')
     app.register_blueprint(proposals, url_prefix='/article/proposal')
