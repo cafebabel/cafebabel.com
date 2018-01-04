@@ -108,7 +108,7 @@ def register_context_processors(app):
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories=lambda: app.config.get('CATEGORIES', []),
-            config=app.config,
+            editor_emails=app.config.get('EDITOR_EMAILS'),
             article_image_url=(
                 lambda a: f'{app.config.get("ARTICLES_IMAGES_URL")}/{a.id}')
         )
