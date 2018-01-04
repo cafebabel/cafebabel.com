@@ -37,7 +37,7 @@ class UploadableImageMixin:
 
     @classmethod
     def store_image(cls, sender, document, **kwargs):
-        if document._upload_image:
+        if document is not None and document._upload_image:
             document.has_image = True
             document._upload_image.save(str(document.image_path))
             document._upload_image = None
