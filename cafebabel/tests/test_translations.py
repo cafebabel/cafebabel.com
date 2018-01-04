@@ -218,6 +218,18 @@ def test_translation_published_should_have_reference(client, translation):
              f'/article/title-{translation.id}/>') in response)
 
 
-def test_article_model_has_translations_property(translation):
+def test_article_model_translations_property(translation):
     article = translation.original_article
     assert article.translations == [translation]
+
+
+def test_article_model_is_translated_in(translation):
+    article = translation.original_article
+    assert article.is_translated_in(translation.language)
+    assert not article.is_translated_in('dummy')
+
+
+def test_article_model_get_translation(translation):
+    article = translation.original_article
+    assert article.get_translation(translation.language) == translation
+    assert article.get_translation('dummy') is None

@@ -23,6 +23,8 @@ class Article(db.Document, UploadableImageMixin):
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
 
+    _translations = None
+
     meta = {
         'allow_inheritance': True
     }
@@ -31,8 +33,8 @@ class Article(db.Document, UploadableImageMixin):
     def translations(self):
         if not self._translations:
             from .translations.models import Translation  # NOQA: circular :/
-            self._translations = (Translation.objects(original_article=self)
-                                  .all())
+            self._translations = list(
+                Translation.objects(original_article=self).all())
         return self._translations
 
     def __str__(self):
@@ -65,20 +67,11 @@ class Article(db.Document, UploadableImageMixin):
         return False
 
     def is_translated_in(self, language):
-        """This implementation is quite naive and inefficient
-
-        given that it performs one query per language.
-        TODO: turn into a cacheable list of translations when necessary.
-        """
         return bool(self.get_translation(language))
 
     def get_translation(self, language):
-        from .translations.models import Translation  # NOQA: circular :/
-        try:
-            return (Translation.objects
-                    .get(original_article=self, language=language))
-        except Translation.DoesNotExist:
-            return None
+        return next((t for t in self.translations if t.language == language),
+                    None)
 
     @classmethod
     def update_publication_date(cls, sender, document, **kwargs):
