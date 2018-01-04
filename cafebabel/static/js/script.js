@@ -51,21 +51,52 @@ if (socialIcons) {
     })
 }
 
+function activateInput(input) {
+  const parent = input.parentElement
+  parent.classList.add('active', 'completed')
+}
+
+function deactivateInput(input) {
+  const parent = input.parentElement
+  parent.classList.remove('active', 'completed')
+}
+
+/* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860  */
+const autofillContent = `"${String.fromCharCode(0xFEFF)}"`
+function checkAutofill(input) {
+  if (!input.value) {
+    const style = window.getComputedStyle(input)
+    if (style.content !== autofillContent)
+      return false
+  }
+  activateInput(input)
+  return true
+}
+const input = document.querySelector('input[type=password]')
+if (!checkAutofill(input)) {
+  deactivateInput(input)
+  let interval = 0
+  const intervalId = setInterval(() => {
+    if (checkAutofill(input) || interval++ >= 20){
+      activateInput(input)
+      clearInterval(intervalId)
+    }
+  }, 100)
+}
 /* animation login fields */
 Array.from(document.querySelectorAll('.authentication-form > div > input')).forEach(input => {
-    const parent = input.parentElement
     if (input.value) {
-        parent.classList.add('active', 'completed')
+        activateInput(input)
     }
     input.addEventListener('change', () => {
-        parent.classList.add('active', 'completed')
+        activateInput(input)
     })
     input.addEventListener('focus', () => {
-        parent.classList.add('active', 'completed')
+        activateInput(input)
     })
     input.addEventListener('blur', () => {
         if (input.value) return
-        parent.classList.remove('active', 'completed')
+        deactivateInput(input)
     })
 })
 

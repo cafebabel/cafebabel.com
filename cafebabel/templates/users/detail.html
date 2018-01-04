@@ -7,9 +7,6 @@
 
 <section>
   <h2>About</h2>
-  {% if user.is_me() or current_user.has_role('editor') %}
-  <a href={{ url_for('users.edit', id=user.id) }}>Edit this profile</a>
-  {% endif %}
   {% if user.profile.has_image %}
   <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
   {% endif %}
@@ -35,6 +32,9 @@
       </p>
     </li>
   </ul>
+  {% if user.is_me() or current_user.has_role('editor') %}
+  <a class=button href={{ url_for('users.edit', id=user.id) }}>Edit this profile</a>
+  {% endif %}
 </section>
 
 <section>

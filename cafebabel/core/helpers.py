@@ -1,3 +1,4 @@
+import json
 import re
 import unicodedata
 from functools import partial, wraps
@@ -15,6 +16,10 @@ def slugify(value):
              .encode('ascii', 'ignore').decode('ascii'))
     value = re.sub('[^\w\s-]', '', value).strip().lower()
     return re.sub('[-\s]+', '-', value)
+
+
+def to_json_filter(value):
+    return Markup(json.dumps(value))
 
 
 def markdown(value):

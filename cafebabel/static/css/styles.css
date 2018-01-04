@@ -311,24 +311,19 @@ textarea:focus {
     outline: none;
     transition: border-color .3s;
 }
-input::placeholder {
-    font-family: 'vremena_grotesk', sans-serif;
-    color: #00283C;
-}
-input:focus::placeholder {
-    color:#bde513;
-}
+
 input[type=submit],
 button,
 .button {
     text-align: center;
     padding: 2rem 4rem;
-    margin-bottom: 2rem;
     cursor: pointer;
     background-color: #00283C;
     border: 0.1rem solid #00283C;
     color: #fff;
     width: 100%;
+    margin: 2rem auto;
+    max-width: 75rem;
 }
 
 input[type=submit]:hover,
@@ -445,6 +440,10 @@ button:hover,
 .authentication-form .password.completed label {
     font-size: 1.4rem;
     transform: translateY(2.5rem);
+}
+
+.authentication-form > div > input:-webkit-autofill {
+    content: '\feff'; /* https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
 }
 
 @media screen and (min-width: 750px) {
@@ -607,12 +606,16 @@ a:hover:after {
     width: 100%;
 }
 
-button a:after {
+a.button:after {
     content: none;
 }
 
 a.button {
+    display: block;
     color: #fff;
+    width: 100%;
+    margin: 2rem auto;
+    max-width: 75rem;
 }
 
 .article-page article p a:after {
@@ -988,12 +991,12 @@ button.follow.active:after {
     margin: 1rem 0;
 }
 
-.profile-page main ul:first-of-type {
+.profile-page.edit main ul:first-of-type {
     width: 24rem;
     margin: 5rem auto;
 }
 
-.profile-page main ul:first-of-type li {
+.profile-page.edit main ul:first-of-type li {
     display: inline-block;
     width: 3.5rem;
 }
@@ -1248,11 +1251,6 @@ textarea#body {
 .translate-list-page ul {
     max-width: 75rem;
     margin: 2rem auto 5rem auto;
-}
-
-.translate-list-page ul article a {
-    width: 100%;
-    margin: 2rem 0 8rem;
 }
 
 .translate-list-page ul article a:hover:after {

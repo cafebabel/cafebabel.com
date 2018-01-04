@@ -1,0 +1,18 @@
+{% macro email_field('label', 'type', 'value') %}
+    <div class=email>
+        <label for=email>{{ label }}</label>
+        <input type="{{ type }}" id=email value="{{ value }}" name="{{ type }}">
+    </div>
+{% endmacro %}
+
+{% macro select_field('select-label', 'select-label-value', 'optgroup-label', 'option-value', 'option-text') %}
+<div class=select>
+    <label for="{{ select-label }}">{{ select-label-value }}
+        <select id="{{ select-label }}" name="{{ select-label }}" required>
+            {% if optgroup_label %}<optgroup label="{{ optgroup-label }}">{% endif %}
+                <option value="{{ option-value }}">{{ option-text }}</option>
+            {% if optgroup_label %}</optgroup>{% endif %}
+        </select>
+    </label>
+</div>
+{% endmacro %}

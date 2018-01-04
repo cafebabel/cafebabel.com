@@ -91,12 +91,13 @@ def register_cli(app):
 
 
 def register_template_filters(app):
-    from cafebabel.core.helpers import slugify, markdown, reading_time
+    from cafebabel.core import helpers
 
     app.add_template_filter(quote_plus, 'quote_plus')
-    app.add_template_filter(slugify, 'slugify')
-    app.add_template_filter(markdown, 'markdown')
-    app.add_template_filter(reading_time, 'reading_time')
+    app.add_template_filter(helpers.slugify, 'slugify')
+    app.add_template_filter(helpers.to_json_filter, 'to_json')
+    app.add_template_filter(helpers.markdown, 'markdown')
+    app.add_template_filter(helpers.reading_time, 'reading_time')
 
 
 def register_context_processors(app):
@@ -106,6 +107,7 @@ def register_context_processors(app):
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories=lambda: app.config.get('CATEGORIES', []),
+            editor_emails=app.config.get('EDITOR_EMAILS'),
             article_image_url=(
                 lambda a: f'{app.config.get("ARTICLES_IMAGES_URL")}/{a.id}')
         )

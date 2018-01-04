@@ -3,7 +3,7 @@
   <a href=# class=icon-{{ name }}></a>
   <label for=social-{{ name }}>
     <span class=icon-{{ name }}></span>
-    <input type=url id=social-{{ name }} name=socials-{{ name }} value="{{ user.profile.socials.get(name) }}">
+    <input type=url id=social-{{ name }} name=socials-{{ name }} value="{{ user.profile.socials.get(name) or '' }}">
   </label>
 </li>
 {% endmacro %}

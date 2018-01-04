@@ -37,11 +37,11 @@
     </div>
     <div class=url>
       <label for=website>Website</label>
-      <input type=url id=website name=website value="{{ user.profile.website }}">
+      <input type=url id=website name=website value="{{ user.profile.website or '' }}">
     </div>
     <div class=textarea>
       <label for=about>Bio</label>
-      <textarea id=about name=about>{{ user.profile.about }}</textarea>
+      <textarea id=about name=about>{{ user.profile.about or '' }}</textarea>
     </div>
     <input type=submit value="Save this profile">
   </form>
