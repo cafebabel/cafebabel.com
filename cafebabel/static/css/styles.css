@@ -991,12 +991,12 @@ button.follow.active:after {
     margin: 1rem 0;
 }
 
-.profile-page main ul:first-of-type {
+.profile-page.edit main ul:first-of-type {
     width: 24rem;
     margin: 5rem auto;
 }
 
-.profile-page main ul:first-of-type li {
+.profile-page.edit main ul:first-of-type li {
     display: inline-block;
     width: 3.5rem;
 }
