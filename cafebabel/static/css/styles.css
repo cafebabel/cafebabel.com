@@ -969,12 +969,12 @@ button.follow.active:after {
     margin: 1rem 0;
 }
 
-.profile-page.edit main ul:first-of-type {
-    width: 24rem;
-    margin: 5rem auto;
+.profile-page main .social-networks {
+    text-align: center;
+    margin: 5rem 0;
 }
 
-.profile-page.edit main ul:first-of-type li {
+.profile-page main .social-networks li {
     display: inline-block;
     width: 3.5rem;
 }
