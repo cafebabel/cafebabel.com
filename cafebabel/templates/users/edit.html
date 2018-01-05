@@ -15,10 +15,8 @@
     {% if user.profile.has_image %}
     <img src={{ user.profile.image_url }} alt="My picture">
     <div class=checkbox>
-      <label for=delete>
-        <input type=checkbox name=delete value=1>
-        Delete this picture
-      </label>
+      <label for=delete>Delete this picture</label>
+        <input type=checkbox name=delete id=delete value=1>
     </div>
     {% endif %}
 

@@ -706,7 +706,9 @@ button.main-menu {
 }
 
 button.follow {
-    right: 1rem;
+    right: 2rem;
+    color: #00283C;
+    text-align: center;
 }
 
 button.language {
@@ -809,35 +811,11 @@ button.menu + nav a {
 }
 
 button.follow:before {
-    font-family: 'icomoon';
-    content: '\e9da';
-    font-size: 3rem;
+    content: 'Follow';
     color: #00283C;
 }
 button.follow:after {
     content: '';
-}
-
-@keyframes heartbeat {
-    0% {
-        transform: scale(1);
-    }
-    25% {
-        transform: scale(.8);
-    }
-    50% {
-        transform: scale(1);
-    }
-    75% {
-        transform: scale(.8);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-button.follow:hover {
-    animation: heartbeat 1s infinite;
 }
 
 button.follow.active:hover {
