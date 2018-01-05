@@ -33,4 +33,4 @@ install:
 	make deploy
 
 reset-db:
-	${remote} "${goto_src} && FLASK_APP=cafebabel flask initdb"
+	${remote} "${goto_src} && FLASK_APP=prod flask initdb"
