@@ -47,6 +47,9 @@
   <p>
     Published on <time>{{ article.creation_date.date() }}</time>
     by {{ article.author }}
+    {% if article.author.profile.has_image %}
+      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
+    {% endif %}
     {% if article.category %}
       in category {{ article.category }}
     {% endif %}
