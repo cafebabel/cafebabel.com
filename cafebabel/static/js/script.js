@@ -10,7 +10,6 @@ Array.from(document.querySelectorAll('button.menu')).forEach(button => {
     button.addEventListener('click', () => {
     const activeButton = document.querySelector('button.active.menu')
         if (activeButton) {
-          const follow = document.querySelector('.menu.follow')
             activeButton.classList.remove('active')
             if (activeButton !== button) {
                 button.classList.add('active')
