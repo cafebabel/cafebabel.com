@@ -37,9 +37,9 @@ def test_translation_creation_should_limit_languages(app, client, user,
     login(client, user.email, 'secret')
     response = client.get(f'/article/draft/{translation.original_article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert ('href=/article/translation/new/?lang='
+    assert ('href="/article/translation/new/?lang='
             f'{app.config["LANGUAGES"][2][0]}' in response)
-    assert (f'href=/article/translation/new/?lang={translation.language}'
+    assert (f'href="/article/translation/new/?lang={translation.language}'
             not in response)
     assert f'value={translation.original_article.language}' not in response
 
