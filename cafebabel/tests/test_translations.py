@@ -1,5 +1,7 @@
 from http import HTTPStatus
 
+import pytest
+import mongoengine
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
@@ -97,10 +99,9 @@ def test_translation_creation_already_existing(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post(f'/article/translation/new/', data=data)
+    response = client.post('/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert ('A translation refering to the same article with this language '
-            'already exists.' in response)
+    assert ('This article already exists in this language.' in response)
 
 
 def test_translation_creation_same_as_article(app, client, user, article):
@@ -111,9 +112,9 @@ def test_translation_creation_same_as_article(app, client, user, article):
         'original': article.id,
         'language': article.language
     }
-    response = client.post(f'/article/translation/new/', data=data)
+    response = client.post('/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert 'Original article in the same language.' in response
+    assert 'This article already exists in this language.' in response
 
 
 def test_translation_creation_unknown_article(app, client, user, article):
@@ -218,11 +219,6 @@ def test_translation_published_should_have_reference(client, translation):
              f'/article/title-{translation.id}/>') in response)
 
 
-def test_article_model_translations_property(translation):
-    article = translation.original_article
-    assert article.translations == [translation]
-
-
 def test_article_model_is_translated_in(translation):
     article = translation.original_article
     assert article.is_translated_in(translation.language)
@@ -233,3 +229,10 @@ def test_article_model_get_translation(translation):
     article = translation.original_article
     assert article.get_translation(translation.language) == translation
     assert article.get_translation('dummy') is None
+
+
+def test_translation_editing_language_prevents_duplicates(translation):
+    translation.language = translation.original_article.language
+    with pytest.raises(mongoengine.errors.NotUniqueError) as error:
+        translation.save()
+    assert str(error.value) == 'This article already exists in this language.'

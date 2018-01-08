@@ -29,14 +29,6 @@ class Article(db.Document, UploadableImageMixin):
         'allow_inheritance': True
     }
 
-    @property
-    def translations(self):
-        if not self._translations:
-            from .translations.models import Translation  # NOQA: circular :/
-            self._translations = list(
-                Translation.objects(original_article=self).all())
-        return self._translations
-
     def __str__(self):
         return self.title
 
@@ -70,8 +62,11 @@ class Article(db.Document, UploadableImageMixin):
         return bool(self.get_translation(language))
 
     def get_translation(self, language):
-        return next((t for t in self.translations if t.language == language),
-                    None)
+        if not self._translations:
+            from .translations.models import Translation  # NOQA: circular :/
+            translations = Translation.objects(original_article=self).all()
+            self._translations = {t.language: t for t in translations}
+        return self._translations.get(language)
 
     @classmethod
     def update_publication_date(cls, sender, document, **kwargs):

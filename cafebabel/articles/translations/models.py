@@ -39,13 +39,13 @@ class Translation(Article):
 
     @classmethod
     def check_duplicate(cls, sender, document, **kwargs):
-        if document.id:
-            return document
-        if Translation.objects(original_article=document.original_article,
-                               language=document.language).first():
+        first = Translation.objects(original_article=document.original_article,
+                                    language=document.language).first()
+        if ((first and first != document)
+                or document.language == document.original_article.language):
             raise errors.NotUniqueError(
-                'A translation refering to the same article with this '
-                'language already exists.')
+                'This article already exists in this language.')
+        return document
 
 
 signals.pre_save.connect(Article.update_publication_date, sender=Translation)
