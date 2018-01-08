@@ -1,5 +1,5 @@
 from flask import current_app, url_for
-from mongoengine import signals, ValidationError
+from mongoengine import signals, errors, ValidationError
 
 from ... import db
 from ...users.models import User
@@ -8,8 +8,7 @@ from ...articles.models import Article
 
 class Translation(Article):
     translator = db.ReferenceField(User, required=True)
-    original_article = db.ReferenceField(
-        'Article', required=True, unique_with='language')
+    original_article = db.ReferenceField('Article', required=True)
 
     @property
     def detail_url(self):
@@ -38,8 +37,19 @@ class Translation(Article):
         except Article.DoesNotExist:
             pass
 
+    @classmethod
+    def check_duplicate(cls, sender, document, **kwargs):
+        first = Translation.objects(original_article=document.original_article,
+                                    language=document.language).first()
+        if ((first and first != document)
+                or document.language == document.original_article.language):
+            raise errors.NotUniqueError(
+                'This article already exists in this language.')
+        return document
+
 
 signals.pre_save.connect(Article.update_publication_date, sender=Translation)
+signals.pre_save.connect(Translation.check_duplicate, sender=Translation)
 signals.pre_save.connect(Article.update_slug, sender=Translation)
 signals.post_save.connect(Article.store_image, sender=Translation)
 signals.pre_delete.connect(Article.delete_image_file, sender=Translation)
