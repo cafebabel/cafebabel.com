@@ -979,6 +979,48 @@ button.follow.active:after {
     width: 3.5rem;
 }
 
+.profile-page main .file input {
+    border-bottom: none;
+    width: 0.01rem;
+    height: 0.01rem;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.profile-page main .file input + label {
+    padding: 2rem;
+    display: inline-block;
+    color: white;
+    background-color: #00283C;
+    border: 0.1rem solid #00283C;
+    cursor: pointer;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    transition: all .3s;
+}
+
+.profile-page main .file input + label strong { /* https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
+    font-weight: 200;
+}
+
+.profile-page main .file input:focus + label,
+.profile-page main .file input + label:hover {
+    color: #00283C;
+    background-color: white;
+}
+
+.profile-page main .file input + label * {
+    pointer-events: none;
+}
+
+.profile-page main img + .checkbox {
+    margin-left: 50%;
+    margin-bottom: 2rem;
+    transform: translateX(-50%);
+}
+
 .profile-page [class^="icon-"],
 .profile-page [class*=" icon-"] {
     font-size: 3rem;
