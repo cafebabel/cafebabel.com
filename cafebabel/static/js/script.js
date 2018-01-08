@@ -10,6 +10,7 @@ Array.from(document.querySelectorAll('button.menu')).forEach(button => {
     button.addEventListener('click', () => {
     const activeButton = document.querySelector('button.active.menu')
         if (activeButton) {
+          const follow = document.querySelector('.menu.follow')
             activeButton.classList.remove('active')
             if (activeButton !== button) {
                 button.classList.add('active')
@@ -131,11 +132,9 @@ if (articleFileInput) {
 }
 
 /* display picture file name after selection on profile edit https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
-const profileFileInput = document.querySelector('.profile-page main .file input'),
-      profileLabel	 = document.querySelector('.profile-page main .file input + label')
+const profileFileInput = document.querySelector('.profile-page main .file input')
+const profileLabel	 = document.querySelector('.profile-page main .file input + label')
 if (profileLabel) {
-  const labelVal = profileLabel.innerHTML
-
   profileFileInput.addEventListener( 'change', (event) => {
     const fileName = event.target.value.split( '\\' ).pop()
     profileLabel.innerHTML = fileName

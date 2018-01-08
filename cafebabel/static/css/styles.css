@@ -810,12 +810,13 @@ button.menu + nav a {
     display: block;
 }
 
+button.follow:after,
 button.follow:before {
-    content: 'Follow';
-    color: #00283C;
-}
-button.follow:after {
     content: '';
+}
+
+button.follow.active {
+    color: #fff;
 }
 
 button.follow.active:hover {
