@@ -1,7 +1,9 @@
 from flask import (Blueprint, flash, render_template, redirect, url_for,
                    request, abort, current_app)
 from flask_login import login_required, current_user
+from werkzeug import exceptions
 
+from ..core.helpers import file_size_is_above
 from ..articles.models import Article
 from .models import User
 
@@ -39,6 +41,9 @@ def edit(id):
         if request.form.get('delete'):
             user.profile.delete_image()
         if image:
+            if file_size_is_above(
+                    image, current_app.config['USERS_IMAGE_MAX_LENGTH']):
+                raise exceptions.RequestEntityTooLarge()
             user.profile.attach_image(image)
         user.save()
         flash('Your profile was successfully saved.')

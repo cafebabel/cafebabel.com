@@ -53,3 +53,9 @@ def editor_required(func=None, fresh=False):
         return _login_required(decorated_view)
     else:
         return partial(editor_required, fresh=fresh)
+
+
+def file_size_is_above(file_, size):
+    blob = file_.read()
+    file_.seek(0)
+    return len(blob) > size
