@@ -209,8 +209,8 @@ def test_access_published_article_should_link_translations(client, article,
     assert ((f'<li class=translated-language><a href=/article/'
              f'title-{translation.id}/>fr</a></li>') in response)
     assert ((f'<li class=to-translate-languages>'
-             f'<a href={url_for("translations.create")}'
-             f'?lang=es&original={article.id}>Español</a></li>') in response)
+             f'<a href="{url_for("translations.create")}'
+             f'?lang=es&original={article.id}">Español</a></li>') in response)
 
 
 def test_article_should_know_its_translations(client, article, translation):
@@ -245,11 +245,11 @@ def test_article_to_translate_should_have_translation_links(
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
     response = client.get(f'/article/to-translate/?from=fr&to=en')
-    assert (f'href=/article/translation/new/'
-            f'?lang=en&original={article.id}>Translate in English</a>'
+    assert (f'href="/article/translation/new/'
+            f'?lang=en&original={article.id}">Translate in English</a>'
             in response)
-    assert (f'href=/article/translation/new/'
-            f'?lang=fr&original={article.id}>Translate in Français</a>'
+    assert (f'href="/article/translation/new/'
+            f'?lang=fr&original={article.id}">Translate in Français</a>'
             not in response)
 
 
@@ -271,8 +271,8 @@ def test_translation_to_translate_should_have_original_language(
     language = app.config['LANGUAGES'][1][0]
     translation.modify(language=language)
     response = client.get(f'/article/to-translate/?from=fr&to=es')
-    assert (f'href=/article/translation/new/'
-            f'?lang=es&original={translation.original_article.id}>'
+    assert (f'href="/article/translation/new/'
+            f'?lang=es&original={translation.original_article.id}">'
             f'Translate in Español</a>'
             in response)
 

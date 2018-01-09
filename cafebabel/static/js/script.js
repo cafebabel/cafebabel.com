@@ -102,30 +102,40 @@ Array.from(document.querySelectorAll('.authentication-form > div > input')).forE
 
 /* animation title field create article */
 Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
-    const h1 = inputh1.parentElement
-    inputh1.addEventListener('focus', () => {
-        h1.classList.add('active')
-    })
-    inputh1.addEventListener('blur', () => {
-        if (inputh1.value) return
-        h1.classList.remove('active')
-    })
+  const h1 = inputh1.parentElement
+  inputh1.addEventListener('focus', () => {
+      h1.classList.add('active')
+  })
+  inputh1.addEventListener('blur', () => {
+      if (inputh1.value) return
+      h1.classList.remove('active')
+  })
 })
 
 /* highlight file upload area on hover or dragenter */
 function addListenerMulti(element, events, fn) {
-    events.split(' ').forEach(event => element.addEventListener(event, fn, false)) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
+  events.split(' ').forEach(event => element.addEventListener(event, fn, false)) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
 }
-const fileInput = document.querySelector('.file input')
+const articleFileInput = document.querySelector('.create-article-page .file input')
 const dropArea = document.querySelector('canvas')
-if (fileInput) {
-    addListenerMulti(fileInput, 'dragenter focus click', () => {
-        dropArea.classList.add('active')
-    })
-    addListenerMulti(fileInput, 'dragleave blur drop', () => {
-        dropArea.classList.remove('active')
-    })
-    fileInput.addEventListener('change', () => {
-        document.querySelector('.file label').innerHTML(' ')
-    })
+if (articleFileInput) {
+  addListenerMulti(articleFileInput, 'dragenter focus click', () => {
+      dropArea.classList.add('active')
+  })
+  addListenerMulti(articleFileInput, 'dragleave blur drop', () => {
+      dropArea.classList.remove('active')
+  })
+  articleFileInput.addEventListener('change', () => {
+      document.querySelector('.file label').innerHTML(' ')
+  })
+}
+
+/* display picture file name after selection on profile edit https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
+const profileFileInput = document.querySelector('.profile-page main .file input')
+const profileLabel = document.querySelector('.profile-page main .file input + label')
+if (profileLabel) {
+  profileFileInput.addEventListener('change', (event) => {
+    const fileName = event.target.value.split( '\\' ).pop()
+    profileLabel.innerHTML = fileName
+  })
 }

@@ -35,6 +35,21 @@ def test_create_draft_should_generate_article(client, user, editor):
     assert '<p>Article body</p>' in response
 
 
+def test_create_draft_with_preexising_translation(client, user, editor,
+                                                  article, translation):
+    login(client, editor.email, 'secret')
+    response = client.post('/article/draft/new/', data={
+        'title': 'Test article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'author': user.id,
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    assert '<h1>Test article</h1>' in response
+    assert '<p>Article body</p>' in response
+
+
 def test_create_published_draft_should_display_article(client, user, editor):
     login(client, editor.email, 'secret')
     response = client.post('/article/draft/new/', data={

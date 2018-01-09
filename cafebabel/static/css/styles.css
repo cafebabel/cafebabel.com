@@ -706,7 +706,9 @@ button.main-menu {
 }
 
 button.follow {
-    right: 1rem;
+    right: 2rem;
+    color: #00283C;
+    text-align: center;
 }
 
 button.language {
@@ -808,36 +810,13 @@ button.menu + nav a {
     display: block;
 }
 
+button.follow:after,
 button.follow:before {
-    font-family: 'icomoon';
-    content: '\e9da';
-    font-size: 3rem;
-    color: #00283C;
-}
-button.follow:after {
     content: '';
 }
 
-@keyframes heartbeat {
-    0% {
-        transform: scale(1);
-    }
-    25% {
-        transform: scale(.8);
-    }
-    50% {
-        transform: scale(1);
-    }
-    75% {
-        transform: scale(.8);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-button.follow:hover {
-    animation: heartbeat 1s infinite;
+button.follow.active {
+    color: #fff;
 }
 
 button.follow.active:hover {
@@ -991,14 +970,56 @@ button.follow.active:after {
     margin: 1rem 0;
 }
 
-.profile-page.edit main ul:first-of-type {
-    width: 24rem;
-    margin: 5rem auto;
+.profile-page main .social-networks {
+    text-align: center;
+    margin: 5rem 0;
 }
 
-.profile-page.edit main ul:first-of-type li {
+.profile-page main .social-networks li {
     display: inline-block;
     width: 3.5rem;
+}
+
+.profile-page main .file input {
+    border-bottom: none;
+    width: 0.01rem;
+    height: 0.01rem;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.profile-page main .file input + label {
+    padding: 2rem;
+    display: inline-block;
+    color: white;
+    background-color: #00283C;
+    border: 0.1rem solid #00283C;
+    cursor: pointer;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    transition: all .3s;
+}
+
+.profile-page main .file input + label strong { /* https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
+    font-weight: 200;
+}
+
+.profile-page main .file input:focus + label,
+.profile-page main .file input + label:hover {
+    color: #00283C;
+    background-color: white;
+}
+
+.profile-page main .file input + label * {
+    pointer-events: none;
+}
+
+.profile-page main img + .checkbox {
+    margin-left: 50%;
+    margin-bottom: 2rem;
+    transform: translateX(-50%);
 }
 
 .profile-page [class^="icon-"],

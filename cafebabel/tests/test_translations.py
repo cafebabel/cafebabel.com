@@ -1,5 +1,7 @@
 from http import HTTPStatus
 
+import pytest
+import mongoengine
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
@@ -28,6 +30,18 @@ def test_translation_creation_should_display_form(app, client, user, article):
         f'/article/translation/new/?lang={language}&original={article.id}')
     assert response.status_code == HTTPStatus.OK
     assert '<textarea id=body name=body required></textarea>' in response
+
+
+def test_translation_creation_should_limit_languages(app, client, user,
+                                                     translation):
+    login(client, user.email, 'secret')
+    response = client.get(f'/article/draft/{translation.original_article.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert ('href="/article/translation/new/?lang='
+            f'{app.config["LANGUAGES"][2][0]}' in response)
+    assert (f'href="/article/translation/new/?lang={translation.language}'
+            not in response)
+    assert f'value={translation.original_article.language}' not in response
 
 
 def test_translation_creation_requires_login(app, client, article):
@@ -85,9 +99,9 @@ def test_translation_creation_already_existing(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post(f'/article/translation/new/', data=data)
+    response = client.post('/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert 'A translation already exists.' in response
+    assert ('This article already exists in this language.' in response)
 
 
 def test_translation_creation_same_as_article(app, client, user, article):
@@ -98,9 +112,9 @@ def test_translation_creation_same_as_article(app, client, user, article):
         'original': article.id,
         'language': article.language
     }
-    response = client.post(f'/article/translation/new/', data=data)
+    response = client.post('/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert 'Original article in the same language.' in response
+    assert 'This article already exists in this language.' in response
 
 
 def test_translation_creation_unknown_article(app, client, user, article):
@@ -203,3 +217,22 @@ def test_translation_published_should_have_reference(client, translation):
     assert response.status_code == HTTPStatus.OK
     assert ((f'<li class=translated-language><a href='
              f'/article/title-{translation.id}/>') in response)
+
+
+def test_article_model_is_translated_in(translation):
+    article = translation.original_article
+    assert article.is_translated_in(translation.language)
+    assert not article.is_translated_in('dummy')
+
+
+def test_article_model_get_translation(translation):
+    article = translation.original_article
+    assert article.get_translation(translation.language) == translation
+    assert article.get_translation('dummy') is None
+
+
+def test_translation_editing_language_prevents_duplicates(translation):
+    translation.language = translation.original_article.language
+    with pytest.raises(mongoengine.errors.NotUniqueError) as error:
+        translation.save()
+    assert str(error.value) == 'This article already exists in this language.'

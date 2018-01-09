@@ -1,4 +1,3 @@
-{% for article in articles %}
 <article>
   {% if article.is_published %}
   <a href={{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}>
@@ -12,4 +11,3 @@
     <p>Article in {{ article.language }}</p>
   </a>
 </article>
-{% endfor %}

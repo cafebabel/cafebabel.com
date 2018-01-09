@@ -12,7 +12,7 @@
     <h1>{{ article.title }}</h1>
 
     <p>
-      <time>Published on {{ article.creation_date.date() }}</time>
+      Published on <time>{{ article.creation_date.date() }}</time>
       — by {% if article.author.profile.has_image %}
       <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
       {% endif %}
@@ -34,14 +34,16 @@
                     <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
                 {% endfor %}
             {% endif %}
-            {% for language in get_languages() %}
-                {% if article.language != language[0] and language[0] not in translations_langs %}
+            {% for lang_code, lang_label in get_languages() %}
+                {% if article.language != lang_code and lang_code not in translations_langs %}
                     {% if article.is_translation %}
-                        {% if language[0] != article.original_article.language %}
-                            <li class=to-translate-languages><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.original_article.id }}>{{ language[1] }}</a></li>
+                        {% if lang_code != article.original_article.language %}
+                            <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.original_article.id }}">{{ lang_label }}</a></li>
                         {% endif %}
-                        {% else %}
-                            <li class=to-translate-languages><a href={{ url_for('translations.create') }}?lang={{language[0]}}&original={{ article.id }}>{{ language[1] }}</a></li>
+                    {% elif article.is_translated_in(lang_code) %}
+                        <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_label }}</a></li>
+                    {% else %}
+                        <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.id }}">{{ lang_label }}</a></li>
                     {% endif %}
                 {% endif %}
             {% endfor %}
