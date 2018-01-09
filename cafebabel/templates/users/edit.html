@@ -8,19 +8,17 @@
 <section>
   <h2>About</h2>
   <form method=post action=. enctype=multipart/form-data>
-    <div class=file>
-      <label for=image>Picture</label>
-      <input id=image type=file name=image>
-    </div>
     {% if user.profile.has_image %}
     <img src={{ user.profile.image_url }} alt="My picture">
     <div class=checkbox>
-      <label for=delete>
-        <input type=checkbox name=delete value=1>
-        Delete this picture
-      </label>
+      <label for=delete>Delete this picture</label>
+      <input type=checkbox name=delete id=delete value=1>
     </div>
     {% endif %}
+    <div class=file>
+      <input id=image type=file name=image>
+      <label for=image><strong>Choose profile picture</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
+    </div>
 
     <ul class=social-networks>
       {{ social_field('twitter') }}
