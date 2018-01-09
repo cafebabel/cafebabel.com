@@ -11,7 +11,17 @@
     {% endif %}
     <h1>{{ article.title }}</h1>
 
-    <p><time>Published on {{ article.creation_date.date() }}</time> — by {{ article.author }}<br>Reading time: {{ article.body|reading_time }} min</p>
+    <p>
+      <time>Published on {{ article.creation_date.date() }}</time>
+      — by {% if article.author.profile.has_image %}
+      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
+      {% endif %}
+      {{ article.author }}<br>
+      {% if article.category %}
+      in category {{ article.category }}
+      {% endif %}
+      <br>Reading time: {{ article.body|reading_time }} min
+    </p>
 
     <div class=article-language-selector>
         <ul>
@@ -44,16 +54,6 @@
 
     {{ article.body|markdown }}
 
-  <p>
-    Published on <time>{{ article.creation_date.date() }}</time>
-    by {{ article.author }}
-    {% if article.author.profile.has_image %}
-      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
-    {% endif %}
-    {% if article.category %}
-      in category {{ article.category }}
-    {% endif %}
-  </p>
   {% block share_nav %}
   <nav class=share>
     <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>

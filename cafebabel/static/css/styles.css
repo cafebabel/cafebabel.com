@@ -1197,6 +1197,12 @@ button.follow.active:after {
     font-size: 1.9rem;
 }
 
+.article-page article p time + img {
+    width: 8rem;
+    border-radius: 50%;
+    margin: 1rem auto 0.5rem;
+}
+
 .article-page article ul li span {
     color: #bde513;
 }
@@ -1232,6 +1238,15 @@ textarea#body {
 .share {
     width: 15rem;
     margin: 0 auto;
+}
+
+@media screen and (min-width: 750px) {
+    .article-page article p time + img {
+        width: 6rem;
+        display: inline-block;
+        margin-left: 0.5rem;
+        vertical-align: middle;
+    }
 }
 
 /* Translation list page */
