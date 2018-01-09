@@ -77,8 +77,7 @@ def test_profile_big_image_should_raise(app, client, user):
         image = BytesIO(content.read())
     data = {'image': (image, 'image-name.jpg')}
     response = client.post(f'/profile/{user.id}/edit/', data=data,
-                           content_type='multipart/form-data',
-                           follow_redirects=True)
+                           content_type='multipart/form-data')
     assert response.status_code == HTTPStatus.REQUEST_ENTITY_TOO_LARGE
     user.reload()
     assert not user.profile.has_image
