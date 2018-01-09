@@ -132,9 +132,9 @@ if (articleFileInput) {
 
 /* display picture file name after selection on profile edit https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
 const profileFileInput = document.querySelector('.profile-page main .file input')
-const profileLabel	 = document.querySelector('.profile-page main .file input + label')
+const profileLabel = document.querySelector('.profile-page main .file input + label')
 if (profileLabel) {
-  profileFileInput.addEventListener( 'change', (event) => {
+  profileFileInput.addEventListener('change', (event) => {
     const fileName = event.target.value.split( '\\' ).pop()
     profileLabel.innerHTML = fileName
   })
