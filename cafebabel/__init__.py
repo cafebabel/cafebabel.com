@@ -5,7 +5,6 @@ from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
 
-
 mail = Mail()
 db = MongoEngine()
 security = Security()
@@ -66,12 +65,17 @@ def register_blueprints(app):
 
 
 def register_cli(app):
-    from .commands import drop_collections, roles_fixtures
+    from .commands import articles_fixtures, auth_fixtures, drop_collections
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
         drop_collections()
-        roles_fixtures(app)
+        auth_fixtures(app)
+        articles_fixtures(app)
+
+    @app.cli.command(short_help='Load articles fixtures')
+    def load_articles():
+        articles_fixtures()
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():

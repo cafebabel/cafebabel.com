@@ -1,17 +1,16 @@
 import pytest
-from flask_security.confirmable import confirm_user
 
 from cafebabel import create_app
-from cafebabel.commands import drop_collections, roles_fixtures
+from cafebabel.commands import auth_fixtures, drop_collections
 from cafebabel.articles.models import Article, Tag
 from cafebabel.articles.translations.models import Translation
-from cafebabel.users.models import Role, User, UserProfile
+from cafebabel.users.models import User
 
 test_app = create_app('config.TestingConfig')
 
 
 def pytest_runtest_setup():
-    roles_fixtures(test_app)
+    auth_fixtures(test_app)
 
 
 def pytest_runtest_teardown():
@@ -33,30 +32,12 @@ def app(request):
 
 @pytest.fixture
 def user():
-    user = User(email='testy@example.com', password='secret')
-    user.profile = UserProfile()
-    user.save()
-    with test_app.app_context():
-        confirm_user(user)
-    user.reload()
-    return user
+    return User.objects.get(email='user@example.com')
 
 
 @pytest.fixture
 def editor():
-    editor_role = Role.objects.get(name='editor')
-    user = User(email='editor@example.com', password='secret')
-    user.profile = UserProfile()
-    user.save()
-    with test_app.app_context():
-        confirm_user(user)
-    test_app.user_datastore.add_role_to_user(user, editor_role)
-    return user
-
-
-@pytest.fixture
-def admin():
-    return User.objects.get(email='admin@example.com')
+    return User.objects.get(email='editor@example.com')
 
 
 @pytest.fixture

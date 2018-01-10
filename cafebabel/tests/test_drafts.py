@@ -15,14 +15,14 @@ def test_create_draft_requires_authentication(client):
 
 
 def test_create_draft_should_display_form(client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get('/article/draft/new/')
     assert response.status_code == 200
     assert '<input id=title' in response
 
 
 def test_create_draft_should_generate_article(client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
@@ -36,7 +36,7 @@ def test_create_draft_should_generate_article(client, editor):
 
 def test_create_draft_with_preexising_translation(client, editor, article,
                                                   translation):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
@@ -49,7 +49,7 @@ def test_create_draft_with_preexising_translation(client, editor, article,
 
 
 def test_create_published_draft_should_display_article(client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
@@ -64,7 +64,7 @@ def test_create_published_draft_should_display_article(client, editor):
 
 
 def test_draft_editing_should_update_content(client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     data = {
         'title': 'My article',
         'summary': 'Summary',
@@ -84,7 +84,7 @@ def test_draft_editing_should_update_content(client, editor):
 
 
 def test_draft_image_should_save_and_render(app, client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image = BytesIO(content.read())
     data = {
@@ -132,14 +132,14 @@ def test_access_published_draft_should_return_404(client, article):
 
 
 def test_editor_access_drafts_list(client, editor, article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.OK
     assert article.title in response
 
 
 def test_author_cannot_access_drafts_list(client, user):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
@@ -147,7 +147,7 @@ def test_author_cannot_access_drafts_list(client, user):
 def test_drafts_list_only_displays_drafts(client, editor, article,
                                           published_article):
     published_article.modify(title='published article')
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.OK
     assert article.title in response

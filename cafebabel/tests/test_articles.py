@@ -76,27 +76,27 @@ def test_access_old_slug_article_should_return_301(client, published_article):
 
 def test_access_article_form_regular_user_should_return_403(client, user,
                                                             article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.get(f'/article/{article.id}/edit/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
 def test_access_published_article_form_should_return_200(client, editor,
                                                          published_article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get(f'/article/{published_article.id}/edit/')
     assert response.status_code == HTTPStatus.OK
 
 
 def test_access_no_article_form_should_return_404(client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get(f'/article/foobarbazquxquuxquuzcorg/edit/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
 def test_update_published_article_should_return_200(app, client, user, editor,
                                                     published_article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     data = {
         'title': 'updated',
         'author': user.id,
@@ -113,7 +113,7 @@ def test_update_published_article_should_return_200(app, client, user, editor,
 
 def test_update_article_with_image_should_return_200(app, client, user, editor,
                                                      published_article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image_content = BytesIO(content.read())
     data = {
@@ -137,7 +137,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
 
 def test_update_article_with_user_should_return_403(client, user,
                                                     published_article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     data = {
         'title': 'updated',
         'author': user.id
@@ -150,7 +150,7 @@ def test_update_article_with_user_should_return_403(client, user,
 
 def test_update_unpublished_article_should_return_404(client, user, editor,
                                                       article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     data = {
         'title': 'updated',
         'author': user.id
@@ -162,7 +162,7 @@ def test_update_unpublished_article_should_return_404(client, user, editor,
 
 
 def test_delete_article_should_return_200(client, editor, article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post(f'/article/{article.id}/delete/',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
@@ -171,7 +171,7 @@ def test_delete_article_should_return_200(client, editor, article):
 
 
 def test_delete_article_regular_user_should_return_403(client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.FORBIDDEN
     assert Article.objects.all().count() == 1
@@ -185,7 +185,7 @@ def test_delete_article_no_user_should_redirect(client, user, article):
 
 
 def test_delete_incorrect_id_should_return_404(client, editor, article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post(f'/article/{article.id}foo/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert Article.objects.all().count() == 1
@@ -193,7 +193,7 @@ def test_delete_incorrect_id_should_return_404(client, editor, article):
 
 def test_delete_inexistent_article_should_return_404(client, editor, article):
     article.delete()
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 

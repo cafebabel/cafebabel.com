@@ -8,7 +8,7 @@ from ..users.models import User
 
 def test_confirm_user_creates_default_profile(app):
     user = User.objects.create(email='test_user@example.com',
-                               password='secret')
+                               password='password')
     with app.app_context():
         confirm_user(user)
     assert user.profile.name == user.email
@@ -22,7 +22,7 @@ def test_user_profile_has_list_of_published_articles_no_draft(client, article):
 
 def test_author_profile_has_list_of_published_articles_and_drafts(
         client, user, article, published_article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     published_article.modify(author=user)
     response = client.get(f'/profile/', follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
@@ -31,36 +31,30 @@ def test_author_profile_has_list_of_published_articles_and_drafts(
 
 
 def test_editor_can_promote_user_as_editor(client, user, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get(f'/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.OK
     assert not user.has_role('editor')
     assert 'name=editor' in response
-    response = client.post(f'/profile/{user.id}/edit/', data={
-        'editor': 'on',
-    })
+    client.post(f'/profile/{user.id}/edit/', data={'editor': 'on'})
     user.reload()
     assert user.has_role('editor')
 
 
 def test_editor_can_remove_editor_role(client, user, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     current_app.user_datastore.add_role_to_user(user, 'editor')
-    response = client.post(f'/profile/{user.id}/edit/', data={
-        'editor': '',
-    })
+    client.post(f'/profile/{user.id}/edit/', data={'editor': ''})
     user.reload()
     assert not user.has_role('editor')
 
 
 def test_user_cannot_promote_as_editor(client, user):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.get(f'/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.OK
     assert not user.has_role('editor')
     assert 'name=editor' not in response
-    response = client.post(f'/profile/{user.id}/edit/', data={
-        'editor': 'on',
-    })
+    client.post(f'/profile/{user.id}/edit/', data={'editor': 'on'})
     user.reload()
     assert not user.has_role('editor')
