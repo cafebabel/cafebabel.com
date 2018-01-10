@@ -43,7 +43,7 @@ def editor():
 @pytest.fixture
 def tag():
     return Tag.objects.create(
-        name='Wildlife',
+        name='A tag',
         summary='summary text',
         language=test_app.config['LANGUAGES'][0][0])
 
