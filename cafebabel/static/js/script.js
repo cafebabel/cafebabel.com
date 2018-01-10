@@ -128,12 +128,17 @@ profileFileInput && profileFileInput.addEventListener('change', (event) => {
   const reader = new FileReader()
   reader.readAsDataURL(image)
   reader.addEventListener('loadend', (event) => {
-    profileLabel.innerHTML = `
+    const maxSize = Math.round(reader.result.length / 1024) > 500
+    if (!maxSize) {
+      profileLabel.innerHTML = `
       <figure>
-      <img src=${reader.result} alt="Preview of your profile picture">
-      <figcaption>${fileName}</figcaption>
+        <img src=${reader.result} alt="Preview of your profile picture">
+        <figcaption>${fileName}</figcaption>
       </figure>
     `
-    sizeInfo.classList.toggle('oversized', Math.round(reader.result.length / 1024) > 500)
+    } else {
+      sizeInfo.classList.add('oversized')
+      profileFileInput.value = ''
+    }
   })
 })

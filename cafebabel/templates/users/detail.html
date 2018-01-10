@@ -9,6 +9,8 @@
   <h2>About</h2>
   {% if user.profile.has_image %}
   <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
+  {% else %}
+  <img src=/static/img/profile.svg width=200px height=200px alt="Blank profile picture">
   {% endif %}
 
   {% if user.profile.socials %}
