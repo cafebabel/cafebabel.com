@@ -286,7 +286,7 @@ def test_article_to_translate_should_have_only_other_links(
 
 
 def test_article_with_tag(app, article):
-    language = app.config['LANGUAGES'][1][0]
+    language = app.config['LANGUAGES'][0][0]
     wildlife = Tag.objects.create(name='Wildlife', language=language)
     Article.objects(id=article.id).update_one(push__tags=wildlife)
     assert Article.objects(tags__in=[wildlife]).count() == 1
@@ -295,17 +295,19 @@ def test_article_with_tag(app, article):
 
 
 def test_article_with_tag_and_summary(app, article):
-    language = app.config['LANGUAGES'][1][0]
+    language = app.config['LANGUAGES'][0][0]
     summary = 'Plans to protect wildlife are in fact plans to protect man.'
     wildlife = Tag.objects.create(
         name='Wildlife', language=language, summary=summary)
     Article.objects(id=article.id).update_one(push__tags=wildlife)
     article2 = Article.objects(tags__in=[wildlife]).first()
     assert article2.tags[0].summary == summary
+    assert wildlife.slug == 'wildlife'
+    assert str(wildlife) == 'Wildlife (en)'
 
 
 def test_article_with_tags(app, article):
-    language = app.config['LANGUAGES'][1][0]
+    language = app.config['LANGUAGES'][0][0]
     wildlife = Tag.objects.create(name='Wildlife', language=language)
     nature = Tag.objects.create(name='Nature', language=language)
     article.modify(tags=[wildlife, nature])

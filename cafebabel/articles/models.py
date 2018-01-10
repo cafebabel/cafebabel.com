@@ -17,11 +17,17 @@ class Tag(db.Document, UploadableImageMixin):
     summary = db.StringField()
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.language})'
 
     @classmethod
     def update_slug(cls, sender, document, **kwargs):
         document.slug = slugify(document.name)
+
+    def get_images_url(self):
+        return current_app.config.get('TAGS_IMAGES_URL')
+
+    def get_images_path(self):
+        return current_app.config.get('TAGS_IMAGES_PATH')
 
 
 signals.pre_save.connect(Tag.update_slug, sender=Tag)

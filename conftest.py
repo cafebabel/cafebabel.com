@@ -2,7 +2,7 @@ import pytest
 from flask_security.confirmable import confirm_user
 
 from cafebabel import create_app
-from cafebabel.articles.models import Article
+from cafebabel.articles.models import Article, Tag
 from cafebabel.articles.translations.models import Translation
 from cafebabel.users.models import Role, User, UserProfile
 
@@ -21,6 +21,7 @@ def pytest_runtest_teardown():
     Role.drop_collection()
     User.drop_collection()
     Article.drop_collection()
+    Tag.drop_collection()
 
 
 @pytest.fixture(scope='session')

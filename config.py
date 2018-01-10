@@ -59,12 +59,15 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
-    ARTICLES_IMAGES_URL = '/static/uploads/articles'
-    ARTICLES_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
-                            / 'uploads' / 'articles')
-    USERS_IMAGES_URL = '/static/uploads/users'
-    USERS_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
-                         / 'uploads' / 'users')
+    BASE_IMAGES_PATH = (
+        Path(__file__).parent / 'cafebabel' / 'static' / 'uploads')
+    BASE_IMAGES_URL = '/static/uploads/'
+    ARTICLES_IMAGES_PATH = BASE_IMAGES_PATH / 'articles'
+    ARTICLES_IMAGES_URL = f'{BASE_IMAGES_URL}articles'
+    TAGS_IMAGES_PATH = BASE_IMAGES_PATH / 'tags'
+    TAGS_IMAGES_URL = f'{BASE_IMAGES_URL}tags'
+    USERS_IMAGES_PATH = BASE_IMAGES_PATH / 'users'
+    USERS_IMAGES_URL = f'{BASE_IMAGES_URL}users'
 
 
 class DevelopmentConfig(BaseConfig):

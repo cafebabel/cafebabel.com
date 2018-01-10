@@ -71,11 +71,12 @@ def register_cli(app):
     @app.cli.command(short_help='Initialize the database')
     def initdb():
         from cafebabel.users.models import Role, User
-        from cafebabel.articles.models import Article
+        from cafebabel.articles.models import Article, Tag
         Role.drop_collection()
         User.drop_collection()
         Article.drop_collection()
-        click.echo('Roles, Users and Articles dropped.')
+        Tag.drop_collection()
+        click.echo('Roles, Users, Articles and Tags dropped.')
         Role.objects.create(name='editor')
         admin_role = Role.objects.create(name='admin')
         admin_user = app.user_datastore.create_user(
