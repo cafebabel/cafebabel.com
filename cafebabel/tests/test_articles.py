@@ -5,7 +5,7 @@ from io import BytesIO
 from flask import url_for
 from flask.helpers import get_flashed_messages
 
-from ..articles.models import Article
+from ..articles.models import Article, Tag
 from .utils import login
 
 
@@ -283,3 +283,34 @@ def test_article_to_translate_should_have_only_other_links(
     article.modify(language=language)
     response = client.get(f'/article/to-translate/?from=en&to=fr')
     assert 'Translate in ' not in response
+
+
+def test_article_with_tag(app, article):
+    language = app.config['LANGUAGES'][1][0]
+    wildlife = Tag.objects.create(name='Wildlife', language=language)
+    Article.objects(id=article.id).update_one(push__tags=wildlife)
+    assert Article.objects(tags__in=[wildlife]).count() == 1
+    Article.objects(id=article.id).update_one(pull__tags=wildlife)
+    assert Article.objects(tags__in=[wildlife]).count() == 0
+
+
+def test_article_with_tag_and_summary(app, article):
+    language = app.config['LANGUAGES'][1][0]
+    summary = 'Plans to protect wildlife are in fact plans to protect man.'
+    wildlife = Tag.objects.create(
+        name='Wildlife', language=language, summary=summary)
+    Article.objects(id=article.id).update_one(push__tags=wildlife)
+    article2 = Article.objects(tags__in=[wildlife]).first()
+    assert article2.tags[0].summary == summary
+
+
+def test_article_with_tags(app, article):
+    language = app.config['LANGUAGES'][1][0]
+    wildlife = Tag.objects.create(name='Wildlife', language=language)
+    nature = Tag.objects.create(name='Nature', language=language)
+    article.modify(tags=[wildlife, nature])
+    assert Article.objects(tags__in=[wildlife]).count() == 1
+    assert Article.objects(tags__all=[wildlife, nature]).count() == 1
+    nature.delete()
+    article.reload()
+    assert article.tags == [wildlife]

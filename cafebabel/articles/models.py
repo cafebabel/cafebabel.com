@@ -2,12 +2,31 @@ import datetime
 
 from flask import current_app, url_for
 from flask_login import current_user
-from mongoengine import signals
+from mongoengine import PULL, signals
 
 from .. import db
 from ..core.helpers import slugify
 from ..core.mixins import UploadableImageMixin
 from ..users.models import User
+
+
+class Tag(db.Document, UploadableImageMixin):
+    name = db.StringField(required=True)
+    slug = db.StringField(required=True)
+    language = db.StringField(max_length=2, required=True)
+    summary = db.StringField()
+
+    def __str__(self):
+        return self.name
+
+    @classmethod
+    def update_slug(cls, sender, document, **kwargs):
+        document.slug = slugify(document.name)
+
+
+signals.pre_save.connect(Tag.update_slug, sender=Tag)
+signals.post_save.connect(Tag.store_image, sender=Tag)
+signals.pre_delete.connect(Tag.delete_image_file, sender=Tag)
 
 
 class Article(db.Document, UploadableImageMixin):
@@ -22,6 +41,7 @@ class Article(db.Document, UploadableImageMixin):
     author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
+    tags = db.ListField(db.ReferenceField(Tag, reverse_delete_rule=PULL))
 
     _translations = None
 
