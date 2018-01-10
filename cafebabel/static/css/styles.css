@@ -1135,6 +1135,11 @@ button.follow.active:after {
     width: 0;
 }
 
+.profile-page.edit .oversized {
+  color: red;
+  font-weight: bold;
+}
+
 @media screen and (min-width: 750px) {
     .profile-page main #content {
         display: grid;

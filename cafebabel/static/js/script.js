@@ -39,8 +39,8 @@ if (socialIcons) {
   socialIcons.forEach(socialIcon => {
     socialIcon.querySelector('a').addEventListener('click', (event) => {
       event.preventDefault()
-      const SocialsClick = socialIcon.querySelector('a').contains(event.target)
-      if (SocialsClick) {
+      const socialsClick = socialIcon.querySelector('a').contains(event.target)
+      if (socialsClick) {
         socialIcons.forEach((li) => li.classList.remove('active'))
         socialIcon.classList.add('active')
         socialIcon.querySelector('input').focus()
@@ -87,31 +87,17 @@ if (!checkAutofill(input)) {
 }
 /* animation login fields */
 Array.from(document.querySelectorAll('.authentication-form > div > input')).forEach(input => {
-  if (input.value) {
-    activateInput(input)
-  }
-  input.addEventListener('change', () => {
-    activateInput(input)
-  })
-  input.addEventListener('focus', () => {
-    activateInput(input)
-  })
-  input.addEventListener('blur', () => {
-    if (input.value) return
-    deactivateInput(input)
-  })
+  input.value && activateInput(input)
+  input.addEventListener('change', () => activateInput(input))
+  input.addEventListener('focus', () => activateInput(input))
+  input.addEventListener('blur', () => input.value || deactivateInput(input))
 })
 
 /* animation title field create article */
 Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
   const h1 = inputh1.parentElement
-  inputh1.addEventListener('focus', () => {
-    h1.classList.add('active')
-  })
-  inputh1.addEventListener('blur', () => {
-    if (inputh1.value) return
-    h1.classList.remove('active')
-  })
+  inputh1.addEventListener('focus', () => h1.classList.add('active'))
+  inputh1.addEventListener('blur', () => inputh1.value || h1.classList.remove('active'))
 })
 
 /* highlight file upload area on hover or dragenter */
@@ -144,7 +130,7 @@ profileFileInput && profileFileInput.addEventListener('change', (event) => {
   reader.addEventListener('loadend', (event) => {
     profileLabel.innerHTML = `
       <figure>
-      <img src=${reader.result} alt>
+      <img src=${reader.result} alt="Preview of your profile picture">
       <figcaption>${fileName}</figcaption>
       </figure>
     `
