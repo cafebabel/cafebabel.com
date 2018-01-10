@@ -267,6 +267,10 @@ time {
     font-size: 1.4rem;
 }
 
+figure {
+    margin: 0;
+}
+
 ul {
     list-style: none;
     margin: 0;
@@ -994,7 +998,7 @@ button.follow.active:after {
     width: 20rem;
 }
 
-.profile-page main .file input {
+.profile-page main .file output + input {
     border-bottom: none;
     width: 0.01rem;
     height: 0.01rem;
@@ -1055,9 +1059,8 @@ button.follow.active:after {
     pointer-events: none;
 }
 
-.profile-page main img + .checkbox {
-    margin-left: 50%;
-    margin-bottom: 2rem;
+.profile-page main .file .checkbox {
+    margin: 5rem 0 1rem 50%;
     transform: translateX(-50%);
 }
 

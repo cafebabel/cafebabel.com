@@ -8,18 +8,23 @@
 <section>
   <h2>About</h2>
   <form method=post action=. enctype=multipart/form-data>
-    {% if user.profile.has_image %}
-    <img src={{ user.profile.image_url }} alt="My picture">
-    <div class=checkbox>
-      <label for=delete>Delete this picture</label>
-      <input type=checkbox name=delete id=delete value=1>
-    </div>
-    {% endif %}
     <div class=file>
-      <output><img src=/static/img/profile.svg width=200px height=200px></output>
+      <output>
+        {% if user.profile.has_image %}
+          <img src={{ user.profile.image_url }} alt="My picture"></output>
+        {% else %}
+          <img src=/static/img/profile.svg width=200px height=200px>
+        {% endif %}
+      </output>
       <input id=image type=file name=image>
-      <label id=test for=image><strong>Choose profile picture</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
+      <label for=image><strong>Choose profile picture</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
       <small class=size-info>500Ko maximum</small>
+      {% if user.profile.has_image %}
+        <div class=checkbox>
+          <label for=delete>Delete this picture</label>
+          <input type=checkbox name=delete id=delete value=1>
+        </div>
+      {% endif %}
     </div>
 
     <ul class=social-networks>
