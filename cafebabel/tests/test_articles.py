@@ -285,34 +285,23 @@ def test_article_to_translate_should_have_only_other_links(
     assert 'Translate in ' not in response
 
 
-def test_article_with_tag(app, article):
+def test_article_with_tag(app, tag, article):
+    Article.objects(id=article.id).update_one(push__tags=tag)
+    assert Article.objects(tags__in=[tag]).count() == 1
+    article2 = Article.objects(tags__in=[tag]).first()
+    assert article2.tags[0].summary == 'summary text'
+    assert tag.slug == 'wildlife'
+    assert str(tag) == 'Wildlife (en)'
+    Article.objects(id=article.id).update_one(pull__tags=tag)
+    assert Article.objects(tags__in=[tag]).count() == 0
+
+
+def test_article_with_tags(app, tag, article):
     language = app.config['LANGUAGES'][0][0]
-    wildlife = Tag.objects.create(name='Wildlife', language=language)
-    Article.objects(id=article.id).update_one(push__tags=wildlife)
-    assert Article.objects(tags__in=[wildlife]).count() == 1
-    Article.objects(id=article.id).update_one(pull__tags=wildlife)
-    assert Article.objects(tags__in=[wildlife]).count() == 0
-
-
-def test_article_with_tag_and_summary(app, article):
-    language = app.config['LANGUAGES'][0][0]
-    summary = 'Plans to protect wildlife are in fact plans to protect man.'
-    wildlife = Tag.objects.create(
-        name='Wildlife', language=language, summary=summary)
-    Article.objects(id=article.id).update_one(push__tags=wildlife)
-    article2 = Article.objects(tags__in=[wildlife]).first()
-    assert article2.tags[0].summary == summary
-    assert wildlife.slug == 'wildlife'
-    assert str(wildlife) == 'Wildlife (en)'
-
-
-def test_article_with_tags(app, article):
-    language = app.config['LANGUAGES'][0][0]
-    wildlife = Tag.objects.create(name='Wildlife', language=language)
     nature = Tag.objects.create(name='Nature', language=language)
-    article.modify(tags=[wildlife, nature])
-    assert Article.objects(tags__in=[wildlife]).count() == 1
-    assert Article.objects(tags__all=[wildlife, nature]).count() == 1
+    article.modify(tags=[tag, nature])
+    assert Article.objects(tags__in=[tag]).count() == 1
+    assert Article.objects(tags__all=[tag, nature]).count() == 1
     nature.delete()
     article.reload()
-    assert article.tags == [wildlife]
+    assert article.tags == [tag]

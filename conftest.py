@@ -2,6 +2,7 @@ import pytest
 from flask_security.confirmable import confirm_user
 
 from cafebabel import create_app
+from cafebabel.commands import drop_collections, roles_fixtures
 from cafebabel.articles.models import Article, Tag
 from cafebabel.articles.translations.models import Translation
 from cafebabel.users.models import Role, User, UserProfile
@@ -10,18 +11,11 @@ test_app = create_app('config.TestingConfig')
 
 
 def pytest_runtest_setup():
-    Role.objects.create(name='editor')
-    admin_role = Role.objects.create(name='admin')
-    admin_user = test_app.user_datastore.create_user(
-        email='admin@example.com', password='password')
-    test_app.user_datastore.add_role_to_user(admin_user, admin_role)
+    roles_fixtures(test_app)
 
 
 def pytest_runtest_teardown():
-    Role.drop_collection()
-    User.drop_collection()
-    Article.drop_collection()
-    Tag.drop_collection()
+    drop_collections()
 
 
 @pytest.fixture(scope='session')
@@ -63,6 +57,14 @@ def editor():
 @pytest.fixture
 def admin():
     return User.objects.get(email='admin@example.com')
+
+
+@pytest.fixture
+def tag():
+    return Tag.objects.create(
+        name='Wildlife',
+        summary='summary text',
+        language=test_app.config['LANGUAGES'][0][0])
 
 
 @pytest.fixture

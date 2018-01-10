@@ -66,23 +66,12 @@ def register_blueprints(app):
 
 
 def register_cli(app):
-    import click
+    from .commands import drop_collections, roles_fixtures
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
-        from cafebabel.users.models import Role, User
-        from cafebabel.articles.models import Article, Tag
-        Role.drop_collection()
-        User.drop_collection()
-        Article.drop_collection()
-        Tag.drop_collection()
-        click.echo('Roles, Users, Articles and Tags dropped.')
-        Role.objects.create(name='editor')
-        admin_role = Role.objects.create(name='admin')
-        admin_user = app.user_datastore.create_user(
-            email='admin@example.com', password='password')
-        app.user_datastore.add_role_to_user(admin_user, admin_role)
-        click.echo('DB intialized.')
+        drop_collections()
+        roles_fixtures(app)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():
