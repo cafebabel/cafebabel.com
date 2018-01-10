@@ -13,7 +13,7 @@
         {% if user.profile.has_image %}
           <img src={{ user.profile.image_url }} alt="My picture">
         {% else %}
-          <img src=/static/img/profile.svg width=200px height=200px alt="Blank profile picture">
+          <img src=/static/img/profile.svg alt="Default profile picture">
         {% endif %}
       </output>
       <input id=image type=file name=image>
