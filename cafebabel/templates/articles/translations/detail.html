@@ -20,7 +20,7 @@
   {{ translation.body|markdown }}
 
   <p>
-    <span>Created on <time pubdate="{{ article.creation_date.date() }}">{{ translation.original_article.creation_date.date() }}</time></span>
+    <span>Created on <time pubdate="{{ translation.original_article.creation_date.date() }}">{{ translation.original_article.creation_date.date() }}</time></span>
     — by {% if article.author.profile.has_image %}
       <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
     {% else %}
