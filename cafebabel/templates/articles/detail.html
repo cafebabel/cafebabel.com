@@ -13,6 +13,13 @@
 
     <p><time>Published on {{ article.creation_date.date() }}</time> — by {{ article.author }}<br>Reading time: {{ article.body|reading_time }} min</p>
 
+    <p>
+      Tags:
+      {% for tag in article.tags -%}
+        {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
+      {%- endfor %}
+    </p>
+
     <div class=article-language-selector>
         <ul>
             <li><span>{{ article.language }}</span></li>
