@@ -61,3 +61,15 @@ def test_profile_image_should_save_and_render(app, client, user):
     assert user.profile.has_image
     assert Path(app.config.get('USERS_IMAGES_PATH') / str(user.id)).exists()
     assert f'<img src={user.profile.image_url}' in response
+
+
+def test_profile_big_image_should_raise(app, client, user):
+    login(client, user.email, 'password')
+    with open(Path(__file__).parent / 'big-image.jpeg', 'rb') as content:
+        image = BytesIO(content.read())
+    data = {'image': (image, 'image-name.jpg')}
+    response = client.post(f'/profile/{user.id}/edit/', data=data,
+                           content_type='multipart/form-data')
+    assert response.status_code == HTTPStatus.REQUEST_ENTITY_TOO_LARGE
+    user.reload()
+    assert not user.profile.has_image

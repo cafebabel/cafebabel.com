@@ -109,8 +109,7 @@ class Article(db.Document, UploadableImageMixin):
         if current_user.has_role('editor'):
             if not self.editor:
                 data['editor'] = current_user.id
-            if data.get('author'):
-                data['author'] = User.objects.get(id=data.get('author'))
+            data['author'] = User.objects.get(id=data['author'])
         else:
             if data.get('author'):
                 del data['author']

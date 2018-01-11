@@ -68,6 +68,7 @@ class BaseConfig:
     TAGS_IMAGES_URL = f'{BASE_IMAGES_URL}tags'
     USERS_IMAGES_PATH = BASE_IMAGES_PATH / 'users'
     USERS_IMAGES_URL = f'{BASE_IMAGES_URL}users'
+    USERS_IMAGE_MAX_LENGTH = 1024 * 500  # Ko
 
 
 class DevelopmentConfig(BaseConfig):
