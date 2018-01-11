@@ -20,7 +20,7 @@
   {{ translation.body|markdown }}
 
   <p>
-    Created on <time>{{ translation.original_article.creation_date.date() }}</time> by {{ translation.author }}
+    <time pubdate="{{ article.creation_date.date() }}">Created on {{ translation.original_article.creation_date.date() }}</time> — by {{ translation.author }}
     {% if translation.category %}
       in category {{ translation.category }}
     {% endif %}

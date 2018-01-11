@@ -12,42 +12,42 @@
     <h1>{{ article.title }}</h1>
 
     <p>
-      Published on <time>{{ article.creation_date.date() }}</time>
+      <time pubdate="{{ article.creation_date.date() }}">Published on {{ article.creation_date.date() }}</time>
       — by {% if article.author.profile.has_image %}
       <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
       {% endif %}
       {{ article.author }}<br>
       {% if article.category %}
-      in category {{ article.category }}
+      in category {{ article.category }}<br>
       {% endif %}
-      <br>Reading time: {{ article.body|reading_time }} min
+      Reading time: {{ article.body|reading_time }} min
     </p>
 
     <div class=article-language-selector>
-        <ul>
-            <li><span>{{ article.language }}</span></li>
-            {% if article.is_translation %}
-                <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.language }}</a></li>
-            {% endif %}
-            {% if translations_publisheds %}
-                {% for translation in translations_publisheds %}
-                    <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
-                {% endfor %}
-            {% endif %}
-            {% for lang_code, lang_label in get_languages() %}
-                {% if article.language != lang_code and lang_code not in translations_langs %}
-                    {% if article.is_translation %}
-                        {% if lang_code != article.original_article.language %}
-                            <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.original_article.id }}">{{ lang_label }}</a></li>
-                        {% endif %}
-                    {% elif article.is_translated_in(lang_code) %}
-                        <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_label }}</a></li>
-                    {% else %}
-                        <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.id }}">{{ lang_label }}</a></li>
-                    {% endif %}
-                {% endif %}
+      <ul>
+        <li><span>{{ article.language }}</span></li>
+          {% if article.is_translation %}
+            <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.language }}</a></li>
+          {% endif %}
+          {% if translations_publisheds %}
+            {% for translation in translations_publisheds %}
+                <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
             {% endfor %}
-        </ul>
+          {% endif %}
+          {% for lang_code, lang_label in get_languages() %}
+            {% if article.language != lang_code and lang_code not in translations_langs %}
+              {% if article.is_translation %}
+                {% if lang_code != article.original_article.language %}
+                  <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.original_article.id }}">{{ lang_label }}</a></li>
+                {% endif %}
+                {% elif article.is_translated_in(lang_code) %}
+                  <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_label }}</a></li>
+                {% else %}
+                  <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.id }}">{{ lang_label }}</a></li>
+                {% endif %}
+             {% endif %}
+          {% endfor %}
+      </ul>
     </div>
 
     {% if article.summary %}
