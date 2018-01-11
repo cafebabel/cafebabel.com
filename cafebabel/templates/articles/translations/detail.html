@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
 
 {% block meta_title %}{{ translation.title }}{% endblock %}
 {% block meta_description %}{{ translation.summary }}{% endblock %}
@@ -19,12 +20,7 @@
 
   {{ translation.body|markdown }}
 
-  <p>
-    Created on <time>{{ translation.original_article.creation_date.date() }}</time> by {{ translation.author }}
-    {% if translation.category %}
-      in category {{ translation.category }}
-    {% endif %}
-  </p>
+  {{ macros.article_meta(translation.original_article) }}
 
   <p>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a> by {{ translation.translator }}.
