@@ -24,7 +24,7 @@ def test_author_profile_has_list_of_published_articles_and_drafts(
         client, user, article, published_article):
     login(client, user.email, 'password')
     published_article.modify(author=user)
-    response = client.get(f'/profile/', follow_redirects=True)
+    response = client.get('/profile/', follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert article.title in response
     assert published_article.title in response
@@ -36,7 +36,7 @@ def test_editor_can_promote_user_as_editor(client, user, editor):
     assert response.status_code == HTTPStatus.OK
     assert not user.has_role('editor')
     assert 'name=editor' in response
-    client.post(f'/profile/{user.id}/edit/', data={'editor': 'on'})
+    client.post(f'/profile/{user.id}/edit/', data={'editor': '1'})
     user.reload()
     assert user.has_role('editor')
 
@@ -55,6 +55,6 @@ def test_user_cannot_promote_as_editor(client, user):
     assert response.status_code == HTTPStatus.OK
     assert not user.has_role('editor')
     assert 'name=editor' not in response
-    client.post(f'/profile/{user.id}/edit/', data={'editor': 'on'})
+    client.post(f'/profile/{user.id}/edit/', data={'editor': '1'})
     user.reload()
     assert not user.has_role('editor')

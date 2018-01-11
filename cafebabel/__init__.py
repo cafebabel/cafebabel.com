@@ -77,7 +77,7 @@ def register_cli(app):
         relations_fixtures(app)
 
     @app.cli.command(short_help='Load articles and tags fixtures')
-    def load_data():
+    def load_fixtures():
         articles_fixtures(app)
         tags_fixtures(app)
         relations_fixtures(app)

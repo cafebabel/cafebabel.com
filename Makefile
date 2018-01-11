@@ -34,4 +34,4 @@ install:
 
 reset-db:
 	${remote} "${goto_src} && FLASK_APP=prod flask initdb"
-	${remote} "${goto_src} && FLASK_APP=prod flask load_data"
+	${remote} "${goto_src} && FLASK_APP=prod flask load_fixtures"

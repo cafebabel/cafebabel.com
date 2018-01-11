@@ -3,7 +3,7 @@ def login(client, email, password):
         email=email,
         password=password
     ), follow_redirects=True)
-    assert b'<form action="/login"' not in response.data, response.data
+    assert b'action="/login"' not in response.data, response.data
     return response
 
 

@@ -291,21 +291,8 @@ def test_article_with_tag(app, tag, article):
     assert Article.objects(tags__in=[tag]).count() == 1
     article2 = Article.objects(tags__in=[tag]).first()
     assert article2.tags[0].summary == 'summary text'
-    assert tag.slug == 'a-tag'
-    assert str(tag) == 'A tag (en)'
     Article.objects(id=article.id).update_one(pull__tags=tag)
     assert Article.objects(tags__in=[tag]).count() == 0
-
-
-def test_article_with_tags(app, tag, article):
-    language = app.config['LANGUAGES'][0][0]
-    tag2 = Tag.objects.create(name='Tag two', language=language)
-    article.modify(tags=[tag, tag2])
-    assert Article.objects(tags__in=[tag]).count() == 1
-    assert Article.objects(tags__all=[tag, tag2]).count() == 1
-    tag2.delete()
-    article.reload()
-    assert article.tags == [tag]
 
 
 def test_article_detail_contains_tags(client, app, tag, published_article):

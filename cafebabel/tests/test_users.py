@@ -27,7 +27,7 @@ def test_authenticated_user_can_access_login_required_page(client, user):
     login(client, user.email, 'password')
     response = client.get('/profile/', follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert b'<h1>user@example.com\'s profile</h1>' in response.data
+    assert b"<h1>user@example.com's profile</h1>" in response.data
 
 
 def test_visitor_cannot_edit_user_profile(client, user):
