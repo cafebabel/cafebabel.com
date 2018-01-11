@@ -764,6 +764,12 @@ button.menu + nav {
     transition: all .3s;
 }
 
+@media screen and (min-width: 750px) {
+    button.menu + nav {
+        font-size: 6vh;
+    }
+}
+
 button.menu + nav ul {
     position: absolute;
     top: 50%;
