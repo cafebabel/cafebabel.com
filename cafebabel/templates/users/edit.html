@@ -1,7 +1,7 @@
 {% from "users/macros.html" import social_field, default_profile_picture with context %}
 {% extends 'base.html' %}
 
-{% block specific_js %}<script src=/static/js/edit-profile.js></script>{% endblock %}
+{% block specific_js %}<script src={{ url_for('static', filename='js/edit-profile.js') }}></script>{% endblock %}
 {% block body_class %}profile-page edit{% endblock %}
 {% block body %}
 <h1>{{ user }}'s profile</h1>
