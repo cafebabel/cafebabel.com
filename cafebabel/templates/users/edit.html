@@ -1,6 +1,7 @@
 {% from "users/profile-macros.html" import social_field with context %}
 {% extends 'base.html' %}
 
+{% block specific_js %}<script src=/static/js/edit-profile.js></script>{% endblock %}
 {% block body_class %}profile-page edit{% endblock %}
 {% block body %}
 <h1>{{ user }}'s profile</h1>
@@ -64,5 +65,4 @@
     {% include "articles/_card.html" %}
   {% endfor %}
 </section>
-<script src=/static/js/edit-profile.js></script> <!-- dunno where to put it elsewhere, it's not clean but we have nother better right now -->
 {% endblock %}
