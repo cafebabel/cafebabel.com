@@ -21,40 +21,43 @@ def test_create_draft_should_display_form(client, editor):
     assert '<input id=title' in response
 
 
-def test_create_draft_should_generate_article(client, editor):
+def test_create_draft_should_generate_article(client, user, editor):
     login(client, editor.email, 'secret')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
         'language': 'en',
+        'author': user.id
     }, follow_redirects=True)
     assert response.status_code == 200
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
 
 
-def test_create_draft_with_preexising_translation(client, editor, article,
-                                                  translation):
+def test_create_draft_with_preexising_translation(client, user, editor,
+                                                  article, translation):
     login(client, editor.email, 'secret')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
         'language': 'en',
+        'author': user.id,
     }, follow_redirects=True)
     assert response.status_code == 200
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
 
 
-def test_create_published_draft_should_display_article(client, editor):
+def test_create_published_draft_should_display_article(client, user, editor):
     login(client, editor.email, 'secret')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
         'language': 'en',
+        'author': user.id,
         'status': 'published',
     }, follow_redirects=True)
     assert response.status_code == 200
@@ -63,13 +66,14 @@ def test_create_published_draft_should_display_article(client, editor):
     assert '<p>Article body</p>' in response
 
 
-def test_draft_editing_should_update_content(client, editor):
+def test_draft_editing_should_update_content(client, user, editor):
     login(client, editor.email, 'secret')
     data = {
         'title': 'My article',
         'summary': 'Summary',
         'body': 'Article body',
         'language': 'en',
+        'author': user.id
     }
     draft = Article.objects.create(**data)
     updated_data = data.copy()
@@ -83,7 +87,7 @@ def test_draft_editing_should_update_content(client, editor):
     assert updated_draft.title == 'My article'
 
 
-def test_draft_image_should_save_and_render(app, client, editor):
+def test_draft_image_should_save_and_render(app, client, user, editor):
     login(client, editor.email, 'secret')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image = BytesIO(content.read())
@@ -92,6 +96,7 @@ def test_draft_image_should_save_and_render(app, client, editor):
         'summary': 'Summary',
         'body': 'Article body',
         'language': 'en',
+        'author': user.id,
         'image': (image, 'image-name.jpg'),
     }
     response = client.post('/article/draft/new/', data=data,

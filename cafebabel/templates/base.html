@@ -4,9 +4,8 @@
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
 <meta name=description content="{% block meta_description %}{% endblock %}">
 
-<link rel=stylesheet href=/static/css/styles.css>
-<link rel=stylesheet href=/static/css/edit.css>
-<script src=/static/js/utils.js></script>
+<link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
+<script src={{ url_for('static', filename='js/utils.js') }}></script>
 
 <body class="{% block body_class %}{% endblock %}">
 
@@ -70,7 +69,7 @@
 
 <main>
   <a href={{ url_for('cores.home') }} class=logo>
-    <img src=/static/img/logo-cafebabel.svg alt="logo Cafébabel">
+    <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
   </a>
   <div id=content>
 {% block body %}{% endblock %}
@@ -81,8 +80,9 @@
   <p>© Cafébabel — 2017</p>
 </footer>
 <div id=preloader>
-    <img src=/static/img/preloader-A.gif alt="preloader coffee grinder">
+    <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="preloader coffee grinder">
 </div>
 
-<script src=/static/js/script.js></script>
-<script src=/static/js/noise.js></script>
+<script src={{ url_for('static', filename='js/script.js') }}></script>
+<script src={{ url_for('static', filename='js/noise.js') }}></script>
+{% block extra_js %}{% endblock %}

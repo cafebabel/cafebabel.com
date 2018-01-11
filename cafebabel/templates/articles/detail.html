@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
 
 {% block meta_title %}{{ article.title }}{% endblock %}
 {% block meta_description %}{{ article.summary }}{% endblock %}
@@ -11,33 +12,33 @@
     {% endif %}
     <h1>{{ article.title }}</h1>
 
-    <p><time>Published on {{ article.creation_date.date() }}</time> — by {{ article.author }}<br>Reading time: {{ article.body|reading_time }} min</p>
+    {{ macros.article_meta(article) }}
 
     <div class=article-language-selector>
-        <ul>
-            <li><span>{{ article.language }}</span></li>
-            {% if article.is_translation %}
-                <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.language }}</a></li>
-            {% endif %}
-            {% if translations_publisheds %}
-                {% for translation in translations_publisheds %}
-                    <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
-                {% endfor %}
-            {% endif %}
-            {% for lang_code, lang_label in get_languages() %}
-                {% if article.language != lang_code and lang_code not in translations_langs %}
-                    {% if article.is_translation %}
-                        {% if lang_code != article.original_article.language %}
-                            <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.original_article.id }}">{{ lang_label }}</a></li>
-                        {% endif %}
-                    {% elif article.is_translated_in(lang_code) %}
-                        <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_label }}</a></li>
-                    {% else %}
-                        <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.id }}">{{ lang_label }}</a></li>
-                    {% endif %}
-                {% endif %}
+      <ul>
+        <li><span>{{ article.language }}</span></li>
+          {% if article.is_translation %}
+            <li class=original-language>Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.language }}</a></li>
+          {% endif %}
+          {% if translations_publisheds %}
+            {% for translation in translations_publisheds %}
+                <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
             {% endfor %}
-        </ul>
+          {% endif %}
+          {% for lang_code, lang_label in get_languages() %}
+            {% if article.language != lang_code and lang_code not in translations_langs %}
+              {% if article.is_translation %}
+                {% if lang_code != article.original_article.language %}
+                  <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.original_article.id }}">{{ lang_label }}</a></li>
+                {% endif %}
+                {% elif article.is_translated_in(lang_code) %}
+                  <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_label }}</a></li>
+                {% else %}
+                  <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.id }}">{{ lang_label }}</a></li>
+                {% endif %}
+             {% endif %}
+          {% endfor %}
+      </ul>
     </div>
 
     {% if article.summary %}
@@ -46,13 +47,6 @@
 
     {{ article.body|markdown }}
 
-  <p>
-    Published on <time>{{ article.creation_date.date() }}</time>
-    by {{ article.author }}
-    {% if article.category %}
-      in category {{ article.category }}
-    {% endif %}
-  </p>
   {% block share_nav %}
   <nav class=share>
     <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>

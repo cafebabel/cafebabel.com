@@ -262,9 +262,8 @@ blockquote {
     font-style: normal;
 }
 
-time {
-    font-weight: 100;
-    font-size: 1.4rem;
+figure {
+    margin: 0;
 }
 
 ul {
@@ -765,6 +764,12 @@ button.menu + nav {
     transition: all .3s;
 }
 
+@media screen and (min-width: 750px) {
+    button.menu + nav {
+        font-size: 6vh;
+    }
+}
+
 button.menu + nav ul {
     position: absolute;
     top: 50%;
@@ -857,7 +862,7 @@ button.follow.active:after {
 }
 
 .create-article-page .file label:before {
-    font-family: icomoon;
+    font-family: 'icomoon';
     content: '\e927';
     display: block;
     font-size: 4rem;
@@ -957,6 +962,10 @@ button.follow.active:after {
     margin: 0.2rem auto;
 }
 
+.file figcaption {
+    text-align: center;
+}
+
 .profile-page main section:first-of-type h3 {
     font-weight: 100;
     font-size: 1.4rem;
@@ -980,7 +989,17 @@ button.follow.active:after {
     width: 3.5rem;
 }
 
-.profile-page main .file input {
+.profile-page main .file {
+    position: relative;
+    margin-bottom: 7rem;
+}
+
+.profile-page main .file img {
+    height: 20rem;
+    width: 20rem;
+}
+
+.profile-page main .file output + input {
     border-bottom: none;
     width: 0.01rem;
     height: 0.01rem;
@@ -991,34 +1010,58 @@ button.follow.active:after {
 }
 
 .profile-page main .file input + label {
-    padding: 2rem;
     display: inline-block;
-    color: white;
-    background-color: #00283C;
-    border: 0.1rem solid #00283C;
     cursor: pointer;
     margin-left: 50%;
     transform: translateX(-50%);
     transition: all .3s;
+    position: absolute;
+    top: 0;
+    width: 20rem;
+    height: 20rem;
+    border-radius: 45%; /* with 50% we can see the image in the background on hover. Seems to be linked to the label dimensions */
+
 }
 
 .profile-page main .file input + label strong { /* https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
     font-weight: 200;
+    text-align: center;
+    display: block;
+    padding: 1.2rem;
+    margin-top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all .3s;
 }
 
-.profile-page main .file input:focus + label,
+.profile-page main .file input + label strong:before {
+    font-family: 'icomoon';
+    content: '\e927';
+    display: block;
+    font-size: 5rem;
+}
+
+.profile-page main .file small {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    margin-top: 1rem;
+}
+
 .profile-page main .file input + label:hover {
-    color: #00283C;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.profile-page main .file input + label:hover strong {
+    opacity: 1;
 }
 
 .profile-page main .file input + label * {
     pointer-events: none;
 }
 
-.profile-page main img + .checkbox {
-    margin-left: 50%;
-    margin-bottom: 2rem;
+.profile-page main .file .checkbox {
+    margin: 5rem 0 1rem 50%;
     transform: translateX(-50%);
 }
 
@@ -1135,6 +1178,11 @@ button.follow.active:after {
     width: 0;
 }
 
+.profile-page.edit .oversized {
+  color: red;
+  font-weight: bold;
+}
+
 @media screen and (min-width: 750px) {
     .profile-page main #content {
         display: grid;
@@ -1212,10 +1260,16 @@ button.follow.active:after {
     text-align: center;
 }
 
-.article-page article h1 + p time {
+.article-page article h1 + p span {
     font-style: italic;
     font-family: serif;
     font-size: 1.9rem;
+}
+
+.article-page article p span + img {
+    width: 8rem;
+    border-radius: 50%;
+    margin: 1rem auto 0.5rem;
 }
 
 .article-page article ul li span {
@@ -1253,6 +1307,15 @@ textarea#body {
 .share {
     width: 15rem;
     margin: 0 auto;
+}
+
+@media screen and (min-width: 750px) {
+    .article-page article p time + img {
+        width: 6rem;
+        display: inline-block;
+        margin-left: 0.5rem;
+        vertical-align: middle;
+    }
 }
 
 /* Translation list page */
