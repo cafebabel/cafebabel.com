@@ -36,7 +36,7 @@ def test_published_article_should_display_content(client, published_article,
             in response)
     assert f'<p class=summary>{published_article.summary}</p>' in response
     assert f'<p>{published_article.body}</p>' in response
-    assert f'<time>{published_article.creation_date.date()}</time>' in response
+    assert f'<time pubdate="{published_article.creation_date.date()}">{published_article.creation_date.date()}</time>' in response
     assert f'<span>{published_article.language}</span>' in response
     assert f'{published_article.author.profile.name}' in response
     assert (f'href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
