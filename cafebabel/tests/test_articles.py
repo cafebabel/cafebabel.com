@@ -47,6 +47,8 @@ def test_published_article_should_display_content(client, published_article,
             f'localhost%2Farticle%2F{published_article.slug}-'
             f'{published_article.id}%2F"' in response)
     assert '1 min' in response
+    assert (f'<meta property="og:url" content="http://localhost/article/'
+            f'{published_article.slug}-{published_article.id}/">' in response)
 
 
 def test_published_article_should_render_markdown(client, published_article):
@@ -134,6 +136,8 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert published_article.has_image
     assert (Path(app.config.get('ARTICLES_IMAGES_PATH') /
                  str(published_article.id)).exists())
+    assert (f'<meta property="og:image" content="http://localhost/static/'
+            f'uploads/articles/{published_article.id}">' in response)
 
 
 def test_update_article_with_user_should_return_403(client, user,

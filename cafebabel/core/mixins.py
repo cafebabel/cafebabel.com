@@ -1,3 +1,5 @@
+from flask import url_for
+
 from .. import db
 
 
@@ -17,7 +19,15 @@ class UploadableImageMixin:
     @property
     def image_url(self):
         if self.has_image:
-            return f'{self.get_images_url()}/{self.get_id()}'
+            return url_for('static',
+                           filename=f'{self.get_images_url()}/{self.get_id()}')
+
+    @property
+    def image_full_url(self):
+        if self.has_image:
+            return url_for('static',
+                           filename=f'{self.get_images_url()}/{self.get_id()}',
+                           _external=True)
 
     @property
     def image_path(self):

@@ -59,10 +59,10 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
-    ARTICLES_IMAGES_URL = '/static/uploads/articles'
+    ARTICLES_IMAGES_URL = 'uploads/articles'
     ARTICLES_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
                             / 'uploads' / 'articles')
-    USERS_IMAGES_URL = '/static/uploads/users'
+    USERS_IMAGES_URL = 'uploads/users'
     USERS_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
                          / 'uploads' / 'users')
     USERS_IMAGE_MAX_LENGTH = 1024 * 500  # Ko
