@@ -10,7 +10,7 @@
 <meta property="og:type" content="{% block meta_type %}website{% endblock %}">
 <meta property="og:description" content="{{ self.meta_description() }}">
 <meta property="og:site_name" content="Cafébabel">
-<meta property="og:locale" content="{% block meta_language %}{% endblock %}">
+<meta property="og:locale" content="{{ current_language }}">
 <meta property="article:author" content="{% block meta_author %}{% endblock %}">
 
 <meta name="twitter:card" content="summary">

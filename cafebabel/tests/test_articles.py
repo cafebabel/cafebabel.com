@@ -24,8 +24,8 @@ def test_access_article_with_large_slug_should_return_200(client,
     assert response.status_code == HTTPStatus.OK
 
 
-def test_published_article_should_display_content(client, published_article,
-                                                  user):
+def test_published_article_should_display_content(app, client,
+                                                  published_article, user):
     published_article.author = user
     response = client.get(f'/article/{published_article.slug}-'
                           f'{published_article.id}/')
@@ -39,16 +39,17 @@ def test_published_article_should_display_content(client, published_article,
     assert (f'<time pubdate="{published_article.creation_date.date()}">'
             f'{published_article.creation_date.date()}</time>' in response)
     assert f'<span>{published_article.language}</span>' in response
-    assert f'{published_article.author.profile.name}' in response
-    assert (f'href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
+    assert published_article.author.profile.name in response
+    assert ('href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
             f'article%2F{published_article.slug}-{published_article.id}%2F'
             f'&text={published_article.title}&via=cafebabel_eng"' in response)
-    assert (f'href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
+    assert ('href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
             f'localhost%2Farticle%2F{published_article.slug}-'
             f'{published_article.id}%2F"' in response)
     assert '1 min' in response
-    assert (f'<meta property="og:url" content="http://localhost/article/'
+    assert ('<meta property="og:url" content="http://localhost/article/'
             f'{published_article.slug}-{published_article.id}/">' in response)
+    assert '<meta property="og:locale" content="en">' in response
 
 
 def test_published_article_should_render_markdown(client, published_article):

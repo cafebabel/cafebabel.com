@@ -59,6 +59,15 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
+
+    DOMAIN_LANGUAGES = {
+        'fr': 'cafebabel.fr',
+        'en': 'cafebabel.co.uk',
+        'de': 'cafebabel.de',
+        'es': 'cafebabel.es',
+        'it': 'cafebabel.it',
+    }
+
     ARTICLES_IMAGES_URL = 'uploads/articles'
     ARTICLES_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
                             / 'uploads' / 'articles')
@@ -66,6 +75,17 @@ class BaseConfig:
     USERS_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
                          / 'uploads' / 'users')
     USERS_IMAGE_MAX_LENGTH = 1024 * 500  # Ko
+
+
+class PreprodConfig(BaseConfig):
+
+    DOMAIN_LANGUAGES = {
+        'fr': 'preprod.cafebabel.fr',
+        'en': 'preprod.cafebabel.co.uk',
+        'de': 'preprod.cafebabel.de',
+        'es': 'preprod.cafebabel.es',
+        'it': 'preprod.cafebabel.it',
+    }
 
 
 class DevelopmentConfig(BaseConfig):
@@ -83,6 +103,8 @@ class DevelopmentConfig(BaseConfig):
     ]
     EXPLAIN_TEMPLATE_LOADING = False
 
+    DOMAIN_LANGUAGES = {'en': 'localhost:5000'}
+
 
 class TestingConfig(BaseConfig):
     TESTING = True
@@ -93,3 +115,5 @@ class TestingConfig(BaseConfig):
     ARTICLES_IMAGES_PATH = Path(mkdtemp())
     USERS_IMAGES_PATH = Path(mkdtemp())
     DEBUG_TB_ENABLED = False
+
+    DOMAIN_LANGUAGES = {'en': 'localhost'}
