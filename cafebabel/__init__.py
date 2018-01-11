@@ -105,7 +105,5 @@ def register_context_processors(app):
     def add_template_helpers():
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
-            get_categories=lambda: app.config.get('CATEGORIES', []),
-            article_image_url=(
-                lambda a: f'{app.config.get("ARTICLES_IMAGES_URL")}/{a.id}')
+            get_categories=lambda: app.config.get('CATEGORIES', [])
         )
