@@ -4,7 +4,7 @@ from flask_security.utils import hash_password
 from cafebabel.users.models import Role, User
 from cafebabel.articles.models import Article, Tag
 
-from .fixtures import ARTICLES
+from .fixtures import ARTICLES, TAGS
 
 
 def drop_collections():
@@ -44,6 +44,15 @@ def auth_fixtures(app):
     click.echo('Auth intialized.')
 
 
+def tags_fixtures(app):
+    for TAG in TAGS:
+        Tag.objects.create(
+            name=TAG['name'],
+            summary=TAG['summary'],
+            language=app.config['LANGUAGES'][0][0])
+    click.echo('Tags intialized.')
+
+
 def articles_fixtures(app):
     user = User.objects.get(email='user@example.com')
     editor = User.objects.get(email='editor@example.com')
@@ -56,3 +65,17 @@ def articles_fixtures(app):
             language=app.config['LANGUAGES'][0][0],
             body=ARTICLE['body'])
     click.echo('Articles intialized.')
+
+
+def relations_fixtures(app):
+    """Must be done *after* `tags_fixtures` and `articles_fixtures`."""
+    travel = Tag.objects.get(name='Travel')
+    drugs = Tag.objects.get(name='Drugs')
+    sport = Tag.objects.get(name='Sport')
+    articles = Article.objects()
+    Article.objects.get(id=articles[0].id).modify(tags=[travel])
+    Article.objects.get(id=articles[1].id).modify(tags=[travel])
+    Article.objects.get(id=articles[2].id).modify(tags=[drugs, travel])
+    Article.objects.get(id=articles[3].id).modify(tags=[drugs, travel])
+    Article.objects.get(id=articles[4].id).modify(tags=[drugs, sport])
+    click.echo('Articles/tags relations intialized.')

@@ -65,17 +65,22 @@ def register_blueprints(app):
 
 
 def register_cli(app):
-    from .commands import articles_fixtures, auth_fixtures, drop_collections
+    from .commands import (articles_fixtures, auth_fixtures, drop_collections,
+                           relations_fixtures, tags_fixtures)
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
         drop_collections()
         auth_fixtures(app)
         articles_fixtures(app)
+        tags_fixtures(app)
+        relations_fixtures(app)
 
-    @app.cli.command(short_help='Load articles fixtures')
-    def load_articles():
-        articles_fixtures()
+    @app.cli.command(short_help='Load articles and tags fixtures')
+    def load_data():
+        articles_fixtures(app)
+        tags_fixtures(app)
+        relations_fixtures(app)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():

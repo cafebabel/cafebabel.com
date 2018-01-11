@@ -1,3 +1,18 @@
+TAGS = [
+    {
+        'name': 'Travel',
+        'summary': 'Flying is caring.'
+    },
+    {
+        'name': 'Drugs',
+        'summary': 'Flying is caring.'
+    },
+    {
+        'name': 'Sport',
+        'summary': 'Moving is caring.'
+    },
+]
+
 ARTICLES = [
     {
         'title': "Lisbon: Nomad's land",
