@@ -28,9 +28,10 @@ install:
 	-${remote} "git clone https://github.com/cafebabel/cafebabel.com.git ${src_dir}"
 	-${remote} "python3.6 -m venv ${venv_dir}"
 	-${remote} "${goto_src} && mkdir logs"
-	-${remote} "${goto_src} && mkdir -p cafebabel/static/uploads/{articles,users}"
+	-${remote} "${goto_src} && mkdir -p cafebabel/static/uploads/{articles,users,tags}"
 	make reset-db
 	make deploy
 
 reset-db:
 	${remote} "${goto_src} && FLASK_APP=prod flask initdb"
+	${remote} "${goto_src} && FLASK_APP=prod flask load_data"
