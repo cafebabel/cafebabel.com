@@ -24,7 +24,7 @@
     — by {% if article.author.profile.has_image %}
       <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
     {% else %}
-      <img src=/static/img/profile.svg alt="Default profile picture">
+      {% include 'users/default_profile_picture.html' without context %}
     {% endif %}
     {{ article.author }}<br>
     {% if translation.category %}

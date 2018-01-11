@@ -8,9 +8,9 @@
 <section>
   <h2>About</h2>
   {% if user.profile.has_image %}
-  <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
+    <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
   {% else %}
-  <img src=/static/img/profile.svg alt="Default profile picture">
+    {% include 'users/default_profile_picture.html' without context %}
   {% endif %}
 
   {% if user.profile.socials %}
