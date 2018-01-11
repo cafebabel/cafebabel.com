@@ -3,6 +3,24 @@
 <meta name=viewport content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
 <meta name=description content="{% block meta_description %}{% endblock %}">
+<!--open graph data -->
+<meta property="fb:app_id" content="123456789">
+<meta property="og:url" content="{{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ article.title }}">
+<meta property="og:image" content="{{ article.image_url }}">
+<meta property="og:description" content="Description Here">
+<meta property="og:site_name" content="Cafébabel">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="">
+<!-- twitter card data -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@site_account">
+<meta name="twitter:creator" content="@individual_account">
+<meta name="twitter:url" content="{{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}">
+<meta name="twitter:title" content="{{ article.title }}">
+<meta name="twitter:description" content="Content description less than 200 characters">
+<meta name="twitter:image" content="{{ article.image_url }}">
 
 <link rel=stylesheet href=/static/css/styles.css>
 <link rel=stylesheet href=/static/css/edit.css>
