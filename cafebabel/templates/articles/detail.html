@@ -2,8 +2,12 @@
 
 {% block meta_title %}{{ article.title }}{% endblock %}
 {% block meta_description %}{{ article.summary }}{% endblock %}
+{% block meta_image_url %}{{ article.image_url }}{% endblock %}
+{% block meta_author %}{{ article.author }}{% endblock %}
+{% block meta_type %}article{% endblock %}
 
 {% block body_class %}article-page{% endblock %}
+
 {% block body %}
 <article>
     {% if article.has_image %}
