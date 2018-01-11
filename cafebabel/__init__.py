@@ -103,9 +103,10 @@ def register_context_processors(app):
 
     @app.context_processor
     def add_template_helpers():
-        from .core.helpers import current_language
+        from .core import helpers
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories=lambda: app.config.get('CATEGORIES', []),
-            current_language=current_language(),
+            current_language=helpers.current_language(),
+            absolute=helpers.absolute,
         )

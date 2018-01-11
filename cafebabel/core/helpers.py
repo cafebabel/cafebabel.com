@@ -65,3 +65,11 @@ def current_language():
     lang_domain = current_app.config.get('DOMAIN_LANGUAGES')
     domain_lang = {v: k for k, v in lang_domain.items()}
     return domain_lang.get(request.host)
+
+
+def absolute(url):
+    if not url:
+        return ''
+    if url.startswith('/'):
+        url = url[1:]
+    return f'{request.url_root}{url}'
