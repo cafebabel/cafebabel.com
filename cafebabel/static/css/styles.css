@@ -262,11 +262,6 @@ blockquote {
     font-style: normal;
 }
 
-time {
-    font-weight: 100;
-    font-size: 1.4rem;
-}
-
 figure {
     margin: 0;
 }
@@ -1259,13 +1254,13 @@ button.follow.active:after {
     text-align: center;
 }
 
-.article-page article h1 + p time {
+.article-page article h1 + p span {
     font-style: italic;
     font-family: serif;
     font-size: 1.9rem;
 }
 
-.article-page article p time + img {
+.article-page article p span + img {
     width: 8rem;
     border-radius: 50%;
     margin: 1rem auto 0.5rem;

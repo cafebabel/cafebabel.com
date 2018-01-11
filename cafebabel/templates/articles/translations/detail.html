@@ -20,7 +20,13 @@
   {{ translation.body|markdown }}
 
   <p>
-    <time pubdate="{{ article.creation_date.date() }}">Created on {{ translation.original_article.creation_date.date() }}</time> — by {{ translation.author }}
+    <span>Created on <time pubdate="{{ article.creation_date.date() }}">{{ translation.original_article.creation_date.date() }}</time></span>
+    — by {% if article.author.profile.has_image %}
+      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
+    {% else %}
+      <img src=/static/img/profile.svg alt="Default profile picture">
+    {% endif %}
+    {{ article.author }}<br>
     {% if translation.category %}
       in category {{ translation.category }}
     {% endif %}

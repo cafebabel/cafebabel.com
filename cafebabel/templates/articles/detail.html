@@ -12,9 +12,11 @@
     <h1>{{ article.title }}</h1>
 
     <p>
-      <time pubdate="{{ article.creation_date.date() }}">Published on {{ article.creation_date.date() }}</time>
+      <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
       — by {% if article.author.profile.has_image %}
-      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
+        <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
+      {% else %}
+        <img src=/static/img/profile.svg alt="Default profile picture">
       {% endif %}
       {{ article.author }}<br>
       {% if article.category %}
