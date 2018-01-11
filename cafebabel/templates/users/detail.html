@@ -1,4 +1,4 @@
-{% from "users/profile-macros.html" import social_field with context %}
+{% from "users/macros.html" import social_field, default_profile_picture with context %}
 {% extends 'base.html' %}
 
 {% block body_class %}profile-page{% endblock %}
@@ -10,7 +10,7 @@
   {% if user.profile.has_image %}
     <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
   {% else %}
-    {% include 'users/default_profile_picture.html' without context %}
+    {{ default_profile_picture() }}
   {% endif %}
 
   {% if user.profile.socials %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
 
 {% block meta_title %}{{ translation.title }}{% endblock %}
 {% block meta_description %}{{ translation.summary }}{% endblock %}
@@ -19,18 +20,7 @@
 
   {{ translation.body|markdown }}
 
-  <p>
-    <span>Created on <time pubdate="{{ translation.original_article.creation_date.date() }}">{{ translation.original_article.creation_date.date() }}</time></span>
-    — by {% if article.author.profile.has_image %}
-      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
-    {% else %}
-      {% include 'users/default_profile_picture.html' without context %}
-    {% endif %}
-    {{ article.author }}<br>
-    {% if translation.category %}
-      in category {{ translation.category }}
-    {% endif %}
-  </p>
+  {{ macros.article_meta(translation.original_article) }}
 
   <p>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a> by {{ translation.translator }}.

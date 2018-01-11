@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
 
 {% block meta_title %}{{ article.title }}{% endblock %}
 {% block meta_description %}{{ article.summary }}{% endblock %}
@@ -11,19 +12,7 @@
     {% endif %}
     <h1>{{ article.title }}</h1>
 
-    <p>
-      <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-      — by {% if article.author.profile.has_image %}
-        <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
-      {% else %}
-        {% include 'users/default_profile_picture.html' without context %}
-      {% endif %}
-      {{ article.author }}<br>
-      {% if article.category %}
-      in category {{ article.category }}<br>
-      {% endif %}
-      Reading time: {{ article.body|reading_time }} min
-    </p>
+    {{ macros.article_meta(article) }}
 
     <div class=article-language-selector>
       <ul>
