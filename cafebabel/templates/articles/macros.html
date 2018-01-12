@@ -15,3 +15,19 @@
     Reading time: {{ article.body|reading_time }} min
   </p>
 {%- endmacro %}
+
+{%- macro tags_fields(tags, article=None) -%}
+  <div>
+    <label for=tag-1>Tags</label>
+    <input list=tags name=tag-1 {% if article and article.tags and article.tags[0] %}value={{ article.tags[0].name }}{% endif %}>
+    <input list=tags name=tag-2 {% if article and article.tags and article.tags[1] %}value={{ article.tags[1].name }}{% endif %}>
+    <input list=tags name=tag-3 {% if article and article.tags and article.tags[2] %}value={{ article.tags[2].name }}{% endif %}>
+    <input list=tags name=tag-4 {% if article and article.tags and article.tags[3] %}value={{ article.tags[3].name }}{% endif %}>
+    <input list=tags name=tag-5 {% if article and article.tags and article.tags[4] %}value={{ article.tags[4].name }}{% endif %}>
+    <datalist id=tags>
+      {% for tag in tags['en'] %}
+        <option value="{{ tag.name }}">
+      {% endfor %}
+    </datalist>
+  </div>
+{%- endmacro %}

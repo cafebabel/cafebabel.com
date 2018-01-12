@@ -115,8 +115,14 @@ class Article(db.Document, UploadableImageMixin):
                 del data['author']
             if data.get('editor'):
                 del data['editor']
+        self.tags = []
         for field, value in data.items():
-            setattr(self, field, value)
+            if field.startswith('tag-') and value:
+                tag = Tag.objects.get(name=value)
+                if tag not in self.tags:
+                    self.tags.append(tag)
+            else:
+                setattr(self, field, value)
         if data.get('delete-image'):
             self.delete_image()
         image = files.get('image')

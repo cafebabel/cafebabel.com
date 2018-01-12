@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
 
 {% block body_class %}create-article-page{% endblock %}
 {% block body %}
@@ -63,6 +64,7 @@
     <label for=summary>Summary</label>
     <textarea id=summary name=summary required></textarea>
   </div>
+  {{ macros.tags_fields(tags) }}
   <div class=textarea>
     <label for=body>Body</label>
     <textarea id=body name=body required></textarea>
