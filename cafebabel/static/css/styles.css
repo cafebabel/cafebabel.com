@@ -924,7 +924,8 @@ button.follow.active:after {
 }
 
 .create-article-page .tags .tag-container button {
-    width: 10%;
+    width: 7rem;
+    padding: 2rem;
 }
 
 .create-article-page .article-settings {

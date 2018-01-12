@@ -19,7 +19,7 @@
 {%- macro tags_fields(tags, article=None) -%}
   <div class=tags>
     <label for=tag-1>Tags</label>
-    <div class=tag-container><input name=tag-new><button class=add></button></div>
+    <div class=tag-container><input name=tag-new><button class=add>+</button></div>
     {% if article and article.tags %}
     {% set count = 1 %}
       {% for tag in tags['en'] %}
