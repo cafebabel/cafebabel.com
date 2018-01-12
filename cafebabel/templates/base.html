@@ -6,7 +6,7 @@
 <!--Social-->
 <meta property="og:url" content="{{ request.url }}">
 <meta property="og:title" content="{{ self.meta_title() }}">
-<meta property="og:image" content="{% block meta_image_url %}{% endblock %}"> <!-- to discuss -->
+<meta property="og:image" content="{% block meta_image_absolute_url %}{% endblock %}"> <!-- to discuss -->
 <meta property="og:type" content="{% block meta_type %}website{% endblock %}">
 <meta property="og:description" content="{{ self.meta_description() }}">
 <meta property="og:site_name" content="Cafébabel">
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="{{ self.meta_title() }}">
 <meta name="twitter:description" content="{{ self.meta_description() }}">
-<meta name="twitter:image" content="{{ self.meta_image_url() }}">
+<meta name="twitter:image" content="{{ self.meta_image_absolute_url() }}">
 <meta name="twitter:url" content="{{ request.url }}">
 
 <link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
