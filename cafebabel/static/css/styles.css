@@ -908,6 +908,25 @@ button.follow.active:after {
     text-align: center;
 }
 
+.create-article-page .tags .tag-container,
+.create-article-page .tags label {
+    max-width: 75rem;
+    margin: 0 auto;
+}
+
+.create-article-page .tags .tag-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-article-page .tags .tag-container input {
+    width: 90%;
+}
+
+.create-article-page .tags .tag-container button {
+    width: 10%;
+}
+
 .create-article-page .article-settings {
     max-width: 75rem;
     margin: auto;

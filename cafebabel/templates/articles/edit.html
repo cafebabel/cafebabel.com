@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block extra_js %}<script src={{ url_for('static', filename='js/edit-article.js') }}></script>{% endblock %}
 
 {% block body_class %}create-article-page{% endblock %}
 {% block body %}
@@ -75,7 +76,7 @@
     <textarea id=body name=body required>{{ article.body }}</textarea>
     {% include "articles/markdown-helper.html" %}
   </div>
-  <input type=submit value="Save">
+  <input type=submit value=Save>
 </form>
 
 {% if current_user.has_role('editor') %}
