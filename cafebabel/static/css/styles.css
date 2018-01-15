@@ -931,6 +931,14 @@ button.follow.active:after {
     color: #696969;
 }
 
+.create-article-page .tags .tagsList li.fadeIn {
+    animation: fadeTag 2s;
+}
+@-webkit-keyframes fadeTag {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 .create-article-page .tags .tagsList li:after {
     font-family: 'icomoon';
     content: '\ea0f';
