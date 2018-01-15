@@ -45,6 +45,15 @@ tagButtonAdd.addEventListener('click', (event) => {
   event.target.previousSibling.value = ''
 })
 
+document.querySelector('.tags input[name=tag-new]').addEventListener('keypress', (event) => {
+  const submission = event.target.value
+  if (submission.length < 3) return
+  fetch(`/article/tag/?language=en&terms=${submission}`)
+    .then(response => response.json())
+    .then(json => console.log(`Query: ${submission} => ${json}`))
+})
+
+
 function addTagsRemoveListener() {
   const tagsButtonRemove = document.querySelectorAll('.tags ul')
   tagsButtonRemove.forEach(tagButtonRemove => tagButtonRemove.addEventListener('click', (event) => {
