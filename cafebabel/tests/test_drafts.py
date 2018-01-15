@@ -5,6 +5,7 @@ from io import BytesIO
 from flask import request
 
 from ..articles.models import Article
+from ..articles.tags.models import Tag
 from .utils import login
 
 
@@ -33,6 +34,56 @@ def test_create_draft_should_generate_article(client, user, editor):
     assert response.status_code == 200
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
+
+
+def test_create_draft_with_tag(client, user, editor, tag):
+    login(client, editor.email, 'password')
+    response = client.post('/article/draft/new/', data={
+        'title': 'Test article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'author': user.id,
+        'tag-1': 'Wonderful'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    article = Article.objects.get(title='Test article')
+    assert article.tags == [tag]
+
+
+def test_create_draft_with_tags(client, app, user, editor, tag):
+    login(client, editor.email, 'password')
+    language = app.config['LANGUAGES'][0][0]
+    tag2 = Tag.objects.create(name='Sensational', language=language)
+    response = client.post('/article/draft/new/', data={
+        'title': 'Test article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'author': user.id,
+        'tag-1': 'Wonderful',
+        'tag-2': 'Sensational'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    article = Article.objects.get(title='Test article')
+    assert article.tags == [tag, tag2]
+
+
+def test_create_draft_with_unknown_tag(client, user, editor, tag):
+    login(client, editor.email, 'password')
+    response = client.post('/article/draft/new/', data={
+        'title': 'Test article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'author': user.id,
+        'tag-1': 'Wonderful',
+        'tag-2': 'Sensational'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    article = Article.objects.get(title='Test article')
+    tag2 = Tag.objects.get(name='Sensational')
+    assert article.tags == [tag, tag2]
 
 
 def test_create_draft_with_preexising_translation(client, user, editor,

@@ -92,9 +92,13 @@ class Article(db.Document, UploadableImageMixin):
             if data.get('editor'):
                 del data['editor']
         self.tags = []
+        language = data.get('language')
         for field, value in data.items():
             if field.startswith('tag-') and value:
-                tag = Tag.objects.get(name=value)
+                try:
+                    tag = Tag.objects.get(name=value, language=language)
+                except Tag.DoesNotExist:
+                    tag = Tag.objects.create(name=value, language=language)
                 if tag not in self.tags:
                     self.tags.append(tag)
             else:
