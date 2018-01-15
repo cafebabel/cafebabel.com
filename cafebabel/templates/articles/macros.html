@@ -16,10 +16,19 @@
   </p>
 {%- endmacro %}
 
-{%- macro tags_fields(tags, article=None) -%}
+{%- macro tags_fields(article=None) -%}
   <div class=tags>
     <label for=tag-1>Tags</label>
-    <ul class=tags-list></ul>
+    <ul class=tags-list>
+      {% if article and article.tags %}
+        {% for tag in article.tags -%}
+          <li>
+            {{ tag.name }}
+            <input name=tag-{{ loop.index }} list=tags value={{ tag.name }} type=hidden>
+          </li>
+        {%- endfor %}
+      {% endif %}
+    </ul>
     <div class=tag-container><input name=tag-new autocomplete=off list=tags-suggestions><button class=add>+</button></div>
     <datalist id=tags-suggestions></datalist>
   </div>

@@ -84,6 +84,8 @@ function addTagsRemoveListener() {
   )
 }
 
+window.addEventListener('load', addTagsRemoveListener)
+
 function displayTags(tags) {
   const container = tags.list.cloneNode(false)
   tags.list.replaceWith(tags._createTagsList(container, tags.values))
