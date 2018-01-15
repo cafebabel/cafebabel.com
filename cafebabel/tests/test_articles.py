@@ -113,6 +113,57 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     assert published_article.author == user
 
 
+def test_update_published_article_to_draft_redirect(app, client, user, editor,
+                                                    published_article):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'language': app.config['LANGUAGES'][1][0],
+        'status': 'draft'
+    }
+    response = client.post(f'/article/{published_article.id}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+
+
+def test_update_published_article_with_tag(app, client, user, editor, tag,
+                                           published_article):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'language': app.config['LANGUAGES'][0][0],
+        'tag-1': tag.name
+    }
+    response = client.post(f'/article/{published_article.id}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your article was successfully saved.']
+    published_article.reload()
+    assert published_article.tags == [tag]
+
+
+def test_update_published_article_with_unkown_tag(app, client, user, editor,
+                                                  tag, published_article):
+    login(client, editor.email, 'password')
+    language = app.config['LANGUAGES'][0][0]
+    tag2 = Tag.objects.create(name='Sensational', language=language)
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'language': language,
+        'tag-1': tag.name,
+        'tag-2': tag2.name
+    }
+    response = client.post(f'/article/{published_article.id}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your article was successfully saved.']
+    published_article.reload()
+    assert published_article.tags == [tag, tag2]
+
+
 def test_update_article_with_image_should_return_200(app, client, user, editor,
                                                      published_article):
     login(client, editor.email, 'password')

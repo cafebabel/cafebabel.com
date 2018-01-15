@@ -50,8 +50,8 @@
             <label for=status>
                 <select id=status name=status required>
                     <optgroup label=Status>
-                        <option value=draft selected>Draft</option>
-                        <option value=published>Published</option>
+                        <option value=draft{% if article.status == 'draft' %} selected{% endif %}>Draft</option>
+                        <option value=published{% if article.status == 'published' %} selected{% endif %}>Published</option>
                     </optgroup>
                 </select>
             </label>
