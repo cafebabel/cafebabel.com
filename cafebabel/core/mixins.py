@@ -23,13 +23,6 @@ class UploadableImageMixin:
                            filename=f'{self.get_images_url()}/{self.get_id()}')
 
     @property
-    def image_full_url(self):
-        if self.has_image:
-            return url_for('static',
-                           filename=f'{self.get_images_url()}/{self.get_id()}',
-                           _external=True)
-
-    @property
     def image_path(self):
         if not self.get_id():
             return

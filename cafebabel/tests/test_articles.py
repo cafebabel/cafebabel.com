@@ -135,9 +135,9 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert published_article.author == user
     assert published_article.editor == editor
     assert published_article.has_image
-    assert (Path(app.config.get('ARTICLES_IMAGES_PATH') /
-                 str(published_article.id)).exists())
-    assert (f'<meta property="og:image" content="http://localhost/static/'
+    assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
+                str(published_article.id)).exists()
+    assert ('<meta property="og:image" content="http://localhost/static/'
             f'uploads/articles/{published_article.id}">' in response)
 
 
