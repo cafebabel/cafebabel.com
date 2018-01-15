@@ -1,11 +1,27 @@
 const tagButtonAdd = document.querySelector('.tags button.add')
 const tagButtonRemove = document.querySelector('.tags button.remove')
+const tagsList = document.querySelector('.tags .tagsList')
+
+const Tag = {
+  count: () => tagsList.querySelectorAll('li').length,
+  createTag(tagValue) {
+    const li = document.createElement('li')
+    const input = document.createElement('input')
+    li.append(tagValue)
+    input.type = 'hidden'
+    input.name = `tag-${Tag.count()}`
+    input.setAttribute('list', 'tags')
+    input.value = tagValue
+    li.append(input)
+    
+    return li
+  }
+}
+
 tagButtonAdd.addEventListener('click', (event) => {
   event.preventDefault()
-  const tag = event.target.previousElementSibling.value
-  if (!tag) {
-    return
-  }
-  console.log('Tag', tag)
+  const tagValue = event.target.previousElementSibling.value
+  if (!tagValue) return
+  tagsList.appendChild(Tag.createTag(tagValue))
 })
 
