@@ -74,7 +74,7 @@ document
   })
 
 function addTagsRemoveListener() {
-  const tagsButtonRemove = document.querySelectorAll('.tags ul')
+  const tagsButtonRemove = document.querySelectorAll('.tags .tags-list')
   tagsButtonRemove.forEach(tagButtonRemove =>
     tagButtonRemove.addEventListener('click', event => {
       const tags = new Tags(document.querySelector('.tags'))
@@ -89,6 +89,6 @@ window.addEventListener('load', addTagsRemoveListener)
 function displayTags(tags) {
   const container = tags.list.cloneNode(false)
   tags.list.replaceWith(tags._createTagsList(container, tags.values))
-  document.querySelector('.tags ul li:last-child').classList.add('fadeIn')
+  document.querySelector('.tags .tags-list li:last-child').classList.add('fadeIn')
   addTagsRemoveListener()
 }
