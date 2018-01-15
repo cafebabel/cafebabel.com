@@ -5,7 +5,8 @@ from io import BytesIO
 from flask import url_for
 from flask.helpers import get_flashed_messages
 
-from ..articles.models import Article, Tag
+from ..articles.models import Article
+from ..articles.tags.models import Tag
 from .utils import login
 
 

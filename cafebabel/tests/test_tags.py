@@ -1,4 +1,5 @@
-from cafebabel.articles.models import Article, Tag
+from cafebabel.articles.models import Article
+from cafebabel.articles.tags.models import Tag
 
 
 def test_tag_basics(tag):

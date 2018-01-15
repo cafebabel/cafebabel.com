@@ -2,7 +2,8 @@ import pytest
 
 from cafebabel import create_app
 from cafebabel.commands import auth_fixtures, drop_collections
-from cafebabel.articles.models import Article, Tag
+from cafebabel.articles.models import Article
+from cafebabel.articles.tags.models import Tag
 from cafebabel.articles.translations.models import Translation
 from cafebabel.users.models import User
 

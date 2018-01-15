@@ -3,7 +3,8 @@ from flask import (Blueprint, current_app, flash, redirect, render_template,
 
 from ...core.helpers import editor_required
 from ...users.models import User
-from ..models import Article, Tag
+from ..models import Article
+from ..tags.models import Tag
 
 drafts = Blueprint('drafts', __name__)
 
