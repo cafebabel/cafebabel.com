@@ -16,13 +16,21 @@ const Tag = {
 
     return li
   },
-  tagValues: () => Array.from(tagsList.querySelectorAll('li')).map(li => li.innerText)
+  tagValues: () => Array.from(tagsList.querySelectorAll('li')).map(li => li.innerText),
+  createTagsList: (container, tagValues) => {
+    tagValues.forEach(tagValue => container.appendChild(Tag.createTag(tagValue)))
+
+    return container
+  }
 }
 
 tagButtonAdd.addEventListener('click', (event) => {
   event.preventDefault()
-  const tagValue = event.target.previousElementSibling.value
-  if (!tagValue || Tag.tagValues().includes(tagValue)) return
-  tagsList.appendChild(Tag.createTag(tagValue))
+  const tag = event.target.previousElementSibling.value
+  if (!tag || Tag.tagValues().includes(tag)) return
+  const tags = Tag.tagValues().concat(tag)
+  const container = tagsList.cloneNode(false)
+  tagsList.innerHTML = ''
+  tagsList.append(Tag.createTagsList(container, tags))
 })
 
