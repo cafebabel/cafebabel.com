@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
+
 {% block extra_js %}<script src={{ url_for('static', filename='js/edit-article.js') }}></script>{% endblock %}
 
 {% block body_class %}create-article-page{% endblock %}
@@ -67,6 +69,7 @@
         </div>
         {% endif %}
     </div>
+  {{ macros.tags_fields(tags, article) }}
   <div class=textarea>
     <label for=summary>Summary</label>
     <textarea id=summary name=summary required>{{ article.summary }}</textarea>
