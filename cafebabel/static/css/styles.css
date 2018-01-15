@@ -918,12 +918,12 @@ button.follow.active:after {
     margin: 0 auto 2rem;
 }
 
-.create-article-page .tags .tagsList {
+.create-article-page .tags .tags-list {
     max-width: 75rem;
     margin: 0 auto;
 }
 
-.create-article-page .tags .tagsList li {
+.create-article-page .tags .tags-list li {
     padding: 1rem 2rem 1rem 2rem;
     background-color: #E0E0E0;
     display: inline-block;
@@ -931,7 +931,7 @@ button.follow.active:after {
     color: #696969;
 }
 
-.create-article-page .tags .tagsList li.fadeIn {
+.create-article-page .tags .tags-list li.fadeIn {
     animation: fadeTag 2s;
 }
 @-webkit-keyframes fadeTag {
@@ -939,7 +939,7 @@ button.follow.active:after {
     100% { opacity: 1; }
 }
 
-.create-article-page .tags .tagsList li:after {
+.create-article-page .tags .tags-list li:after {
     font-family: 'icomoon';
     content: '\ea0f';
     font-size: 1.3rem;

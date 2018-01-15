@@ -19,7 +19,8 @@
 {%- macro tags_fields(tags, article=None) -%}
   <div class=tags>
     <label for=tag-1>Tags</label>
-    <ul class=tagsList></ul>
-    <div class=tag-container><input name=tag-new><button class=add>+</button></div>
+    <ul class=tags-list></ul>
+    <div class=tag-container><input name=tag-new autocomplete=off list=tags-suggestions><button class=add>+</button></div>
+    <datalist id=tags-suggestions></datalist>
   </div>
 {%- endmacro %}

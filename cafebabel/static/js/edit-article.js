@@ -45,11 +45,22 @@ tagButtonAdd.addEventListener('click', (event) => {
   event.target.previousSibling.value = ''
 })
 
-document.querySelector('.tags input[name=tag-new]').addEventListener('keypress', (event) => {
+function handleSuggestion(tag) {
+  const tagsSuggestion = document.querySelector('#tags-suggestions')
+  tagsSuggestion.innerHTML = ''
+  const option = document.createElement('option')
+  option.value = tag.name
+  tagsSuggestion.appendChild(option)
+}
+
+document.querySelector('.tags input[name=tag-new]').addEventListener('keyup', (event) => {
+  /* Return if arrow up, arrow down or enter are pressed */
+  if( event.keyCode==40 || event.keyCode==38 || event.keyCode==13 ) return
   const submission = event.target.value
   if (submission.length < 3) return
   request(`/article/tag/suggest/?language=en&terms=${submission}`)
-    .then(json => console.log(`Query: ${submission} => ${json}`))
+    .then((response) => response.forEach(handleSuggestion))
+    .catch(console.error.bind(console))
 })
 
 
