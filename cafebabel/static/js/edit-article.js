@@ -13,15 +13,16 @@ const Tag = {
     input.setAttribute('list', 'tags')
     input.value = tagValue
     li.append(input)
-    
+
     return li
-  }
+  },
+  tagValues: () => Array.from(tagsList.querySelectorAll('li')).map(li => li.innerText)
 }
 
 tagButtonAdd.addEventListener('click', (event) => {
   event.preventDefault()
   const tagValue = event.target.previousElementSibling.value
-  if (!tagValue) return
+  if (!tagValue || Tag.tagValues().includes(tagValue)) return
   tagsList.appendChild(Tag.createTag(tagValue))
 })
 
