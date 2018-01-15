@@ -21,10 +21,12 @@
     <label for=tag-1>Tags</label>
     <div class=tag-container><input name=tag-new><button class=add>+</button></div>
     <ul class=tagsList>
-      <li>Machin<input type=hidden list=tags name=tag-0 value=machin></li>
       {% set count = 1 %}
       {% for tag in tags['en'] %}
-        <button class=remove>+</button><input list=tags name=tag-{{ count }} value={{ article.tags.name }}>
+        <li>
+            {{ article.tags.name }}
+            <input type=hidden list=tags name=tag-{{ count }} value={{ article.tags.name }}>
+        </li>
         {% set count = count + 1 %}
       {% endfor %}
     </ul>
