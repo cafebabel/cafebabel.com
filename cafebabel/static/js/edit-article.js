@@ -56,9 +56,12 @@ function handleSuggestion(tag) {
 document.querySelector('.tags input[name=tag-new]').addEventListener('keyup', (event) => {
   /* Return if arrow up, arrow down or enter are pressed */
   if( event.keyCode==40 || event.keyCode==38 || event.keyCode==13 ) return
+  document.querySelector('#tags-suggestions').innerHTML = ''
   const submission = event.target.value
+  const languages = document.querySelector('#language')
+  const language = languages.options[languages.selectedIndex].value
   if (submission.length < 3) return
-  request(`/article/tag/suggest/?language=en&terms=${submission}`)
+  request(`/article/tag/suggest/?language=${language}&terms=${submission}`)
     .then((response) => response.forEach(handleSuggestion))
     .catch(console.error.bind(console))
 })
