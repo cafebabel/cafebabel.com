@@ -30,11 +30,9 @@ class Tags {
     li.append(tagValue)
     li.append(input)
 
-
     return li
   }
 }
-
 
 const tagButtonAdd = document.querySelector('.tags button.add')
 
@@ -61,4 +59,3 @@ function displayTags(tags) {
   tags.list.replaceWith(tags._createTagsList(container, tags.values))
   addTagsRemoveListener()
 }
-

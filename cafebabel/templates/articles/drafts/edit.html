@@ -68,11 +68,11 @@
       </div>
       {% endif %}
     </div>
+  {{ macros.tags_fields(tags, article) }}
   <div class=textarea>
     <label for=summary>Summary</label>
     <textarea id=summary name=summary required>{{ article.summary }}</textarea>
   </div>
-  {{ macros.tags_fields(tags, article) }}
   <div class=textarea>
     <label for=body>Body</label>
     <textarea id=body name=body required>{{ article.body }}</textarea>

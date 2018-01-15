@@ -172,6 +172,9 @@ main {
 .icon-arrow-down:before {
     content: '\ea3e';
 }
+.icon-cross:before {
+    content: '\ea0f';
+}
 .icon-facebook:before {
     content: '\ea90';
 }
@@ -875,6 +878,7 @@ button.follow.active:after {
 
 .create-article-page .file input {
     position: absolute;
+    top: 0;
     margin: 0;
     height: 100%;
     cursor: pointer;
@@ -911,7 +915,28 @@ button.follow.active:after {
 .create-article-page .tags .tag-container,
 .create-article-page .tags label {
     max-width: 75rem;
+    margin: 0 auto 2rem;
+}
+
+.create-article-page .tags .tagsList {
+    max-width: 75rem;
     margin: 0 auto;
+}
+
+.create-article-page .tags .tagsList li {
+    padding: 1rem 2rem 1rem 2rem;
+    background-color: #E0E0E0;
+    display: inline-block;
+    margin: 0 2rem 2rem 0;
+    color: #696969;
+}
+
+.create-article-page .tags .tagsList li:after {
+    font-family: 'icomoon';
+    content: '\ea0f';
+    font-size: 1.3rem;
+    margin-left: 1rem;
+    cursor: pointer;
 }
 
 .create-article-page .tags .tag-container {
