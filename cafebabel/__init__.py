@@ -52,12 +52,14 @@ def register_blueprints(app):
     from .articles.views import articles
     from .articles.drafts.views import drafts
     from .articles.proposals.views import proposals
+    from .articles.tags.views import tags
     from .articles.translations.views import translations
     from .core.views import cores
     from .users.views import users
 
     app.register_blueprint(cores, url_prefix='/')
     app.register_blueprint(articles, url_prefix='/article')
+    app.register_blueprint(tags, url_prefix='/article/tag')
     app.register_blueprint(drafts, url_prefix='/article/draft')
     app.register_blueprint(proposals, url_prefix='/article/proposal')
     app.register_blueprint(translations, url_prefix='/article/translation')

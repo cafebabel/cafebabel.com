@@ -44,7 +44,7 @@ def editor():
 @pytest.fixture
 def tag():
     return Tag.objects.create(
-        name='A tag',
+        name='Wonderful',
         summary='summary text',
         language=test_app.config['LANGUAGES'][0][0])
 
