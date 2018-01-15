@@ -1,10 +1,12 @@
 class Tags {
   constructor(domContext) {
     this.list = domContext.querySelector('ul')
-    this.values = Array.from(this.list.querySelectorAll('li')).map(li => li.innerText)
+    this.values = Array.from(this.list.querySelectorAll('li')).map(
+      li => li.innerText
+    )
   }
   checkSubmission(query) {
-    return query && ! this._isTag(query)
+    return query && !this._isTag(query)
   }
   add(query) {
     this.values = this.values.concat(query)
@@ -16,7 +18,9 @@ class Tags {
     return this.values.includes(tag)
   }
   _createTagsList(container, tagValues) {
-    tagValues.forEach((tagValue, index) => container.appendChild(this._createTag(tagValue, index)))
+    tagValues.forEach((tagValue, index) =>
+      container.appendChild(this._createTag(tagValue, index))
+    )
 
     return container
   }
@@ -36,7 +40,7 @@ class Tags {
 
 const tagButtonAdd = document.querySelector('.tags button.add')
 
-tagButtonAdd.addEventListener('click', (event) => {
+tagButtonAdd.addEventListener('click', event => {
   event.preventDefault()
   const submission = event.target.previousSibling.value
   const tags = new Tags(document.querySelector('.tags'))
@@ -53,27 +57,31 @@ function handleSuggestion(tag) {
   tagsSuggestion.appendChild(option)
 }
 
-document.querySelector('.tags input[name=tag-new]').addEventListener('keyup', (event) => {
-  /* Return if arrow up, arrow down or enter are pressed */
-  if( event.keyCode==40 || event.keyCode==38 || event.keyCode==13 ) return
-  document.querySelector('#tags-suggestions').innerHTML = ''
-  const submission = event.target.value
-  const languages = document.querySelector('#language')
-  const language = languages.options[languages.selectedIndex].value
-  if (submission.length < 3) return
-  request(`/article/tag/suggest/?language=${language}&terms=${submission}`)
-    .then((response) => response.forEach(handleSuggestion))
-    .catch(console.error.bind(console))
-})
-
+document
+  .querySelector('.tags input[name=tag-new]')
+  .addEventListener('keyup', event => {
+    /* Return if arrow up, arrow down or enter are pressed */
+    if (event.keyCode == 40 || event.keyCode == 38 || event.keyCode == 13)
+      return
+    document.querySelector('#tags-suggestions').innerHTML = ''
+    const submission = event.target.value
+    const languages = document.querySelector('#language')
+    const language = languages.options[languages.selectedIndex].value
+    if (submission.length < 3) return
+    request(`/article/tag/suggest/?language=${language}&terms=${submission}`)
+      .then(response => response.forEach(handleSuggestion))
+      .catch(console.error.bind(console))
+  })
 
 function addTagsRemoveListener() {
   const tagsButtonRemove = document.querySelectorAll('.tags ul')
-  tagsButtonRemove.forEach(tagButtonRemove => tagButtonRemove.addEventListener('click', (event) => {
-    const tags = new Tags(document.querySelector('.tags'))
-    tags.remove(event.target.innerText)
-    displayTags(tags)
-  }))
+  tagsButtonRemove.forEach(tagButtonRemove =>
+    tagButtonRemove.addEventListener('click', event => {
+      const tags = new Tags(document.querySelector('.tags'))
+      tags.remove(event.target.innerText)
+      displayTags(tags)
+    })
+  )
 }
 
 function displayTags(tags) {

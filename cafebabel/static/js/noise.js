@@ -7,7 +7,7 @@ if (canvas) {
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
     }
-    resize();
+    resize()
     window.onresize = resize
 
     function noise(context) {
@@ -17,12 +17,11 @@ if (canvas) {
             buffer32 = new Uint32Array(idata.data.buffer),
             len = buffer32.length,
             i = 0
-        for(; i < len;)
-            buffer32[i++] = ((50 * Math.random())|0) << 24
+        for (; i < len; ) buffer32[i++] = ((50 * Math.random()) | 0) << 24
         context.putImageData(idata, 0, 0)
     }
-    var toggle = true;
-    (function loop() {
+    var toggle = true
+    ;(function loop() {
         toggle = !toggle
         if (toggle) {
             requestAnimationFrame(loop)

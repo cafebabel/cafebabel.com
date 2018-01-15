@@ -6,7 +6,7 @@ setTimeout(() => {
 }, 300)
 
 /* open menu */
-Array.from(document.querySelectorAll('button.menu')).forEach((button) => {
+Array.from(document.querySelectorAll('button.menu')).forEach(button => {
   button.addEventListener('click', () => {
     const activeButton = document.querySelector('button.active.menu')
     if (activeButton) {
@@ -22,7 +22,8 @@ Array.from(document.querySelectorAll('button.menu')).forEach((button) => {
 
 /* external link in new tab */
 Array.from(document.querySelectorAll('a')).forEach(a => {
-  if (a.href.search(/\w+:\/\//) === 0 && a.hostname !== location.hostname) a.setAttribute('target', '_blank')
+  if (a.href.search(/\w+:\/\//) === 0 && a.hostname !== location.hostname)
+    a.setAttribute('target', '_blank')
 })
 
 /* animation flash info */
@@ -34,14 +35,16 @@ if (flashes) {
 }
 
 /* display profile social network field on click */
-const socialIcons = Array.from(document.querySelectorAll('.edit .social-networks li'))
+const socialIcons = Array.from(
+  document.querySelectorAll('.edit .social-networks li')
+)
 if (socialIcons) {
   socialIcons.forEach(socialIcon => {
-    socialIcon.querySelector('a').addEventListener('click', (event) => {
+    socialIcon.querySelector('a').addEventListener('click', event => {
       event.preventDefault()
       const socialsClick = socialIcon.querySelector('a').contains(event.target)
       if (socialsClick) {
-        socialIcons.forEach((li) => li.classList.remove('active'))
+        socialIcons.forEach(li => li.classList.remove('active'))
         socialIcon.classList.add('active')
         socialIcon.querySelector('input').focus()
       } else {
@@ -51,20 +54,20 @@ if (socialIcons) {
   })
 }
 
-function activateInput (input) {
+function activateInput(input) {
   if (!input) return
   const parent = input.parentElement
   parent.classList.add('active', 'completed')
 }
 
-function deactivateInput (input) {
+function deactivateInput(input) {
   const parent = input.parentElement
   parent.classList.remove('active', 'completed')
 }
 
 /* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860  */
-const autofillContent = `"${String.fromCharCode(0xFEFF)}"`
-function checkAutofill (input) {
+const autofillContent = `"${String.fromCharCode(0xfeff)}"`
+function checkAutofill(input) {
   if (input && !input.value) {
     const style = window.getComputedStyle(input)
     if (style.content !== autofillContent) {
@@ -86,7 +89,9 @@ if (!checkAutofill(input)) {
   }, 100)
 }
 /* animation login fields */
-Array.from(document.querySelectorAll('.authentication-form > div > input')).forEach(input => {
+Array.from(
+  document.querySelectorAll('.authentication-form > div > input')
+).forEach(input => {
   input.value && activateInput(input)
   input.addEventListener('change', () => activateInput(input))
   input.addEventListener('focus', () => activateInput(input))
@@ -97,14 +102,23 @@ Array.from(document.querySelectorAll('.authentication-form > div > input')).forE
 Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
   const h1 = inputh1.parentElement
   inputh1.addEventListener('focus', () => h1.classList.add('active'))
-  inputh1.addEventListener('blur', () => inputh1.value || h1.classList.remove('active'))
+  inputh1.addEventListener(
+    'blur',
+    () => inputh1.value || h1.classList.remove('active')
+  )
 })
 
 /* highlight file upload area on hover or dragenter */
-function addListenerMulti (element, events, fn) {
-  events.split(' ').forEach(event => element.addEventListener(event, fn, false)) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
+function addListenerMulti(element, events, fn) {
+  events
+    .split(' ')
+    .forEach(event =>
+      element.addEventListener(event, fn, false)
+    ) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
 }
-const articleFileInput = document.querySelector('.create-article-page .file input')
+const articleFileInput = document.querySelector(
+  '.create-article-page .file input'
+)
 const dropArea = document.querySelector('canvas')
 if (articleFileInput) {
   addListenerMulti(articleFileInput, 'dragenter focus click', () => {
