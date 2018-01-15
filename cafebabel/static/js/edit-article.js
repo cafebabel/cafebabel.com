@@ -48,8 +48,7 @@ tagButtonAdd.addEventListener('click', (event) => {
 document.querySelector('.tags input[name=tag-new]').addEventListener('keypress', (event) => {
   const submission = event.target.value
   if (submission.length < 3) return
-  fetch(`/article/tag/?language=en&terms=${submission}`)
-    .then(response => response.json())
+  request(`/article/tag/?language=en&terms=${submission}`)
     .then(json => console.log(`Query: ${submission} => ${json}`))
 })
 

@@ -5,7 +5,6 @@
 <meta name=description content="{% block meta_description %}{% endblock %}">
 
 <link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
-<script src={{ url_for('static', filename='js/utils.js') }}></script>
 
 <body class="{% block body_class %}{% endblock %}">
 
@@ -83,6 +82,7 @@
     <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="preloader coffee grinder">
 </div>
 
+<script src={{ url_for('static', filename='js/utils.js') }}></script>
 <script src={{ url_for('static', filename='js/script.js') }}></script>
 <script src={{ url_for('static', filename='js/noise.js') }}></script>
 {% block extra_js %}{% endblock %}
