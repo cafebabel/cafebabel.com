@@ -1,3 +1,23 @@
 {% extends "base.html" %}
 
+{% block metas %}
+  {{ meta('name=description', 'pan-European news, features and opinions') }}
+  {{ meta('name=author', 'Café Babel') }}
+{% endblock %}
+
+<!--Social-->
+{% block metas_social %}
+  {{ meta('property=og:url', request.url) }}
+  {{ meta('property=og:title', self.meta_title()) }}
+  {{ meta('property=og:type', 'website') }}
+  {{ meta('property=og:description', 'pan-European news, features and opinions') }}
+  {{ meta('property=og:site_name', 'Cafébabel') }}
+  {{ meta('property=og:locale', current_language) }}
+  {{ meta('name=twitter:card', 'summary') }}
+  {{ meta('name=twitter:title', self.meta_title()) }}
+  {{ meta('name=twitter:description', 'pan-European news, features and opinions') }}
+  {{ meta('name=twitter:url', request.url) }}
+{% endblock %}
+
+
 {% block body %}{% endblock %}
