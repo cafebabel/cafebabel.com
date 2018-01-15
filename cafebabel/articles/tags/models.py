@@ -1,9 +1,18 @@
 from flask import current_app
-from mongoengine import signals
+from mongoengine import signals, QuerySet
 
 from ... import db
 from ...core.helpers import slugify
 from ...core.mixins import UploadableImageMixin
+
+
+class TagQuerySet(QuerySet):
+
+    def get_or_create(self, **kwargs):
+        try:
+            return self.get(**kwargs)
+        except Tag.DoesNotExist:
+            return self.create(**kwargs)
 
 
 class Tag(db.Document, UploadableImageMixin):
@@ -11,6 +20,10 @@ class Tag(db.Document, UploadableImageMixin):
     slug = db.StringField(required=True)
     language = db.StringField(max_length=2, required=True)
     summary = db.StringField()
+
+    meta = {
+        'queryset_class': TagQuerySet
+    }
 
     def __str__(self):
         return f'{self.name} ({self.language})'
