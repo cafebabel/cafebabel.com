@@ -20,13 +20,14 @@
   <div class=tags>
     <label for=tag-1>Tags</label>
     <div class=tag-container><input name=tag-new><button class=add>+</button></div>
-    {% if article and article.tags %}
-    {% set count = 1 %}
+    <ul class=tagsList>
+      <li>Machin<input type=hidden list=tags name=tag-0 value=machin></li>
+      {% set count = 1 %}
       {% for tag in tags['en'] %}
         <button class=remove>+</button><input list=tags name=tag-{{ count }} value={{ article.tags.name }}>
         {% set count = count + 1 %}
       {% endfor %}
-    {% endif %}
+    </ul>
     <datalist id=tags>
       {% for tag in tags['en'] %}
         <option value="{{ tag.name }}">
