@@ -7,7 +7,7 @@
   {{ meta('name=description', article.summary) }}
   {{ meta('name=author', article.author) }}
 {% endblock %}
-<!--Social-->
+
 {% block metas_social %}
   {{ meta('property=article:author', article.author) }}
   {{ meta('property=og:image', absolute(article.image_url)) }}
