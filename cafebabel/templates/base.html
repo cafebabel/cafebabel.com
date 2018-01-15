@@ -1,23 +1,40 @@
+{% from "_meta-macro.html" import meta with context %}
 <!doctype html>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
-<meta name=description content="{% block meta_description %}{% endblock %}">
-<!--Social-->
-<meta property="og:url" content="{{ request.url }}">
-<meta property="og:title" content="{{ self.meta_title() }}">
-<meta property="og:image" content="{% block meta_image_absolute_url %}{% endblock %}">
-<meta property="og:type" content="{% block meta_type %}website{% endblock %}">
-<meta property="og:description" content="{{ self.meta_description() }}">
-<meta property="og:site_name" content="Cafébabel">
-<meta property="og:locale" content="{{ current_language }}">
-<meta property="article:author" content="{% block meta_author %}{% endblock %}">
 
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="{{ self.meta_title() }}">
-<meta name="twitter:description" content="{{ self.meta_description() }}">
-<meta name="twitter:image" content="{{ self.meta_image_absolute_url() }}">
-<meta name="twitter:url" content="{{ request.url }}">
+{% set description -%}
+  {% block meta_description %}{% endblock %}
+{%- endset %}
+{{ meta('name=description', description) }}
+<!--Social-->
+{{ meta('property=og:url', request.url) }}
+{{ meta('property=og:title', self.meta_title()) }}
+
+{% set image_abolute_url -%}
+  {% block meta_image_absolute_url %}{% endblock %}
+{%- endset %}
+{{ meta('property=og:image', image_abolute_url) }}
+
+{% set type -%}
+  {% block meta_type %}website{% endblock %}
+{%- endset %}
+{{ meta('property=og:type', type) }}
+{{ meta('property=og:description', self.meta_description()) }}
+{{ meta('property=og:site_name', 'Cafébabel') }}
+{{ meta('property=og:locale', current_language) }}
+
+{% set author -%}
+  {% block meta_author %}{% endblock %}
+{%- endset %}
+{{ meta('property=article:author', author) }}
+
+{{ meta('name=twitter:card', 'summary') }}
+{{ meta('name=twitter:title', self.meta_title()) }}
+{{ meta('name=twitter:description', self.meta_description()) }}
+{{ meta('name=twitter:image', self.meta_image_absolute_url()) }}
+{{ meta('name=twitter:url', request.url) }}
 
 <link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
 <script src={{ url_for('static', filename='js/utils.js') }}></script>
