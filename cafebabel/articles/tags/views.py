@@ -7,7 +7,7 @@ from .models import Tag
 tags = Blueprint('tags', __name__)
 
 
-@tags.route('/')
+@tags.route('/suggest/')
 def suggest():
     terms = request.args.get('terms')
     if len(terms) < 3:
