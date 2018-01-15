@@ -19,21 +19,6 @@
 {%- macro tags_fields(tags, article=None) -%}
   <div class=tags>
     <label for=tag-1>Tags</label>
-    <ul class=tagsList>
-      {% set count = 1 %}
-      {% for tag in tags['en'] %}
-        <li>
-          {{ article.tags.name }}
-          <input type=hidden list=tags name=tag-{{ count }} value={{ article.tags.name }}>
-        </li>
-        {% set count = count + 1 %}
-      {% endfor %}
-    </ul>
-    <datalist id=tags>
-      {% for tag in tags['en'] %}
-        <option value="{{ tag.name }}">
-      {% endfor %}
-    </datalist>
     <div class=tag-container><input name=tag-new><button class=add>+</button></div>
   </div>
 {%- endmacro %}

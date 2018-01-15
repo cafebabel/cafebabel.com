@@ -2,7 +2,8 @@ import click
 from flask_security.utils import hash_password
 
 from cafebabel.users.models import Role, User
-from cafebabel.articles.models import Article, Tag
+from cafebabel.articles.models import Article
+from cafebabel.articles.tags.models import Tag
 
 from .fixtures import ARTICLES, TAGS
 

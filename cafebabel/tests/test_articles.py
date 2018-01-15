@@ -5,7 +5,8 @@ from io import BytesIO
 from flask import url_for
 from flask.helpers import get_flashed_messages
 
-from ..articles.models import Article, Tag
+from ..articles.models import Article
+from ..articles.tags.models import Tag
 from .utils import login
 
 
@@ -297,9 +298,9 @@ def test_article_with_tag(app, tag, article):
 
 def test_article_detail_contains_tags(client, app, tag, published_article):
     language = app.config['LANGUAGES'][0][0]
-    tag2 = Tag.objects.create(name='Tag two', language=language)
+    tag2 = Tag.objects.create(name='Sensational', language=language)
     published_article.modify(tags=[tag, tag2])
     response = client.get(
         f'/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert 'A tag, Tag two.' in response
+    assert 'Wonderful, Sensational.' in response
