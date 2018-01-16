@@ -74,3 +74,24 @@ def test_tag_suggest_wrong_language(client, tag):
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert (b"Languages available: ['en', 'fr', 'es', 'it', 'de']"
             in response.data)
+
+
+def test_tag_detail(client, tag, published_article):
+    published_article.modify(tags=[tag])
+    response = client.get('/article/tag/wonderful/')
+    assert response.status_code == HTTPStatus.OK
+    assert tag.name in response
+    assert published_article.title in response
+
+
+def test_tag_detail_draft(client, tag, article):
+    article.modify(tags=[tag])
+    response = client.get('/article/tag/wonderful/')
+    assert response.status_code == HTTPStatus.OK
+    assert tag.name in response
+    assert article.title not in response
+
+
+def test_tag_detail_unknown(client, tag):
+    response = client.get('/article/tag/sensational/')
+    assert response.status_code == HTTPStatus.NOT_FOUND

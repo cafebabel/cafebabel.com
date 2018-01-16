@@ -1,12 +1,13 @@
 from flask import current_app
-from mongoengine import signals, QuerySet
+from flask_mongoengine import BaseQuerySet
+from mongoengine import signals
 
 from ... import db
 from ...core.helpers import slugify
 from ...core.mixins import UploadableImageMixin
 
 
-class TagQuerySet(QuerySet):
+class TagQuerySet(BaseQuerySet):
 
     def get_or_create(self, **kwargs):
         try:

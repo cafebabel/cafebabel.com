@@ -17,7 +17,7 @@
     <p>
       Tags:
       {% for tag in article.tags -%}
-        {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
+        <a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>{% if loop.last %}.{% else %}, {% endif %}
       {%- endfor %}
     </p>
 
