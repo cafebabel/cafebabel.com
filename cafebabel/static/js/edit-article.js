@@ -1,8 +1,8 @@
 class Tags {
   constructor(domContext) {
-    this.list = domContext.querySelector('ul')
-    this.values = Array.from(this.list.querySelectorAll('li')).map(
-      li => li.innerText
+    this.list = domContext.querySelector('.tags .tags-list')
+    this.values = Array.from(this.list.querySelectorAll('input')).map(
+      input => input.value
     )
   }
   checkSubmission(query) {
@@ -46,15 +46,25 @@ tagButtonAdd.addEventListener('click', event => {
   const tags = new Tags(document.querySelector('.tags'))
   if (tags.checkSubmission(submission)) tags.add(submission)
   displayTags(tags)
-  event.target.previousSibling.value = ''
+  document.querySelector('.tags input[name=tag-new]').value = ''
 })
 
 function handleSuggestion(tag) {
   const tagsSuggestion = document.querySelector('#tags-suggestions')
   tagsSuggestion.innerHTML = ''
-  const option = document.createElement('option')
-  option.value = tag.name
-  tagsSuggestion.appendChild(option)
+  const li = document.createElement('li')
+  li.append(tag.name)
+  tagsSuggestion.appendChild(li)
+  tagsSuggestion.classList.remove('inactive')
+  tagsSuggestion.addEventListener('click', event => {
+    const submission = event.target.innerText
+    const tags = new Tags(document.querySelector('.tags'))
+    if (tags.checkSubmission(submission)) tags.add(submission)
+    displayTags(tags)
+    li.remove()
+    document.querySelector('.tags input[name=tag-new]').value = ''
+    tagsSuggestion.classList.add('inactive')
+  })
 }
 
 document
@@ -89,6 +99,10 @@ window.addEventListener('load', addTagsRemoveListener)
 function displayTags(tags) {
   const container = tags.list.cloneNode(false)
   tags.list.replaceWith(tags._createTagsList(container, tags.values))
-  document.querySelector('.tags .tags-list li:last-child').classList.add('fadeIn')
-  addTagsRemoveListener()
+  if (tags.values.length) {
+    document
+      .querySelector('.tags .tags-list li:last-child')
+      .classList.add('fadeIn')
+    addTagsRemoveListener()
+  }
 }
