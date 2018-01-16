@@ -9,7 +9,7 @@ class Tags {
   addRemoveListener() {
     const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
     tagsButtonRemove.forEach(tagButtonRemove =>
-      Listener.clickRemove(tagButtonRemove)
+      TagEventListener.clickRemove(tagButtonRemove)
     )
   }
   checkSubmission(query) {
@@ -50,7 +50,7 @@ class Tags {
   }
 }
 
-class Effect {
+class TagEffect {
   static fadeIn(element) {
     function fade() {
       element.style.opacity = +element.style.opacity + 0.03
@@ -81,17 +81,21 @@ class Effect {
   }
 }
 
-class Listener {
+class TagEventListener {
   static clickAdd() {
     const tagButtonAdd = document.querySelector('.tags button.add')
     tagButtonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
       const tags = new Tags()
-      if (tags.checkSubmission(submission)) tags.add(submission)
-      tags.display()
-      Effect.fadeIn(document.querySelector('.tags .tags-list li:last-child'))
-      document.querySelector('.tags input[name=tag-new]').value = ''
+      if (tags.checkSubmission(submission)) {
+        tags.add(submission)
+        tags.display()
+        TagEffect.fadeIn(
+          document.querySelector('.tags .tags-list li:last-child')
+        )
+        document.querySelector('.tags input[name=tag-new]').value = ''
+      }
     })
   }
   static clickRemove(tagButtonRemove) {
@@ -99,7 +103,7 @@ class Listener {
       const tags = new Tags()
       const tagElement = event.target.parentNode
       tags.remove(tagElement.innerText)
-      Effect.fadeOut(tagElement).then(response => tags.display())
+      TagEffect.fadeOut(tagElement).then(response => tags.display())
     })
   }
 
@@ -138,8 +142,8 @@ class Listener {
   }
 }
 
-Listener.clickAdd()
-Listener.keyup()
+TagEventListener.clickAdd()
+TagEventListener.keyup()
 
 window.addEventListener('load', () => {
   const tags = new Tags(document.querySelector('.tags'))
