@@ -6,12 +6,6 @@ class Tags {
       input => input.value
     )
   }
-  addRemoveListener() {
-    const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
-    tagsButtonRemove.forEach(tagButtonRemove =>
-      TagEventListener.clickRemove(tagButtonRemove)
-    )
-  }
   checkSubmission(query) {
     return query && !this._isTag(query)
   }
@@ -24,7 +18,7 @@ class Tags {
   display() {
     const container = this.list.cloneNode(false)
     this.list.replaceWith(this._createTagsList(container, this.values))
-    this.addRemoveListener()
+    TagEventListener.addRemoveListener()
   }
   _isTag(tag) {
     return this.values.includes(tag)
@@ -106,7 +100,12 @@ class TagEventListener {
       TagEffect.fadeOut(tagElement).then(response => tags.display())
     })
   }
-
+  static addRemoveListener() {
+    const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
+    tagsButtonRemove.forEach(tagButtonRemove =>
+      TagEventListener.clickRemove(tagButtonRemove)
+    )
+  }
   static keyup() {
     function handleSuggestion(tag) {
       const tagsSuggestion = document.querySelector('#tags-suggestions')
@@ -147,5 +146,5 @@ TagEventListener.keyup()
 
 window.addEventListener('load', () => {
   const tags = new Tags(document.querySelector('.tags'))
-  tags.addRemoveListener()
+  TagEventListener.addRemoveListener()
 })
