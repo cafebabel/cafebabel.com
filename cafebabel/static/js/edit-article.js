@@ -6,7 +6,7 @@ class Tags {
       input => input.value
     )
   }
-  static addTagsRemoveListener() {
+  addRemoveListener() {
     const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
     tagsButtonRemove.forEach(tagButtonRemove =>
       Listener.clickRemove(tagButtonRemove)
@@ -24,7 +24,7 @@ class Tags {
   display() {
     const container = this.list.cloneNode(false)
     this.list.replaceWith(this._createTagsList(container, this.values))
-    Tags.addTagsRemoveListener()
+    this.addRemoveListener()
   }
   _isTag(tag) {
     return this.values.includes(tag)
@@ -142,5 +142,5 @@ Listener.keyup()
 
 window.addEventListener('load', () => {
   const tags = new Tags(document.querySelector('.tags'))
-  Tags.addTagsRemoveListener()
+  tags.addRemoveListener()
 })
