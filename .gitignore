@@ -7,7 +7,3 @@ __pycache__/
 *.egg-info/
 /cafebabel/static/uploads/
 /data/
-# Johan's specific configuration (workaround as it does not work when stored in ~/gitignore)
-.idea/
-.DS_Store
-venv/

@@ -22,14 +22,12 @@
     <ul class=tags-list>
       {% if article and article.tags %}
         {% for tag in article.tags -%}
-          <li>
-            {{ tag.name }}
-            <input name=tag-{{ loop.index }} list=tags value={{ tag.name }} type=hidden>
-          </li>
+          <!-- One line prevents from getting extra space #151 -->
+          <li>{{ tag.name }}<input name=tag-{{ loop.index }} list=tags value="{{ tag.name }}" type=hidden><a></a></li>
         {%- endfor %}
       {% endif %}
     </ul>
     <div class=tag-container><input name=tag-new autocomplete=off list=tags-suggestions><button class=add>+</button></div>
-    <datalist id=tags-suggestions></datalist>
+    <ul id=tags-suggestions class=inactive></ul>
   </div>
 {%- endmacro %}

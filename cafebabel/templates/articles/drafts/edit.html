@@ -9,11 +9,11 @@
   <div class=file>
       <label for=image>Image</label>
       {% if article.has_image %}
-          <img src={{ article_image_url(article) }} alt="Image for {{ article.title }}">
-          <div class=checkbox>
-            <label for=delete-image>Delete image</label>
-            <input type=checkbox name=delete-image id=delete-image value=1>
-          </div>
+        <img src={{ article.image_url }} alt="Image for {{ article.title }}">
+        <div class=checkbox>
+          <label for=delete-image>Delete image</label>
+          <input type=checkbox name=delete-image id=delete-image value=1>
+        </div>
       {% endif %}
       <input type=file id=image name=image>
   </div>
