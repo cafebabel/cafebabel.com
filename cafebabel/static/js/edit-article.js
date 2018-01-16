@@ -31,22 +31,22 @@ class Tags {
   }
   _createTagsList(container, tagValues) {
     tagValues.forEach((tagValue, index) =>
-      container.appendChild(this._createTag(tagValue, index))
+      container.insertAdjacentHTML(
+        'beforeend',
+        this._createTag(tagValue, index)
+      )
     )
 
     return container
   }
   _createTag(tagValue, index) {
-    const li = document.createElement('li')
-    const input = document.createElement('input')
-    const a = document.createElement('a')
-    input.type = 'hidden'
-    input.name = `tag-${index + 1}`
-    input.setAttribute('list', 'tags')
-    input.value = tagValue
-    li.append(tagValue, input, a)
-
-    return li
+    return `
+      <li>
+        ${tagValue}
+        <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden"><a>
+        </a>
+      </li>
+    `
   }
 }
 
