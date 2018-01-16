@@ -27,12 +27,14 @@ class Tags {
   _createTag(tagValue, index) {
     const li = document.createElement('li')
     const input = document.createElement('input')
+    const a = document.createElement('a')
     input.type = 'hidden'
     input.name = `tag-${index + 1}`
     input.setAttribute('list', 'tags')
     input.value = tagValue
     li.append(tagValue)
     li.append(input)
+    li.append(a)
 
     return li
   }
@@ -46,6 +48,7 @@ tagButtonAdd.addEventListener('click', event => {
   const tags = new Tags(document.querySelector('.tags'))
   if (tags.checkSubmission(submission)) tags.add(submission)
   displayTags(tags)
+  fadeIn(document.querySelector('.tags .tags-list li:last-child'))
   document.querySelector('.tags input[name=tag-new]').value = ''
 })
 
@@ -84,12 +87,13 @@ document
   })
 
 function addTagsRemoveListener() {
-  const tagsButtonRemove = document.querySelectorAll('.tags .tags-list')
+  const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
   tagsButtonRemove.forEach(tagButtonRemove =>
     tagButtonRemove.addEventListener('click', event => {
       const tags = new Tags(document.querySelector('.tags'))
-      tags.remove(event.target.innerText)
-      displayTags(tags)
+      const tagElement = event.target.parentNode
+      tags.remove(tagElement.innerText)
+      fadeOut(tagElement).then(response => displayTags(tags))
     })
   )
 }
@@ -99,10 +103,30 @@ window.addEventListener('load', addTagsRemoveListener)
 function displayTags(tags) {
   const container = tags.list.cloneNode(false)
   tags.list.replaceWith(tags._createTagsList(container, tags.values))
-  if (tags.values.length) {
-    document
-      .querySelector('.tags .tags-list li:last-child')
-      .classList.add('fadeIn')
-    addTagsRemoveListener()
-  }
+  addTagsRemoveListener()
+}
+
+function fadeIn(element) {
+  element.style.opacity = 0
+  ;(function fade() {
+    let val = parseFloat(element.style.opacity)
+    if (!((val += 0.03) > 1)) {
+      element.style.opacity = val
+      requestAnimationFrame(fade)
+    }
+  })()
+}
+
+function fadeOut(element) {
+  element.style.opacity = 1
+  return new Promise((resolve, reject) => {
+    ;(function fade() {
+      if ((element.style.opacity -= 0.03) < 0) {
+        element.style.display = 'none'
+        resolve()
+      } else {
+        requestAnimationFrame(fade)
+      }
+    })()
+  })
 }

@@ -926,26 +926,21 @@ button.follow.active:after {
 }
 
 .create-article-page .tags .tags-list li {
-  padding: 1rem 2rem 1rem 2rem;
+  position: relative;
+  padding: 1rem 4rem 1rem 2rem;
   background-color: #eeeeee;
   display: inline-block;
   margin: 0 2rem 2rem 0;
   color: #696969;
 }
 
-.create-article-page .tags .tags-list li.fadeIn {
-  animation: fadeTag 2s;
-}
-@-webkit-keyframes fadeTag {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.create-article-page .tags .tags-list li a {
+  position: absolute;
+  top: calc(50% - 0.7rem);
+  color: #696969;
 }
 
-.create-article-page .tags .tags-list li:after {
+.create-article-page .tags .tags-list li a:after {
   font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.3rem;
