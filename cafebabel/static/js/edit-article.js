@@ -48,7 +48,7 @@ tagButtonAdd.addEventListener('click', event => {
   const tags = new Tags(document.querySelector('.tags'))
   if (tags.checkSubmission(submission)) tags.add(submission)
   displayTags(tags)
-  fadeIn(document.querySelector('.tags .tags-list li:last-child'))
+  Effect.fadeIn(document.querySelector('.tags .tags-list li:last-child'))
   document.querySelector('.tags input[name=tag-new]').value = ''
 })
 
@@ -93,7 +93,7 @@ function addTagsRemoveListener() {
       const tags = new Tags(document.querySelector('.tags'))
       const tagElement = event.target.parentNode
       tags.remove(tagElement.innerText)
-      fadeOut(tagElement).then(response => displayTags(tags))
+      Effect.fadeOut(tagElement).then(response => displayTags(tags))
     })
   )
 }
@@ -106,27 +106,28 @@ function displayTags(tags) {
   addTagsRemoveListener()
 }
 
-function fadeIn(element) {
-  element.style.opacity = 0
-  ;(function fade() {
-    let val = parseFloat(element.style.opacity)
-    if (!((val += 0.03) > 1)) {
-      element.style.opacity = val
-      requestAnimationFrame(fade)
-    }
-  })()
-}
-
-function fadeOut(element) {
-  element.style.opacity = 1
-  return new Promise((resolve, reject) => {
+class Effect {
+  static fadeIn(element) {
+    element.style.opacity = 0
     ;(function fade() {
-      if ((element.style.opacity -= 0.03) < 0) {
-        element.style.display = 'none'
-        resolve()
-      } else {
+      let val = parseFloat(element.style.opacity)
+      if (!((val += 0.03) > 1)) {
+        element.style.opacity = val
         requestAnimationFrame(fade)
       }
     })()
-  })
+  }
+  static fadeOut(element) {
+    element.style.opacity = 1
+    return new Promise((resolve, reject) => {
+      ;(function fade() {
+        if ((element.style.opacity -= 0.03) < 0) {
+          element.style.display = 'none'
+          resolve()
+        } else {
+          requestAnimationFrame(fade)
+        }
+      })()
+    })
+  }
 }
