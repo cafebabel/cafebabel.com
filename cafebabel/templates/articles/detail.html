@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 {% import "articles/macros.html" as macros without context %}
+{% from "_meta-macro.html" import meta without context %}
 
 {% block meta_title %}{{ article.title }}{% endblock %}
-{% block meta_description %}{{ article.summary }}{% endblock %}
+{% block metas %}
+  {{ meta('name=description', article.summary) }}
+  {{ meta('name=author', article.author) }}
+{% endblock %}
+
+{% block metas_social %}
+  {{ meta('property=article:author', article.author) }}
+  {{ meta('property=og:image', absolute(article.image_url)) }}
+  {{ meta('property=og:url', request.url) }}
+  {{ meta('property=og:title', self.meta_title()) }}
+  {{ meta('property=og:type', 'article') }}
+  {{ meta('property=og:description', 'pan-European news, features and opinions') }}
+  {{ meta('property=og:site_name', 'Cafébabel') }}
+  {{ meta('property=og:locale', current_language) }}
+  {{ meta('name=twitter:card', 'summary') }}
+  {{ meta('name=twitter:image', absolute(article.image_url)) }}
+  {{ meta('name=twitter:title', self.meta_title()) }}
+  {{ meta('name=twitter:description', 'pan-European news, features and opinions') }}
+  {{ meta('name=twitter:url', request.url) }}
+{% endblock %}
 
 {% block body_class %}article-page{% endblock %}
+
 {% block body %}
 <article>
     {% if article.has_image %}
