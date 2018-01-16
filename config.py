@@ -61,14 +61,32 @@ class BaseConfig:
     }
     BASE_IMAGES_PATH = (
         Path(__file__).parent / 'cafebabel' / 'static' / 'uploads')
-    BASE_IMAGES_URL = '/static/uploads/'
     ARTICLES_IMAGES_PATH = BASE_IMAGES_PATH / 'articles'
-    ARTICLES_IMAGES_URL = f'{BASE_IMAGES_URL}articles'
+    ARTICLES_IMAGES_URL = 'uploads/articles'
     TAGS_IMAGES_PATH = BASE_IMAGES_PATH / 'tags'
-    TAGS_IMAGES_URL = f'{BASE_IMAGES_URL}tags'
+    TAGS_IMAGES_URL = 'uploads/tags'
     USERS_IMAGES_PATH = BASE_IMAGES_PATH / 'users'
-    USERS_IMAGES_URL = f'{BASE_IMAGES_URL}users'
+    USERS_IMAGES_URL = 'uploads/users'
     USERS_IMAGE_MAX_LENGTH = 1024 * 500  # Ko
+
+    DOMAIN_LANGUAGES = {
+        'fr': 'cafebabel.fr',
+        'en': 'cafebabel.co.uk',
+        'de': 'cafebabel.de',
+        'es': 'cafebabel.es',
+        'it': 'cafebabel.it',
+    }
+
+
+class PreprodConfig(BaseConfig):
+
+    DOMAIN_LANGUAGES = {
+        'fr': 'preprod.cafebabel.fr',
+        'en': 'preprod.cafebabel.co.uk',
+        'de': 'preprod.cafebabel.de',
+        'es': 'preprod.cafebabel.es',
+        'it': 'preprod.cafebabel.it',
+    }
 
 
 class DevelopmentConfig(BaseConfig):
@@ -86,6 +104,8 @@ class DevelopmentConfig(BaseConfig):
     ]
     EXPLAIN_TEMPLATE_LOADING = False
 
+    DOMAIN_LANGUAGES = {'en': 'localhost:5000'}
+
 
 class TestingConfig(BaseConfig):
     TESTING = True
@@ -96,3 +116,5 @@ class TestingConfig(BaseConfig):
     ARTICLES_IMAGES_PATH = Path(mkdtemp())
     USERS_IMAGES_PATH = Path(mkdtemp())
     DEBUG_TB_ENABLED = False
+
+    DOMAIN_LANGUAGES = {'en': 'localhost'}

@@ -104,9 +104,10 @@ def register_context_processors(app):
 
     @app.context_processor
     def add_template_helpers():
+        from .core import helpers
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories=lambda: app.config.get('CATEGORIES', []),
-            article_image_url=(
-                lambda a: f'{app.config.get("ARTICLES_IMAGES_URL")}/{a.id}')
+            current_language=helpers.current_language(),
+            absolute=helpers.absolute,
         )
