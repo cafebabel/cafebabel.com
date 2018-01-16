@@ -1357,10 +1357,6 @@ button.follow.active:after {
   margin: 1rem auto 0.5rem;
 }
 
-.article-page article ul li span {
-  color: #bde513;
-}
-
 .article-page article h3 {
   text-align: center;
   max-width: 75rem;
@@ -1387,6 +1383,14 @@ textarea#body {
   display: inline-block;
   padding: 1rem;
   border: 0.1rem solid;
+}
+
+.article-language-selector span {
+    color: #bde513;
+}
+
+.article-language-selector li.translated-language a {
+    color: #b3b69b;
 }
 
 .share {
