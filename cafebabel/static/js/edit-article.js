@@ -44,9 +44,7 @@ class Tags {
     input.name = `tag-${index + 1}`
     input.setAttribute('list', 'tags')
     input.value = tagValue
-    li.append(tagValue)
-    li.append(input)
-    li.append(a)
+    li.append(tagValue, input, a)
 
     return li
   }
@@ -81,7 +79,6 @@ class Effect {
 class Listener {
   static clickAdd() {
     const tagButtonAdd = document.querySelector('.tags button.add')
-
     tagButtonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
@@ -121,7 +118,6 @@ class Listener {
     }
 
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-
     inputNewTag.addEventListener('keyup', event => {
       /* Return if arrow up, arrow down or enter are pressed */
       if (event.keyCode == 40 || event.keyCode == 38 || event.keyCode == 13)
