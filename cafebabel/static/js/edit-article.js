@@ -52,26 +52,31 @@ class Tags {
 
 class Effect {
   static fadeIn(element) {
-    element.style.opacity = 0
-    ;(function fade() {
-      let val = parseFloat(element.style.opacity)
-      if (!((val += 0.03) > 1)) {
-        element.style.opacity = val
+    function fade() {
+      element.style.opacity = +element.style.opacity + 0.03
+      if (element.style.opacity <= 1) {
         requestAnimationFrame(fade)
       }
-    })()
+    }
+
+    element.style.opacity = 0
+    fade()
   }
   static fadeOut(element) {
+    function fade() {
+      element.style.opacity = +element.style.opacity - 0.03
+      if (element.style.opacity < 0) {
+        element.style.display = 'none'
+        resolve()
+      } else {
+        requestAnimationFrame(fade)
+      }
+    }
+
     element.style.opacity = 1
+
     return new Promise((resolve, reject) => {
-      ;(function fade() {
-        if ((element.style.opacity -= 0.03) < 0) {
-          element.style.display = 'none'
-          resolve()
-        } else {
-          requestAnimationFrame(fade)
-        }
-      })()
+      fade()
     })
   }
 }
