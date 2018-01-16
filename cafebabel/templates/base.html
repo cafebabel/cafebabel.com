@@ -2,7 +2,10 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
-<meta name=description content="{% block meta_description %}{% endblock %}">
+
+{% block metas %}{% endblock %}
+
+{% block metas_social %}{% endblock %}
 
 <link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
 <script src={{ url_for('static', filename='js/utils.js') }}></script>
