@@ -145,6 +145,6 @@ TagEventListener.clickAdd()
 TagEventListener.keyup()
 
 window.addEventListener('load', () => {
-  const tags = new Tags(document.querySelector('.tags'))
+  const tags = new Tags()
   TagEventListener.addRemoveListener()
 })
