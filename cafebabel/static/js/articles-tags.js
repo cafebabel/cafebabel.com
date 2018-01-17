@@ -164,7 +164,9 @@ class TagEventListener {
       const submission = event.target.value
       if (submission.length < 3) return
       const tags = new Tags()
-      request(`/article/tag/suggest/?language=en&terms=${submission}`)
+      request(
+        `/article/tag/suggest/?language=${tags.language}&terms=${submission}`
+      )
         .then(tagsApi => tags.handleSuggestion(tagsApi))
         .catch(console.error.bind(console))
     })

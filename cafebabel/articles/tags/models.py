@@ -21,7 +21,7 @@ class TagQuerySet(BaseQuerySet):
 class Tag(db.Document, UploadableImageMixin):
     name = db.StringField(required=True)
     slug = db.StringField(required=True)
-    language = db.StringField(max_length=2, required=True)
+    language = db.StringField(max_length=2, required=True, unique_with='slug')
     summary = db.StringField()
 
     meta = {
