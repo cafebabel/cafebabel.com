@@ -1483,8 +1483,7 @@ textarea#body {
 }
 
 .tag-page .tag-header-image + header {
-  /*margin-top: 60vh;*/
-  margin-top: 90vh;
+  margin-top: 60vh;
 }
 
 .tag-page header h1 {
