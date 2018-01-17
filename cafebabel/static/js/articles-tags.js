@@ -29,15 +29,13 @@ class Tags {
     }
   }
   handleSuggestion(tagsApi) {
+    this._activeSuggestionsList()
     const ul = this.suggestions.cloneNode(false)
     tagsApi.forEach(tag => {
       const li = `<li>${tag.name}</li>`
       ul.insertAdjacentHTML('afterbegin', li)
     })
-    this.suggestions.replaceWith(ul)
-    this.suggestions = ul
-    TagEventListener.addSuggestion()
-    this._activeSuggestionsList()
+    this._renderSuggestion(ul)
   }
   _isTag(tag) {
     return this.values.includes(tag)
@@ -78,6 +76,10 @@ class Tags {
   }
   _emptyAddField() {
     this.fieldAdd.value = ''
+  }
+  _renderSuggestion(ul) {
+    this.suggestions.replaceWith(ul)
+    TagEventListener.addSuggestion()
   }
   _render() {
     const container = this.list.cloneNode(false)
