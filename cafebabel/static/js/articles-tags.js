@@ -10,30 +10,30 @@ class Tags {
   }
   static addNewTag(submission) {
     const tags = new Tags()
-    if (tags.checkSubmission(submission)) {
-      tags._add(submission)
-      tags._emptyAddField()
-      tags._inactiveSuggestionsList()
-      tags.display()
-      TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
+    if (!submission || tags._isTag(submission)) return
+    tags._addValue(submission)
+    tags._emptyAddField()
+    tags._inactiveSuggestionsList()
+    tags._render()
+    TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
+  }
+  static removeTag(tagElement) {
+    const submission = tagElement.innerText
+    const tags = new Tags()
+    if (tags._isTag(submission)) {
+      tags._removeValue(submission)
+      TagEffect.fadeOut(tagElement).then(tags._render)
+      tags._render()
     }
-  }
-  checkSubmission(query) {
-    return query && !this._isTag(query)
-  }
-  remove(query) {
-    this.values = this.values.filter(value => value !== query)
-  }
-  display() {
-    const container = this.list.cloneNode(false)
-    this.list.replaceWith(this._createTagsList(container, this.values))
-    TagEventListener.addRemoveListener()
-  }
-  _add(query) {
-    this.values = this.values.concat(query)
   }
   _isTag(tag) {
     return this.values.includes(tag)
+  }
+  _addValue(query) {
+    this.values = this.values.concat(query)
+  }
+  _removeValue(query) {
+    this.values = this.values.filter(value => value !== query)
   }
   _createTagsList(container, tagValues) {
     tagValues.forEach((tagValue, index) =>
@@ -59,6 +59,11 @@ class Tags {
   }
   _emptyAddField() {
     this.buttonAdd.value = ''
+  }
+  _render() {
+    const container = this.list.cloneNode(false)
+    this.list.replaceWith(this._createTagsList(container, this.values))
+    TagEventListener.addRemoveListener()
   }
 }
 
@@ -105,10 +110,8 @@ class TagEventListener {
     tagsButtonRemove.forEach(button =>
       button.addEventListener('click', event => {
         event.preventDefault()
-        const tags = new Tags()
         const tagElement = event.target.parentNode
-        tags.remove(tagElement.innerText)
-        TagEffect.fadeOut(tagElement).then(tags.display)
+        Tags.removeTag(tagElement)
       })
     )
   }
