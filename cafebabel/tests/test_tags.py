@@ -101,35 +101,22 @@ def test_tag_detail_unknown(client, tag):
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_tag_update_basics(app, client, tag, editor):
-    Tag.objects.create(name='Wonderful',
-                       language=app.config['LANGUAGES'][1][0])
+def test_tag_update_summary(app, client, tag, editor):
     login(client, editor.email, 'password')
-    language = app.config['LANGUAGES'][2][0]
-    data = {
-        'name': 'updated name',
-        'language': language,
-        'summary': 'custom summary'
-    }
+    data = {'summary': 'custom summary'}
     response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your tag was successfully saved.']
     tag.reload()
-    assert tag.name == 'updated name'
-    assert tag.language == language
     assert tag.summary == 'custom summary'
-    assert 'updated name' in response
 
 
 def test_tag_update_image(app, client, tag, editor):
     login(client, editor.email, 'password')
-    language = app.config['LANGUAGES'][1][0]
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image_content = BytesIO(content.read())
     data = {
-        'name': 'updated name',
-        'language': language,
         'summary': 'custom summary',
         'image': (image_content, 'image-name.jpg'),
     }
@@ -139,9 +126,22 @@ def test_tag_update_image(app, client, tag, editor):
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your tag was successfully saved.']
     tag.reload()
-    assert tag.name == 'updated name'
-    assert tag.language == language
     assert tag.summary == 'custom summary'
-    assert 'updated name' in response
     assert tag.has_image
     assert Path(app.config.get('TAGS_IMAGES_PATH') / str(tag.id)).exists()
+
+
+def test_tag_update_name_not_possible(app, client, tag, editor):
+    login(client, editor.email, 'password')
+    data = {'name': 'updated title'}
+    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_tag_update_language_not_possible(app, client, tag, editor):
+    login(client, editor.email, 'password')
+    data = {'language': app.config['LANGUAGES'][2][0]}
+    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.BAD_REQUEST

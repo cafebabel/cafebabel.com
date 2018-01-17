@@ -1,4 +1,6 @@
-from flask import current_app
+from http import HTTPStatus
+
+from flask import abort, current_app
 from flask_mongoengine import BaseQuerySet
 from mongoengine import signals
 
@@ -42,6 +44,8 @@ class Tag(db.Document, UploadableImageMixin):
     def save_from_request(self, request):
         data = request.form.to_dict()
         files = request.files
+        if 'name' in data or 'language' in data:
+            abort(HTTPStatus.BAD_REQUEST)
         for field, value in data.items():
             setattr(self, field, value)
         if data.get('delete-image'):
