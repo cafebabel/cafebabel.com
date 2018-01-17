@@ -1,6 +1,6 @@
 from http import HTTPStatus
-from pathlib import Path
 from io import BytesIO
+from pathlib import Path
 
 from flask import url_for
 from flask.helpers import get_flashed_messages

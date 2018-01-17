@@ -9,6 +9,11 @@
     <img src="{{ tag.image_url }}" alt="Image for {{ tag.title }}">
   {% endif %}
   <h1>{{ tag.name }}</h1>
+  {% if current_user.has_role('editor') %}
+    <p>
+      <a class=button href={{ url_for('tags.edit', slug=tag.slug) }}>Edit this tag</a>
+    </p>
+  {% endif %}
   {% if tag.summary %}
     <p class=summary>{{ tag.summary }}</p>
   {% endif %}

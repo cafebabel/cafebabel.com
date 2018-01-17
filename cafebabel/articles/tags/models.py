@@ -39,6 +39,18 @@ class Tag(db.Document, UploadableImageMixin):
     def get_images_path(self):
         return current_app.config.get('TAGS_IMAGES_PATH')
 
+    def save_from_request(self, request):
+        data = request.form.to_dict()
+        files = request.files
+        for field, value in data.items():
+            setattr(self, field, value)
+        if data.get('delete-image'):
+            self.delete_image()
+        image = files.get('image')
+        if image:
+            self.attach_image(image)
+        return self.save()
+
 
 signals.pre_save.connect(Tag.update_slug, sender=Tag)
 signals.post_save.connect(Tag.store_image, sender=Tag)
