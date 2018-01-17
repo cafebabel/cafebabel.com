@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block body_class %}tag-page-edit{% endblock %}
+{% block body_class %}edit-tag-page{% endblock %}
 {% block body %}
 <form method=post action={{ url_for('tags.edit', slug=tag.slug) }} enctype=multipart/form-data>
   <input type=hidden name=slug value="{{ tag.slug }}">
@@ -15,15 +15,10 @@
     {% endif %}
     <input type=file id=image name=image>
   </div>
-  <div class=edit-tag-detail-container>
-    <h1 class="edit active">
-        <label for=name>Name</label>
-        <input id=name name=name value="{{ tag.name }}" required>
-    </h1>
-    <div class=textarea>
-      <label for=summary>Summary</label>
-      <textarea id=summary name=summary required>{{ tag.summary }}</textarea>
-    </div>
+  <h1 class="edit active">
+    <label for=name>Name</label>
+    <input id=name name=name value="{{ tag.name }}" required>
+  </h1>
     <div class=tag-settings>
       <div class=select>
         <label for=language>
@@ -39,5 +34,10 @@
     </div>
     <input type=submit value=Save>
   </div>
+  <div class=textarea>
+    <label for=summary>Summary</label>
+    <textarea id=summary name=summary required>{{ tag.summary }}</textarea>
+  </div>
+  <input type=submit value=Save>
 </form>
 {% endblock %}
