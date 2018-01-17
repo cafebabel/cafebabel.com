@@ -1,15 +1,25 @@
 class Tags {
   constructor() {
-    this.list = document.querySelector('.tags-list')
+    const context = document.querySelector('.tags')
+    this.list = context.querySelector('.tags-list')
+    this.buttonAdd = context.querySelector('input[name=tag-new]')
+    this.suggestions = context.querySelector('#tags-suggestions')
     this.values = Array.from(this.list.querySelectorAll('input')).map(
       input => input.value
     )
   }
+  static addNewTag(submission) {
+    const tags = new Tags()
+    if (tags.checkSubmission(submission)) {
+      tags._add(submission)
+      tags._emptyAddField()
+      tags._inactiveSuggestionsList()
+      tags.display()
+      TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
+    }
+  }
   checkSubmission(query) {
     return query && !this._isTag(query)
-  }
-  add(query) {
-    this.values = this.values.concat(query)
   }
   remove(query) {
     this.values = this.values.filter(value => value !== query)
@@ -18,6 +28,9 @@ class Tags {
     const container = this.list.cloneNode(false)
     this.list.replaceWith(this._createTagsList(container, this.values))
     TagEventListener.addRemoveListener()
+  }
+  _add(query) {
+    this.values = this.values.concat(query)
   }
   _isTag(tag) {
     return this.values.includes(tag)
@@ -33,7 +46,19 @@ class Tags {
     return container
   }
   _createTag(tagValue, index) {
-    return `<li>${tagValue}<input name="tag-${++index}" list="tags" value=${tagValue} type="hidden"><button></button></li>`
+    return `
+      <li>
+        ${tagValue}
+        <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden">
+        <button></button>
+      </li>
+    `
+  }
+  _inactiveSuggestionsList() {
+    this.suggestions.classList.add('inactive')
+  }
+  _emptyAddField() {
+    this.buttonAdd.value = ''
   }
 }
 
@@ -45,7 +70,7 @@ class TagEffect {
         requestAnimationFrame(fade)
       }
     }
-
+    console.log('TOC FADE')
     element.style.opacity = 0
     fade()
   }
@@ -72,26 +97,20 @@ class TagEventListener {
     tagButtonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
-      const tags = new Tags()
-      if (tags.checkSubmission(submission)) {
-        tags.add(submission)
-        tags.display()
-        TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
-        document.querySelector('.tags input[name=tag-new]').value = ''
-      }
-    })
-  }
-  static clickRemove(tagButtonRemove) {
-    tagButtonRemove.addEventListener('click', event => {
-      const tags = new Tags()
-      const tagElement = event.target.parentNode
-      tags.remove(tagElement.innerText)
-      TagEffect.fadeOut(tagElement).then(tags.display)
+      Tags.addNewTag(submission)
     })
   }
   static addRemoveListener() {
-    const tagsButtonRemove = document.querySelectorAll('.tags-list li a')
-    tagsButtonRemove.forEach(TagEventListener.clickRemove)
+    const tagsButtonRemove = document.querySelectorAll('.tags-list li button')
+    tagsButtonRemove.forEach(button =>
+      button.addEventListener('click', event => {
+        event.preventDefault()
+        const tags = new Tags()
+        const tagElement = event.target.parentNode
+        tags.remove(tagElement.innerText)
+        TagEffect.fadeOut(tagElement).then(tags.display)
+      })
+    )
   }
   static keyup() {
     function handleSuggestion(tag) {
@@ -103,20 +122,17 @@ class TagEventListener {
       tagsSuggestion.classList.remove('inactive')
       tagsSuggestion.addEventListener('click', event => {
         const submission = event.target.innerText
-        const tags = new Tags()
-        if (tags.checkSubmission(submission)) tags.add(submission)
-        tags.display()
-        li.remove()
-        document.querySelector('.tags input[name=tag-new]').value = ''
-        tagsSuggestion.classList.add('inactive')
+        Tags.addNewTag(submission)
       })
     }
 
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-    inputNewTag.addEventListener('keyup', event => {
+    inputNewTag.addEventListener('keypress', event => {
       /* Return if arrow up, arrow down or enter are pressed */
-      if (event.keyCode == 40 || event.keyCode == 38 || event.keyCode == 13)
+      if (event.keyCode == 13) {
         return
+      }
+      if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
       const languages = document.querySelector('#language')
       const language = languages.options[languages.selectedIndex].value
