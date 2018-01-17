@@ -594,6 +594,7 @@ a:active {
 a {
   position: relative;
   z-index: 0;
+  transition: all 0.3s;
 }
 
 a:after {
@@ -1492,7 +1493,54 @@ textarea#body {
 
 .tag-page article {
   max-width: 75rem;
-  margin: 2rem auto;
+  margin: 3rem auto;
+}
+
+.tag-page article .article-detail {
+  position: relative;
+  background: #fff;
+  width: 85%;
+  margin: -4rem auto 0;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.01);
+  padding: 2rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.tag-page article .article-detail h3 {
+  margin: 1rem;
+}
+
+.tag-page article .article-detail p {
+  margin: 0 0 2rem;
+  font-size: 1.6rem;
+}
+
+.tag-page article .article-detail p span {
+  font-style: italic;
+  font-family: serif;
+}
+
+.article-detail .tags-list a {
+  position: relative;
+  font-size: 1.6rem;
+  padding: 0.5rem 1rem;
+  background-color: #eeeeee;
+  display: inline-block;
+  margin: 0 1rem 1rem 0;
+  color: #696969;
+}
+
+.article-detail .tags-list a:before {
+  content: '#';
+}
+
+.article-detail .tags-list a:hover {
+  background-color: #e2e2e2;
+}
+
+.article-detail .tags-list a:hover:after {
+  width: 0;
 }
 
 /* Tag page edit */
