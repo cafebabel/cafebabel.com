@@ -4,9 +4,8 @@ if (parallax) {
     const scrolledHeight = window.pageYOffset
     const limit = parallax.offsetTop + parallax.offsetHeight
     if (scrolledHeight > parallax.offsetTop && scrolledHeight <= limit) {
-      parallax.style.backgroundPositionY = `${(parallax.offsetTop -
-        scrolledHeight) /
-        3}px`
+      parallax.style.backgroundPositionY =
+        (parallax.offsetTop - scrolledHeight) / 3 + 'px'
     } else {
       parallax.style.backgroundPositionY = '0'
     }
