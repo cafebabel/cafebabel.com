@@ -987,7 +987,7 @@ button.follow.active:after {
   transition: all 0.3s;
 }
 
-.create-article-page .tags #tags-suggestions:hover {
+.create-article-page .tags #tags-suggestions li:hover {
   background-color: #eeeeee;
   cursor: pointer;
 }

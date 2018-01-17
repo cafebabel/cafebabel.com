@@ -28,6 +28,17 @@ class Tags {
       tags._render()
     }
   }
+  handleSuggestion(tagsApi) {
+    const ul = this.suggestions.cloneNode(false)
+    tagsApi.forEach(tag => {
+      const li = `<li>${tag.name}</li>`
+      ul.insertAdjacentHTML('afterbegin', li)
+    })
+    this.suggestions.replaceWith(ul)
+    this.suggestions = ul
+    TagEventListener.addSuggestion()
+    this._activeSuggestionsList()
+  }
   _isTag(tag) {
     return this.values.includes(tag)
   }
@@ -62,6 +73,9 @@ class Tags {
   _activeSuggestionsList() {
     this.suggestions.classList.remove('inactive')
   }
+  _emptySuggestions() {
+    this.suggestions.innerHTML = ''
+  }
   _emptyAddField() {
     this.fieldAdd.value = ''
   }
@@ -80,7 +94,6 @@ class TagEffect {
         requestAnimationFrame(fade)
       }
     }
-    console.log('TOC FADE')
     element.style.opacity = 0
     fade()
   }
@@ -110,6 +123,15 @@ class TagEventListener {
       tags.addNewTag(submission)
     })
   }
+  static addSuggestion() {
+    const tags = new Tags()
+    tags.suggestions.querySelectorAll('li').forEach(li =>
+      li.addEventListener('click', event => {
+        const submission = event.target.innerText
+        tags.addNewTag(submission)
+      })
+    )
+  }
   static addRemoveListener() {
     const tags = new Tags()
     tags.removeButtons.forEach(button =>
@@ -121,17 +143,6 @@ class TagEventListener {
     )
   }
   static keyup() {
-    function handleSuggestion(submission) {
-      const tags = new Tags()
-      tags._activeSuggestionsList()
-      const li = `<li>${submission.name}</li>`
-      tags.suggestions.insertAdjacentHTML('beforeend', li)
-      tags.suggestions.addEventListener('click', event => {
-        const submission = event.target.innerText
-        tags.addNewTag(submission)
-      })
-    }
-
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
     inputNewTag.addEventListener('keypress', event => {
       /* Return if arrow up, arrow down or enter are pressed */
@@ -140,9 +151,10 @@ class TagEventListener {
       }
       if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
-      if (submission.length < 2) return
+      if (submission.length < 3) return
+      const tags = new Tags()
       request(`/article/tag/suggest/?language=en&terms=${submission}`)
-        .then(response => response.forEach(handleSuggestion))
+        .then(tagsApi => tags.handleSuggestion(tagsApi))
         .catch(console.error.bind(console))
     })
   }
