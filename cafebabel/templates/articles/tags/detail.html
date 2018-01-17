@@ -6,7 +6,7 @@
 {% block body_class %}article-tag{% endblock %}
 {% block body %}
   {% if tag.has_image %}
-    <img src="{{ tag.image_url }}" alt="Image for {{ tag.title }}">
+    <img src="{{ tag.image_url }}" alt="Image for {{ tag.name }}">
   {% endif %}
   <h1>{{ tag.name }}</h1>
   {% if tag.summary %}
