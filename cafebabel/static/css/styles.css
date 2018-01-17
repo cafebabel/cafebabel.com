@@ -1386,11 +1386,11 @@ textarea#body {
 }
 
 .article-language-selector span {
-    color: #bde513;
+  color: #bde513;
 }
 
 .article-language-selector li.translated-language a {
-    color: #b3b69b;
+  color: #b3b69b;
 }
 
 .share {
@@ -1452,6 +1452,53 @@ textarea#body {
 
 .flashes.hidden {
   bottom: -10rem;
+}
+
+/* Tag page */
+
+.tag-page .tag-header-default,
+.tag-page .tag-header-image {
+  position: absolute;
+  height: 70vh;
+  background: #e0e0e0;
+  top: 10rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.tag-page header {
+  position: relative;
+  background-color: #fff;
+  margin-top: 30vh;
+  text-align: center;
+  padding: 2rem 4rem;
+}
+
+@media screen and (min-width: 750px) {
+  .tag-page header {
+    max-width: 75rem;
+    margin: 30vh auto 2rem auto;
+  }
+}
+
+.tag-page .tag-header-image + header {
+  /*margin-top: 60vh;*/
+  margin-top: 90vh;
+}
+
+.tag-page header h1 {
+  border: none;
+  padding: 0;
+}
+
+.tag-page header h1:before {
+  content: '#';
+}
+
+.tag-page article {
+  max-width: 75rem;
+  margin: 2rem auto;
 }
 
 /* Footer */
