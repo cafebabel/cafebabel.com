@@ -935,18 +935,24 @@ h1.edit input {
   color: #696969;
 }
 
-.create-article-page .tags .tags-list li a {
+.create-article-page .tags .tags-list li button {
   position: absolute;
-  top: calc(50% - 0.7rem);
+  top: calc(50% - 1.4rem);
+  right: 1.7rem;
   color: #696969;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  z-index: 1;
 }
 
-.create-article-page .tags .tags-list li a:after {
+.create-article-page .tags .tags-list li button:after {
   font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.3rem;
   margin-left: 1rem;
-  cursor: pointer;
 }
 
 .create-article-page .tags .tag-container {
@@ -982,7 +988,7 @@ h1.edit input {
   transition: all 0.3s;
 }
 
-.create-article-page .tags #tags-suggestions:hover {
+.create-article-page .tags #tags-suggestions li:hover {
   background-color: #eeeeee;
   cursor: pointer;
 }
