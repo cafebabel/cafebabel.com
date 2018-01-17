@@ -1,9 +1,33 @@
 {% extends "base.html" %}
+{% from "_meta-macro.html" import meta without context %}
 
 {% block extra_js %}<script src={{ url_for('static', filename='js/tag-parallax.js') }}></script>{% endblock %}
 
 {% block meta_title %}{{ tag.name }}{% endblock %}
-{% block meta_description %}{{ tag.summary }}{% endblock %}
+{% block metas %}
+  {% if tag.summary %}
+    {{ meta('name=description', tag.summary) }}
+  {% endif %}
+{% endblock %}
+
+{% block metas_social %}
+  {{ meta('property=og:image', absolute(tag.image_url)) }}
+  {{ meta('property=og:url', request.url) }}
+  {{ meta('property=og:title', self.meta_title()) }}
+  {{ meta('property=og:type', 'article') }}
+  {% if tag.summary %}
+    {{ meta('property=og:description', tag.summary) }}
+  {% endif %}
+  {{ meta('property=og:site_name', 'Cafébabel') }}
+  {{ meta('property=og:locale', current_language) }}
+  {{ meta('name=twitter:card', 'summary') }}
+  {{ meta('name=twitter:image', absolute(tag.image_url)) }}
+  {{ meta('name=twitter:title', self.meta_title()) }}
+  {% if tag.summary %}
+    {{ meta('name=twitter:description', tag.summary) }}
+  {% endif %}
+  {{ meta('name=twitter:url', request.url) }}
+{% endblock %}
 
 {% block body_class %}tag-page{% endblock %}
 {% block body %}
