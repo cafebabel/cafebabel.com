@@ -59,6 +59,9 @@ class Tags {
   _inactiveSuggestionsList() {
     this.suggestions.classList.add('inactive')
   }
+  _activeSuggestionsList() {
+    this.suggestions.classList.remove('inactive')
+  }
   _emptyAddField() {
     this.fieldAdd.value = ''
   }
@@ -118,16 +121,14 @@ class TagEventListener {
     )
   }
   static keyup() {
-    function handleSuggestion(tag) {
-      const tagsSuggestion = document.querySelector('#tags-suggestions')
-      tagsSuggestion.innerHTML = ''
-      const li = document.createElement('li')
-      li.append(tag.name)
-      tagsSuggestion.appendChild(li)
-      tagsSuggestion.classList.remove('inactive')
-      tagsSuggestion.addEventListener('click', event => {
+    function handleSuggestion(submission) {
+      const tags = new Tags()
+      tags._activeSuggestionsList()
+      const li = `<li>${submission.name}</li>`
+      tags.suggestions.insertAdjacentHTML('beforeend', li)
+      tags.suggestions.addEventListener('click', event => {
         const submission = event.target.innerText
-        Tags.addNewTag(submission)
+        tags.addNewTag(submission)
       })
     }
 
@@ -139,10 +140,8 @@ class TagEventListener {
       }
       if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
-      const languages = document.querySelector('#language')
-      const language = languages.options[languages.selectedIndex].value
-      if (submission.length < 3) return
-      request(`/article/tag/suggest/?language=${language}&terms=${submission}`)
+      if (submission.length < 2) return
+      request(`/article/tag/suggest/?language=en&terms=${submission}`)
         .then(response => response.forEach(handleSuggestion))
         .catch(console.error.bind(console))
     })
