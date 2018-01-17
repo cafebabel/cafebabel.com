@@ -7,7 +7,18 @@
     {% if article.has_image %}
     <img src={{ article.image_url }} alt="Image for {{ article.title }}">
     {% endif %}
-    <h3>{{ article.title }}</h3>
-    <p>Article in {{ article.language }}</p>
+    <div class=article-detail>
+      <h3>{{ article.title }}</h3>
+      <p>
+        <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
+        — by {{ article.author }}<br>
+        Article in {{ article.language }}
+      </p>
+      <p class=tags-list>
+        {% for tag in article.tags -%}
+          <a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>
+        {%- endfor %}
+      </p>
+    </div>
   </a>
 </article>
