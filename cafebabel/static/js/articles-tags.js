@@ -1,14 +1,28 @@
 class Tags {
   constructor() {
-    const context = document.querySelector('.tags')
-    this.list = context.querySelector('.tags-list')
-    this.fieldAdd = context.querySelector('input[name=tag-new]')
-    this.buttonAdd = context.querySelector('button.add')
-    this.removeButtons = context.querySelectorAll('.tags-list li button')
-    this.suggestions = context.querySelector('#tags-suggestions')
+    this.context = document.querySelector('.tags')
     this.values = Array.from(this.list.querySelectorAll('input')).map(
       input => input.value
     )
+  }
+  get language() {
+    const languages = document.querySelector('#language')
+    return languages.options[languages.selectedIndex].value
+  }
+  get list() {
+    return this.context.querySelector('.tags-list')
+  }
+  get suggestions() {
+    return this.context.querySelector('#tags-suggestions')
+  }
+  get buttonAdd() {
+    return this.context.querySelector('button.add')
+  }
+  get fieldAdd() {
+    return this.context.querySelector('input[name=tag-new]')
+  }
+  get removeButtons() {
+    return this.context.querySelectorAll('.tags-list li button')
   }
   addNewTag(submission) {
     const tags = new Tags()
@@ -17,16 +31,13 @@ class Tags {
     tags._emptyAddField()
     tags._inactiveSuggestionsList()
     tags._render()
-    TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
   }
   removeTag(tagElement) {
     const submission = tagElement.innerText
     const tags = new Tags()
-    if (tags._isTag(submission)) {
-      tags._removeValue(submission)
-      TagEffect.fadeOut(tagElement).then(tags._render)
-      tags._render()
-    }
+    if (!tags._isTag(submission)) return
+    tags._removeValue(submission)
+    tags._render()
   }
   handleSuggestion(tagsApi) {
     this._activeSuggestionsList()
@@ -77,14 +88,15 @@ class Tags {
   _emptyAddField() {
     this.fieldAdd.value = ''
   }
-  _renderSuggestion(ul) {
-    this.suggestions.replaceWith(ul)
+  _renderSuggestion(container) {
+    this.suggestions.replaceWith(container)
     TagEventListener.addSuggestion()
   }
   _render() {
     const container = this.list.cloneNode(false)
     this.list.replaceWith(this._createTagsList(container, this.values))
     TagEventListener.addRemoveListener()
+    TagEffect.fadeIn(container.querySelector('li:last-child'))
   }
 }
 
@@ -104,15 +116,12 @@ class TagEffect {
       element.style.opacity = +element.style.opacity - 0.03
       if (element.style.opacity < 0) {
         element.style.display = 'none'
-        resolve()
       } else {
         requestAnimationFrame(fade)
       }
     }
-
     element.style.opacity = 1
-
-    return new Promise((resolve, reject) => fade())
+    fade()
   }
 }
 
@@ -162,7 +171,8 @@ class TagEventListener {
   }
 }
 
-TagEventListener.clickAdd()
-TagEventListener.keyup()
-
-window.addEventListener('load', () => TagEventListener.addRemoveListener())
+window.addEventListener('load', () => {
+  TagEventListener.addRemoveListener()
+  TagEventListener.clickAdd()
+  TagEventListener.keyup()
+})
