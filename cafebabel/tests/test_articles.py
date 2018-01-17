@@ -268,7 +268,7 @@ def test_access_published_article_should_link_translations(client, article,
              f'title-{translation.id}/>fr</a></li>') in response)
     assert ((f'<li class=to-translate-languages>'
              f'<a href="{url_for("translations.create")}'
-             f'?lang=es&original={article.id}">Español</a></li>') in response)
+             f'?lang=es&original={article.id}">es</a></li>') in response)
 
 
 def test_article_should_know_its_translations(client, article, translation):
