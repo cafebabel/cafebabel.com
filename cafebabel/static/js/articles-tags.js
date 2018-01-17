@@ -12,18 +12,19 @@ class Tags {
   get list() {
     return this.context.querySelector('.tags-list')
   }
-  get suggestions() {
-    return this.context.querySelector('#tags-suggestions')
-  }
-  get buttonAdd() {
-    return this.context.querySelector('button.add')
+  get removeButtons() {
+    return this.list.querySelectorAll('li button')
   }
   get fieldAdd() {
     return this.context.querySelector('input[name=tag-new]')
   }
-  get removeButtons() {
-    return this.context.querySelectorAll('.tags-list li button')
+  get buttonAdd() {
+    return this.context.querySelector('button.add')
   }
+  get suggestions() {
+    return this.context.querySelector('#tags-suggestions')
+  }
+
   addNewTag(submission) {
     const tags = new Tags()
     if (!submission || tags._isTag(submission)) return
