@@ -72,5 +72,4 @@ def test_tag_suggest_too_short(client, tag):
 def test_tag_suggest_wrong_language(client, tag):
     response = client.get('/article/tag/suggest/?language=ca&terms=wond')
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert (b"Languages available: ['en', 'fr', 'es', 'it', 'de']"
-            in response.data)
+    assert "Languages available: ['en', 'fr', 'es', 'it', 'de']" in response
