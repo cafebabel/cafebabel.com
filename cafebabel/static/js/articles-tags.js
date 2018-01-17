@@ -1,26 +1,61 @@
 class Tags {
   constructor() {
-    this.list = document.querySelector('.tags-list')
+    this.context = document.querySelector('.tags')
     this.values = Array.from(this.list.querySelectorAll('input')).map(
       input => input.value
     )
   }
-  checkSubmission(query) {
-    return query && !this._isTag(query)
+  get language() {
+    const languages = document.querySelector('#language')
+    return languages.options[languages.selectedIndex].value
   }
-  add(query) {
-    this.values = this.values.concat(query)
+  get list() {
+    return this.context.querySelector('.tags-list')
   }
-  remove(query) {
-    this.values = this.values.filter(value => value !== query)
+  get suggestions() {
+    return this.context.querySelector('#tags-suggestions')
   }
-  display() {
-    const container = this.list.cloneNode(false)
-    this.list.replaceWith(this._createTagsList(container, this.values))
-    TagEventListener.addRemoveListener()
+  get buttonAdd() {
+    return this.context.querySelector('button.add')
+  }
+  get fieldAdd() {
+    return this.context.querySelector('input[name=tag-new]')
+  }
+  get removeButtons() {
+    return this.context.querySelectorAll('.tags-list li button')
+  }
+  addNewTag(submission) {
+    const tags = new Tags()
+    if (!submission || tags._isTag(submission)) return
+    tags._addValue(submission)
+    tags._emptyAddField()
+    tags._inactiveSuggestionsList()
+    tags._render()
+  }
+  removeTag(tagElement) {
+    const submission = tagElement.innerText
+    const tags = new Tags()
+    if (!tags._isTag(submission)) return
+    tags._removeValue(submission)
+    tags._render()
+  }
+  handleSuggestion(tagsApi) {
+    this._activeSuggestionsList()
+    const ul = this.suggestions.cloneNode(false)
+    tagsApi.forEach(tag => {
+      const li = `<li>${tag.name}</li>`
+      ul.insertAdjacentHTML('afterbegin', li)
+    })
+    this._renderSuggestion(ul)
   }
   _isTag(tag) {
     return this.values.includes(tag)
+  }
+  _addValue(query) {
+    this.values = this.values.concat(query)
+  }
+  _removeValue(query) {
+    this.values = this.values.filter(value => value !== query)
   }
   _createTagsList(container, tagValues) {
     tagValues.forEach((tagValue, index) =>
@@ -36,10 +71,32 @@ class Tags {
     return `
       <li>
         ${tagValue}
-        <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden"><a>
-        </a>
+        <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden">
+        <button></button>
       </li>
     `
+  }
+  _inactiveSuggestionsList() {
+    this.suggestions.classList.add('inactive')
+  }
+  _activeSuggestionsList() {
+    this.suggestions.classList.remove('inactive')
+  }
+  _emptySuggestions() {
+    this.suggestions.innerHTML = ''
+  }
+  _emptyAddField() {
+    this.fieldAdd.value = ''
+  }
+  _renderSuggestion(container) {
+    this.suggestions.replaceWith(container)
+    TagEventListener.addSuggestion()
+  }
+  _render() {
+    const container = this.list.cloneNode(false)
+    this.list.replaceWith(this._createTagsList(container, this.values))
+    TagEventListener.addRemoveListener()
+    TagEffect.fadeIn(container.querySelector('li:last-child'))
   }
 }
 
@@ -51,7 +108,6 @@ class TagEffect {
         requestAnimationFrame(fade)
       }
     }
-
     element.style.opacity = 0
     fade()
   }
@@ -60,81 +116,63 @@ class TagEffect {
       element.style.opacity = +element.style.opacity - 0.03
       if (element.style.opacity < 0) {
         element.style.display = 'none'
-        resolve()
       } else {
         requestAnimationFrame(fade)
       }
     }
-
     element.style.opacity = 1
-
-    return new Promise((resolve, reject) => fade())
+    fade()
   }
 }
 
 class TagEventListener {
   static clickAdd() {
-    const tagButtonAdd = document.querySelector('.tags button.add')
-    tagButtonAdd.addEventListener('click', event => {
+    const tags = new Tags()
+    tags.buttonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
-      const tags = new Tags()
-      if (tags.checkSubmission(submission)) {
-        tags.add(submission)
-        tags.display()
-        TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
-        document.querySelector('.tags input[name=tag-new]').value = ''
-      }
+      tags.addNewTag(submission)
     })
   }
-  static clickRemove(tagButtonRemove) {
-    tagButtonRemove.addEventListener('click', event => {
-      const tags = new Tags()
-      const tagElement = event.target.parentNode
-      tags.remove(tagElement.innerText)
-      TagEffect.fadeOut(tagElement).then(tags.display)
-    })
+  static addSuggestion() {
+    const tags = new Tags()
+    tags.suggestions.querySelectorAll('li').forEach(li =>
+      li.addEventListener('click', event => {
+        const submission = event.target.innerText
+        tags.addNewTag(submission)
+      })
+    )
   }
   static addRemoveListener() {
-    const tagsButtonRemove = document.querySelectorAll('.tags-list li a')
-    tagsButtonRemove.forEach(TagEventListener.clickRemove)
+    const tags = new Tags()
+    tags.removeButtons.forEach(button =>
+      button.addEventListener('click', event => {
+        event.preventDefault()
+        const tagElement = event.target.parentNode
+        tags.removeTag(tagElement)
+      })
+    )
   }
   static keyup() {
-    function handleSuggestion(tag) {
-      const tagsSuggestion = document.querySelector('#tags-suggestions')
-      tagsSuggestion.innerHTML = ''
-      const li = document.createElement('li')
-      li.append(tag.name)
-      tagsSuggestion.appendChild(li)
-      tagsSuggestion.classList.remove('inactive')
-      tagsSuggestion.addEventListener('click', event => {
-        const submission = event.target.innerText
-        const tags = new Tags()
-        if (tags.checkSubmission(submission)) tags.add(submission)
-        tags.display()
-        li.remove()
-        document.querySelector('.tags input[name=tag-new]').value = ''
-        tagsSuggestion.classList.add('inactive')
-      })
-    }
-
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-    inputNewTag.addEventListener('keyup', event => {
+    inputNewTag.addEventListener('keypress', event => {
       /* Return if arrow up, arrow down or enter are pressed */
-      if (event.keyCode == 40 || event.keyCode == 38 || event.keyCode == 13)
+      if (event.keyCode == 13) {
         return
+      }
+      if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
-      const languages = document.querySelector('#language')
-      const language = languages.options[languages.selectedIndex].value
       if (submission.length < 3) return
-      request(`/article/tag/suggest/?language=${language}&terms=${submission}`)
-        .then(response => response.forEach(handleSuggestion))
+      const tags = new Tags()
+      request(`/article/tag/suggest/?language=en&terms=${submission}`)
+        .then(tagsApi => tags.handleSuggestion(tagsApi))
         .catch(console.error.bind(console))
     })
   }
 }
 
-TagEventListener.clickAdd()
-TagEventListener.keyup()
-
-window.addEventListener('load', () => TagEventListener.addRemoveListener())
+window.addEventListener('load', () => {
+  TagEventListener.addRemoveListener()
+  TagEventListener.clickAdd()
+  TagEventListener.keyup()
+})
