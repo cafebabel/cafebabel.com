@@ -3,7 +3,7 @@ from http import HTTPStatus
 from flask import (Blueprint, abort, current_app, flash, jsonify, redirect,
                    render_template, request, url_for)
 
-from ...core.helpers import editor_required
+from ...core.helpers import editor_required, current_language
 from ..models import Article
 from .models import Tag
 
@@ -42,7 +42,7 @@ def detail(slug):
 @tags.route('/<slug>/edit/', methods=['get', 'post'])
 @editor_required
 def edit(slug):
-    tag = Tag.objects.get_or_404(slug=slug)
+    tag = Tag.objects.get_or_404(slug=slug, language=current_language())
 
     if request.method == 'POST':
         tag.save_from_request(request)

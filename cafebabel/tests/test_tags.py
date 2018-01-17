@@ -103,8 +103,10 @@ def test_tag_detail_unknown(client, tag):
 
 
 def test_tag_update_basics(app, client, tag, editor):
+    Tag.objects.create(name='Wonderful',
+                       language=app.config['LANGUAGES'][1][0])
     login(client, editor.email, 'password')
-    language = app.config['LANGUAGES'][1][0]
+    language = app.config['LANGUAGES'][2][0]
     data = {
         'name': 'updated name',
         'language': language,
