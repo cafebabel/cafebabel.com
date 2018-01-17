@@ -2,13 +2,15 @@ class Tags {
   constructor() {
     const context = document.querySelector('.tags')
     this.list = context.querySelector('.tags-list')
-    this.buttonAdd = context.querySelector('input[name=tag-new]')
+    this.fieldAdd = context.querySelector('input[name=tag-new]')
+    this.buttonAdd = context.querySelector('button.add')
+    this.removeButtons = context.querySelectorAll('.tags-list li button')
     this.suggestions = context.querySelector('#tags-suggestions')
     this.values = Array.from(this.list.querySelectorAll('input')).map(
       input => input.value
     )
   }
-  static addNewTag(submission) {
+  addNewTag(submission) {
     const tags = new Tags()
     if (!submission || tags._isTag(submission)) return
     tags._addValue(submission)
@@ -17,7 +19,7 @@ class Tags {
     tags._render()
     TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
   }
-  static removeTag(tagElement) {
+  removeTag(tagElement) {
     const submission = tagElement.innerText
     const tags = new Tags()
     if (tags._isTag(submission)) {
@@ -58,7 +60,7 @@ class Tags {
     this.suggestions.classList.add('inactive')
   }
   _emptyAddField() {
-    this.buttonAdd.value = ''
+    this.fieldAdd.value = ''
   }
   _render() {
     const container = this.list.cloneNode(false)
@@ -98,20 +100,20 @@ class TagEffect {
 
 class TagEventListener {
   static clickAdd() {
-    const tagButtonAdd = document.querySelector('.tags button.add')
-    tagButtonAdd.addEventListener('click', event => {
+    const tags = new Tags()
+    tags.buttonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
-      Tags.addNewTag(submission)
+      tags.addNewTag(submission)
     })
   }
   static addRemoveListener() {
-    const tagsButtonRemove = document.querySelectorAll('.tags-list li button')
-    tagsButtonRemove.forEach(button =>
+    const tags = new Tags()
+    tags.removeButtons.forEach(button =>
       button.addEventListener('click', event => {
         event.preventDefault()
         const tagElement = event.target.parentNode
-        Tags.removeTag(tagElement)
+        tags.removeTag(tagElement)
       })
     )
   }
