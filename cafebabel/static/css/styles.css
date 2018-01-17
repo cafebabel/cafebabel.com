@@ -1454,43 +1454,6 @@ textarea#body {
   bottom: -10rem;
 }
 
-/* Tag page */
-
-.tag-page .tag-header-default,
-.tag-page .tag-header-image {
-  position: absolute;
-  height: 70vh;
-  background: #e0e0e0;
-  top: 10rem;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-
-.tag-page header {
-  position: relative;
-  background-color: #fff;
-  margin-top: 30vh;
-  text-align: center;
-  padding: 2rem 4rem;
-}
-
-.tag-page .tag-header-image + header {
-  margin-top: 60vh;
-}
-
-@media screen and (min-width: 750px) {
-  .tag-page header {
-    max-width: 75rem;
-    margin: 30vh auto 2rem auto;
-  }
-}
-
-.tag-page header h1 {
-  border: none;
-  padding: 0;
-}
-
 /* Footer */
 
 footer {
