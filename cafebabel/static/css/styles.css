@@ -887,11 +887,11 @@ button.follow.active:after {
   opacity: 0;
 }
 
-.create-article-page h1.edit {
+h1.edit {
   position: relative;
 }
 
-.create-article-page .edit label {
+h1.edit label {
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
@@ -900,12 +900,12 @@ button.follow.active:after {
   transition: all 0.2s;
 }
 
-.create-article-page .edit.active label {
+h1.edit.active label {
   font-size: 1.9rem;
   top: 2rem;
 }
 
-.create-article-page .edit input {
+h1.edit input {
   border: none;
   font-size: 4.2rem;
   font-weight: 600;
@@ -1457,7 +1457,8 @@ textarea#body {
 /* Tag page */
 
 .tag-page .tag-header-default,
-.tag-page .tag-header-image {
+.tag-page .tag-header-image,
+.tag-page-edit form .file {
   position: absolute;
   height: 70vh;
   background: #e0e0e0;
@@ -1470,16 +1471,10 @@ textarea#body {
 .tag-page header {
   position: relative;
   background-color: #fff;
-  margin-top: 30vh;
+  max-width: 75rem;
+  margin: 30vh auto 2rem auto;
   text-align: center;
   padding: 2rem 4rem;
-}
-
-@media screen and (min-width: 750px) {
-  .tag-page header {
-    max-width: 75rem;
-    margin: 30vh auto 2rem auto;
-  }
 }
 
 .tag-page .tag-header-image + header {
@@ -1498,6 +1493,24 @@ textarea#body {
 .tag-page article {
   max-width: 75rem;
   margin: 2rem auto;
+}
+
+/* Tag page edit */
+
+.tag-page-edit .edit-tag-detail-container {
+  position: relative;
+  max-width: 75rem;
+  margin: 30vh auto 2rem auto;
+  padding: 0 2rem;
+  background: #fff;
+}
+
+.tag-page-edit .edit-tag-detail-container h1 {
+  border: none;
+}
+
+.tag-page-edit form textarea {
+  min-height: 15rem;
 }
 
 /* Footer */

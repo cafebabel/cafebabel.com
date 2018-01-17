@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block body_class %}edit-tag-page{% endblock %}
+{% block body_class %}tag-page-edit{% endblock %}
 {% block body %}
 <form method=post action={{ url_for('tags.edit', slug=tag.slug) }} enctype=multipart/form-data>
   <input type=hidden name=slug value="{{ tag.slug }}">
@@ -15,27 +15,29 @@
     {% endif %}
     <input type=file id=image name=image>
   </div>
-  <h1 class="edit active">
-      <label for=name>Name</label>
-      <input id=name name=name value="{{ tag.name }}" required>
-  </h1>
-  <div class=tag-settings>
+  <div class=edit-tag-detail-container>
+    <h1 class="edit active">
+        <label for=name>Name</label>
+        <input id=name name=name value="{{ tag.name }}" required>
+    </h1>
+    <div class=textarea>
+      <label for=summary>Summary</label>
+      <textarea id=summary name=summary required>{{ tag.summary }}</textarea>
+    </div>
+    <div class=tag-settings>
       <div class=select>
-          <label for=language>
-              <select id=language name=language required>
-                  <optgroup label=Language>
-                      {% for language in get_languages() %}
-                      <option value={{language[0]}}{% if tag.language == language[0] %} selected{% endif %}>{{ language[1] }}</option>
-                      {% endfor %}
-                  </optgroup>
-              </select>
-          </label>
+        <label for=language>
+          <select id=language name=language required>
+            <optgroup label=Language>
+              {% for language in get_languages() %}
+                <option value={{language[0]}}{% if tag.language == language[0] %} selected{% endif %}>{{ language[1] }}</option>
+              {% endfor %}
+            </optgroup>
+          </select>
+        </label>
       </div>
+    </div>
+    <input type=submit value=Save>
   </div>
-  <div class=textarea>
-    <label for=summary>Summary</label>
-    <textarea id=summary name=summary required>{{ tag.summary }}</textarea>
-  </div>
-  <input type=submit value=Save>
 </form>
 {% endblock %}
