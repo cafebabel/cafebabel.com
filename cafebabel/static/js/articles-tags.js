@@ -1,7 +1,6 @@
 class Tags {
   constructor() {
-    const domContext = document.querySelector('.tags')
-    this.list = domContext.querySelector('.tags-list')
+    this.list = document.querySelector('.tags-list')
     this.values = Array.from(this.list.querySelectorAll('input')).map(
       input => input.value
     )
@@ -69,9 +68,7 @@ class TagEffect {
 
     element.style.opacity = 1
 
-    return new Promise((resolve, reject) => {
-      fade()
-    })
+    return new Promise((resolve, reject) => fade())
   }
 }
 
@@ -85,9 +82,7 @@ class TagEventListener {
       if (tags.checkSubmission(submission)) {
         tags.add(submission)
         tags.display()
-        TagEffect.fadeIn(
-          document.querySelector('.tags .tags-list li:last-child')
-        )
+        TagEffect.fadeIn(tags.list.querySelector('li:last-child'))
         document.querySelector('.tags input[name=tag-new]').value = ''
       }
     })
@@ -97,14 +92,12 @@ class TagEventListener {
       const tags = new Tags()
       const tagElement = event.target.parentNode
       tags.remove(tagElement.innerText)
-      TagEffect.fadeOut(tagElement).then(response => tags.display())
+      TagEffect.fadeOut(tagElement).then(tags.display)
     })
   }
   static addRemoveListener() {
-    const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
-    tagsButtonRemove.forEach(tagButtonRemove =>
-      TagEventListener.clickRemove(tagButtonRemove)
-    )
+    const tagsButtonRemove = document.querySelectorAll('.tags-list li a')
+    tagsButtonRemove.forEach(TagEventListener.clickRemove)
   }
   static keyup() {
     function handleSuggestion(tag) {
@@ -144,7 +137,4 @@ class TagEventListener {
 TagEventListener.clickAdd()
 TagEventListener.keyup()
 
-window.addEventListener('load', () => {
-  const tags = new Tags()
-  TagEventListener.addRemoveListener()
-})
+window.addEventListener('load', () => TagEventListener.addRemoveListener())
