@@ -12,6 +12,11 @@
   {% if tag.summary %}
     <p class=summary>{{ tag.summary }}</p>
   {% endif %}
+  {% if current_user.has_role('editor') %}
+    <p>
+      <a class=button href={{ url_for('tags.edit', slug=tag.slug) }}>Edit this tag</a>
+    </p>
+  {% endif %}
   {% for article in articles %}
     <article>
       <h2><a href={{ article.detail_url }}>{{ article.title }}</a></h2>
