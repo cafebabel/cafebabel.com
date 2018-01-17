@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "_meta-macro.html" import meta without context %}
 
-{% block extra_js %}<script src={{ url_for('static', filename='js/tag-tag-parallax.js') }}></script>{% endblock %}
+{% block extra_js %}<script src={{ url_for('static', filename='js/tag-parallax.js') }}></script>{% endblock %}
 
 {% block meta_title %}{{ tag.name }}{% endblock %}
 {% block metas %}
