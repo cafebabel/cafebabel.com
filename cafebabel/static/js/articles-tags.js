@@ -26,7 +26,6 @@ class Tags {
   }
 
   addNewTag(submission) {
-    const tags = new Tags()
     if (!submission || tags._isTag(submission)) return
     tags._addValue(submission)
     tags._emptyAddField()
@@ -35,13 +34,12 @@ class Tags {
   }
   removeTag(tagElement) {
     const submission = tagElement.innerText
-    const tags = new Tags()
     if (!tags._isTag(submission)) return
     tags._removeValue(submission)
     tags._render()
   }
   handleSuggestion(submission) {
-    _request(submission)
+    this._request(submission)
       .then(tagsApi => this._createSuggestionList(tagsApi))
       .catch(console.error.bind(console))
   }
@@ -138,7 +136,6 @@ class TagEffect {
 
 class TagEventListener {
   static clickAdd() {
-    const tags = new Tags()
     tags.buttonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
@@ -146,7 +143,6 @@ class TagEventListener {
     })
   }
   static addSuggestion() {
-    const tags = new Tags()
     tags.suggestions.querySelectorAll('li').forEach(li =>
       li.addEventListener('click', event => {
         const submission = event.target.innerText
@@ -155,7 +151,6 @@ class TagEventListener {
     )
   }
   static addRemoveListener() {
-    const tags = new Tags()
     tags.removeButtons.forEach(button =>
       button.addEventListener('click', event => {
         event.preventDefault()
@@ -174,12 +169,12 @@ class TagEventListener {
       if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
       if (submission.length < 3) return
-      const tags = new Tags()
       tags.handleSuggestion(submission)
     })
   }
 }
 
+const tags = new Tags()
 window.addEventListener('load', () => {
   TagEventListener.addRemoveListener()
   TagEventListener.clickAdd()
