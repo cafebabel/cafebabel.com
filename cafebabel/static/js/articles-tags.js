@@ -33,13 +33,7 @@ class Tags {
     return container
   }
   _createTag(tagValue, index) {
-    return `
-      <li>
-        ${tagValue}
-        <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden"><a>
-        </a>
-      </li>
-    `
+    return `<li>${tagValue}<input name="tag-${++index}" list="tags" value=${tagValue} type="hidden"><button></button></li>`
   }
 }
 
