@@ -40,14 +40,18 @@ class Tags {
     tags._removeValue(submission)
     tags._render()
   }
-  handleSuggestion(tagsApi) {
-    this._activeSuggestionsList()
-    const ul = this.suggestions.cloneNode(false)
-    tagsApi.forEach(tag => {
-      const li = `<li>${tag.name}</li>`
-      ul.insertAdjacentHTML('afterbegin', li)
-    })
-    this._renderSuggestion(ul)
+  handleSuggestion(submission) {
+    _request(submission)
+      .then(tagsApi => this._createSuggestionList(tagsApi))
+      .catch(console.error.bind(console))
+  }
+  _request(submission) {
+    return request(
+      `/article/tag/suggest/?language=${this.language}&terms=${submission}`
+    )
+  }
+  _isTagSaved(tag) {
+    return
   }
   _isTag(tag) {
     return this.values.includes(tag)
@@ -57,6 +61,15 @@ class Tags {
   }
   _removeValue(query) {
     this.values = this.values.filter(value => value !== query)
+  }
+  _createSuggestionList(tagsApi) {
+    this._activeSuggestionsList()
+    const ul = this.suggestions.cloneNode(false)
+    tagsApi.forEach(tag => {
+      const li = `<li>${tag.name}</li>`
+      ul.insertAdjacentHTML('afterbegin', li)
+    })
+    this._renderSuggestion(ul)
   }
   _createTagsList(container, tagValues) {
     tagValues.forEach((tagValue, index) =>
@@ -69,8 +82,7 @@ class Tags {
     return container
   }
   _createTag(tagValue, index) {
-    return `<li>
-        ${tagValue}
+    return `<li>${tagValue}
         <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden">
         <button></button>
       </li>`
@@ -163,11 +175,7 @@ class TagEventListener {
       const submission = event.target.value
       if (submission.length < 3) return
       const tags = new Tags()
-      request(
-        `/article/tag/suggest/?language=${tags.language}&terms=${submission}`
-      )
-        .then(tagsApi => tags.handleSuggestion(tagsApi))
-        .catch(console.error.bind(console))
+      tags.handleSuggestion(submission)
     })
   }
 }
