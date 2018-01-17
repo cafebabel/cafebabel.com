@@ -75,11 +75,14 @@ def test_tag_suggest_wrong_language(client, tag):
     assert "Languages available: ['en', 'fr', 'es', 'it', 'de']" in response
 
 
-def test_tag_detail(client, tag, published_article):
+def test_tag_detail(app, client, tag, published_article):
+    Tag.objects.create(name='Wonderful', summary='text chapo',
+                       language=app.config['LANGUAGES'][1][0])
     published_article.modify(tags=[tag])
     response = client.get('/article/tag/wonderful/')
     assert response.status_code == HTTPStatus.OK
     assert tag.name in response
+    assert tag.summary in response
     assert published_article.title in response
 
 
