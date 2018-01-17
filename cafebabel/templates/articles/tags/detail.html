@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from "_meta-macro.html" import meta without context %}
 
 {% block meta_title %}{{ tag.name }}{% endblock %}
 {% block meta_description %}{{ tag.summary }}{% endblock %}
@@ -10,11 +9,6 @@
     <img src="{{ tag.image_url }}" alt="Image for {{ tag.name }}">
   {% endif %}
   <h1>{{ tag.name }}</h1>
-  {% if current_user.has_role('editor') %}
-    <p>
-      <a class=button href={{ url_for('tags.edit', slug=tag.slug) }}>Edit this tag</a>
-    </p>
-  {% endif %}
   {% if tag.summary %}
     <p class=summary>{{ tag.summary }}</p>
   {% endif %}
