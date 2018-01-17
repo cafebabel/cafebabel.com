@@ -6,12 +6,6 @@ class Tags {
       input => input.value
     )
   }
-  static addTagsRemoveListener() {
-    const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
-    tagsButtonRemove.forEach(tagButtonRemove =>
-      Listener.clickRemove(tagButtonRemove)
-    )
-  }
   checkSubmission(query) {
     return query && !this._isTag(query)
   }
@@ -24,72 +18,78 @@ class Tags {
   display() {
     const container = this.list.cloneNode(false)
     this.list.replaceWith(this._createTagsList(container, this.values))
-    Tags.addTagsRemoveListener()
+    TagEventListener.addRemoveListener()
   }
   _isTag(tag) {
     return this.values.includes(tag)
   }
   _createTagsList(container, tagValues) {
     tagValues.forEach((tagValue, index) =>
-      container.appendChild(this._createTag(tagValue, index))
+      container.insertAdjacentHTML(
+        'beforeend',
+        this._createTag(tagValue, index)
+      )
     )
 
     return container
   }
   _createTag(tagValue, index) {
-    const li = document.createElement('li')
-    const input = document.createElement('input')
-    const a = document.createElement('a')
-    input.type = 'hidden'
-    input.name = `tag-${index + 1}`
-    input.setAttribute('list', 'tags')
-    input.value = tagValue
-    li.append(tagValue)
-    li.append(input)
-    li.append(a)
-
-    return li
+    return `
+      <li>
+        ${tagValue}
+        <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden"><a>
+        </a>
+      </li>
+    `
   }
 }
 
-class Effect {
+class TagEffect {
   static fadeIn(element) {
-    element.style.opacity = 0
-    ;(function fade() {
-      let val = parseFloat(element.style.opacity)
-      if (!((val += 0.03) > 1)) {
-        element.style.opacity = val
+    function fade() {
+      element.style.opacity = +element.style.opacity + 0.03
+      if (element.style.opacity <= 1) {
         requestAnimationFrame(fade)
       }
-    })()
+    }
+
+    element.style.opacity = 0
+    fade()
   }
   static fadeOut(element) {
+    function fade() {
+      element.style.opacity = +element.style.opacity - 0.03
+      if (element.style.opacity < 0) {
+        element.style.display = 'none'
+        resolve()
+      } else {
+        requestAnimationFrame(fade)
+      }
+    }
+
     element.style.opacity = 1
+
     return new Promise((resolve, reject) => {
-      ;(function fade() {
-        if ((element.style.opacity -= 0.03) < 0) {
-          element.style.display = 'none'
-          resolve()
-        } else {
-          requestAnimationFrame(fade)
-        }
-      })()
+      fade()
     })
   }
 }
 
-class Listener {
+class TagEventListener {
   static clickAdd() {
     const tagButtonAdd = document.querySelector('.tags button.add')
-
     tagButtonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
       const tags = new Tags()
-      if (tags.checkSubmission(submission)) tags.add(submission)
-      tags.display()
-      Effect.fadeIn(document.querySelector('.tags .tags-list li:last-child'))
-      document.querySelector('.tags input[name=tag-new]').value = ''
+      if (tags.checkSubmission(submission)) {
+        tags.add(submission)
+        tags.display()
+        TagEffect.fadeIn(
+          document.querySelector('.tags .tags-list li:last-child')
+        )
+        document.querySelector('.tags input[name=tag-new]').value = ''
+      }
     })
   }
   static clickRemove(tagButtonRemove) {
@@ -97,10 +97,15 @@ class Listener {
       const tags = new Tags()
       const tagElement = event.target.parentNode
       tags.remove(tagElement.innerText)
-      Effect.fadeOut(tagElement).then(response => tags.display())
+      TagEffect.fadeOut(tagElement).then(response => tags.display())
     })
   }
-
+  static addRemoveListener() {
+    const tagsButtonRemove = document.querySelectorAll('.tags .tags-list li a')
+    tagsButtonRemove.forEach(tagButtonRemove =>
+      TagEventListener.clickRemove(tagButtonRemove)
+    )
+  }
   static keyup() {
     function handleSuggestion(tag) {
       const tagsSuggestion = document.querySelector('#tags-suggestions')
@@ -121,7 +126,6 @@ class Listener {
     }
 
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-
     inputNewTag.addEventListener('keyup', event => {
       /* Return if arrow up, arrow down or enter are pressed */
       if (event.keyCode == 40 || event.keyCode == 38 || event.keyCode == 13)
@@ -137,10 +141,10 @@ class Listener {
   }
 }
 
-Listener.clickAdd()
-Listener.keyup()
+TagEventListener.clickAdd()
+TagEventListener.keyup()
 
 window.addEventListener('load', () => {
-  const tags = new Tags(document.querySelector('.tags'))
-  Tags.addTagsRemoveListener()
+  const tags = new Tags()
+  TagEventListener.addRemoveListener()
 })
