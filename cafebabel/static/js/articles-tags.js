@@ -48,8 +48,10 @@ class Tags {
       `/article/tag/suggest/?language=${this.language}&terms=${submission}`
     )
   }
-  _isTagSaved(tag) {
-    return
+  _isTagSaved(submission) {
+    return this._request(submission).then(
+      tagsApi => !!tagsApi.filter(tagApi => tagApi.name === submission).length
+    )
   }
   _isTag(tag) {
     return this.values.includes(tag)
