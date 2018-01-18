@@ -170,10 +170,7 @@ class TagEventListener {
   static keyup() {
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
     inputNewTag.addEventListener('keypress', event => {
-      /* Return if arrow up, arrow down or enter are pressed */
-      if (event.keyCode == 13) {
-        return
-      }
+      /* Return if arrow up, arrow down are pressed */
       if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
       if (submission.length < 3) return
