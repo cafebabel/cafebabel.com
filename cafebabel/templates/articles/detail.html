@@ -38,7 +38,11 @@
     <p>
       Tags:
       {% for tag in article.tags -%}
-        <a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>{% if loop.last %}.{% else %}, {% endif %}
+        {% if article.is_published %}
+          <a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>{% if loop.last %}.{% else %}, {% endif %}
+        {% else %}
+          {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
+        {% endif %}
       {%- endfor %}
     </p>
 
