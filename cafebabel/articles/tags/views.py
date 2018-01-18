@@ -34,7 +34,8 @@ def suggest():
 @tags.route('/<slug>/')
 def detail(slug):
     tag = Tag.objects.get_or_404(slug=slug, language=current_language())
-    articles = Article.objects(tags__in=[tag], status='published')
+    articles = (Article.objects(tags__in=[tag], status='published')
+                .order_by('-publication_date'))
     return render_template('articles/tags/detail.html', tag=tag,
                            articles=articles)
 
