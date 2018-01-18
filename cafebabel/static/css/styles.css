@@ -1463,12 +1463,12 @@ textarea#body {
 
 /* Tag page */
 
-.tag-page .tag-header-default,
-.tag-page .tag-header-image,
+.tag-page .tag-header.default,
+.tag-page .tag-header.image,
 .tag-page-edit form .file {
   position: absolute;
   height: 70vh;
-  background: #e0e0e0;
+  background: #e0e0e0 no-repeat center fixed;
   top: 10rem;
   left: 0;
   bottom: 0;
@@ -1484,7 +1484,7 @@ textarea#body {
   padding: 2rem 4rem;
 }
 
-.tag-page .tag-header-image + header {
+.tag-page .tag-header.image + header {
   margin-top: 60vh;
 }
 
