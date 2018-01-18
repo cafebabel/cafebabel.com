@@ -39,14 +39,14 @@ class Tags {
     tags._render()
   }
   handleSuggestion(submission) {
-    this._request(submission)
-      .then(tagsApi => this._createSuggestionList(tagsApi))
-      .catch(console.error.bind(console))
+    this._request(submission).then(tagsApi =>
+      this._createSuggestionList(tagsApi)
+    )
   }
   _request(submission) {
     return request(
       `/article/tag/suggest/?language=${this.language}&terms=${submission}`
-    )
+    ).catch(console.error.bind(console))
   }
   _isTagSaved(submission) {
     return this._request(submission).then(tagsApi =>
@@ -110,6 +110,7 @@ class Tags {
     const container = this.list.cloneNode(false)
     this._createTagsList(container, this.values).then(tagsList => {
       this.list.replaceWith(tagsList)
+      if (!this.values.length) return
       TagEventListener.addRemoveListener()
       TagEffect.fadeIn(this.list.querySelector('li:last-child'))
     })
@@ -146,6 +147,7 @@ class TagEventListener {
     tags.buttonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
+      if (submission.length < 3) return
       tags.addNewTag(submission)
     })
   }
@@ -168,7 +170,7 @@ class TagEventListener {
   }
   static keyup() {
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-    inputNewTag.addEventListener('keypress', event => {
+    inputNewTag.addEventListener('keyup', event => {
       /* Return if arrow up, arrow down are pressed */
       if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
