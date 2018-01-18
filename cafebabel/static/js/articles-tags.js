@@ -33,7 +33,7 @@ class Tags {
     tags._render()
   }
   removeTag(tagElement) {
-    const submission = tagElement.innerText
+    const submission = tagElement.innerText.trim()
     if (!tags._isTag(submission)) return
     tags._removeValue(submission)
     tags._render()
@@ -84,8 +84,7 @@ class Tags {
   _createTag(tagValue, index) {
     return this._isTagSaved(tagValue).then(
       isSave =>
-        `<li ${isSave ? 'class=saved' : ''}>
-          ${tagValue}
+        `<li ${isSave ? 'class=saved' : ''}>${tagValue}
           <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
           <button></button>
         </li>`
@@ -162,7 +161,7 @@ class TagEventListener {
     tags.removeButtons.forEach(button =>
       button.addEventListener('click', event => {
         event.preventDefault()
-        const tagElement = event.target.parentNode
+        const tagElement = event.target.parentElement
         tags.removeTag(tagElement)
       })
     )
