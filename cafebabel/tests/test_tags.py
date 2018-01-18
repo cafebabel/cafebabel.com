@@ -83,7 +83,8 @@ def test_tag_detail(app, client, tag, published_article):
     assert response.status_code == HTTPStatus.OK
     assert tag.name in response
     assert tag.summary in response
-    assert published_article.title in response
+    assert (f'<a href={published_article.detail_url }>'
+            f'{published_article.title}' in response)
 
 
 def test_tag_detail_draft(client, tag, article):
