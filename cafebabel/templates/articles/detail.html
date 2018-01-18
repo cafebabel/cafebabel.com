@@ -34,11 +34,10 @@
     <h1>{{ article.title }}</h1>
 
     {{ macros.article_meta(article) }}
-    {% if article.tags|length != 0 %}
+    {% if article.tags %}
       <p class=tags-list>
         {% for tag in article.tags -%}
-          {#<a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>#} <!-- next PR -->
-          {{ tag.name }}
+          {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
         {%- endfor %}
       </p>
     {% endif %}
