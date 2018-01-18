@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "_meta-macro.html" import meta without context %}
 
-{% block extra_js %}<script src={{ url_for('static', filename='js/tag-parallax.js') }}></script>{% endblock %}
+{% block extra_js %}<script src={{ url_for('static', filename='js/tag-detail.js') }}></script>{% endblock %}
 
 {% block meta_title %}{{ tag.name }}{% endblock %}
 {% block metas %}
@@ -31,16 +31,7 @@
 
 {% block body_class %}tag-page{% endblock %}
 {% block body %}
-  {% if tag.has_image %}
-    <div class=tag-header-image style="background:url({{ tag.image_url }}) no-repeat center 0 fixed"></div>
-  {% else %}
-    <div class=tag-header-default></div>
-  {% endif %}
-  {% if current_user.has_role('editor') %}
-    <p>
-      <a class=button href={{ url_for('tags.edit', slug=tag.slug) }}>Edit this tag</a>
-    </p>
-  {% endif %}
+  <div class=tag-header data-image={{ tag.image_url }}></div>
   <header>
     <h1>{{ tag.name }}</h1>
     {% if tag.summary %}
