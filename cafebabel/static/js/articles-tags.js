@@ -49,8 +49,8 @@ class Tags {
     )
   }
   _isTagSaved(submission) {
-    return this._request(submission).then(
-      tagsApi => !!tagsApi.filter(tagApi => tagApi.name === submission).length
+    return this._request(submission).then(tagsApi =>
+      tagsApi.some(tag => tag.name === submission)
     )
   }
   _isTag(tag) {
