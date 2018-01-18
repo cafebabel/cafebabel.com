@@ -31,13 +31,18 @@
 
 {% block body_class %}tag-page{% endblock %}
 {% block body %}
-  <div class=tag-header data-image='https://www.legalnomads.com/wp-content/uploads/2015/05/Resources-for-Digital-Nomads-smaller-size.jpg'></div>
+  <div class=tag-header data-image={{ tag.image_url }}></div>
   <header>
     <h1>{{ tag.name }}</h1>
     {% if tag.summary %}
       <p class=summary>{{ tag.summary }}</p>
     {% endif %}
   </header>
+  {% if current_user.has_role('editor') %}
+    <p>
+      <a class=button href={{ url_for('tags.edit', slug=tag.slug) }}>Edit this tag</a>
+    </p>
+  {% endif %}
   {% for article in articles %}
     {% include "articles/_card.html" %}
   {% endfor %}

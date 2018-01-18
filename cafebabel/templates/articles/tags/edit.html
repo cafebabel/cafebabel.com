@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body_class %}edit-tag-page{% endblock %}
+{% block body %}
+<form method=post action={{ url_for('tags.edit', slug=tag.slug) }} enctype=multipart/form-data>
+  <input type=hidden name=slug value="{{ tag.slug }}">
+  <div class=file>
+    <label for=image>Image</label>
+    {% if tag.has_image %}
+      <img src={{ tag.image_url }} alt="Image for {{ tag.name }}">
+      <div class=checkbox>
+        <label for=delete-image>Delete image</label>
+        <input type=checkbox name=delete-image id=delete-image value=1>
+      </div>
+    {% endif %}
+    <input type=file id=image name=image>
+  </div>
+  <h1>{{ tag.name }}</h1>
+  <div class=textarea>
+    <label for=summary>Summary</label>
+    <textarea id=summary name=summary required>{{ tag.summary }}</textarea>
+  </div>
+  <input type=submit value=Save>
+</form>
+{% endblock %}
