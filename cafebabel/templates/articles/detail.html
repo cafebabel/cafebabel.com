@@ -35,16 +35,13 @@
 
     {{ macros.article_meta(article) }}
 
-    <p>
-      Tags:
-      {% for tag in article.tags -%}
-        {% if article.is_published %}
-          <a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>{% if loop.last %}.{% else %}, {% endif %}
-        {% else %}
+    {% if article.tags %}
+      <p class=tags-list>
+        {% for tag in article.tags -%}
           {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
-        {% endif %}
-      {%- endfor %}
-    </p>
+        {%- endfor %}
+      </p>
+    {% endif %}
 
     <div class=article-language-selector>
       <ul>

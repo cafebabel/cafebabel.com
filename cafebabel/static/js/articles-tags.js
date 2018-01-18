@@ -33,31 +33,31 @@ class Tags {
     tags._render()
   }
   removeTag(tagElement) {
-    const submission = tagElement.innerText
+    const submission = tagElement.innerText.trim()
     if (!tags._isTag(submission)) return
     tags._removeValue(submission)
     tags._render()
   }
   handleSuggestion(submission) {
-    this._request(submission)
-      .then(tagsApi => this._createSuggestionList(tagsApi))
-      .catch(console.error.bind(console))
+    this._request(submission).then(tagsApi =>
+      this._createSuggestionList(tagsApi)
+    )
   }
   _request(submission) {
     return request(
       `/article/tag/suggest/?language=${this.language}&terms=${submission}`
-    )
+    ).catch(console.error.bind(console))
   }
   _isTagSaved(submission) {
-    return this._request(submission).then(
-      tagsApi => !!tagsApi.filter(tagApi => tagApi.name === submission).length
+    return this._request(submission).then(tagsApi =>
+      tagsApi.some(tag => tag.name === submission)
     )
   }
   _isTag(tag) {
     return this.values.includes(tag)
   }
   _addValue(query) {
-    this.values = this.values.concat(query)
+    this.values.push(query)
   }
   _removeValue(query) {
     this.values = this.values.filter(value => value !== query)
@@ -72,21 +72,23 @@ class Tags {
     this._renderSuggestion(ul)
   }
   _createTagsList(container, tagValues) {
-    tagValues.forEach((tagValue, index) =>
-      container.insertAdjacentHTML(
-        'beforeend',
-        this._createTag(tagValue, index)
-      )
-    )
-
-    return container
+    return Promise.all(
+      tagValues.map((tagValue, index) => this._createTag(tagValue, index))
+    ).then(tagsList => {
+      tagsList.forEach(tagItem => {
+        container.insertAdjacentHTML('beforeend', tagItem)
+      })
+      return container
+    })
   }
   _createTag(tagValue, index) {
-    return `<li>
-        ${tagValue}
-        <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
-        <button></button>
-      </li>`
+    return this._isTagSaved(tagValue).then(
+      isSave =>
+        `<li ${isSave ? 'class=saved' : ''}>${tagValue}
+          <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
+          <button></button>
+        </li>`
+    )
   }
   _inactiveSuggestionsList() {
     this.suggestions.classList.add('inactive')
@@ -106,9 +108,12 @@ class Tags {
   }
   _render() {
     const container = this.list.cloneNode(false)
-    this.list.replaceWith(this._createTagsList(container, this.values))
-    TagEventListener.addRemoveListener()
-    TagEffect.fadeIn(container.querySelector('li:last-child'))
+    this._createTagsList(container, this.values).then(tagsList => {
+      this.list.replaceWith(tagsList)
+      if (!this.values.length) return
+      TagEventListener.addRemoveListener()
+      TagEffect.fadeIn(this.list.querySelector('li:last-child'))
+    })
   }
 }
 
@@ -142,6 +147,7 @@ class TagEventListener {
     tags.buttonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
+      if (submission.length < 3) return
       tags.addNewTag(submission)
     })
   }
@@ -157,18 +163,15 @@ class TagEventListener {
     tags.removeButtons.forEach(button =>
       button.addEventListener('click', event => {
         event.preventDefault()
-        const tagElement = event.target.parentNode
+        const tagElement = event.target.parentElement
         tags.removeTag(tagElement)
       })
     )
   }
   static keyup() {
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-    inputNewTag.addEventListener('keypress', event => {
-      /* Return if arrow up, arrow down or enter are pressed */
-      if (event.keyCode == 13) {
-        return
-      }
+    inputNewTag.addEventListener('keyup', event => {
+      /* Return if arrow up, arrow down are pressed */
       if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
       if (submission.length < 3) return
