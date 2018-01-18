@@ -1387,8 +1387,30 @@ textarea#body {
 
 .article-language-selector li {
   display: inline-block;
+  margin: 0 0.2rem;
+  text-align: center;
+}
+
+.article-language-selector li a,
+.article-language-selector li span {
   padding: 1rem;
-  border: 0.1rem solid;
+  background-color: #eeeeee;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  transition: all 0.3s;
+}
+
+.article-language-selector li span {
+  display: block;
+}
+
+.article-language-selector li a:hover {
+  background-color: #e2e2e2;
+}
+
+.article-language-selector li a:after {
+  width: 0;
 }
 
 .article-language-selector span {
