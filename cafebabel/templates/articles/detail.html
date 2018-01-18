@@ -34,12 +34,14 @@
     <h1>{{ article.title }}</h1>
 
     {{ macros.article_meta(article) }}
-    <p class=tags-list>
-      {% for tag in article.tags -%}
-        {#<a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>#} <!-- next PR -->
-        {{ tag.name }}
-      {%- endfor %}
-    </p>
+    {% if article.tags|length != 0 %}
+      <p class=tags-list>
+        {% for tag in article.tags -%}
+          {#<a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>#} <!-- next PR -->
+          {{ tag.name }}
+        {%- endfor %}
+      </p>
+    {% endif %}
 
     <div class=article-language-selector>
       <ul>
