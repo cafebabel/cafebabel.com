@@ -57,7 +57,7 @@ class Tags {
     return this.values.includes(tag)
   }
   _addValue(query) {
-    this.values = this.values.concat(query)
+    this.values.push(query)
   }
   _removeValue(query) {
     this.values = this.values.filter(value => value !== query)
@@ -72,21 +72,24 @@ class Tags {
     this._renderSuggestion(ul)
   }
   _createTagsList(container, tagValues) {
-    tagValues.forEach((tagValue, index) =>
-      container.insertAdjacentHTML(
-        'beforeend',
-        this._createTag(tagValue, index)
-      )
-    )
-
-    return container
+    return Promise.all(
+      tagValues.map((tagValue, index) => this._createTag(tagValue, index))
+    ).then(tagsList => {
+      tagsList.forEach(tagItem => {
+        container.insertAdjacentHTML('beforeend', tagItem)
+      })
+      return container
+    })
   }
   _createTag(tagValue, index) {
-    return `<li>
-        ${tagValue}
-        <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
-        <button></button>
-      </li>`
+    return this._isTagSaved(tagValue).then(
+      isSave =>
+        `<li ${isSave ? 'class=saved' : ''}>
+          ${tagValue}
+          <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
+          <button></button>
+        </li>`
+    )
   }
   _inactiveSuggestionsList() {
     this.suggestions.classList.add('inactive')
@@ -106,9 +109,11 @@ class Tags {
   }
   _render() {
     const container = this.list.cloneNode(false)
-    this.list.replaceWith(this._createTagsList(container, this.values))
-    TagEventListener.addRemoveListener()
-    TagEffect.fadeIn(container.querySelector('li:last-child'))
+    this._createTagsList(container, this.values).then(tagsList => {
+      this.list.replaceWith(tagsList)
+      TagEventListener.addRemoveListener()
+      TagEffect.fadeIn(this.list.querySelector('li:last-child'))
+    })
   }
 }
 

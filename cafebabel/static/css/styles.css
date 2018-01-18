@@ -928,10 +928,15 @@ button.follow.active:after {
 .create-article-page .tags .tags-list li {
   position: relative;
   padding: 1rem 4rem 1rem 2rem;
-  background-color: #eeeeee;
+  background-color: #eee;
   display: inline-block;
   margin: 0 2rem 2rem 0;
-  color: #696969;
+  color: #bbb1b1;
+}
+
+.create-article-page .tags .tags-list li.saved {
+  background-color: #ddd;
+  color: #aca3a3;
 }
 
 .create-article-page .tags .tags-list li button {
