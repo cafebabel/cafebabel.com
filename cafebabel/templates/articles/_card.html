@@ -1,6 +1,6 @@
 <article>
   {% if article.has_image %}
-    <img src={{ article.image_url }} alt="Image for {{ article.title }}">
+    <a href={{ article.detail_url }}><img src={{ article.image_url }} alt="Image for {{ article.title }}"></a>
   {% endif %}
   <div class=article-detail>
     <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>
