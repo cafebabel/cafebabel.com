@@ -12,20 +12,20 @@ class Tags {
   get list() {
     return this.context.querySelector('.tags-list')
   }
-  get suggestions() {
-    return this.context.querySelector('#tags-suggestions')
-  }
-  get buttonAdd() {
-    return this.context.querySelector('button.add')
+  get removeButtons() {
+    return this.list.querySelectorAll('li button')
   }
   get fieldAdd() {
     return this.context.querySelector('input[name=tag-new]')
   }
-  get removeButtons() {
-    return this.context.querySelectorAll('.tags-list li button')
+  get buttonAdd() {
+    return this.context.querySelector('button.add')
   }
+  get suggestions() {
+    return this.context.querySelector('#tags-suggestions')
+  }
+
   addNewTag(submission) {
-    const tags = new Tags()
     if (!submission || tags._isTag(submission)) return
     tags._addValue(submission)
     tags._emptyAddField()
@@ -34,19 +34,24 @@ class Tags {
   }
   removeTag(tagElement) {
     const submission = tagElement.innerText
-    const tags = new Tags()
     if (!tags._isTag(submission)) return
     tags._removeValue(submission)
     tags._render()
   }
-  handleSuggestion(tagsApi) {
-    this._activeSuggestionsList()
-    const ul = this.suggestions.cloneNode(false)
-    tagsApi.forEach(tag => {
-      const li = `<li>${tag.name}</li>`
-      ul.insertAdjacentHTML('afterbegin', li)
-    })
-    this._renderSuggestion(ul)
+  handleSuggestion(submission) {
+    this._request(submission)
+      .then(tagsApi => this._createSuggestionList(tagsApi))
+      .catch(console.error.bind(console))
+  }
+  _request(submission) {
+    return request(
+      `/article/tag/suggest/?language=${this.language}&terms=${submission}`
+    )
+  }
+  _isTagSaved(submission) {
+    return this._request(submission).then(
+      tagsApi => !!tagsApi.filter(tagApi => tagApi.name === submission).length
+    )
   }
   _isTag(tag) {
     return this.values.includes(tag)
@@ -56,6 +61,15 @@ class Tags {
   }
   _removeValue(query) {
     this.values = this.values.filter(value => value !== query)
+  }
+  _createSuggestionList(tagsApi) {
+    this._activeSuggestionsList()
+    const ul = this.suggestions.cloneNode(false)
+    tagsApi.forEach(tag => {
+      const li = `<li>${tag.name}</li>`
+      ul.insertAdjacentHTML('afterbegin', li)
+    })
+    this._renderSuggestion(ul)
   }
   _createTagsList(container, tagValues) {
     tagValues.forEach((tagValue, index) =>
@@ -68,13 +82,11 @@ class Tags {
     return container
   }
   _createTag(tagValue, index) {
-    return `
-      <li>
+    return `<li>
         ${tagValue}
-        <input name="tag-${++index}" list="tags" value=${tagValue} type="hidden">
+        <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
         <button></button>
-      </li>
-    `
+      </li>`
   }
   _inactiveSuggestionsList() {
     this.suggestions.classList.add('inactive')
@@ -127,7 +139,6 @@ class TagEffect {
 
 class TagEventListener {
   static clickAdd() {
-    const tags = new Tags()
     tags.buttonAdd.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
@@ -135,7 +146,6 @@ class TagEventListener {
     })
   }
   static addSuggestion() {
-    const tags = new Tags()
     tags.suggestions.querySelectorAll('li').forEach(li =>
       li.addEventListener('click', event => {
         const submission = event.target.innerText
@@ -144,7 +154,6 @@ class TagEventListener {
     )
   }
   static addRemoveListener() {
-    const tags = new Tags()
     tags.removeButtons.forEach(button =>
       button.addEventListener('click', event => {
         event.preventDefault()
@@ -163,16 +172,12 @@ class TagEventListener {
       if (event.keyCode == 40 || event.keyCode == 38) return
       const submission = event.target.value
       if (submission.length < 3) return
-      const tags = new Tags()
-      request(
-        `/article/tag/suggest/?language=${tags.language}&terms=${submission}`
-      )
-        .then(tagsApi => tags.handleSuggestion(tagsApi))
-        .catch(console.error.bind(console))
+      tags.handleSuggestion(submission)
     })
   }
 }
 
+const tags = new Tags()
 window.addEventListener('load', () => {
   TagEventListener.addRemoveListener()
   TagEventListener.clickAdd()
