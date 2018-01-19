@@ -1355,6 +1355,7 @@ h1.edit input {
 
 .article-page article h1 + p {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
 .article-page article h1 + p span {
@@ -1367,6 +1368,12 @@ h1.edit input {
   width: 8rem;
   border-radius: 50%;
   margin: 1rem auto 0.5rem;
+}
+
+.article-page .tags-list {
+  display: inline-block;
+  transform: translateX(-50%);
+  margin: 0 0 3rem 50%;
 }
 
 .article-page article h3 {
@@ -1554,7 +1561,8 @@ textarea#body {
   font-family: serif;
 }
 
-.article-detail .tags-list a {
+.article-detail .tags-list a,
+.article-page .tags-list a {
   position: relative;
   font-size: 1.6rem;
   padding: 0.5rem 1rem;
@@ -1564,19 +1572,30 @@ textarea#body {
   color: #696969;
 }
 
-.article-detail .tags-list a:before {
+.article-detail .tags-list a:after,
+.article-page .tags-list a:after {
+  content: none;
+}
+
+.article-detail .tags-list a:before,
+.article-page .tags-list a:before {
   content: '#';
 }
 
-.article-detail .tags-list a:hover {
+.article-detail .tags-list a:hover,
+.article-page .tags-list a:hover {
   background-color: #e2e2e2;
 }
 
-.article-detail .tags-list a:hover:after {
+.article-detail .tags-list a:hover:after,
+.article-page .tags-list a:hover:after {
   width: 0;
 }
 
 /* Tag page edit */
+
+.tag-page-edit form .file {
+}
 
 .tag-page-edit .edit-tag-detail-container {
   position: relative;
@@ -1584,14 +1603,27 @@ textarea#body {
   margin: 30vh auto 2rem auto;
   padding: 0 2rem;
   background: #fff;
+  text-align: center;
 }
 
 .tag-page-edit .edit-tag-detail-container h1 {
   border: none;
+  display: inline-block;
+  padding: 0;
 }
 
-.tag-page-edit form textarea {
+.tag-page-edit .edit-tag-detail-container h1:before {
+  content: '#';
+}
+
+.tag-page-edit .edit-tag-detail-container textarea {
   min-height: 15rem;
+  text-align: center;
+  margin: 0;
+}
+
+.tag-page-edit .edit-tag-detail-container input[type='submit'] {
+  display: inline-block;
 }
 
 /* Footer */
