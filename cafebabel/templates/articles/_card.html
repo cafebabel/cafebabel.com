@@ -1,13 +1,18 @@
 <article>
-  {% if article.is_published %}
-  <a href={{ url_for('articles.detail', article_id=article.id, slug=article.slug) }}>
-  {% else %}
-  <a href={{ url_for('drafts.detail', draft_id=article.id) }}>
+  {% if article.has_image %}
+    <a href={{ article.detail_url }}><img src={{ article.image_url }} alt="Image for {{ article.title }}"></a>
   {% endif %}
-    {% if article.has_image %}
-    <img src={{ article.image_url }} alt="Image for {{ article.title }}">
-    {% endif %}
-    <h3>{{ article.title }}</h3>
-    <p>Article in {{ article.language }}</p>
-  </a>
+  <div class=article-detail>
+    <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>
+    <p>
+      <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
+      — by {{ article.author }}<br>
+      Article in {{ article.language }}
+    </p>
+    <p class=tags-list>
+      {% for tag in article.tags -%}
+        <a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>
+      {%- endfor %}
+    </p>
+  </div>
 </article>

@@ -19,7 +19,7 @@ class BaseConfig:
         ('fr', 'Français'),
         ('es', 'Español'),
         ('it', 'Italiano'),
-        ('de', 'Deutch'),
+        ('de', 'Deutsch'),
     )
 
     CATEGORIES = ['society', 'lifestyle', 'politics', 'culture']
@@ -59,6 +59,15 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
+    BASE_IMAGES_PATH = (
+        Path(__file__).parent / 'cafebabel' / 'static' / 'uploads')
+    ARTICLES_IMAGES_PATH = BASE_IMAGES_PATH / 'articles'
+    ARTICLES_IMAGES_URL = 'uploads/articles'
+    TAGS_IMAGES_PATH = BASE_IMAGES_PATH / 'tags'
+    TAGS_IMAGES_URL = 'uploads/tags'
+    USERS_IMAGES_PATH = BASE_IMAGES_PATH / 'users'
+    USERS_IMAGES_URL = 'uploads/users'
+    USERS_IMAGE_MAX_LENGTH = 1024 * 500  # Ko
 
     DOMAIN_LANGUAGES = {
         'fr': 'cafebabel.fr',
@@ -67,14 +76,6 @@ class BaseConfig:
         'es': 'cafebabel.es',
         'it': 'cafebabel.it',
     }
-
-    ARTICLES_IMAGES_URL = 'uploads/articles'
-    ARTICLES_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
-                            / 'uploads' / 'articles')
-    USERS_IMAGES_URL = 'uploads/users'
-    USERS_IMAGES_PATH = (Path(__file__).parent / 'cafebabel' / 'static'
-                         / 'uploads' / 'users')
-    USERS_IMAGE_MAX_LENGTH = 1024 * 500  # Ko
 
 
 class PreprodConfig(BaseConfig):
@@ -114,6 +115,7 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
     ARTICLES_IMAGES_PATH = Path(mkdtemp())
     USERS_IMAGES_PATH = Path(mkdtemp())
+    TAGS_IMAGES_PATH = Path(mkdtemp())
     DEBUG_TB_ENABLED = False
 
     DOMAIN_LANGUAGES = {'en': 'localhost'}

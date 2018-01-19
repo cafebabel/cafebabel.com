@@ -5,7 +5,6 @@ from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
 
-
 mail = Mail()
 db = MongoEngine()
 security = Security()
@@ -53,12 +52,14 @@ def register_blueprints(app):
     from .articles.views import articles
     from .articles.drafts.views import drafts
     from .articles.proposals.views import proposals
+    from .articles.tags.views import tags
     from .articles.translations.views import translations
     from .core.views import cores
     from .users.views import users
 
     app.register_blueprint(cores, url_prefix='/')
     app.register_blueprint(articles, url_prefix='/article')
+    app.register_blueprint(tags, url_prefix='/article/tag')
     app.register_blueprint(drafts, url_prefix='/article/draft')
     app.register_blueprint(proposals, url_prefix='/article/proposal')
     app.register_blueprint(translations, url_prefix='/article/translation')
@@ -66,22 +67,22 @@ def register_blueprints(app):
 
 
 def register_cli(app):
-    import click
+    from .commands import (articles_fixtures, auth_fixtures, drop_collections,
+                           relations_fixtures, tags_fixtures)
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
-        from cafebabel.users.models import Role, User
-        from cafebabel.articles.models import Article
-        Role.drop_collection()
-        User.drop_collection()
-        Article.drop_collection()
-        click.echo('Roles, Users and Articles dropped.')
-        Role.objects.create(name='editor')
-        admin_role = Role.objects.create(name='admin')
-        admin_user = app.user_datastore.create_user(
-            email='admin@example.com', password='password')
-        app.user_datastore.add_role_to_user(admin_user, admin_role)
-        click.echo('DB intialized.')
+        drop_collections()
+        auth_fixtures(app)
+        articles_fixtures(app)
+        tags_fixtures(app)
+        relations_fixtures(app)
+
+    @app.cli.command(short_help='Load articles and tags fixtures')
+    def load_fixtures():
+        articles_fixtures(app)
+        tags_fixtures(app)
+        relations_fixtures(app)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():

@@ -1,11 +1,12 @@
 from http import HTTPStatus
-from pathlib import Path
 from io import BytesIO
+from pathlib import Path
 
 from flask import url_for
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
+from ..articles.tags.models import Tag
 from .utils import login
 
 
@@ -80,27 +81,27 @@ def test_access_old_slug_article_should_return_301(client, published_article):
 
 def test_access_article_form_regular_user_should_return_403(client, user,
                                                             article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.get(f'/article/{article.id}/edit/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
 def test_access_published_article_form_should_return_200(client, editor,
                                                          published_article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get(f'/article/{published_article.id}/edit/')
     assert response.status_code == HTTPStatus.OK
 
 
 def test_access_no_article_form_should_return_404(client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get(f'/article/foobarbazquxquuxquuzcorg/edit/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
 def test_update_published_article_should_return_200(app, client, user, editor,
                                                     published_article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     data = {
         'title': 'updated',
         'author': user.id,
@@ -115,9 +116,60 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     assert published_article.author == user
 
 
+def test_update_published_article_to_draft_redirect(app, client, user, editor,
+                                                    published_article):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'language': app.config['LANGUAGES'][1][0],
+        'status': 'draft'
+    }
+    response = client.post(f'/article/{published_article.id}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+
+
+def test_update_published_article_with_tag(app, client, user, editor, tag,
+                                           published_article):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'language': app.config['LANGUAGES'][0][0],
+        'tag-1': tag.name
+    }
+    response = client.post(f'/article/{published_article.id}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your article was successfully saved.']
+    published_article.reload()
+    assert published_article.tags == [tag]
+
+
+def test_update_published_article_with_unkown_tag(app, client, user, editor,
+                                                  tag, published_article):
+    login(client, editor.email, 'password')
+    language = app.config['LANGUAGES'][0][0]
+    tag2 = Tag.objects.create(name='Sensational', language=language)
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'language': language,
+        'tag-1': tag.name,
+        'tag-2': tag2.name
+    }
+    response = client.post(f'/article/{published_article.id}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your article was successfully saved.']
+    published_article.reload()
+    assert published_article.tags == [tag, tag2]
+
+
 def test_update_article_with_image_should_return_200(app, client, user, editor,
                                                      published_article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image_content = BytesIO(content.read())
     data = {
@@ -143,7 +195,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
 
 def test_update_article_with_user_should_return_403(client, user,
                                                     published_article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     data = {
         'title': 'updated',
         'author': user.id
@@ -156,7 +208,7 @@ def test_update_article_with_user_should_return_403(client, user,
 
 def test_update_unpublished_article_should_return_404(client, user, editor,
                                                       article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     data = {
         'title': 'updated',
         'author': user.id
@@ -168,7 +220,7 @@ def test_update_unpublished_article_should_return_404(client, user, editor,
 
 
 def test_delete_article_should_return_200(client, editor, article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post(f'/article/{article.id}/delete/',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
@@ -177,7 +229,7 @@ def test_delete_article_should_return_200(client, editor, article):
 
 
 def test_delete_article_regular_user_should_return_403(client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.FORBIDDEN
     assert Article.objects.all().count() == 1
@@ -191,7 +243,7 @@ def test_delete_article_no_user_should_redirect(client, user, article):
 
 
 def test_delete_incorrect_id_should_return_404(client, editor, article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post(f'/article/{article.id}foo/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert Article.objects.all().count() == 1
@@ -199,7 +251,7 @@ def test_delete_incorrect_id_should_return_404(client, editor, article):
 
 def test_delete_inexistent_article_should_return_404(client, editor, article):
     article.delete()
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post(f'/article/{article.id}/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
@@ -216,7 +268,7 @@ def test_access_published_article_should_link_translations(client, article,
              f'title-{translation.id}/>fr</a></li>') in response)
     assert ((f'<li class=to-translate-languages>'
              f'<a href="{url_for("translations.create")}'
-             f'?lang=es&original={article.id}">Español</a></li>') in response)
+             f'?lang=es&original={article.id}">es</a></li>') in response)
 
 
 def test_article_should_know_its_translations(client, article, translation):
@@ -289,3 +341,23 @@ def test_article_to_translate_should_have_only_other_links(
     article.modify(language=language)
     response = client.get(f'/article/to-translate/?from=en&to=fr')
     assert 'Translate in ' not in response
+
+
+def test_article_with_tag(app, tag, article):
+    Article.objects(id=article.id).update_one(push__tags=tag)
+    assert Article.objects(tags__in=[tag]).count() == 1
+    article2 = Article.objects(tags__in=[tag]).first()
+    assert article2.tags[0].summary == 'summary text'
+    Article.objects(id=article.id).update_one(pull__tags=tag)
+    assert Article.objects(tags__in=[tag]).count() == 0
+
+
+def test_article_detail_contains_tags(client, app, tag, published_article):
+    language = app.config['LANGUAGES'][0][0]
+    tag2 = Tag.objects.create(name='Sensational', language=language)
+    published_article.modify(tags=[tag, tag2])
+    response = client.get(
+        f'/article/{published_article.slug}-{published_article.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert '<a href=/article/tag/wonderful/>Wonderful</a>' in response
+    assert '<a href=/article/tag/sensational/>Sensational</a>' in response

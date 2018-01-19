@@ -46,8 +46,7 @@ def edit(article_id):
     if request.method == 'POST':
         article.save_from_request(request)
         flash('Your article was successfully saved.')
-        return redirect(
-            url_for('.detail', article_id=article.id, slug=article.slug))
+        return redirect(article.detail_url)
 
     authors = User.objects.all()
     return render_template(

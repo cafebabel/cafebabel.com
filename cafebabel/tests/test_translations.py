@@ -24,7 +24,7 @@ def test_translation_query_should_retrieve_all(app, article, translation):
 
 
 def test_translation_creation_should_display_form(app, client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     language = app.config['LANGUAGES'][1][0]
     response = client.get(
         f'/article/translation/new/?lang={language}&original={article.id}')
@@ -34,7 +34,7 @@ def test_translation_creation_should_display_form(app, client, user, article):
 
 def test_translation_creation_should_limit_languages(app, client, user,
                                                      translation):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.get(f'/article/draft/{translation.original_article.id}/')
     assert response.status_code == HTTPStatus.OK
     assert ('href="/article/translation/new/?lang='
@@ -54,7 +54,7 @@ def test_translation_creation_requires_login(app, client, article):
 
 
 def test_translation_creation_required_parameters(app, client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     language = app.config['LANGUAGES'][1][0]
     response = client.get(f'/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.BAD_REQUEST
@@ -66,7 +66,7 @@ def test_translation_creation_required_parameters(app, client, user, article):
 
 
 def test_translation_creation_should_redirect(app, client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     language = app.config['LANGUAGES'][1][0]
     data = {
         'title': 'title',
@@ -85,7 +85,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
 
 
 def test_translation_creation_already_existing(app, client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     language = app.config['LANGUAGES'][1][0]
     translation = Translation(
         title='foo', summary='summary', body='bar',
@@ -105,7 +105,7 @@ def test_translation_creation_already_existing(app, client, user, article):
 
 
 def test_translation_creation_same_as_article(app, client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     data = {
         'title': 'Test article',
         'body': 'Article body',
@@ -118,7 +118,7 @@ def test_translation_creation_same_as_article(app, client, user, article):
 
 
 def test_translation_creation_unknown_article(app, client, user, article):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     language = app.config['LANGUAGES'][1][0]
     data = {
         'title': 'Test article',
@@ -160,7 +160,7 @@ def test_translation_access_wrong_id_should_return_404(client, translation):
 
 
 def test_translation_update_should_display_form(client, user, translation):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.get(f'/article/translation/{translation.id}/edit/')
     assert response.status_code == HTTPStatus.OK
     assert ('<textarea id=body name=body required>body text</textarea>'
@@ -175,7 +175,7 @@ def test_translation_update_requires_login(client, translation):
 
 
 def test_translation_update_values_should_redirect(client, user, translation):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     data = {
         'title': 'Modified title',
         'summary': 'Modified summary',

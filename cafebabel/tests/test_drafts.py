@@ -5,6 +5,7 @@ from io import BytesIO
 from flask import request
 
 from ..articles.models import Article
+from ..articles.tags.models import Tag
 from .utils import login
 
 
@@ -15,14 +16,14 @@ def test_create_draft_requires_authentication(client):
 
 
 def test_create_draft_should_display_form(client, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get('/article/draft/new/')
     assert response.status_code == 200
     assert '<input id=title' in response
 
 
 def test_create_draft_should_generate_article(client, user, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
@@ -35,9 +36,59 @@ def test_create_draft_should_generate_article(client, user, editor):
     assert '<p>Article body</p>' in response
 
 
+def test_create_draft_with_tag(client, user, editor, tag):
+    login(client, editor.email, 'password')
+    response = client.post('/article/draft/new/', data={
+        'title': 'Test article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'author': user.id,
+        'tag-1': 'Wonderful'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    article = Article.objects.get(title='Test article')
+    assert article.tags == [tag]
+
+
+def test_create_draft_with_tags(client, app, user, editor, tag):
+    login(client, editor.email, 'password')
+    language = app.config['LANGUAGES'][0][0]
+    tag2 = Tag.objects.create(name='Sensational', language=language)
+    response = client.post('/article/draft/new/', data={
+        'title': 'Test article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'author': user.id,
+        'tag-1': 'Wonderful',
+        'tag-2': 'Sensational'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    article = Article.objects.get(title='Test article')
+    assert article.tags == [tag, tag2]
+
+
+def test_create_draft_with_unknown_tag(client, user, editor, tag):
+    login(client, editor.email, 'password')
+    response = client.post('/article/draft/new/', data={
+        'title': 'Test article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'author': user.id,
+        'tag-1': 'Wonderful',
+        'tag-2': 'Sensational'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    article = Article.objects.get(title='Test article')
+    tag2 = Tag.objects.get(name='Sensational')
+    assert article.tags == [tag, tag2]
+
+
 def test_create_draft_with_preexising_translation(client, user, editor,
                                                   article, translation):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
@@ -51,7 +102,7 @@ def test_create_draft_with_preexising_translation(client, user, editor,
 
 
 def test_create_published_draft_should_display_article(client, user, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.post('/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
@@ -67,7 +118,7 @@ def test_create_published_draft_should_display_article(client, user, editor):
 
 
 def test_draft_editing_should_update_content(client, user, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     data = {
         'title': 'My article',
         'summary': 'Summary',
@@ -88,7 +139,7 @@ def test_draft_editing_should_update_content(client, user, editor):
 
 
 def test_draft_image_should_save_and_render(app, client, user, editor):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
         image = BytesIO(content.read())
     data = {
@@ -137,14 +188,14 @@ def test_access_published_draft_should_return_404(client, article):
 
 
 def test_editor_access_drafts_list(client, editor, article):
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.OK
     assert article.title in response
 
 
 def test_author_cannot_access_drafts_list(client, user):
-    login(client, user.email, 'secret')
+    login(client, user.email, 'password')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
@@ -152,8 +203,18 @@ def test_author_cannot_access_drafts_list(client, user):
 def test_drafts_list_only_displays_drafts(client, editor, article,
                                           published_article):
     published_article.modify(title='published article')
-    login(client, editor.email, 'secret')
+    login(client, editor.email, 'password')
     response = client.get('/article/draft/')
     assert response.status_code == HTTPStatus.OK
     assert article.title in response
     assert published_article.title not in response
+
+
+def test_draft_detail_contains_tags_without_links(client, app, tag, article):
+    language = app.config['LANGUAGES'][0][0]
+    tag2 = Tag.objects.create(name='Sensational', language=language)
+    article.modify(tags=[tag, tag2])
+    response = client.get(f'/article/draft/{article.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert 'Wonderful,' in response
+    assert 'Sensational.' in response

@@ -2,12 +2,13 @@ import datetime
 
 from flask import current_app, url_for
 from flask_login import current_user
-from mongoengine import signals
+from mongoengine import PULL, signals
 
 from .. import db
 from ..core.helpers import slugify
 from ..core.mixins import UploadableImageMixin
 from ..users.models import User
+from .tags.models import Tag
 
 
 class Article(db.Document, UploadableImageMixin):
@@ -22,6 +23,7 @@ class Article(db.Document, UploadableImageMixin):
     author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
+    tags = db.ListField(db.ReferenceField(Tag, reverse_delete_rule=PULL))
 
     _translations = None
 
@@ -89,8 +91,15 @@ class Article(db.Document, UploadableImageMixin):
                 del data['author']
             if data.get('editor'):
                 del data['editor']
+        self.tags = []
+        language = data.get('language')
         for field, value in data.items():
-            setattr(self, field, value)
+            if field.startswith('tag-') and value:
+                tag = Tag.objects.get_or_create(name=value, language=language)
+                if tag not in self.tags:
+                    self.tags.append(tag)
+            else:
+                setattr(self, field, value)
         if data.get('delete-image'):
             self.delete_image()
         image = files.get('image')

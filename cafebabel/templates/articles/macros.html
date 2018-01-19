@@ -15,3 +15,22 @@
     Reading time: {{ article.body|reading_time }} min
   </p>
 {%- endmacro %}
+
+{%- macro tags_fields(article=None) -%}
+  <div class=tags>
+    <label for=tag-1>Tags</label>
+    <ul class=tags-list>
+      {% if article and article.tags %}
+        {% for tag in article.tags -%}
+          <li class=saved>
+            {{ tag.name }}{# Avoid any whitespace between the name and the input.
+            #}<input name=tag-{{ loop.index }} list=tags value="{{ tag.name }}" type=hidden>
+            <button type=button></button>
+          </li>
+        {%- endfor %}
+      {% endif %}
+    </ul>
+    <div class=tag-container><input name=tag-new autocomplete=off list=tags-suggestions><button class=add>+</button></div>
+    <ul id=tags-suggestions class=inactive></ul>
+  </div>
+{%- endmacro %}

@@ -1,22 +1,22 @@
 /* global fetch */
 // Inspired by https://github.com/zellwk/zl-fetch
 // See https://css-tricks.com/using-fetch/
-function request (url, options = undefined) {
+function request(url, options = undefined) {
   return fetch(url, optionsHandler(options))
     .then(handleResponse)
     .catch(error => {
       const e = new Error(`${error.message} ${url}`)
-      Object.assign(e, error, {url})
+      Object.assign(e, error, { url })
       throw e
     })
 }
 
-function optionsHandler (options) {
+function optionsHandler(options) {
   const def = {
     method: 'GET',
     mode: 'cors',
     credentials: 'include',
-    headers: {'Content-Type': 'application/json'}
+    headers: { 'Content-Type': 'application/json' }
   }
 
   if (!options) return def
@@ -38,31 +38,37 @@ function optionsHandler (options) {
 }
 
 const handlers = {
-  JSONResponseHandler (response) {
-    return response.json()
-      .then(json => {
-        if (response.ok) {
-          return json
-        } else {
-          return Promise.reject(Object.assign({}, json, {
+  JSONResponseHandler(response) {
+    return response.json().then(json => {
+      if (response.ok) {
+        return json
+      } else {
+        return Promise.reject(
+          Object.assign({}, json, {
             status: response.status
-          }))
-        }
-      })
+          })
+        )
+      }
+    })
   },
-  textResponseHandler (response) {
+  textResponseHandler(response) {
     if (response.ok) {
       return response.text()
     } else {
-      return Promise.reject(Object.assign({}, {
-        status: response.status,
-        message: response.statusText
-      }))
+      return Promise.reject(
+        Object.assign(
+          {},
+          {
+            status: response.status,
+            message: response.statusText
+          }
+        )
+      )
     }
   }
 }
 
-function handleResponse (response) {
+function handleResponse(response) {
   let contentType = response.headers.get('content-type')
   if (contentType.includes('application/json')) {
     return handlers.JSONResponseHandler(response)

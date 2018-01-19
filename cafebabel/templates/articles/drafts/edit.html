@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
 
+{% block extra_js %}<script src={{ url_for('static', filename='js/articles-tags.js') }}></script>{% endblock %}
 {% block body_class %}create-article-page{% endblock %}
 {% block body %}
 <form method=post action={{ url_for('drafts.edit', draft_id=article.id) }} enctype=multipart/form-data>
@@ -66,6 +68,7 @@
       </div>
       {% endif %}
     </div>
+  {{ macros.tags_fields(article) }}
   <div class=textarea>
     <label for=summary>Summary</label>
     <textarea id=summary name=summary required>{{ article.summary }}</textarea>

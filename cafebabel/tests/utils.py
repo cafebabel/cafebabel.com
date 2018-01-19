@@ -1,8 +1,10 @@
 def login(client, email, password):
-    return client.post('/login', data=dict(
+    response = client.post('/login', data=dict(
         email=email,
         password=password
     ), follow_redirects=True)
+    assert b'action="/login"' not in response.data, response.data
+    return response
 
 
 def logout(client):
