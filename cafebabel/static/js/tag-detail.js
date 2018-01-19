@@ -10,7 +10,6 @@ function parallax(imgUrl) {
 
   if (!container) return
   window.addEventListener('scroll', () => {
-    console.log('oink', height)
     const scrolledHeight = window.pageYOffset
     const top = container.offsetTop - height * 2
     container.style.backgroundPositionY = `${(top - scrolledHeight) / 3}px`
