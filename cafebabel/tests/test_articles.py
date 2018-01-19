@@ -1,6 +1,6 @@
 from http import HTTPStatus
-from pathlib import Path
 from io import BytesIO
+from pathlib import Path
 
 from flask import url_for
 from flask.helpers import get_flashed_messages
@@ -359,4 +359,5 @@ def test_article_detail_contains_tags(client, app, tag, published_article):
     response = client.get(
         f'/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert 'Wonderful, Sensational.' in response
+    assert '<a href=/article/tag/wonderful/>Wonderful</a>,' in response
+    assert '<a href=/article/tag/sensational/>Sensational</a>.' in response

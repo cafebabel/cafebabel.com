@@ -1,7 +1,12 @@
 from http import HTTPStatus
+from io import BytesIO
+from pathlib import Path
 
 from cafebabel.articles.models import Article
 from cafebabel.articles.tags.models import Tag
+from flask.helpers import get_flashed_messages
+
+from .utils import login
 
 
 def test_tag_basics(tag):
@@ -73,3 +78,74 @@ def test_tag_suggest_wrong_language(client, tag):
     response = client.get('/article/tag/suggest/?language=ca&terms=wond')
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert "Languages available: ['en', 'fr', 'es', 'it', 'de']" in response
+
+
+def test_tag_detail(app, client, tag, published_article):
+    Tag.objects.create(name='Wonderful', summary='text chapo',
+                       language=app.config['LANGUAGES'][1][0])
+    published_article.modify(tags=[tag])
+    response = client.get('/article/tag/wonderful/')
+    assert response.status_code == HTTPStatus.OK
+    assert tag.name in response
+    assert tag.summary in response
+    assert (f'<a href={published_article.detail_url }>'
+            f'{published_article.title}' in response)
+
+
+def test_tag_detail_draft(client, tag, article):
+    article.modify(tags=[tag])
+    response = client.get('/article/tag/wonderful/')
+    assert response.status_code == HTTPStatus.OK
+    assert tag.name in response
+    assert article.title not in response
+
+
+def test_tag_detail_unknown(client, tag):
+    response = client.get('/article/tag/sensational/')
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_tag_update_summary(app, client, tag, editor):
+    login(client, editor.email, 'password')
+    data = {'summary': 'custom summary'}
+    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your tag was successfully saved.']
+    tag.reload()
+    assert tag.summary == 'custom summary'
+
+
+def test_tag_update_image(app, client, tag, editor):
+    login(client, editor.email, 'password')
+    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
+        image_content = BytesIO(content.read())
+    data = {
+        'summary': 'custom summary',
+        'image': (image_content, 'image-name.jpg'),
+    }
+    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+                           content_type='multipart/form-data',
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your tag was successfully saved.']
+    tag.reload()
+    assert tag.summary == 'custom summary'
+    assert tag.has_image
+    assert Path(app.config.get('TAGS_IMAGES_PATH') / str(tag.id)).exists()
+
+
+def test_tag_update_name_not_possible(app, client, tag, editor):
+    login(client, editor.email, 'password')
+    data = {'name': 'updated title'}
+    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_tag_update_language_not_possible(app, client, tag, editor):
+    login(client, editor.email, 'password')
+    data = {'language': app.config['LANGUAGES'][2][0]}
+    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.BAD_REQUEST

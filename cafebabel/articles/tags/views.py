@@ -1,7 +1,10 @@
 from http import HTTPStatus
 
-from flask import Blueprint, abort, current_app, jsonify, request
+from flask import (Blueprint, abort, current_app, flash, jsonify, redirect,
+                   render_template, request, url_for)
 
+from ...core.helpers import editor_required, current_language
+from ..models import Article
 from .models import Tag
 
 tags = Blueprint('tags', __name__)
@@ -26,3 +29,25 @@ def suggest():
         'summary': tag.summary or ''
     } for tag in tags]
     return jsonify(cleaned_tag)
+
+
+@tags.route('/<slug>/')
+def detail(slug):
+    tag = Tag.objects.get_or_404(slug=slug, language=current_language())
+    articles = (Article.objects(tags__in=[tag], status='published')
+                .order_by('-publication_date'))
+    return render_template('articles/tags/detail.html', tag=tag,
+                           articles=articles)
+
+
+@tags.route('/<slug>/edit/', methods=['get', 'post'])
+@editor_required
+def edit(slug):
+    tag = Tag.objects.get_or_404(slug=slug, language=current_language())
+
+    if request.method == 'POST':
+        tag.save_from_request(request)
+        flash('Your tag was successfully saved.')
+        return redirect(url_for('tags.detail', slug=tag.slug))
+
+    return render_template('articles/tags/edit.html', tag=tag)

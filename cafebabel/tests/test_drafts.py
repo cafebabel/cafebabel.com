@@ -208,3 +208,13 @@ def test_drafts_list_only_displays_drafts(client, editor, article,
     assert response.status_code == HTTPStatus.OK
     assert article.title in response
     assert published_article.title not in response
+
+
+def test_draft_detail_contains_tags_without_links(client, app, tag, article):
+    language = app.config['LANGUAGES'][0][0]
+    tag2 = Tag.objects.create(name='Sensational', language=language)
+    article.modify(tags=[tag, tag2])
+    response = client.get(f'/article/draft/{article.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert 'Wonderful,' in response
+    assert 'Sensational.' in response

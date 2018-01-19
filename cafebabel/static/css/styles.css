@@ -594,6 +594,7 @@ a:active {
 a {
   position: relative;
   z-index: 0;
+  transition: all 0.3s;
 }
 
 a:after {
@@ -887,11 +888,11 @@ button.follow.active:after {
   opacity: 0;
 }
 
-.create-article-page h1.edit {
+h1.edit {
   position: relative;
 }
 
-.create-article-page .edit label {
+h1.edit label {
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
@@ -900,12 +901,12 @@ button.follow.active:after {
   transition: all 0.2s;
 }
 
-.create-article-page .edit.active label {
+h1.edit.active label {
   font-size: 1.9rem;
   top: 2rem;
 }
 
-.create-article-page .edit input {
+h1.edit input {
   border: none;
   font-size: 4.2rem;
   font-weight: 600;
@@ -1347,6 +1348,11 @@ button.follow.active:after {
 
 /* Article page */
 
+.article-page article h2,
+.article-page article h3,
+.article-page article h4,
+.article-page article h5,
+.article-page article h6,
 .article-page article p {
   max-width: 75rem;
   margin: 0 auto 5rem auto;
@@ -1354,6 +1360,7 @@ button.follow.active:after {
 
 .article-page article h1 + p {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
 .article-page article h1 + p span {
@@ -1368,9 +1375,14 @@ button.follow.active:after {
   margin: 1rem auto 0.5rem;
 }
 
+.article-page .tags-list {
+  display: inline-block;
+  transform: translateX(-50%);
+  margin: 0 0 3rem 50%;
+}
+
 .article-page article h3 {
   text-align: center;
-  max-width: 75rem;
   margin: 3rem auto 5rem auto;
 }
 
@@ -1378,6 +1390,10 @@ button.follow.active:after {
   max-width: 100%;
   margin: 3rem auto 5rem auto;
   font-size: 2.8rem;
+}
+
+.article-page article p img {
+  margin-bottom: 2rem;
 }
 
 textarea#body {
@@ -1485,6 +1501,137 @@ textarea#body {
 
 .flashes.hidden {
   bottom: -10rem;
+}
+
+/* Tag page */
+
+.tag-page .tag-header.default,
+.tag-page .tag-header.image,
+.tag-page-edit form .file {
+  position: absolute;
+  height: 70vh;
+  background: #e0e0e0 no-repeat center fixed;
+  top: 10rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.tag-page header {
+  position: relative;
+  background-color: #fff;
+  max-width: 75rem;
+  margin: 30vh auto 2rem auto;
+  text-align: center;
+  padding: 2rem 4rem;
+}
+
+.tag-page .tag-header.image + header {
+  margin-top: 60vh;
+}
+
+.tag-page header h1 {
+  border: none;
+  padding: 0;
+}
+
+.tag-page header h1:before {
+  content: '#';
+}
+
+.tag-page article {
+  max-width: 75rem;
+  margin: 3rem auto;
+}
+
+.tag-page article .article-detail {
+  position: relative;
+  background: #fff;
+  width: 85%;
+  margin: -4rem auto 0;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.01);
+  padding: 2rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.tag-page article .article-detail h3 {
+  margin: 1rem;
+}
+
+.tag-page article .article-detail p {
+  margin: 0 0 2rem;
+  font-size: 1.6rem;
+}
+
+.tag-page article .article-detail p span {
+  font-style: italic;
+  font-family: serif;
+}
+
+.article-detail .tags-list a,
+.article-page .tags-list a {
+  position: relative;
+  font-size: 1.6rem;
+  padding: 0.5rem 1rem;
+  background-color: #eeeeee;
+  display: inline-block;
+  margin: 0 1rem 1rem 0;
+  color: #696969;
+}
+
+.article-detail .tags-list a:after,
+.article-page .tags-list a:after {
+  content: none;
+}
+
+.article-detail .tags-list a:before,
+.article-page .tags-list a:before {
+  content: '#';
+}
+
+.article-detail .tags-list a:hover,
+.article-page .tags-list a:hover {
+  background-color: #e2e2e2;
+}
+
+.article-detail .tags-list a:hover:after,
+.article-page .tags-list a:hover:after {
+  width: 0;
+}
+
+/* Tag page edit */
+
+.tag-page-edit form .file {
+}
+
+.tag-page-edit .edit-tag-detail-container {
+  position: relative;
+  max-width: 75rem;
+  margin: 30vh auto 2rem auto;
+  padding: 0 2rem;
+  background: #fff;
+  text-align: center;
+}
+
+.tag-page-edit .edit-tag-detail-container h1 {
+  border: none;
+  display: inline-block;
+  padding: 0;
+}
+
+.tag-page-edit .edit-tag-detail-container h1:before {
+  content: '#';
+}
+
+.tag-page-edit .edit-tag-detail-container textarea {
+  min-height: 15rem;
+  text-align: center;
+  margin: 0;
+}
+
+.tag-page-edit .edit-tag-detail-container input[type='submit'] {
+  display: inline-block;
 }
 
 /* Footer */

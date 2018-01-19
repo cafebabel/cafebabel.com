@@ -34,13 +34,16 @@
     <h1>{{ article.title }}</h1>
 
     {{ macros.article_meta(article) }}
+
+    {% block tag_list %}
     {% if article.tags %}
       <p class=tags-list>
         {% for tag in article.tags -%}
-          {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
+          <a href={{ url_for('tags.detail', slug=tag.slug) }}>{{ tag.name }}</a>
         {%- endfor %}
       </p>
     {% endif %}
+    {% endblock %}
 
     <div class=article-language-selector>
       <ul>
