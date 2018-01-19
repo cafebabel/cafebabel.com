@@ -86,7 +86,7 @@ class Tags {
       isSave =>
         `<li ${isSave ? 'class=saved' : ''}>${tagValue}
           <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
-          <button></button>
+          <button type=button></button>
         </li>`
     )
   }
@@ -162,7 +162,6 @@ class TagEventListener {
   static addRemoveListener() {
     tags.removeButtons.forEach(button =>
       button.addEventListener('click', event => {
-        event.preventDefault()
         const tagElement = event.target.parentElement
         tags.removeTag(tagElement)
       })
@@ -171,8 +170,10 @@ class TagEventListener {
   static keyup() {
     const inputNewTag = document.querySelector('.tags input[name=tag-new]')
     inputNewTag.addEventListener('keyup', event => {
+      event.preventDefault()
       /* Return if arrow up, arrow down are pressed */
-      if (event.keyCode == 40 || event.keyCode == 38) return
+      if (event.keyCode == 13 || event.keyCode == 40 || event.keyCode == 38)
+        return
       const submission = event.target.value
       if (submission.length < 3) return
       tags.handleSuggestion(submission)
@@ -182,7 +183,7 @@ class TagEventListener {
 
 const tags = new Tags()
 window.addEventListener('load', () => {
+  TagEventListener.keyup()
   TagEventListener.addRemoveListener()
   TagEventListener.clickAdd()
-  TagEventListener.keyup()
 })
