@@ -1,9 +1,12 @@
 class Tags {
   constructor() {
     this.context = document.querySelector('.tags')
-    this.values = Array.from(this.list.querySelectorAll('input')).map(
-      input => input.value
-    )
+  }
+  get tags() {
+    return this.list.querySelectorAll('input')
+  }
+  get tagsNames() {
+    return Array.from(this.tags).map(({ value }) => value)
   }
   get languages() {
     return document.querySelector('#language')
@@ -29,16 +32,14 @@ class Tags {
 
   addNewTag(submission) {
     if (!submission || this._isTag(submission)) return
-    this._addValue(submission)
     this._emptyAddField()
     this._inactiveSuggestionsList()
-    this._render()
+    this._render(this._tagsNamesAdd(submission))
   }
   removeTag(tagElement) {
-    const submission = tagElement.innerText.trim()
+    const submission = tagElement.textContent.trim()
     if (!this._isTag(submission)) return
-    this._removeValue(submission)
-    this._render()
+    this._render(this._tagsNamesRemove(submission))
   }
   handleSuggestion(submission) {
     this._request(submission).then(tagsApi =>
@@ -56,13 +57,13 @@ class Tags {
     )
   }
   _isTag(tag) {
-    return this.values.includes(tag)
+    return this.tagsNames.includes(tag)
   }
-  _addValue(query) {
-    this.values.push(query)
+  _tagsNamesAdd(tagName) {
+    return this.tagsNames.concat([tagName])
   }
-  _removeValue(query) {
-    this.values = this.values.filter(value => value !== query)
+  _tagsNamesRemove(tagName) {
+    return this.tagsNames.filter(selfTagName => selfTagName !== tagName)
   }
   _createSuggestionList(tagsApi) {
     this._activeSuggestionsList()
@@ -108,11 +109,11 @@ class Tags {
     this.suggestions.replaceWith(container)
     TagEventListener.addSuggestion()
   }
-  _render() {
+  _render(tagNames) {
     const container = this.list.cloneNode(false)
-    this._createTagsList(container, this.values).then(tagsList => {
+    this._createTagsList(container, tagNames).then(tagsList => {
       this.list.replaceWith(tagsList)
-      if (!this.values.length) return
+      if (!tagNames.length) return
       TagEventListener.addRemoveListener()
       TagEffect.fadeIn(this.list.querySelector('li:last-child'))
     })
