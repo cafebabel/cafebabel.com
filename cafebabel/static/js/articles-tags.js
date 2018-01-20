@@ -31,14 +31,14 @@ class Tags {
   }
 
   addNewTag(submission) {
-    if (!submission || this._isTag(submission)) return
+    if (!submission || this._isTagName(submission)) return
     this._emptyAddField()
     this._inactiveSuggestionsList()
     this._render(this._tagsNamesAdd(submission))
   }
   removeTag(tagElement) {
     const submission = tagElement.textContent.trim()
-    if (!this._isTag(submission)) return
+    if (!this._isTagName(submission)) return
     this._render(this._tagsNamesRemove(submission))
   }
   handleSuggestion(submission) {
@@ -56,8 +56,8 @@ class Tags {
       tagsApi.some(tag => tag.name === submission)
     )
   }
-  _isTag(tag) {
-    return this._tagsNames.includes(tag)
+  _isTagName(tagName) {
+    return this._tagsNames.includes(tagName)
   }
   _tagsNamesAdd(tagName) {
     return this._tagsNames.concat([tagName])
