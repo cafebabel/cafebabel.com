@@ -8,7 +8,7 @@ class Tags {
   get fieldAdd() {
     return this.context.querySelector('input[name=tag-new]')
   }
-  get buttonAdd() {
+  get addButton() {
     return this.context.querySelector('button.add')
   }
   get suggestions() {
@@ -150,7 +150,7 @@ class TagEffect {
 
 class TagEventListener {
   static clickAdd() {
-    tags.buttonAdd.addEventListener('click', event => {
+    tags.addButton.addEventListener('click', event => {
       event.preventDefault()
       const submission = event.target.previousSibling.value
       if (submission.length < 3) return
