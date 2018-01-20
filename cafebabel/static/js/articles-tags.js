@@ -26,17 +26,17 @@ class Tags {
   }
 
   addNewTag(submission) {
-    if (!submission || tags._isTag(submission)) return
-    tags._addValue(submission)
-    tags._emptyAddField()
-    tags._inactiveSuggestionsList()
-    tags._render()
+    if (!submission || this._isTag(submission)) return
+    this._addValue(submission)
+    this._emptyAddField()
+    this._inactiveSuggestionsList()
+    this._render()
   }
   removeTag(tagElement) {
     const submission = tagElement.innerText.trim()
-    if (!tags._isTag(submission)) return
-    tags._removeValue(submission)
-    tags._render()
+    if (!this._isTag(submission)) return
+    this._removeValue(submission)
+    this._render()
   }
   handleSuggestion(submission) {
     this._request(submission).then(tagsApi =>
