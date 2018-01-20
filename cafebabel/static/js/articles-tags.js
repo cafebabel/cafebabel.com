@@ -2,32 +2,32 @@ class Tags {
   constructor() {
     this.context = document.querySelector('.tags')
   }
-  get tags() {
-    return this.list.querySelectorAll('input')
-  }
-  get tagsNames() {
-    return Array.from(this.tags).map(({ value }) => value)
-  }
-  get languages() {
-    return document.querySelector('#language')
-  }
-  get language() {
-    return this.languages.options[this.languages.selectedIndex].value
-  }
-  get list() {
-    return this.context.querySelector('.tags-list')
-  }
   get removeButtons() {
-    return this.list.querySelectorAll('li button')
-  }
-  get fieldAdd() {
-    return this.context.querySelector('input[name=tag-new]')
+    return this._list.querySelectorAll('li button')
   }
   get buttonAdd() {
     return this.context.querySelector('button.add')
   }
   get suggestions() {
     return this.context.querySelector('#tags-suggestions')
+  }
+  get _languages() {
+    return document.querySelector('#language')
+  }
+  get _language() {
+    return this._languages.options[this._languages.selectedIndex].value
+  }
+  get _tags() {
+    return this._list.querySelectorAll('input')
+  }
+  get _tagsNames() {
+    return Array.from(this._tags).map(({ value }) => value)
+  }
+  get _list() {
+    return this.context.querySelector('.tags-list')
+  }
+  get _fieldAdd() {
+    return this.context.querySelector('input[name=tag-new]')
   }
 
   addNewTag(submission) {
@@ -48,7 +48,7 @@ class Tags {
   }
   _request(submission) {
     return request(
-      `/article/tag/suggest/?language=${this.language}&terms=${submission}`
+      `/article/tag/suggest/?language=${this._language}&terms=${submission}`
     ).catch(console.error.bind(console))
   }
   _isTagSaved(submission) {
@@ -57,13 +57,13 @@ class Tags {
     )
   }
   _isTag(tag) {
-    return this.tagsNames.includes(tag)
+    return this._tagsNames.includes(tag)
   }
   _tagsNamesAdd(tagName) {
-    return this.tagsNames.concat([tagName])
+    return this._tagsNames.concat([tagName])
   }
   _tagsNamesRemove(tagName) {
-    return this.tagsNames.filter(selfTagName => selfTagName !== tagName)
+    return this._tagsNames.filter(selfTagName => selfTagName !== tagName)
   }
   _createSuggestionList(tagsApi) {
     this._activeSuggestionsList()
@@ -103,19 +103,19 @@ class Tags {
     this.suggestions.innerHTML = ''
   }
   _emptyAddField() {
-    this.fieldAdd.value = ''
+    this._fieldAdd.value = ''
   }
   _renderSuggestion(container) {
     this.suggestions.replaceWith(container)
     TagEventListener.addSuggestion()
   }
   _render(tagNames) {
-    const container = this.list.cloneNode(false)
+    const container = this._list.cloneNode(false)
     this._createTagsList(container, tagNames).then(tagsList => {
-      this.list.replaceWith(tagsList)
+      this._list.replaceWith(tagsList)
       if (!tagNames.length) return
       TagEventListener.addRemoveListener()
-      TagEffect.fadeIn(this.list.querySelector('li:last-child'))
+      TagEffect.fadeIn(this._list.querySelector('li:last-child'))
     })
   }
 }
