@@ -5,11 +5,14 @@ class Tags {
   get removeButtons() {
     return this._list.querySelectorAll('li button')
   }
+  get fieldAdd() {
+    return this.context.querySelector('input[name=tag-new]')
+  }
   get buttonAdd() {
     return this.context.querySelector('button.add')
   }
   get suggestions() {
-    return this.context.querySelector('#tags-suggestions')
+    return this._suggestionsContainer.querySelectorAll('li')
   }
   get _languages() {
     return document.querySelector('#language')
@@ -26,8 +29,8 @@ class Tags {
   get _list() {
     return this.context.querySelector('.tags-list')
   }
-  get _fieldAdd() {
-    return this.context.querySelector('input[name=tag-new]')
+  get _suggestionsContainer() {
+    return this.context.querySelector('#tags-suggestions')
   }
 
   addNewTag(submission) {
@@ -67,7 +70,7 @@ class Tags {
   }
   _createSuggestionList(tagsApi) {
     this._activeSuggestionsList()
-    const ul = this.suggestions.cloneNode(false)
+    const ul = this._suggestionsContainer.cloneNode(false)
     tagsApi.forEach(tag => {
       const li = `<li>${tag.name}</li>`
       ul.insertAdjacentHTML('afterbegin', li)
@@ -94,19 +97,19 @@ class Tags {
     )
   }
   _inactiveSuggestionsList() {
-    this.suggestions.classList.add('inactive')
+    this._suggestionsContainer.classList.add('inactive')
   }
   _activeSuggestionsList() {
-    this.suggestions.classList.remove('inactive')
+    this._suggestionsContainer.classList.remove('inactive')
   }
   _emptySuggestions() {
-    this.suggestions.innerHTML = ''
+    this._suggestionsContainer.innerHTML = ''
   }
   _emptyAddField() {
-    this._fieldAdd.value = ''
+    this.fieldAdd.value = ''
   }
   _renderSuggestion(container) {
-    this.suggestions.replaceWith(container)
+    this._suggestionsContainer.replaceWith(container)
     TagEventListener.addSuggestion()
   }
   _render(tagNames) {
@@ -155,7 +158,7 @@ class TagEventListener {
     })
   }
   static addSuggestion() {
-    tags.suggestions.querySelectorAll('li').forEach(li =>
+    tags.suggestions.forEach(li =>
       li.addEventListener('click', event => {
         const submission = event.target.innerText
         tags.addNewTag(submission)
@@ -171,8 +174,7 @@ class TagEventListener {
     )
   }
   static keyup() {
-    const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-    inputNewTag.addEventListener('keyup', event => {
+    tags.fieldAdd.addEventListener('keyup', event => {
       event.preventDefault()
       /* Intercept -return- it's capture by 'click' for adding tags */
       if (event.keyCode == 38) return
