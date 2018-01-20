@@ -191,3 +191,7 @@ window.addEventListener('load', () => {
   TagEventListener.addRemoveListener()
   TagEventListener.clickAdd()
 })
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { Tags }
+}
