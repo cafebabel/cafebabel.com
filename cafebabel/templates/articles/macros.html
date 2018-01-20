@@ -24,7 +24,7 @@
         {% for tag in article.tags -%}
           <li class=saved>
             {{ tag.name }}{# Avoid any whitespace between the name and the input.
-            #}<input name=tag-{{ loop.index }} list=tags value="{{ tag.name }}" type=hidden>
+            #}<input name=tag-{{ loop.index }} list=tags value={{ tag.name }} type=hidden>
             <button type=button></button>
           </li>
         {%- endfor %}
