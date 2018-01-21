@@ -1,3 +1,4 @@
+const expect = require('chai').expect
 const JSDOM = require('jsdom').JSDOM
 
 function createDocument() {
@@ -28,3 +29,12 @@ document = addTemplate(window.document, tpl)
 console.log('document', document)
 
 Tags = require(`${__dirname}/../articles-tags.js`)
+
+describe('Tags', () => {
+  const tags = new Tags.Tags()
+
+  it('should retrieve -input- whose add tag', () => {
+    const field = tags.fieldAdd
+    expect(field.localName).to.equal('input')
+  })
+})
