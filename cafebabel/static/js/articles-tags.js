@@ -39,8 +39,7 @@ class Tags {
     this._inactiveSuggestionsList()
     this._render(this._tagsNamesAdd(submission))
   }
-  removeTag(tagElement) {
-    const submission = tagElement.textContent.trim()
+  removeTag(submission) {
     if (!this._isTagName(submission)) return
     this._render(this._tagsNamesRemove(submission))
   }
@@ -175,8 +174,8 @@ class TagEventListener {
   static addRemoveListener() {
     tags.removeButtons.forEach(button =>
       button.addEventListener('click', event => {
-        const tagElement = event.target.parentElement
-        tags.removeTag(tagElement)
+        const tagName = event.target.parentElement.textContent.trim()
+        tags.removeTag(tagName)
       })
     )
   }
