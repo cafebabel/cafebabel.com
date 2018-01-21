@@ -16,9 +16,10 @@ function createDocument() {
   return new JSDOM(base).window
 }
 
-function addTemplate(document, tpl) {
+function render(tpl) {
+  const body = document.querySelector('body')
+  body.innerHtml = ''
   document.querySelector('body').insertAdjacentHTML('beforeend', tpl)
-  return document
 }
 
 const tpl = `
@@ -50,7 +51,8 @@ const tpl = `
 `
 
 window = createDocument()
-document = addTemplate(window.document, tpl)
+document = window.document
+render(tpl)
 
 Tags = require(`${__dirname}/../articles-tags.js`)
 
@@ -63,5 +65,8 @@ describe('Tags', () => {
   })
   it('should get language', () => {
     expect(tags._language).to.equal('en')
+  })
+  it("should retrieve the tag's value", () => {
+    expect(tags._tagsNames).to.deep.equal(['Joseki', 'Tesuji'])
   })
 })
