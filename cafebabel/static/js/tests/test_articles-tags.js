@@ -17,14 +17,30 @@ function createDocument() {
 }
 
 function addTemplate(document, tpl) {
-  document.querySelector('body').insertAdjacentHTML('afterbegin', tpl)
+  document.querySelector('body').insertAdjacentHTML('beforeend', tpl)
   return document
 }
 
 const tpl = `
+  <select id=language>
+    <optgroup label=Language>
+      <option value=fr>Italie</option>
+      <option value=en selected=>English</option>
+      <option value=fr>Français</option>
+    </optgroup>
+  </select>
   <div class=tags>
     <label for=tag-1>Tags</label>
-    <ul class=tags-list></ul>
+    <ul class=tags-list>
+      <li class=saved>Joseki
+        <input name=tag-1 list=tags value=Joseki type=hidden>
+        <button type=button></button>
+      </li>
+      <li>Tesuji
+        <input name=tag-2 list=tags value=Tesuji type=hidden>
+        <button type=button></button>
+      </li>
+    </ul>
     <div class=tag-container>
       <input name=tag-new autocomplete=off list=tags-suggestions>
       <button class=add>+</button>
@@ -36,8 +52,6 @@ const tpl = `
 window = createDocument()
 document = addTemplate(window.document, tpl)
 
-console.log('document', document)
-
 Tags = require(`${__dirname}/../articles-tags.js`)
 
 describe('Tags', () => {
@@ -46,5 +60,8 @@ describe('Tags', () => {
   it('should retrieve -input- whose add tag', () => {
     const field = tags.fieldAdd
     expect(field.localName).to.equal('input')
+  })
+  it('should get language', () => {
+    expect(tags._language).to.equal('en')
   })
 })
