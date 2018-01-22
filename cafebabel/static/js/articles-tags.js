@@ -41,7 +41,7 @@ class Tags {
   }
   removeTag(submission) {
     if (!this._isTagName(submission)) return
-    this._render(this._tagsNamesRemove(submission))
+    return this._render(this._tagsNamesRemove(submission))
   }
   handleSuggestion(submission) {
     this._request(submission).then(tagsApi =>
@@ -118,9 +118,9 @@ class Tags {
     this._suggestionsContainer.replaceWith(container)
     TagEventListener.addSuggestion()
   }
-  _render(tagNames) {
+  _render(tagNames = this._tagsNames) {
     const container = this._list.cloneNode(false)
-    this._createTagsList(container, tagNames).then(tagsList => {
+    return this._createTagsList(container, tagNames).then(tagsList => {
       this._list.replaceWith(tagsList)
       if (!tagNames.length) return
       TagEventListener.addRemoveListener()
