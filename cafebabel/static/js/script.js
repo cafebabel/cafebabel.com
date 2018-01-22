@@ -107,27 +107,3 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
     () => inputh1.value || h1.classList.remove('active')
   )
 })
-
-/* highlight file upload area on hover or dragenter */
-function addListenerMulti(element, events, fn) {
-  events
-    .split(' ')
-    .forEach(event =>
-      element.addEventListener(event, fn, false)
-    ) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
-}
-const articleFileInput = document.querySelector(
-  '.create-article-page .file input'
-)
-const dropArea = document.querySelector('canvas')
-if (articleFileInput) {
-  addListenerMulti(articleFileInput, 'dragenter focus click', () => {
-    dropArea.classList.add('active')
-  })
-  addListenerMulti(articleFileInput, 'dragleave blur drop', () => {
-    dropArea.classList.remove('active')
-  })
-  articleFileInput.addEventListener('change', () => {
-    document.querySelector('.file label').innerHTML(' ')
-  })
-}

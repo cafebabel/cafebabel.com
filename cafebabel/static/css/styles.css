@@ -844,8 +844,8 @@ button.follow.active:after {
 .create-article-page canvas,
 .create-article-page .file {
   position: relative;
-  width: 100%;
-  height: 30vw;
+  width: 120rem;
+  height: 46.7rem;
   background: transparent;
   transition: all 0.3s;
 }
@@ -859,7 +859,11 @@ button.follow.active:after {
   opacity: 0.6;
 }
 
-.create-article-page .file label {
+.create-article-page canvas.hidden {
+  display: none;
+}
+
+.create-article-page .file label[for='image'] {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -867,11 +871,15 @@ button.follow.active:after {
   transform: translate(-50%, -50%);
 }
 
-.create-article-page .file label:before {
+.create-article-page .file label[for='image']:before {
   font-family: 'icomoon';
   content: '\e927';
   display: block;
   font-size: 4rem;
+}
+
+.create-article-page .file figcaption {
+  float: right;
 }
 
 .create-article-page small {
@@ -879,7 +887,11 @@ button.follow.active:after {
   margin-top: 2rem;
 }
 
-.create-article-page .file input {
+.create-article-page .checkbox {
+  margin: 0.5rem 0;
+}
+
+.create-article-page .file input[type='file'] {
   position: absolute;
   top: 0;
   margin: 0;

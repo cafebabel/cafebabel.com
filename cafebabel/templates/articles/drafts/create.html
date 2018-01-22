@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 {% import "articles/macros.html" as macros without context %}
+{% from "_macro-extra-js.html" import extra_js without context %}
 
-{% block extra_js %}<script src={{ url_for('static', filename='js/articles-tags.js') }}></script>{% endblock %}
+{% block extra_js %}
+  {{ extra_js(url_for('static', filename='js/articles-tags.js')) }}
+  {{ extra_js(url_for('static', filename='js/image-preview.js')) }}
+{% endblock %}
 
 {% block body_class %}create-article-page{% endblock %}
 {% block body %}
   <form method=post action={{ url_for('drafts.create') }} enctype=multipart/form-data>
-  <canvas class=noise></canvas>
   <div class=file>
-    <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>Recommended file size: less than 1Mo</small></label>
+    <canvas class=noise></canvas>
+    <output></output>
+    <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>Recommended file size: 1200x467px, less than 1Mo</small></label>
     <input type=file id=image name=image>
   </div>
   <h1 class=edit>
