@@ -134,7 +134,7 @@ class TagEffect {
     function fade() {
       element.style.opacity = +element.style.opacity + 0.03
       if (element.style.opacity <= 1) {
-        requestAnimationFrame(fade)
+        window.requestAnimationFrame(fade)
       }
     }
     element.style.opacity = 0
@@ -146,7 +146,7 @@ class TagEffect {
       if (element.style.opacity < 0) {
         element.style.display = 'none'
       } else {
-        requestAnimationFrame(fade)
+        window.requestAnimationFrame(fade)
       }
     }
     element.style.opacity = 1
