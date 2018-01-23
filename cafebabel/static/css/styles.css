@@ -1379,7 +1379,8 @@ h1.edit input {
 }
 
 .create-article-page .file img,
-.article-page article img:first-of-type { /* in case pic are too small */
+.article-page article img:first-of-type {
+  /* in case pic are too small */
   margin-left: 50%;
   transform: translateX(-50%);
 }
@@ -1526,7 +1527,7 @@ textarea#body {
 }
 
 .flashes.hidden {
-  bottom: -10rem;
+  bottom: -50rem;
 }
 
 /* Tag page */
