@@ -1380,7 +1380,6 @@ h1.edit input {
 
 .create-article-page .file img,
 .article-page article img:first-of-type {
-  /* in case pic are too small */
   margin-left: 50%;
   transform: translateX(-50%);
 }
@@ -1537,7 +1536,7 @@ textarea#body {
 .tag-page-edit form .file {
   position: absolute;
   height: 70vh;
-  background: #e0e0e0 no-repeat center fixed;
+  background: #e0e0e0 no-repeat center 50% fixed;
   top: 10rem;
   left: 0;
   bottom: 0;
@@ -1633,6 +1632,11 @@ textarea#body {
 .tag-page-edit .file {
   position: relative;
   width: 100%;
+}
+
+.tag-page-edit img {
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 .tag-page-edit .checkbox {
