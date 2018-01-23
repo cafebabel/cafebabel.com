@@ -844,26 +844,34 @@ button.follow.active:after {
 .create-article-page canvas,
 .create-article-page .file {
   position: relative;
-  width: 120rem;
-  height: 46.7rem;
+  width: 100%;
+  height: auto;
   background: transparent;
   transition: all 0.3s;
 }
 
-.create-article-page canvas {
+@media screen and (min-width: 1200px) {
+  .create-article-page canvas,
+  .create-article-page .file {
+    width: 120rem;
+    height: 46.7rem;
+  }
+}
+
+.file canvas {
   float: left;
   opacity: 1;
 }
 
-.create-article-page canvas.active {
+.file canvas.active {
   opacity: 0.6;
 }
 
-.create-article-page canvas.hidden {
+.file canvas.hidden {
   display: none;
 }
 
-.create-article-page .file label[for='image'] {
+.file label[for='image'] {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -871,27 +879,27 @@ button.follow.active:after {
   transform: translate(-50%, -50%);
 }
 
-.create-article-page .file label[for='image']:before {
+.file label[for='image']:before {
   font-family: 'icomoon';
   content: '\e927';
   display: block;
   font-size: 4rem;
 }
 
-.create-article-page .file figcaption {
+.file figcaption {
   float: right;
 }
 
-.create-article-page small {
+.file small {
   display: block;
   margin-top: 2rem;
 }
 
-.create-article-page .checkbox {
+.file .checkbox {
   margin: 0.5rem 0;
 }
 
-.create-article-page .file input[type='file'] {
+.file input[type='file'] {
   position: absolute;
   top: 0;
   margin: 0;
@@ -1069,7 +1077,7 @@ h1.edit input {
   margin: 0.2rem auto;
 }
 
-.file figcaption {
+.profile-page .file figcaption {
   text-align: center;
 }
 
@@ -1527,6 +1535,7 @@ textarea#body {
   left: 0;
   bottom: 0;
   right: 0;
+  overflow: hidden;
 }
 
 .tag-page header {
@@ -1614,13 +1623,23 @@ textarea#body {
 
 /* Tag page edit */
 
-.tag-page-edit form .file {
+.tag-page-edit .file {
+  position: relative;
+  width: 100%;
+}
+
+.tag-page-edit .checkbox {
+  position: absolute;
+  top: calc(50% - 12rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .tag-page-edit .edit-tag-detail-container {
   position: relative;
   max-width: 75rem;
-  margin: 30vh auto 2rem auto;
+  margin: 60vh auto 2rem auto;
   padding: 0 2rem;
   background: #fff;
   text-align: center;
