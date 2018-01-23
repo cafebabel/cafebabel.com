@@ -3,6 +3,7 @@
 {% from "_macro-extra-js.html" import extra_js without context %}
 
 {% block extra_js %}
+  {{ extra_js(url_for('static', filename='js/noise.js')) }}
   {{ extra_js(url_for('static', filename='js/articles-tags.js')) }}
   {{ extra_js(url_for('static', filename='js/image-preview.js')) }}
 {% endblock %}
