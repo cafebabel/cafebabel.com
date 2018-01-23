@@ -1378,6 +1378,12 @@ h1.edit input {
   margin: 0 auto 5rem auto;
 }
 
+.create-article-page .file img,
+.article-page article img:first-of-type { /* in case pic are too small */
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
 .article-page article h1 + p {
   text-align: center;
   margin-bottom: 3rem;
