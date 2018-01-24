@@ -952,12 +952,11 @@ h1.edit input {
   background-color: #eee;
   display: inline-block;
   margin: 0 2rem 2rem 0;
-  color: #bbb1b1;
+  color: #696969;
 }
 
 .create-article-page .tags .tags-list li.saved {
   background-color: #ddd;
-  color: #aca3a3;
 }
 
 .create-article-page .tags .tags-list li button {
