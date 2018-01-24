@@ -14,10 +14,10 @@ function parallax() {
 }
 
 function addBackgroundImage(container, imgUrl) {
-  if (imgUrl) {
+  if (imgUrl === 'None') {
+    container.classList.add('default')
+  } else {
     container.classList.add('image')
     container.style.backgroundImage = `url(${imgUrl})`
-  } else {
-    container.classList.add('default')
   }
 }
