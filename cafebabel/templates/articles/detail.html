@@ -31,6 +31,11 @@
     {% if article.has_image %}
     <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
     {% endif %}
+    {% block edit_button %}
+      {% if current_user.has_role('editor') and article.is_published %}
+        <a class=button href={{ url_for('articles.edit', article_id=article.id) }}>Edit this article</a>
+      {% endif %}
+    {% endblock %}
     <h1>{{ article.title }}</h1>
 
     {{ macros.article_meta(article) }}
@@ -84,11 +89,6 @@
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
   </nav>
   {% endblock %}
-  {% if current_user.has_role('editor') and article.is_published %}
-    <p>
-      <a class=button href={{ url_for('articles.edit', article_id=article.id) }}>Edit this article</a>
-    </p>
-  {% endif %}
 
   {% if article.is_translation %}
     <p>

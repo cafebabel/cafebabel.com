@@ -2,18 +2,20 @@
 
 {% block body %}
   {{ super() }}
+{% endblock %}
 
-  {% block tag_list %}
-  {% if article.tags %}
-    <p class=tags-list>
-      {% for tag in article.tags -%}
-        {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
-      {%- endfor %}
-    </p>
-  {% endif %}
-  {% endblock %}
-
+{% block edit_button %}
   <a class=button href={{ url_for('drafts.edit', draft_id=article.id) }}>Edit this draft</a>
+{% endblock %}
+
+{% block tag_list %}
+{% if article.tags %}
+  <p class=tags-list>
+    {% for tag in article.tags -%}
+      {{ tag.name }}{% if loop.last %}.{% else %}, {% endif %}
+    {%- endfor %}
+  </p>
+{% endif %}
 {% endblock %}
 
 {% block share_nav %}{% endblock %}
