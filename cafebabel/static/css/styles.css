@@ -845,7 +845,7 @@ button.follow.active:after {
 .create-article-page .file {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 30rem;
   background: transparent;
   transition: all 0.3s;
 }
