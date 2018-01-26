@@ -1383,7 +1383,7 @@ h1.edit input {
   transform: translateX(-50%);
 }
 
-.article-page a.button {
+.article-page a.button:first-of-type {
   margin: 2rem auto -2rem auto;
   max-width: 100%;
 }
