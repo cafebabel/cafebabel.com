@@ -1383,6 +1383,11 @@ h1.edit input {
   transform: translateX(-50%);
 }
 
+.article-page a.button {
+  margin: 2rem auto -2rem auto;
+  max-width: 100%;
+}
+
 .article-page article h1 + p {
   text-align: center;
   margin-bottom: 3rem;
