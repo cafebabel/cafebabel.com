@@ -77,7 +77,6 @@
       </div>
       {% endif %}
   </div>
-  {{ macros.tags_fields(article) }}
   <div class=textarea>
     <label for=summary>Summary</label>
     <textarea id=summary name=summary required>{{ article.summary }}</textarea>
@@ -87,6 +86,7 @@
     <textarea id=body name=body required>{{ article.body }}</textarea>
     {% include "articles/markdown-helper.html" %}
   </div>
+  {{ macros.tags_fields(article) }}
   <input type=submit value=Save>
 </form>
 
