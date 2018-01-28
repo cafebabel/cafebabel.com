@@ -125,6 +125,10 @@ describe('Tags', () => {
   })
 
   describe('Add', () => {
+    it('should add new tag to the current list', () => {
+      const tags = mock.reset()
+      expect(tags._tagsNamesAdd('Tesuji')).to.contains('Tesuji')
+    })
     it('should add new tag', () => {
       const tags = mock.reset()
       tags
