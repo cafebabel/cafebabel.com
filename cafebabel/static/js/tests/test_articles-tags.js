@@ -115,4 +115,19 @@ describe('Tags', () => {
         .then(() => expect(tags._tagsNames.length).to.equal(1))
     })
   })
+
+  describe('Add', () => {
+    it('should add new tag', () => {
+      const tags = mock.reset()
+      tags
+        .addNewTag('Keima')
+        .then(() => expect(tags._tagsNames).to.contains('Keima'))
+    })
+    it('should change nothing when new tag exists', () => {
+      const tags = mock.reset()
+      tags.addNewTag('Joseki')
+      expect(tags.addNewTag('Joseki')).to.equal(undefined)
+      expect(tags._tagsNames.length).to.equal(2)
+    })
+  })
 })
