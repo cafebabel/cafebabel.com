@@ -1,6 +1,6 @@
 class Tags {
-  constructor() {
-    this.context = document.querySelector('.tags')
+  get context() {
+    return document.querySelector('.tags')
   }
   get removeButtons() {
     return this._list.querySelectorAll('li button')
@@ -57,7 +57,7 @@ class Tags {
       .catch(error => {
         const e = new Error(`${error.message} ${url}`)
         Object.assign(e, error, { url })
-        throw e
+        throw `${e} for ${url}`
       })
   }
   _isTagSaved(submission) {
