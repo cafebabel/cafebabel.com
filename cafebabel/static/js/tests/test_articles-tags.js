@@ -34,10 +34,17 @@ class MockDocument {
   _initTags() {
     const tags = new Tags.Tags()
 
-    // Mock _request, we don't want test XHR
+    // mock _request, we don't want test XHR
     tags._request = submission => {
       return new Promise(resolve => {
-        resolve([{ name: submission }])
+        // like 'Joseki' is already saved
+        if (submission === 'Joseki') {
+          resolve([
+            { language: 'en', name: submission, slug: submission, summary: '' }
+          ])
+        } else {
+          resolve([])
+        }
       })
     }
     return tags
@@ -60,9 +67,9 @@ const tpl = `
   <div class=tags>
     <label for=tag-1>Tags</label>
     <ul class=tags-list>
-      <li class=saved>Travel<input name=tag-1 list=tags value=Joseki type=hidden>
+      <li class=saved>Joseki<input name=tag-1 list=tags value=Joseki type=hidden>
         <button type=button></button>
-      </li><li class=saved>Drugs<input name=tag-2 list=tags value=Fuseki type=hidden>
+      </li><li class=saved>Fuseki<input name=tag-2 list=tags value=Fuseki type=hidden>
         <button type=button></button>
       </li>
     </ul>
@@ -93,7 +100,7 @@ describe('Tags', () => {
     })
     it('should verify if a tag is not in a current list', () => {
       const tags = mock.reset()
-      expect(tags._isTagName('CheckMate')).to.be.false
+      expect(tags._isTagName('ChessMate')).to.be.false
     })
   })
 
@@ -140,6 +147,17 @@ describe('Tags', () => {
       tags.addNewTag('Joseki')
       expect(tags.addNewTag('Joseki')).to.equal(undefined)
       expect(tags._tagsNames.length).to.equal(2)
+    })
+  })
+
+  describe('Submission', () => {
+    it('should verify that a tag is previously saved', () => {
+      const tags = mock.reset()
+      tags._isTagSaved('Joseki').then(response => expect(response).to.be.true)
+    })
+    it('should verify that a tag is not previously saved', () => {
+      const tags = mock.reset()
+      tags._isTagSaved('Akira').then(response => expect(response).to.be.false)
     })
   })
 })
