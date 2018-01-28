@@ -11,15 +11,42 @@
 const expect = require('chai').expect
 const JSDOM = require('jsdom').JSDOM
 
-function createDocument() {
-  const base = '<!doctype html><meta charset=utf-8>'
-  return new JSDOM(base).window
-}
+window = {}
+document = {}
 
-function render(tpl) {
-  const body = document.querySelector('body')
-  body.innerHtml = ''
-  document.querySelector('body').insertAdjacentHTML('beforeend', tpl)
+class MockDocument {
+  constructor(tpl) {
+    this.base = '<!doctype html><meta charset=utf-8>'
+    this._initDom()
+  }
+  get outerHTML() {
+    console.info('info > html document:', this.dom.serialize())
+  }
+  reset() {
+    this._initDom()
+    return this._initTags()
+  }
+  _initDom() {
+    window = new JSDOM(this.base, { pretendToBeVisual: true }).window
+    document = window.document
+    this._injectTpl(tpl)
+  }
+  _initTags() {
+    const tags = new Tags.Tags()
+
+    // Mock _request, we don't want test XHR
+    tags._request = submission => {
+      return new Promise(resolve => {
+        resolve([{ name: submission }])
+      })
+    }
+    return tags
+  }
+  _injectTpl(tpl) {
+    const body = document.querySelector('body')
+    body.innerHTML = ''
+    document.querySelector('body').insertAdjacentHTML('beforeend', tpl)
+  }
 }
 
 const tpl = `
@@ -33,40 +60,59 @@ const tpl = `
   <div class=tags>
     <label for=tag-1>Tags</label>
     <ul class=tags-list>
-      <li class=saved>Joseki
-        <input name=tag-1 list=tags value=Joseki type=hidden>
+      <li class=saved>Travel<input name=tag-1 list=tags value=Joseki type=hidden>
         <button type=button></button>
-      </li>
-      <li>Tesuji
-        <input name=tag-2 list=tags value=Tesuji type=hidden>
+      </li><li class=saved>Drugs<input name=tag-2 list=tags value=Fuseki type=hidden>
         <button type=button></button>
       </li>
     </ul>
-    <div class=tag-container>
-      <input name=tag-new autocomplete=off list=tags-suggestions>
-      <button class=add>+</button>
-    </div>
+    <div class=tag-container><input name=tag-new autocomplete=off list=tags-suggestions><button class=add>+</button></div>
     <ul id=tags-suggestions class=inactive></ul>
   </div>
 `
 
-window = createDocument()
-document = window.document
-render(tpl)
+const mock = new MockDocument(tpl)
 
-Tags = require(`${__dirname}/../articles-tags.js`)
+// need -document- before import
+const Tags = require(`${__dirname}/../articles-tags.js`)
 
 describe('Tags', () => {
-  const tags = new Tags.Tags()
+  describe('Find', () => {
+    it('should retrieve -input- whose add tag', () => {
+      const tags = mock.reset()
+      const field = tags.fieldAdd
+      expect(field.localName).to.equal('input')
+    })
+    it('should get language', () => {
+      const tags = mock.reset()
+      expect(tags._language).to.equal('en')
+    })
+  })
 
-  it('should retrieve -input- whose add tag', () => {
-    const field = tags.fieldAdd
-    expect(field.localName).to.equal('input')
+  describe('Render', () => {
+    it("should render a tag's list", () => {
+      const tags = mock.reset()
+      tags._render(['Burial', 'Jlin', 'Arca', 'Bibio']).then(() => {
+        expect(tags._tagsNames.length).to.equal(4)
+      })
+    })
   })
-  it('should get language', () => {
-    expect(tags._language).to.equal('en')
-  })
-  it("should retrieve the tag's value", () => {
-    expect(tags._tagsNames).to.deep.equal(['Joseki', 'Tesuji'])
+
+  describe('Remove', () => {
+    it("should retrieve the tag's value", () => {
+      const tags = mock.reset()
+      expect(tags._tagsNames.length).to.equal(2)
+    })
+    it('should do nothing when name is inexistant', () => {
+      const tags = mock.reset()
+      expect(tags.removeTag('chessmate')).to.equal(undefined)
+      expect(tags._tagsNames.length).to.equal(2)
+    })
+    it('should remove the tag', () => {
+      const tags = mock.reset()
+      tags
+        .removeTag('Fuseki')
+        .then(() => expect(tags._tagsNames.length).to.equal(1))
+    })
   })
 })
