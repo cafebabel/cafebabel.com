@@ -5,7 +5,8 @@
  * This implementation is a minimal config without any installation on the repository.
  * To play with tests, you have to install : jsdom, chai and mocha.
  * With npm you can complete with : npm link pour jsdom, chai and mocha.
- * Then $ mocha static/js/tests/test_articles-tags.js
+ * Then :
+ * $ mocha static/js/tests/test_articles-tags.js
  */
 
 const expect = require('chai').expect
