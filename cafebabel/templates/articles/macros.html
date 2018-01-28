@@ -22,8 +22,8 @@
     <ul class=tags-list>
       {% if article and article.tags %}
         {% for tag in article.tags -%}
-          <li class=saved>
-            {{ tag.name }}{# Avoid any whitespace between the name and the input.
+          <li class=saved>{# Avoid any whitespace before the name and the input.
+              #}{{ tag.name }}{# Avoid any whitespace after the name and the input.
             #}<input name=tag-{{ loop.index }} list=tags value={{ tag.name }} type=hidden>
             <button type=button></button>
           </li>
