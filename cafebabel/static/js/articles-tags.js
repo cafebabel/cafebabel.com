@@ -37,7 +37,7 @@ class Tags {
     if (!submission || this._isTagName(submission)) return
     this._emptyAddField()
     this._inactiveSuggestionsList()
-    this._render(this._tagsNamesAdd(submission))
+    return this._render(this._tagsNamesAdd(submission))
   }
   removeTag(submission) {
     if (!this._isTagName(submission)) return
