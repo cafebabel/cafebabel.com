@@ -87,6 +87,14 @@ describe('Tags', () => {
       const tags = mock.reset()
       expect(tags._language).to.equal('en')
     })
+    it('should verify when a tag is in a current list', () => {
+      const tags = mock.reset()
+      expect(tags._isTagName('Joseki')).to.be.true
+    })
+    it('should verify if a tag is not in a current list', () => {
+      const tags = mock.reset()
+      expect(tags._isTagName('CheckMate')).to.be.false
+    })
   })
 
   describe('Render', () => {
