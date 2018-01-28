@@ -118,11 +118,11 @@ class Tags {
     this._suggestionsContainer.replaceWith(container)
     TagEventListener.addSuggestion()
   }
-  _render(tagNames = this._tagsNames) {
+  _render(tagsNames = this._tagsNames) {
     const container = this._list.cloneNode(false)
-    return this._createTagsList(container, tagNames).then(tagsList => {
+    return this._createTagsList(container, tagsNames).then(tagsList => {
       this._list.replaceWith(tagsList)
-      if (!tagNames.length) return
+      if (!tagsNames.length) return
       TagEventListener.addRemoveListener()
       TagEffect.fadeIn(this._list.querySelector('li:last-child'))
     })
