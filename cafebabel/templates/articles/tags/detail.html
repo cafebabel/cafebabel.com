@@ -31,7 +31,7 @@
 
 {% block body_class %}tag-page{% endblock %}
 {% block body %}
-  <div class=tag-header data-image={{ tag.image_url }}></div>
+  <div class=tag-header data-image={{ tag.image_url or '' }}></div>
   <header>
     <h1>{{ tag.name }}</h1>
     {% if tag.summary %}

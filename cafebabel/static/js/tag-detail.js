@@ -14,7 +14,7 @@ function parallax() {
 }
 
 function addBackgroundImage(container, imgUrl) {
-  if (imgUrl === 'None') {
+  if (!imgUrl) {
     container.classList.add('default')
   } else {
     container.classList.add('image')
