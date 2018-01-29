@@ -49,16 +49,9 @@ class Tags {
     )
   }
   _request(submission) {
-    const url = `/article/tag/suggest/?language=${
-      this._language
-    }&terms=${submission}`
-    return fetch(url)
-      .then(handleResponse)
-      .catch(error => {
-        const e = new Error(`${error.message} ${url}`)
-        Object.assign(e, error, { url })
-        throw `${e} for ${url}`
-      })
+    return request(
+      `/article/tag/suggest/?language=${this._language}&terms=${submission}`
+    ).catch(console.error.bind(console))
   }
   _isTagSaved(submission) {
     return this._request(submission).then(tagsApi =>
