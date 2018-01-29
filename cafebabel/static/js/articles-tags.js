@@ -177,7 +177,7 @@ class TagEventListener {
       event.preventDefault()
       /* Intercept -return- it's capture by 'click' for adding tags */
       if (event.keyCode == 38) return
-      const submission = event.target.value
+      const submission = event.target.value.trim()
       if (submission.length < 3) return
       tags.handleSuggestion(submission)
     })
