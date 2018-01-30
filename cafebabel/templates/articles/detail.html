@@ -28,7 +28,7 @@
 
 {% block body %}
 <article>
-    {% if article.has_image %}
+    {% if article.image_filename %}
     <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
     {% endif %}
     {% block edit_button %}

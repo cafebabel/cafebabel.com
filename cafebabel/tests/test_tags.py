@@ -131,8 +131,32 @@ def test_tag_update_image(app, client, tag, editor):
     assert get_flashed_messages() == ['Your tag was successfully saved.']
     tag.reload()
     assert tag.summary == 'custom summary'
-    assert tag.has_image
-    assert Path(app.config.get('TAGS_IMAGES_PATH') / str(tag.id)).exists()
+    assert tag.image_filename == 'image-name.jpg'
+    assert Path(app.config.get('UPLOADS_FOLDER') /
+                'tags' / tag.image_filename).exists()
+
+
+def test_tag_update_image_unallowed_extension(app, client, tag, editor):
+    login(client, editor.email, 'password')
+    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
+        image_content = BytesIO(content.read())
+    data = {
+        'summary': 'custom summary',
+        'image': (image_content, 'image-name.zip'),
+    }
+    assert 'zip' not in app.config.get('ALLOWED_EXTENSIONS')
+    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+                           content_type='multipart/form-data',
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == [
+        'There was an error in your tag submission:',
+        'Unallowed extension.'
+    ]
+    tag.reload()
+    assert tag.image_filename is None
+    assert not Path(app.config.get('UPLOADS_FOLDER') /
+                    'tags' / 'image-name.zip').exists()
 
 
 def test_tag_update_name_not_possible(app, client, tag, editor):

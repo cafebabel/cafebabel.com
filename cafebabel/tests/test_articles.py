@@ -186,11 +186,36 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert published_article.title == 'updated'
     assert published_article.author == user
     assert published_article.editor == editor
-    assert published_article.has_image
-    assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
-                str(published_article.id)).exists()
-    assert ('<meta property=og:image content="http://localhost/static/'
-            f'uploads/articles/{published_article.id}">' in response)
+    assert published_article.image_filename == 'image-name.jpg'
+    assert Path(app.config.get('UPLOADS_FOLDER') / 'articles' /
+                published_article.image_filename).exists()
+    assert ('<meta property=og:image content="http://localhost/uploads/'
+            f'articles/{published_article.image_filename}">' in response)
+
+
+def test_update_article_with_image_unallowed_extension(
+        app, client, user, editor, published_article):
+    login(client, editor.email, 'password')
+    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
+        image_content = BytesIO(content.read())
+    data = {
+        'title': 'updated',
+        'author': user.id,
+        'image': (image_content, 'image-name.zip'),
+    }
+    assert 'zip' not in app.config.get('ALLOWED_EXTENSIONS')
+    response = client.post(f'/article/{published_article.id}/edit/', data=data,
+                           content_type='multipart/form-data',
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == [
+        'There was an error in your article submission:',
+        'Unallowed extension.'
+    ]
+    published_article.reload()
+    assert published_article.image_filename is None
+    assert not Path(app.config.get('UPLOADS_FOLDER') / 'articles' /
+                    'image-name.zip').exists()
 
 
 def test_update_article_with_user_should_return_403(client, user,

@@ -3,6 +3,7 @@ from http import HTTPStatus
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
 
+from ..core.exceptions import ValidationError
 from ..core.helpers import editor_required
 from ..users.models import User
 from .models import Article
@@ -44,7 +45,13 @@ def edit(article_id):
     article = Article.objects.get_or_404(id=article_id, status='published')
 
     if request.method == 'POST':
-        article.save_from_request(request)
+        try:
+            article.save_from_request(request)
+        except ValidationError as e:
+            # TODO: see https://github.com/cafebabel/cafebabel.com/issues/187
+            flash('There was an error in your article submission:')
+            flash(str(e))
+            return redirect(url_for('articles.edit', article_id=article.id))
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
 

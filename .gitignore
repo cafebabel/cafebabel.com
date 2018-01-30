@@ -5,6 +5,6 @@ __pycache__/
 /logs/
 /settings.local.py
 *.egg-info/
-/cafebabel/static/uploads/
+/cafebabel/uploads/
 /data/
 *.json

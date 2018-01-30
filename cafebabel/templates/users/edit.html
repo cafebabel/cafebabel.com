@@ -11,7 +11,7 @@
   <form method=post action=. enctype=multipart/form-data>
     <div class=file>
       <output>
-        {% if user.profile.has_image %}
+        {% if user.profile.image_filename %}
           <img src={{ user.profile.image_url }} alt="My picture">
         {% else %}
           {{ default_profile_picture() }}
@@ -20,7 +20,7 @@
       <input id=image type=file name=image>
       <label for=image><strong>Choose profile picture</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
       <small class=size-info>500Ko maximum</small>
-      {% if user.profile.has_image %}
+      {% if user.profile.image_filename %}
         <div class=checkbox>
           <label for=delete>Delete this picture</label>
           <input type=checkbox name=delete id=delete value=1>

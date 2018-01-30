@@ -12,7 +12,7 @@
 
   <p>Article in <span>{{ translation.language }}</span></p>
 
-  {% if translation.has_image %}
+  {% if translation.image_filename %}
     <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
   {% endif %}
 

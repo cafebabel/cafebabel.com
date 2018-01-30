@@ -2,6 +2,8 @@ from http import HTTPStatus
 from io import BytesIO
 from pathlib import Path
 
+from flask.helpers import get_flashed_messages
+
 from ..users.models import Role
 from .utils import login, logout
 
@@ -57,10 +59,32 @@ def test_profile_image_should_save_and_render(app, client, user):
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your profile was successfully saved.']
     user.reload()
-    assert user.profile.has_image
-    assert Path(app.config.get('USERS_IMAGES_PATH') / str(user.id)).exists()
+    assert user.profile.image_filename == 'image-name.jpg'
+    assert Path(app.config.get('UPLOADS_FOLDER') /
+                'users' / user.profile.image_filename).exists()
     assert f'<img src={user.profile.image_url}' in response
+
+
+def test_profile_image_unallowed_extension(app, client, user):
+    login(client, user.email, 'password')
+    with open(Path(__file__).parent / 'dummy-image.jpg', 'rb') as content:
+        image = BytesIO(content.read())
+    data = {'image': (image, 'image-name.zip')}
+    assert 'zip' not in app.config.get('ALLOWED_EXTENSIONS')
+    response = client.post(f'/profile/{user.id}/edit/', data=data,
+                           content_type='multipart/form-data',
+                           follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == [
+        'There was an error in your profile submission:',
+        'Unallowed extension.'
+    ]
+    user.reload()
+    assert user.profile.image_filename is None
+    assert not Path(app.config.get('UPLOADS_FOLDER') /
+                    'users' / 'image-name.zip').exists()
 
 
 def test_profile_big_image_should_raise(app, client, user):
@@ -72,4 +96,4 @@ def test_profile_big_image_should_raise(app, client, user):
                            content_type='multipart/form-data')
     assert response.status_code == HTTPStatus.REQUEST_ENTITY_TOO_LARGE
     user.reload()
-    assert not user.profile.has_image
+    assert not user.profile.image_filename

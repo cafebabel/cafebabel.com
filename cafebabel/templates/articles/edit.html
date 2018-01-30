@@ -13,7 +13,8 @@
 <form method=post action={{ url_for('articles.edit', article_id=article.id) }} enctype=multipart/form-data>
   <input type=hidden name=id value="{{ article.id }}">
   <div class=file>
-    {% if article.has_image %}
+    <label for=image>Image</label>
+    {% if article.image_filename %}
       <output><img src={{ article.image_url }} alt="Image for {{ article.title }}"></output>
       <div class=checkbox>
         <label for=delete-image>Delete image</label>

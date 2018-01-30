@@ -11,7 +11,8 @@
 <form method=post action={{ url_for('tags.edit', slug=tag.slug) }} enctype=multipart/form-data>
   <input type=hidden name=slug value="{{ tag.slug }}">
   <div class=file>
-    {% if tag.has_image %}
+    <label for=image>Image</label>
+    {% if tag.image_filename %}
       <output><img src={{ tag.image_url }} alt="Image for {{ tag.name }}"></output>
       <div class=checkbox>
         <label for=delete-image>Delete image</label>

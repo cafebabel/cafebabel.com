@@ -155,9 +155,9 @@ def test_draft_image_should_save_and_render(app, client, user, editor):
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     article = Article.objects.first()
-    assert article.has_image
-    assert Path(app.config.get('ARTICLES_IMAGES_PATH') /
-                str(article.id)).exists()
+    assert article.image_filename == 'image-name.jpg'
+    assert Path(app.config.get('UPLOADS_FOLDER') /
+                'articles' / article.image_filename).exists()
     assert f'<img src="{article.image_url}"' in response
 
 
