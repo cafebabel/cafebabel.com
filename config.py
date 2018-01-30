@@ -1,5 +1,6 @@
 from pathlib import Path
 from tempfile import mkdtemp
+from cafebabel.users.forms import MultipleHashLoginForm
 
 
 class BaseConfig:
@@ -31,6 +32,8 @@ class BaseConfig:
     SECURITY_CHANGEABLE = True
     SECURITY_EMAIL_SENDER = '@'.join(['no-reply', 'cafebabel.com'])
     SECURITY_POST_LOGIN_VIEW = '/profile/'
+    SECURITY_PASSWORD_SCHEMES = ['bcrypt', 'django_pbkdf2_sha256']
+    SECURITY_LOGIN_FORM = MultipleHashLoginForm
 
     SECURITY_SEND_REGISTER_EMAIL = True
 
