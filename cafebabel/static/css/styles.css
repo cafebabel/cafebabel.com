@@ -841,7 +841,7 @@ button.follow.active:after {
 
 /* Editing place page */
 
-.create-article-page canvas,
+.create-article-page .file canvas,
 .create-article-page .file {
   position: relative;
   width: 100%;
@@ -851,7 +851,7 @@ button.follow.active:after {
 }
 
 @media screen and (min-width: 1200px) {
-  .create-article-page canvas,
+  .create-article-page .file canvas,
   .create-article-page .file {
     width: 120rem;
     height: 46.7rem;
