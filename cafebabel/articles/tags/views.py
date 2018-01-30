@@ -51,8 +51,8 @@ def edit(slug):
             tag.save_from_request(request)
         except ValidationError as e:
             # TODO: see https://github.com/cafebabel/cafebabel.com/issues/187
-            flash('There was an error in your tag submission:')
-            flash(str(e))
+            message = f'There was an error in your tag submission: {e}'
+            flash(message, 'error')
             return redirect(url_for('tags.edit', slug=slug))
         flash('Your tag was successfully saved.')
         return redirect(url_for('tags.detail', slug=tag.slug))

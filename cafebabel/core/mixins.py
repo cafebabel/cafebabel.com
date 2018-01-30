@@ -11,19 +11,23 @@ class UploadableImageMixin:
     _upload_image = None
 
     @property
+    def has_image(self):
+        return bool(self.image_filename)
+
+    @property
     def upload_subpath(self):
         raise NotImplemented()
 
     @property
     def image_url(self):
-        if self.image_filename:
+        if self.has_image:
             return url_for(
                 'cores.uploads',
                 filename=f'{self.upload_subpath}/{self.image_filename}')
 
     @property
     def image_path(self):
-        if not self.image_filename:
+        if not self.has_image:
             return
         return (current_app.config['UPLOADS_FOLDER'] / self.upload_subpath /
                 self.image_filename)
@@ -32,7 +36,7 @@ class UploadableImageMixin:
         self._upload_image = image
 
     def delete_image(self):
-        if not self.image_filename:
+        if not self.has_image:
             return
         self.image_path.unlink()
         self.image_filename = None
