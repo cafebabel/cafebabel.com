@@ -46,16 +46,17 @@ def edit(id):
             if file_exceeds(image, maximum):
                 raise exceptions.RequestEntityTooLarge()
             if image.filename == '':
-                flash('There was an error in your profile submission:')
-                flash('No selected file.')
+                message = ('There was an error in your profile submission: '
+                           'No selected file.')
+                flash(message, 'error')
                 return redirect(url_for('users.edit', id=user.id))
-            if allowed_file(image.filename):
-                user.profile.attach_image(image)
-            else:
+            if not allowed_file(image.filename):
                 # TODO: https://github.com/cafebabel/cafebabel.com/issues/187
-                flash('There was an error in your profile submission:')
-                flash('Unallowed extension.')
+                message = ('There was an error in your profile submission: '
+                           'Unallowed extension.')
+                flash(message, 'error')
                 return redirect(url_for('users.edit', id=user.id))
+            user.profile.attach_image(image)
         user.save()
         flash('Your profile was successfully saved.')
         return redirect(url_for('users.detail', id=user.id))

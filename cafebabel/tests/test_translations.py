@@ -95,7 +95,7 @@ def test_translation_creation_should_keep_image(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post(f'/article/translation/new/', data=data)
+    response = client.post('/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert translation.image_filename == 'image-name.jpg'
@@ -121,7 +121,7 @@ def test_translation_creation_already_existing(app, client, user, article):
     }
     response = client.post('/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert ('This article already exists in this language.' in response)
+    assert 'This article already exists in this language.' in response
 
 
 def test_translation_creation_same_as_article(app, client, user, article):

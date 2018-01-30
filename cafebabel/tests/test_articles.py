@@ -209,8 +209,7 @@ def test_update_article_with_image_unallowed_extension(
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == [
-        'There was an error in your article submission:',
-        'Unallowed extension.'
+        'There was an error in your article submission: Unallowed extension.'
     ]
     published_article.reload()
     assert published_article.image_filename is None

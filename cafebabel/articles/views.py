@@ -49,8 +49,8 @@ def edit(article_id):
             article.save_from_request(request)
         except ValidationError as e:
             # TODO: see https://github.com/cafebabel/cafebabel.com/issues/187
-            flash('There was an error in your article submission:')
-            flash(str(e))
+            message = f'There was an error in your article submission: {e}'
+            flash(message, 'error')
             return redirect(url_for('articles.edit', article_id=article.id))
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)

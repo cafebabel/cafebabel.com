@@ -3,7 +3,7 @@
 {%- macro article_meta(article) -%}
   <p>
     <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-    — by {% if article.author.profile.image_filename %}
+    — by {% if article.author.profile.has_image %}
       <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
     {% else %}
       {{ default_profile_picture() }}

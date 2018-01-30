@@ -7,7 +7,7 @@
 
 <section>
   <h2>About</h2>
-  {% if user.profile.image_filename %}
+  {% if user.profile.has_image %}
     <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
   {% else %}
     {{ default_profile_picture() }}

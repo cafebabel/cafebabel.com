@@ -53,10 +53,9 @@ class Tag(db.Document, UploadableImageMixin):
         if image:
             if image.filename == '':
                 raise ValidationError('No selected file.')
-            if allowed_file(image.filename):
-                self.attach_image(image)
-            else:
+            if not allowed_file(image.filename):
                 raise ValidationError('Unallowed extension.')
+            self.attach_image(image)
         return self.save()
 
 

@@ -78,8 +78,7 @@ def test_profile_image_unallowed_extension(app, client, user):
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == [
-        'There was an error in your profile submission:',
-        'Unallowed extension.'
+        'There was an error in your profile submission: Unallowed extension.'
     ]
     user.reload()
     assert user.profile.image_filename is None

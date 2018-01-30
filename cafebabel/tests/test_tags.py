@@ -150,8 +150,7 @@ def test_tag_update_image_unallowed_extension(app, client, tag, editor):
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == [
-        'There was an error in your tag submission:',
-        'Unallowed extension.'
+        'There was an error in your tag submission: Unallowed extension.'
     ]
     tag.reload()
     assert tag.image_filename is None
