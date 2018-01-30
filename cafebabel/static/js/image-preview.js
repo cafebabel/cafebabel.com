@@ -1,14 +1,14 @@
 /* display picture file name after selection on profile edit https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
 const fileInput = document.querySelector('.file input[type="file"]')
 const outputImage = document.querySelector('.file output')
-const sizeInfo = fileInput.parentElement.querySelector('small')
+const sizeInfo = fileInput.parentElement.querySelector('.file small')
 
 fileInput &&
   fileInput.addEventListener('change', event => {
     const image = event.target.files[0]
     const fileName = image.name
     const reader = new FileReader()
-    const canvas = document.querySelector('canvas')
+    const canvas = document.querySelector('.file canvas')
     reader.readAsDataURL(image)
     reader.addEventListener('loadend', () => {
       const maxSize = Math.round(reader.result.length / 1024) > 500
