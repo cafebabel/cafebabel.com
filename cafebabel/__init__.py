@@ -89,8 +89,9 @@ def register_cli(app):
 
     @app.cli.command(short_help='Migrate data from old to new system')
     @click.option('--limit', default=0, help='Number of items migrated.')
-    def load_migrations(limit):
-        migrate_users(app, limit)
+    @click.option('--users-filepath', help='Path to users.json file.')
+    def load_migrations(limit, users_filepath):
+        migrate_users(app, limit, users_filepath)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():
