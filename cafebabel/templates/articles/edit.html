@@ -9,7 +9,7 @@
   <input type=hidden name=id value="{{ article.id }}">
   <div class=file>
     <label for=image>Image</label>
-    {% if article.has_image %}
+    {% if article.image_filename %}
       <img src={{ article.image_url }} alt="Image for {{ article.title }}">
       <div class=checkbox>
         <label for=delete-image>Delete image</label>

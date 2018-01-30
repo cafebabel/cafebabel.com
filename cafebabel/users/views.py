@@ -3,7 +3,8 @@ from flask import (Blueprint, flash, render_template, redirect, url_for,
 from flask_login import login_required, current_user
 from werkzeug import exceptions
 
-from ..core.helpers import file_exceeds
+from ..core.exceptions import ValidationError
+from ..core.helpers import allowed_file, file_exceeds
 from ..articles.models import Article
 from .models import User
 
@@ -41,10 +42,20 @@ def edit(id):
         if request.form.get('delete'):
             user.profile.delete_image()
         if image:
-            if file_exceeds(image,
-                            current_app.config['USERS_IMAGE_MAX_LENGTH']):
+            maximum = current_app.config['USERS_IMAGE_MAX_CONTENT_LENGTH']
+            if file_exceeds(image, maximum):
                 raise exceptions.RequestEntityTooLarge()
-            user.profile.attach_image(image)
+            if image.filename == '':
+                flash('There was an error in your profile submission:')
+                flash('No selected file.')
+                return redirect(url_for('users.edit', id=user.id))
+            if allowed_file(image.filename):
+                user.profile.attach_image(image)
+            else:
+                # TODO: https://github.com/cafebabel/cafebabel.com/issues/187
+                flash('There was an error in your profile submission:')
+                flash('Unallowed extension.')
+                return redirect(url_for('users.edit', id=user.id))
         user.save()
         flash('Your profile was successfully saved.')
         return redirect(url_for('users.detail', id=user.id))

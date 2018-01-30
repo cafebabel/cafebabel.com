@@ -6,7 +6,7 @@
   <input type=hidden name=slug value="{{ tag.slug }}">
   <div class=file>
     <label for=image>Image</label>
-    {% if tag.has_image %}
+    {% if tag.image_filename %}
       <img src={{ tag.image_url }} alt="Image for {{ tag.name }}">
       <div class=checkbox>
         <label for=delete-image>Delete image</label>

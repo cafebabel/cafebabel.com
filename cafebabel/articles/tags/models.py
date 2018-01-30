@@ -1,11 +1,12 @@
 from http import HTTPStatus
 
-from flask import abort, current_app
+from flask import abort
 from flask_mongoengine import BaseQuerySet
 from mongoengine import signals
 
 from ... import db
-from ...core.helpers import slugify
+from ...core.exceptions import ValidationError
+from ...core.helpers import allowed_file, slugify
 from ...core.mixins import UploadableImageMixin
 
 
@@ -35,11 +36,9 @@ class Tag(db.Document, UploadableImageMixin):
     def update_slug(cls, sender, document, **kwargs):
         document.slug = slugify(document.name)
 
-    def get_images_url(self):
-        return current_app.config.get('TAGS_IMAGES_URL')
-
-    def get_images_path(self):
-        return current_app.config.get('TAGS_IMAGES_PATH')
+    @property
+    def upload_subpath(self):
+        return 'tags'
 
     def save_from_request(self, request):
         data = request.form.to_dict()
@@ -52,7 +51,12 @@ class Tag(db.Document, UploadableImageMixin):
             self.delete_image()
         image = files.get('image')
         if image:
-            self.attach_image(image)
+            if image.filename == '':
+                raise ValidationError('No selected file.')
+            if allowed_file(image.filename):
+                self.attach_image(image)
+            else:
+                raise ValidationError('Unallowed extension.')
         return self.save()
 
 

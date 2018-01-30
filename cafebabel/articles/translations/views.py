@@ -24,7 +24,7 @@ def create():
                 status='draft',
                 editor=article.editor,
                 author=article.author,
-                has_image=article.has_image,
+                image_filename=article.image_filename,
                 category=article.category,
                 **data
             )

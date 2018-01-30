@@ -3,6 +3,7 @@ from http import HTTPStatus
 from flask import (Blueprint, abort, current_app, flash, jsonify, redirect,
                    render_template, request, url_for)
 
+from ...core.exceptions import ValidationError
 from ...core.helpers import editor_required, current_language
 from ..models import Article
 from .models import Tag
@@ -46,7 +47,13 @@ def edit(slug):
     tag = Tag.objects.get_or_404(slug=slug, language=current_language())
 
     if request.method == 'POST':
-        tag.save_from_request(request)
+        try:
+            tag.save_from_request(request)
+        except ValidationError as e:
+            # TODO: see https://github.com/cafebabel/cafebabel.com/issues/187
+            flash('There was an error in your tag submission:')
+            flash(str(e))
+            return redirect(url_for('tags.edit', slug=slug))
         flash('Your tag was successfully saved.')
         return redirect(url_for('tags.detail', slug=tag.slug))
 

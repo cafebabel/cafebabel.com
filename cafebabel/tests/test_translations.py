@@ -84,6 +84,26 @@ def test_translation_creation_should_redirect(app, client, user, article):
             ['Your translation was successfully created.'])
 
 
+def test_translation_creation_should_keep_image(app, client, user, article):
+    login(client, user.email, 'password')
+    article.modify(image_filename='image-name.jpg')
+    language = app.config['LANGUAGES'][1][0]
+    data = {
+        'title': 'title',
+        'summary': 'summary',
+        'body': 'body',
+        'original': article.id,
+        'language': language
+    }
+    response = client.post(f'/article/translation/new/', data=data)
+    assert response.status_code == HTTPStatus.FOUND
+    translation = Translation.objects.first()
+    assert translation.image_filename == 'image-name.jpg'
+    assert translation.image_url == '/uploads/articles/image-name.jpg'
+    assert str(translation.image_path).endswith(
+        '/cafebabel/uploads/articles/image-name.jpg')
+
+
 def test_translation_creation_already_existing(app, client, user, article):
     login(client, user.email, 'password')
     language = app.config['LANGUAGES'][1][0]

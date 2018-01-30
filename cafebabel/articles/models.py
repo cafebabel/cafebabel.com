@@ -1,11 +1,12 @@
 import datetime
 
-from flask import current_app, url_for
+from flask import url_for
 from flask_login import current_user
 from mongoengine import PULL, signals
 
 from .. import db
-from ..core.helpers import slugify
+from ..core.exceptions import ValidationError
+from ..core.helpers import allowed_file, slugify
 from ..core.mixins import UploadableImageMixin
 from ..users.models import User
 from .tags.models import Tag
@@ -34,11 +35,9 @@ class Article(db.Document, UploadableImageMixin):
     def __str__(self):
         return self.title
 
-    def get_images_url(self):
-        return current_app.config.get('ARTICLES_IMAGES_URL')
-
-    def get_images_path(self):
-        return current_app.config.get('ARTICLES_IMAGES_PATH')
+    @property
+    def upload_subpath(self):
+        return 'articles'
 
     @property
     def detail_url(self):
@@ -104,7 +103,12 @@ class Article(db.Document, UploadableImageMixin):
             self.delete_image()
         image = files.get('image')
         if image:
-            self.attach_image(image)
+            if image.filename == '':
+                raise ValidationError('No selected file.')
+            if allowed_file(image.filename):
+                self.attach_image(image)
+            else:
+                raise ValidationError('Unallowed extension.')
         return self.save()
 
 
