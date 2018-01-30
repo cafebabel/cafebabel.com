@@ -11,10 +11,10 @@ def iterate_over_json_file(filename):
         return json.loads(json_file.read())
 
 
-def migrate_users(app, limit):
+def migrate_users(app, limit, users_filepath):
     click.echo('Starting users migration.')
     ds = app.user_datastore
-    old_users = iterate_over_json_file('users.json')
+    old_users = iterate_over_json_file(users_filepath)
     if limit:
         old_users = old_users[:limit]
     bar = ProgressBar(
@@ -26,13 +26,11 @@ def migrate_users(app, limit):
     with app.app_context():
         for old_user in bar.iter(old_users):
             data = old_user['fields']
-            # TODO: deal properly with passwords import, see #192
-            password = data['password']
             creation_date = datetime.strptime(data['date_joined'],
                                               '%Y-%m-%dT%H:%M:%S')
             creation_date.replace(tzinfo=timezone.utc)
             user = ds.create_user(email=data['email'],
-                                  password=password,
+                                  password=data['password'],
                                   creation_date=creation_date)
             user.profile.name = f'{data["first_name"]} {data["last_name"]}'
             user.profile.old_pk = old_user['pk']
