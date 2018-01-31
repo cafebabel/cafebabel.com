@@ -1,4 +1,4 @@
-from flask import current_app, url_for
+from flask import url_for
 from mongoengine import signals, errors, ValidationError
 
 from ... import db
@@ -22,12 +22,6 @@ class Translation(Article):
     def is_translation(self):
         return True
 
-    @property
-    def image_url(self):
-        if self.has_image:
-            return (f'{current_app.config.get("ARTICLES_IMAGES_URL")}/'
-                    f'{self.original_article.id}')
-
     def clean(self):
         super().clean()
         try:
@@ -41,8 +35,8 @@ class Translation(Article):
     def check_duplicate(cls, sender, document, **kwargs):
         first = Translation.objects(original_article=document.original_article,
                                     language=document.language).first()
-        if ((first and first != document)
-                or document.language == document.original_article.language):
+        if ((first and first != document) or
+                document.language == document.original_article.language):
             raise errors.NotUniqueError(
                 'This article already exists in this language.')
         return document
