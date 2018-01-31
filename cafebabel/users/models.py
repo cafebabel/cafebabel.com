@@ -27,11 +27,9 @@ class UserProfile(db.EmbeddedDocument, UploadableImageMixin):
     def get_id(self):
         return self._instance.id
 
-    def get_images_url(self):
-        return current_app.config.get('USERS_IMAGES_URL')
-
-    def get_images_path(self):
-        return current_app.config.get('USERS_IMAGES_PATH')
+    @property
+    def upload_subpath(self):
+        return 'users'
 
 
 class User(db.Document, UserMixin):
