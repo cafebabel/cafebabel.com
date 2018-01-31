@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% from "users/macros.html" import social_field, default_profile_picture with context %}
-{% from "_extrajs-macros.html" import extra_js without context %}
+{% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
   {{ extra_js(url_for('static', filename='js/image-preview.js')) }}
