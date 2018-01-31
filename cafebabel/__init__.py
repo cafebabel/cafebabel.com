@@ -71,7 +71,7 @@ def register_blueprints(app):
 def register_cli(app):
     from .commands import (articles_fixtures, auth_fixtures, drop_collections,
                            relations_fixtures, tags_fixtures)
-    from .migrations import migrate_users
+    from .django_migrations import migrate_users
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
