@@ -19,6 +19,7 @@ class UserProfile(db.EmbeddedDocument, UploadableImageMixin):
     socials = db.DictField()
     website = db.StringField()
     about = db.StringField()
+    old_pk = db.IntField()  # In use for migrations (references in articles).
 
     def __str__(self):
         return self.name or 'Anonymous'
