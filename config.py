@@ -1,5 +1,6 @@
 from pathlib import Path
 from tempfile import mkdtemp
+from cafebabel.users.forms import MultipleHashLoginForm
 
 
 class BaseConfig:
@@ -31,6 +32,8 @@ class BaseConfig:
     SECURITY_CHANGEABLE = True
     SECURITY_EMAIL_SENDER = '@'.join(['no-reply', 'cafebabel.com'])
     SECURITY_POST_LOGIN_VIEW = '/profile/'
+    SECURITY_PASSWORD_SCHEMES = ['bcrypt', 'django_pbkdf2_sha256']
+    SECURITY_LOGIN_FORM = MultipleHashLoginForm
 
     SECURITY_SEND_REGISTER_EMAIL = True
 
@@ -59,15 +62,10 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
-    BASE_IMAGES_PATH = (
-        Path(__file__).parent / 'cafebabel' / 'static' / 'uploads')
-    ARTICLES_IMAGES_PATH = BASE_IMAGES_PATH / 'articles'
-    ARTICLES_IMAGES_URL = 'uploads/articles'
-    TAGS_IMAGES_PATH = BASE_IMAGES_PATH / 'tags'
-    TAGS_IMAGES_URL = 'uploads/tags'
-    USERS_IMAGES_PATH = BASE_IMAGES_PATH / 'users'
-    USERS_IMAGES_URL = 'uploads/users'
-    USERS_IMAGE_MAX_LENGTH = 1024 * 500  # Ko
+    UPLOADS_FOLDER = Path(__file__).parent / 'cafebabel' / 'uploads'
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+    MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
+    USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
 
     DOMAIN_LANGUAGES = {
         'fr': 'cafebabel.fr',
@@ -113,9 +111,7 @@ class TestingConfig(BaseConfig):
         'db': 'cafebabel_test'
     }
     WTF_CSRF_ENABLED = False
-    ARTICLES_IMAGES_PATH = Path(mkdtemp())
-    USERS_IMAGES_PATH = Path(mkdtemp())
-    TAGS_IMAGES_PATH = Path(mkdtemp())
+    UPLOADS_FOLDER = Path(mkdtemp()) / 'cafebabel' / 'uploads'
     DEBUG_TB_ENABLED = False
 
     DOMAIN_LANGUAGES = {'en': 'localhost'}
