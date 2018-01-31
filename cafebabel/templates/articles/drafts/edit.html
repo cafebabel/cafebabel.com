@@ -12,20 +12,7 @@
 {% block body %}
 <form method=post action={{ url_for('drafts.edit', draft_id=article.id) }} enctype=multipart/form-data>
   <input type=hidden name=id value="{{ article.id }}">
-  <div class=file>
-    {% if article.image_filename %}
-      <output><img src={{ article.image_url }} alt="Image for {{ article.title }}"></output>
-      <div class=checkbox>
-        <label for=delete-image>Delete image</label>
-        <input type=checkbox name=delete-image id=delete-image value=1>
-      </div>
-    {% else %}
-      <canvas class=noise></canvas>
-      <output></output>
-    {% endif %}
-    <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>Recommended file size: 1200x467px, less than 1Mo</small></label>
-    <input type=file id=image name=image>
-  </div>
+  {{ macros.image_upload(article) }}
   <h1 class="edit active">
     <label for=title>Title</label>
     <input id=title name=title value="{{ article.title }}" required>
