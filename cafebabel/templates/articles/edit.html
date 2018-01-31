@@ -3,9 +3,7 @@
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(url_for('static', filename='js/noise.js')) }}
-  {{ extra_js(url_for('static', filename='js/articles-tags.js')) }}
-  {{ extra_js(url_for('static', filename='js/image-preview.js')) }}
+  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js']) }}
 {% endblock %}
 
 {% block body_class %}create-article-page{% endblock %}
