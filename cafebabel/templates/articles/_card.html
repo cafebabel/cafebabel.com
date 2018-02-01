@@ -1,6 +1,11 @@
+{% from "articles/macros.html" import default_article_picture %}
 <article>
   {% if article.has_image %}
     <a href={{ article.detail_url }}><img src={{ article.image_url }} alt="Image for {{ article.title }}"></a>
+  {% else %}
+    <a href={{ article.detail_url }}>
+      {{ default_article_picture() }}
+    </a>
   {% endif %}
   <div class=article-detail>
     <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>

@@ -51,3 +51,7 @@
     <input type=file id=image name=image>
   </div>
 {%- endmacro %}
+
+{% macro default_article_picture() %}
+  <img src={{ url_for('static', filename='img/article-thumbnail-default.jpg') }} alt="Default thumbnail picture">
+{% endmacro %}

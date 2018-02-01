@@ -1389,6 +1389,11 @@ h1.edit input {
   transform: translateX(-50%);
 }
 
+.thumbnail-placeholder {
+  height: 46.7rem;
+  background: #e0e0e0;
+}
+
 .article-page a.button:first-of-type {
   margin: 2rem auto -2rem auto;
   max-width: 100%;
