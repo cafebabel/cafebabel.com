@@ -14,11 +14,9 @@ class Tags {
   get suggestions() {
     return this._suggestionsContainer.querySelectorAll('li')
   }
-  get _languages() {
-    return document.querySelector('#language')
-  }
   get _language() {
-    return this._languages.options[this._languages.selectedIndex].value
+    const languages = document.querySelector('#language')
+    return languages.options[languages.selectedIndex].value
   }
   get _tags() {
     return this._list.querySelectorAll('input')
