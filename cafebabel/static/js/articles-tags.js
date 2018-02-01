@@ -7,11 +7,8 @@ class Tags {
     return languages.options[languages.selectedIndex].value
   }
   get _tagsNames() {
-    const tags = this._list.querySelectorAll('input')
+    const tags = document.querySelectorAll('.tags .tags-list input')
     return Array.from(tags).map(({ value }) => value)
-  }
-  get _list() {
-    return document.querySelector('.tags .tags-list')
   }
   get _suggestionsContainer() {
     return document.querySelector('.tags #tags-suggestions')
@@ -96,12 +93,13 @@ class Tags {
     TagEventListener.addSuggestion()
   }
   _render(tagsNames = this._tagsNames) {
-    const container = this._list.cloneNode(false)
+    const list = document.querySelector('.tags .tags-list')
+    const container = list.cloneNode(false)
     return this._createTagsList(container, tagsNames).then(tagsList => {
-      this._list.replaceWith(tagsList)
+      list.replaceWith(tagsList)
       if (!tagsNames.length) return
       TagEventListener.addRemoveListener()
-      TagEffect.fadeIn(this._list.querySelector('li:last-child'))
+      TagEffect.fadeIn(list.querySelector('li:last-child'))
     })
   }
 }
