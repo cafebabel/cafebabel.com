@@ -8,6 +8,6 @@ def home():
     return render_template('home.html')
 
 
-@cores.route('/uploads/<filename>')
+@cores.route('/uploads/<path:filename>')
 def uploads(filename):
     return send_from_directory(current_app.config['UPLOADS_FOLDER'], filename)

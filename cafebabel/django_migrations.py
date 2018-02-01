@@ -33,6 +33,9 @@ def migrate_users(app, limit, users_filepath):
                                   password=data['password'],
                                   creation_date=creation_date)
             user.profile.name = f'{data["first_name"]} {data["last_name"]}'
+            avatar = data['avatar']
+            if avatar:
+                user.profile.image_filename = avatar[len('avatars/'):]
             user.profile.old_pk = old_user['pk']
             user.save()
             if data['is_superuser'] or data['is_staff']:

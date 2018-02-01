@@ -3,7 +3,6 @@ from flask import (Blueprint, flash, render_template, redirect, url_for,
 from flask_login import login_required, current_user
 from werkzeug import exceptions
 
-from ..core.exceptions import ValidationError
 from ..core.helpers import allowed_file, file_exceeds
 from ..articles.models import Article
 from .models import User
