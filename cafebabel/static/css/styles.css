@@ -1108,6 +1108,10 @@ h1.edit input {
   width: 20rem;
 }
 
+.profile-page .file label[for='image']:before {
+  content: '';
+}
+
 .profile-page main .file output + input {
   border-bottom: none;
   width: 0.01rem;
@@ -1118,17 +1122,24 @@ h1.edit input {
   z-index: -1;
 }
 
-.profile-page main .file input + label {
+.profile-page .file label[for='image'] {
   display: inline-block;
   cursor: pointer;
   margin-left: 50%;
-  transform: translateX(-50%);
+  padding: 0;
+  transform: translate(-50%, 0);
   transition: all 0.3s;
   position: absolute;
   top: 0;
+  left: 0;
   width: 20rem;
   height: 20rem;
   border-radius: 45%; /* with 50% we can see the image in the background on hover. Seems to be linked to the label dimensions */
+  background: transparent;
+}
+
+.profile-page .file figcaption {
+  float: none;
 }
 
 .profile-page main .file input + label strong {
