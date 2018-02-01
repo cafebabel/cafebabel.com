@@ -1,7 +1,4 @@
 class Tags {
-  get removeButtons() {
-    return this._list.querySelectorAll('li button')
-  }
   get fieldAdd() {
     return document.querySelector('.tags input[name=tag-new]')
   }
@@ -157,7 +154,10 @@ class TagEventListener {
     )
   }
   static addRemoveListener() {
-    Array.from(tags.removeButtons).forEach(button =>
+    const RemoveButtons = document.querySelectorAll(
+      '.tags .tags-list li button'
+    )
+    Array.from(RemoveButtons).forEach(button =>
       button.addEventListener('click', event => {
         const tagName = event.target.parentElement.textContent.trim()
         tags.removeTag(tagName)
