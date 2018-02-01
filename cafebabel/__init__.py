@@ -59,7 +59,7 @@ def register_blueprints(app):
     from .core.views import cores
     from .users.views import users
 
-    app.register_blueprint(cores, url_prefix='/')
+    app.register_blueprint(cores, url_prefix='')
     app.register_blueprint(articles, url_prefix='/article')
     app.register_blueprint(tags, url_prefix='/article/tag')
     app.register_blueprint(drafts, url_prefix='/article/draft')
