@@ -35,10 +35,10 @@
   </div>
 {%- endmacro %}
 
-{%- macro image_upload(article) -%}
+{%- macro image_upload(object) -%}
   <div class=file>
-    {% if article.image_filename %}
-      <output><img src={{ article.image_url }} alt="Image for {{ article.name }}"></output>
+    {% if object.image_filename %}
+      <output><img src={{ object.image_url }} alt="Image for {{ object.name }}"></output>
       <div class=checkbox>
         <label for=delete-image>Delete image</label>
         <input type=checkbox name=delete-image id=delete-image value=1>
@@ -47,7 +47,7 @@
       <canvas class=noise></canvas>
       <output></output>
     {% endif %}
-    <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>Recommended file size: 1200x467px, less than 1Mo</small></label>
+    <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>File size: 1200x467px, less than 1Mo</small></label>
     <input type=file id=image name=image>
   </div>
 {%- endmacro %}
