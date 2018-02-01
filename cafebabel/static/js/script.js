@@ -42,13 +42,19 @@ if (socialIcons) {
   socialIcons.forEach(socialIcon => {
     socialIcon.querySelector('a').addEventListener('click', event => {
       event.preventDefault()
+      document.querySelector('html').addEventListener('click', () => {
+        socialIcon.classList.remove('active')
+      })
+      document
+        .querySelector('.social-networks')
+        .addEventListener('click', event => {
+          event.stopPropagation()
+        })
       const socialsClick = socialIcon.querySelector('a').contains(event.target)
       if (socialsClick) {
         socialIcons.forEach(li => li.classList.remove('active'))
         socialIcon.classList.add('active')
         socialIcon.querySelector('input').focus()
-      } else {
-        socialIcon.classList.remove('active')
       }
     })
   })
