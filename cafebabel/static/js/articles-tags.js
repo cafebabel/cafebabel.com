@@ -8,9 +8,6 @@ class Tags {
   get fieldAdd() {
     return this.context.querySelector('input[name=tag-new]')
   }
-  get addButton() {
-    return this.context.querySelector('button.add')
-  }
   get suggestions() {
     return this._suggestionsContainer.querySelectorAll('li')
   }
@@ -18,11 +15,9 @@ class Tags {
     const languages = document.querySelector('#language')
     return languages.options[languages.selectedIndex].value
   }
-  get _tags() {
-    return this._list.querySelectorAll('input')
-  }
   get _tagsNames() {
-    return Array.from(this._tags).map(({ value }) => value)
+    const tags = this._list.querySelectorAll('input')
+    return Array.from(tags).map(({ value }) => value)
   }
   get _list() {
     return this.context.querySelector('.tags-list')
@@ -147,12 +142,14 @@ class TagEffect {
 
 class TagEventListener {
   static clickAdd() {
-    tags.addButton.addEventListener('click', event => {
-      event.preventDefault()
-      const submission = event.target.previousSibling.value
-      if (submission.length < 3) return
-      tags.addTag(submission)
-    })
+    document
+      .querySelector('.tags button.add')
+      .addEventListener('click', event => {
+        event.preventDefault()
+        const submission = event.target.previousSibling.value
+        if (submission.length < 3) return
+        tags.addTag(submission)
+      })
   }
   static addSuggestion() {
     tags.suggestions.forEach(li =>
