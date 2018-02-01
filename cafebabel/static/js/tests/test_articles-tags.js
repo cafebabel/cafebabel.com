@@ -86,10 +86,9 @@ const Tags = require(`${__dirname}/../articles-tags.js`)
 
 describe('Tags', () => {
   describe('Find', () => {
-    it('should retrieve -input- whose add tag', () => {
+    it('should retrieve suggestions container whose add tag', () => {
       const tags = mock.reset()
-      const field = tags.fieldAdd
-      expect(field.localName).to.equal('input')
+      expect(tags._suggestionsContainer.localName).to.equal('ul')
     })
     it('should get language', () => {
       const tags = mock.reset()

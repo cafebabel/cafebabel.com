@@ -1,7 +1,4 @@
 class Tags {
-  get fieldAdd() {
-    return document.querySelector('.tags input[name=tag-new]')
-  }
   get suggestions() {
     return this._suggestionsContainer.querySelectorAll('li')
   }
@@ -92,7 +89,7 @@ class Tags {
     this._suggestionsContainer.innerHTML = ''
   }
   _emptyAddField() {
-    this.fieldAdd.value = ''
+    document.querySelector('.tags input[name=tag-new]').value = ''
   }
   _renderSuggestion(container) {
     this._suggestionsContainer.replaceWith(container)
@@ -165,7 +162,8 @@ class TagEventListener {
     )
   }
   static keyup() {
-    tags.fieldAdd.addEventListener('keyup', event => {
+    const fieldAdd = document.querySelector('.tags input[name=tag-new]')
+    fieldAdd.addEventListener('keyup', event => {
       event.preventDefault()
       /* Intercept -return- it's capture by 'click' for adding tags */
       if (event.keyCode == 38) return
