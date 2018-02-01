@@ -845,17 +845,10 @@ button.follow.active:after {
 .create-article-page .file {
   position: relative;
   width: 100%;
-  height: auto;
+  max-width: 120rem;
+  height: 46.7rem;
   background: transparent;
   transition: all 0.3s;
-}
-
-@media screen and (min-width: 1200px) {
-  .create-article-page .file canvas,
-  .create-article-page .file {
-    width: 120rem;
-    height: 46.7rem;
-  }
 }
 
 .file canvas {
