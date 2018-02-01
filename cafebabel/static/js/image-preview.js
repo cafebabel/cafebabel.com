@@ -2,18 +2,18 @@
 const fileInput = document.querySelector('.file input[type="file"]')
 const outputImage = document.querySelector('.file output')
 const sizeInfo = fileInput.parentElement.querySelector('.file small')
+const canvasField = document.querySelector('.file canvas')
 
 fileInput &&
   fileInput.addEventListener('change', event => {
     const image = event.target.files[0]
     const fileName = image.name
     const reader = new FileReader()
-    const canvas = document.querySelector('.file canvas')
     reader.readAsDataURL(image)
     reader.addEventListener('loadend', () => {
       const maxSize = Math.round(reader.result.length / 1024) > 500
       if (!maxSize) {
-        if (canvas) canvas.classList.add('hidden')
+        if (canvasField) canvasField.classList.add('hidden')
         outputImage.innerHTML = `
     <figure>
       <img src=${reader.result} alt="Picture preview">
@@ -35,11 +35,11 @@ function addListenerMulti(element, events, fn) {
       element.addEventListener(event, fn, false)
     ) /* https://stackoverflow.com/questions/8796988/binding-multiple-events-to-a-listener-without-jquery */
 }
-if (canvas) {
+if (canvasField) {
   addListenerMulti(fileInput, 'dragenter focus click', () => {
-    canvas.classList.add('active')
+    canvasField.classList.add('active')
   })
   addListenerMulti(fileInput, 'dragleave blur drop', () => {
-    canvas.classList.remove('active')
+    canvasField.classList.remove('active')
   })
 }
