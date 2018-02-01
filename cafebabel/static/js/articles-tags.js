@@ -1,12 +1,9 @@
 class Tags {
-  get context() {
-    return document.querySelector('.tags')
-  }
   get removeButtons() {
     return this._list.querySelectorAll('li button')
   }
   get fieldAdd() {
-    return this.context.querySelector('input[name=tag-new]')
+    return document.querySelector('.tags input[name=tag-new]')
   }
   get suggestions() {
     return this._suggestionsContainer.querySelectorAll('li')
@@ -20,10 +17,10 @@ class Tags {
     return Array.from(tags).map(({ value }) => value)
   }
   get _list() {
-    return this.context.querySelector('.tags-list')
+    return document.querySelector('.tags .tags-list')
   }
   get _suggestionsContainer() {
-    return this.context.querySelector('#tags-suggestions')
+    return document.querySelector('.tags #tags-suggestions')
   }
 
   addTag(submission) {
