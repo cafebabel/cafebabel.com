@@ -80,7 +80,7 @@ class Tags {
     return Promise.all(
       tagValues.map((tagValue, index) => this._createTag(tagValue, index))
     ).then(tagsList => {
-      tagsList.forEach(tagItem => {
+      Array.from(tagsList).forEach(tagItem => {
         container.insertAdjacentHTML('beforeend', tagItem)
       })
       return container
@@ -165,7 +165,7 @@ class TagEventListener {
     )
   }
   static addRemoveListener() {
-    tags.removeButtons.forEach(button =>
+    Array.from(tags.removeButtons).forEach(button =>
       button.addEventListener('click', event => {
         const tagName = event.target.parentElement.textContent.trim()
         tags.removeTag(tagName)
