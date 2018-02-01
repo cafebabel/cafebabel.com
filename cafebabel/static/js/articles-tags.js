@@ -1,7 +1,4 @@
 class Tags {
-  get suggestions() {
-    return this._suggestionsContainer.querySelectorAll('li')
-  }
   get _language() {
     const languages = document.querySelector('#language')
     return languages.options[languages.selectedIndex].value
@@ -141,7 +138,8 @@ class TagEventListener {
       })
   }
   static addSuggestion() {
-    tags.suggestions.forEach(li =>
+    const suggestions = document.querySelectorAll('.tags #tags-suggestions li')
+    suggestions.forEach(li =>
       li.addEventListener('click', event => {
         const submission = event.target.innerText
         tags.addTag(submission)
