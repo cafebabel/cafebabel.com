@@ -140,13 +140,13 @@ describe('Tags', () => {
     it('should add new tag', () => {
       const tags = mock.reset()
       tags
-        .addNewTag('Keima')
+        .addTag('Keima')
         .then(() => expect(tags._tagsNames).to.contains('Keima'))
     })
     it('should change nothing when new tag exists', () => {
       const tags = mock.reset()
-      tags.addNewTag('Joseki')
-      expect(tags.addNewTag('Joseki')).to.equal(undefined)
+      tags.addTag('Joseki')
+      expect(tags.addTag('Joseki')).to.equal(undefined)
       expect(tags._tagsNames.length).to.equal(2)
     })
   })

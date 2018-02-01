@@ -33,7 +33,7 @@ class Tags {
     return this.context.querySelector('#tags-suggestions')
   }
 
-  addNewTag(submission) {
+  addTag(submission) {
     if (!submission || this._isTagName(submission)) return
     this._emptyAddField()
     this._inactiveSuggestionsList()
@@ -153,14 +153,14 @@ class TagEventListener {
       event.preventDefault()
       const submission = event.target.previousSibling.value
       if (submission.length < 3) return
-      tags.addNewTag(submission)
+      tags.addTag(submission)
     })
   }
   static addSuggestion() {
     tags.suggestions.forEach(li =>
       li.addEventListener('click', event => {
         const submission = event.target.innerText
-        tags.addNewTag(submission)
+        tags.addTag(submission)
       })
     )
   }
