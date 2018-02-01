@@ -25,7 +25,7 @@ deploy:
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
 	${remote} "${goto_src} && pkill gunicorn; \
-		gunicorn --daemon -b 0.0.0.0:5000 prod:app \
+		gunicorn --daemon -b 127.0.0.1:5000 prod:app \
 		--error-logfile ~/log/preprod.log --access-logfile ~/log/preprod.log"
 	@echo "> App is deployed. Run \`make logs\` to follow activity."
 
