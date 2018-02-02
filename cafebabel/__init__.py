@@ -1,5 +1,7 @@
+from datetime import datetime
 from urllib.parse import quote_plus
 
+import click
 from flask import Flask
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
@@ -69,6 +71,7 @@ def register_blueprints(app):
 def register_cli(app):
     from .commands import (articles_fixtures, auth_fixtures, drop_collections,
                            relations_fixtures, tags_fixtures)
+    from .django_migrations import migrate_users
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
@@ -83,6 +86,12 @@ def register_cli(app):
         articles_fixtures(app)
         tags_fixtures(app)
         relations_fixtures(app)
+
+    @app.cli.command(short_help='Migrate data from old to new system')
+    @click.option('--limit', default=0, help='Number of items migrated.')
+    @click.option('--users-filepath', help='Path to users.json file.')
+    def load_migrations(limit, users_filepath):
+        migrate_users(app, limit, users_filepath)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():
@@ -108,6 +117,7 @@ def register_context_processors(app):
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories=lambda: app.config.get('CATEGORIES', []),
+            get_year=lambda: datetime.now().year,
             current_language=helpers.current_language(),
             absolute=helpers.absolute,
         )
