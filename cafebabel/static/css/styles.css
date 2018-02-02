@@ -1462,9 +1462,7 @@ textarea#body {
   width: 5rem;
   height: 5rem;
   transition: all 0.3s;
-}
-
-.article-language-selector li span {
+  color: #d9d9d9;
   display: block;
 }
 
@@ -1476,12 +1474,12 @@ textarea#body {
   width: 0;
 }
 
-.article-language-selector span {
+.article-language-selector li span {
   color: #bde513;
 }
 
 .article-language-selector li.translated-language a {
-  color: #b3b69b;
+  color: #00283c;
 }
 
 .share {
