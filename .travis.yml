@@ -5,7 +5,9 @@ python:
 install:
   - python setup.py develop
   - pip install -r requirements-dev.txt
-script: py.test -vv
+script:
+  - py.test -vv
+  - cd static/js/tests; npm install; npm test
 branches:
   only:
     - master
