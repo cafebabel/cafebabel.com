@@ -1,6 +1,5 @@
 import datetime
 
-from flask import current_app
 from flask_security import RoleMixin, UserMixin
 from flask_login import current_user
 from mongoengine import signals
@@ -20,6 +19,10 @@ class UserProfile(db.EmbeddedDocument, UploadableImageMixin):
     website = db.StringField()
     about = db.StringField()
     old_pk = db.IntField()  # In use for migrations (references in articles).
+
+    meta = {
+        'indexes': ['old_pk']
+    }
 
     def __str__(self):
         return self.name or 'Anonymous'

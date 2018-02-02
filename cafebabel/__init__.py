@@ -71,7 +71,10 @@ def register_blueprints(app):
 def register_cli(app):
     from .commands import (articles_fixtures, auth_fixtures, drop_collections,
                            relations_fixtures, tags_fixtures)
-    from .django_migrations import migrate_users
+    from .django_migrations import migrate_articles, migrate_users
+    from .users.models import User
+    from .articles.models import Article
+    from .articles.tags.models import Tag
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
@@ -90,8 +93,13 @@ def register_cli(app):
     @app.cli.command(short_help='Migrate data from old to new system')
     @click.option('--limit', default=0, help='Number of items migrated.')
     @click.option('--users-filepath', help='Path to users.json file.')
-    def load_migrations(limit, users_filepath):
+    @click.option('--articles-filepath', help='Path to base.json file.')
+    def load_migrations(limit, users_filepath, articles_filepath):
+        User.drop_collection()
         migrate_users(app, limit, users_filepath)
+        Article.drop_collection()
+        Tag.drop_collection()
+        migrate_articles(app, limit, articles_filepath)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():

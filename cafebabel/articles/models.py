@@ -25,11 +25,15 @@ class Article(db.Document, UploadableImageMixin):
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
     tags = db.ListField(db.ReferenceField(Tag, reverse_delete_rule=PULL))
+    old_pk = db.IntField()  # In use for migrations (references in related).
+    old_category_slug = db.StringField()  # In use for redirections.
+    old_slug = db.StringField()  # In use for redirections.
 
     _translations = None
 
     meta = {
-        'allow_inheritance': True
+        'allow_inheritance': True,
+        'indexes': ['old_pk']
     }
 
     def __str__(self):
