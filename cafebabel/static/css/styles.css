@@ -710,12 +710,6 @@ button.main-menu {
   left: 1rem;
 }
 
-button.follow {
-  right: 2rem;
-  color: #00283c;
-  text-align: center;
-}
-
 button.language {
   left: 8.5rem;
   color: #00283c;
@@ -726,9 +720,7 @@ button.menu:focus {
 }
 
 button.main-menu:before,
-button.main-menu:after,
-button.follow.active:before,
-button.follow.active:after {
+button.main-menu:after {
   content: '';
   height: 0.3rem;
   width: 3.5rem;
@@ -819,24 +811,6 @@ button.menu.active + nav ul li {
 
 button.menu + nav a {
   display: block;
-}
-
-button.follow:after,
-button.follow:before {
-  content: '';
-}
-
-button.follow.active {
-  color: #fff;
-}
-
-button.follow.active:hover {
-  animation: none;
-}
-
-button.follow.active:before,
-button.follow.active:after {
-  font-family: sans-serif;
 }
 
 #social-networks {
