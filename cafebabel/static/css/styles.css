@@ -839,6 +839,47 @@ button.follow.active:after {
   font-family: sans-serif;
 }
 
+#social-networks {
+  position: fixed;
+  top: 2.5rem;
+  right: 3rem;
+  z-index: 1;
+}
+
+#social-networks li {
+  display: inline-block;
+  font-size: 1.7rem;
+  padding: 0.2rem;
+}
+
+#social-networks li:first-child {
+  margin-right: -0.2rem;
+}
+
+#social-networks li:nth-child(2) {
+  font-size: 2.1rem;
+  top: 0.1rem;
+}
+
+#social-networks li:last-child {
+  font-size: 2.4rem;
+  top: 0.3rem;
+  margin-left: 0.2rem;
+}
+
+#social-networks li a {
+  top: 0;
+  transition: all 0.3s;
+}
+
+#social-networks li a:hover {
+  top: -0.2rem;
+}
+
+#social-networks li a:hover:after {
+  width: 0;
+}
+
 /* Editing place page */
 
 .create-article-page .file canvas,
