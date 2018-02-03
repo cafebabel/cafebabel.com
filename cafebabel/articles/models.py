@@ -12,6 +12,12 @@ from ..users.models import User
 from .tags.models import Tag
 
 
+class ArticleArchive(db.EmbeddedDocument):
+    pk = db.IntField()  # In use for migrations (references in related).
+    category_slug = db.StringField()  # In use for redirections.
+    slug = db.StringField()  # In use for redirections.
+
+
 class Article(db.Document, UploadableImageMixin):
     title = db.StringField(required=True)
     slug = db.StringField(required=True)
@@ -25,15 +31,13 @@ class Article(db.Document, UploadableImageMixin):
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
     tags = db.ListField(db.ReferenceField(Tag, reverse_delete_rule=PULL))
-    old_pk = db.IntField()  # In use for migrations (references in related).
-    old_category_slug = db.StringField()  # In use for redirections.
-    old_slug = db.StringField()  # In use for redirections.
+    archive = db.EmbeddedDocumentField(ArticleArchive)
 
     _translations = None
 
     meta = {
         'allow_inheritance': True,
-        'indexes': ['old_pk']
+        'indexes': ['archive.pk']
     }
 
     def __str__(self):

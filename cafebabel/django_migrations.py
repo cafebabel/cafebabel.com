@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timedelta, timezone
 
 import click
-from cafebabel.articles.models import Article
+from cafebabel.articles.models import Article, ArticleArchive
 from cafebabel.articles.tags.models import Tag
 from cafebabel.articles.translations.models import Translation
 from cafebabel.users.models import Role, User
@@ -85,6 +85,8 @@ def normalize_language(language):
         normalized_language = 'de'
     elif normalized_language == 'sp':
         normalized_language = 'es'
+    elif normalized_language == 'po':
+        normalized_language = 'pl'
     return normalized_language
 
 
@@ -102,7 +104,7 @@ def normalize_author(author_pk):
 
 def handle_groups(groups):
     tags = []
-    old_category_slug = ''
+    category_slug = ''
     if groups:
         for group in groups:
             group_fields = group['fields']
@@ -119,8 +121,8 @@ def handle_groups(groups):
                 tag = Tag.objects.get_or_create(**data)
             tags.append(tag)
             if group_fields['feature'] == 'MAGAZINE':
-                old_category_slug = group_fields['slug']
-    return tags, old_category_slug
+                category_slug = group_fields['slug']
+    return tags, category_slug
 
 
 def create_article(old_article):
@@ -131,32 +133,34 @@ def create_article(old_article):
     if status == 'draft' and creation_date + timedelta(days=90) < NOW:
         return
     try:
-        Article.objects.get(old_pk=old_article['pk'])
+        Article.objects.get(archive__pk=old_article['pk'])
         return
     except Article.DoesNotExist:
         pass
     article_fields = old_article['article']['fields']
-    tags, old_category_slug = handle_groups(old_article['groups'])
+    tags, category_slug = handle_groups(old_article['groups'])
     data = {
         'title': fields['title'],
         'summary': article_fields['original_header'] or 'TODO',
         'body': article_fields['body'] or 'TODO',
         'language': normalize_language(fields['language']),
-        'old_pk': old_article['pk'],
-        'old_slug': fields['slug'],
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
         'author': normalize_author(fields['created_by']),
         'image_filename': normalize_image(fields['image']),
         'status': status,
-        'old_category_slug': old_category_slug,
-        'tags': tags or None
+        'tags': tags or None,
+        'archive': ArticleArchive(
+            pk=old_article['pk'],
+            slug=fields['slug'],
+            category_slug=category_slug
+        )
     }
     translation_from = fields['translation_from']
     if translation_from:
         try:
             original_article = Article.objects.get(
-                old_pk=translation_from)
+                archive__pk=translation_from)
         except Article.DoesNotExist:
             # print(old_pk, 'article does not exist')
             return
