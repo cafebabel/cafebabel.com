@@ -710,12 +710,6 @@ button.main-menu {
   left: 1rem;
 }
 
-button.follow {
-  right: 2rem;
-  color: #00283c;
-  text-align: center;
-}
-
 button.language {
   left: 8.5rem;
   color: #00283c;
@@ -726,9 +720,7 @@ button.menu:focus {
 }
 
 button.main-menu:before,
-button.main-menu:after,
-button.follow.active:before,
-button.follow.active:after {
+button.main-menu:after {
   content: '';
   height: 0.3rem;
   width: 3.5rem;
@@ -821,22 +813,45 @@ button.menu + nav a {
   display: block;
 }
 
-button.follow:after,
-button.follow:before {
-  content: '';
+#social-networks {
+  position: fixed;
+  top: 2.5rem;
+  right: 3rem;
+  z-index: 1;
 }
 
-button.follow.active {
-  color: #fff;
+#social-networks li {
+  display: inline-block;
+  font-size: 1.7rem;
+  padding: 0.2rem;
 }
 
-button.follow.active:hover {
-  animation: none;
+#social-networks li:first-child {
+  margin-right: -0.2rem;
 }
 
-button.follow.active:before,
-button.follow.active:after {
-  font-family: sans-serif;
+#social-networks li:nth-child(2) {
+  font-size: 2.1rem;
+  top: 0.1rem;
+}
+
+#social-networks li:last-child {
+  font-size: 2.4rem;
+  top: 0.3rem;
+  margin-left: 0.2rem;
+}
+
+#social-networks li a {
+  top: 0;
+  transition: all 0.3s;
+}
+
+#social-networks li a:hover {
+  top: -0.2rem;
+}
+
+#social-networks li a:hover:after {
+  width: 0;
 }
 
 /* Editing place page */
@@ -1462,9 +1477,7 @@ textarea#body {
   width: 5rem;
   height: 5rem;
   transition: all 0.3s;
-}
-
-.article-language-selector li span {
+  color: #d9d9d9;
   display: block;
 }
 
@@ -1476,12 +1489,12 @@ textarea#body {
   width: 0;
 }
 
-.article-language-selector span {
+.article-language-selector li span {
   color: #bde513;
 }
 
 .article-language-selector li.translated-language a {
-  color: #b3b69b;
+  color: #00283c;
 }
 
 .share {

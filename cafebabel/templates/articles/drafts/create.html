@@ -1,81 +1,10 @@
-{% extends "base.html" %}
-{% import "articles/macros.html" as macros %}
-{% from "_extrajs-macros.html" import extra_js %}
+{% extends "articles/edit.html" %}
 
-{% block extra_js %}
-  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js']) }}
+{% block form_status_options %}
+  <option value=draft selected>Draft</option>
+  <option value=published>Published</option>
 {% endblock %}
 
-{% block body_class %}create-article-page{% endblock %}
-{% block body %}
-  <form method=post action={{ url_for('drafts.create') }} enctype=multipart/form-data>
-  <div class=file>
-    <canvas class=noise></canvas>
-    <output></output>
-    <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>File size: 1200x467px, less than 1Mo</small></label>
-    <input type=file id=image name=image>
-  </div>
-  <h1 class=edit>
-    <label for=title>Title</label>
-    <input id=title name=title required>
-  </h1>
-  <div class=article-settings>
-    <div class=select>
-      <label for=language>
-        <select id=language name=language required>
-          <optgroup label=Language>
-            {% for language in get_languages() %}
-            <option value={{language[0]}}>{{ language[1] }}</option>
-            {% endfor %}
-          </optgroup>
-        </select>
-      </label>
-    </div>
-    <div class=select>
-      <label for=category>
-        <select id=category name=category required>
-          <optgroup label=Category>
-            {% for category in get_categories() %}
-            <option value={{ category }}>{{ category }}</option>
-            {% endfor %}
-          </optgroup>
-        </select>
-      </label>
-    </div>
-    {% if current_user.has_role('editor') %}
-    <div class=select>
-      <label for=status>
-        <select id=status name=status required>
-          <optgroup label=Status>
-            <option value=draft selected>Draft</option>
-            <option value=published>Published</option>
-          </optgroup>
-        </select>
-      </label>
-    </div>
-    <div class=select>
-      <label for=author>
-        <select id=author name=author required>
-          <optgroup label=Author>
-            {% for author in authors %}
-            <option value={{author.id}}>{{ author }}</option>
-            {% endfor %}
-          </optgroup>
-        </select>
-      </label>
-    </div>
-    {% endif %}
-  </div>
-  <div class=textarea>
-    <label for=summary>Summary</label>
-    <textarea id=summary name=summary required></textarea>
-  </div>
-  <div class=textarea>
-    <label for=body>Body</label>
-    <textarea id=body name=body required></textarea>
-    {% include "articles/markdown-helper.html" %}
-  </div>
-  {{ macros.tags_fields() }}
-  <input type=submit value="Save">
-</form>
-{% endblock %}
+{% block form_action %}{{ url_for('drafts.create') }}{% endblock %}
+
+{% block form_extra_actions %}{% endblock %}

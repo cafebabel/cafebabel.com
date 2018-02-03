@@ -47,25 +47,22 @@
 <button class="menu language">EN</button>
 
 <nav>
-    <ul>
-        <li><a href=#>EN</a></li>
-        <li><a href=#>FR</a></li>
-        <li><a href=#>DE</a></li>
-        <li><a href=#>IT</a></li>
-        <li><a href=#>ES</a></li>
-    </ul>
+  <ul>
+    <li><a href=#>EN</a></li>
+    <li><a href=#>FR</a></li>
+    <li><a href=#>DE</a></li>
+    <li><a href=#>IT</a></li>
+    <li><a href=#>ES</a></li>
+  </ul>
 </nav>
 
-<button class="menu follow">Follow</button>
-
-<nav>
-    <ul>
-        <li><a href=#>Facebook</a></li>
-        <li><a href=#>Twitter</a></li>
-        <li><a href=#>Instagram</a></li>
-        <li><a href=#>LinkedIn</a></li>
-        <li><a href=#>Youtube</a></li>
-    </ul>
+<nav id=social-networks>
+  <ul>
+    <li><a href=# class=icon-facebook></a></li>
+    <li><a href=# class=icon-twitter></a></li>
+    <li><a href=# class=icon-instagram></a></li>
+    <li><a href=# class=icon-youtube></a></li>
+  </ul>
 </nav>
 {% include "security/_messages.html" %}
 
@@ -79,7 +76,7 @@
 </main>
 
 <footer>
-  <p>© Cafébabel — 2017</p>
+  <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
 <div id=preloader>
     <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="preloader coffee grinder">

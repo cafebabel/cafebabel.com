@@ -37,7 +37,7 @@
 
 {%- macro image_upload(object) -%}
   <div class=file>
-    {% if object.image_filename %}
+    {% if object.has_image %}
       <output><img src={{ object.image_url }} alt="Image for {{ object.name }}"></output>
       <div class=checkbox>
         <label for=delete-image>Delete image</label>
