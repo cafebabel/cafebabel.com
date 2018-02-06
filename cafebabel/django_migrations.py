@@ -80,14 +80,19 @@ def normalize_status(status):
 
 
 def normalize_language(language):
-    normalized_language = language[:2]
-    if normalized_language == 'ge':
-        normalized_language = 'de'
-    elif normalized_language == 'sp':
-        normalized_language = 'es'
-    elif normalized_language == 'po':
-        normalized_language = 'pl'
-    return normalized_language
+    if language == 'ger':
+        language = 'de'
+    elif language == 'spa':
+        language = 'es'
+    elif language == 'pol':
+        language = 'pl'
+    elif language == 'por':
+        language = 'pt'
+    elif language == 'ell':
+        language = 'gr'
+    elif language == 'zho':
+        language = 'cn'
+    return language[:2]
 
 
 def normalize_image(image):
@@ -99,12 +104,11 @@ def normalize_author(author_pk):
         if author_pk is not None:
             return User.objects.get(profile__old_pk=author_pk)
     except User.DoesNotExist:
-        print(author_pk, 'user does not exist (outdated input file?)')
+        click.echo(author_pk, 'user does not exist (outdated input file?)')
 
 
 def handle_groups(groups):
     tags = []
-    category_slug = ''
     if groups:
         for group in groups:
             group_fields = group['fields']
@@ -113,6 +117,9 @@ def handle_groups(groups):
                 'language': normalize_language(group_fields['language']),
                 'summary': group_fields['about'],
             }
+            if data['language'] == 'xx':
+                # It happens with unused tags(?)
+                continue
             try:
                 tag = Tag.objects.get_or_create(**data)
             except mongo_errors.NotUniqueError:
@@ -120,25 +127,41 @@ def handle_groups(groups):
                 data['slug'] = group_fields['slug']
                 tag = Tag.objects.get_or_create(**data)
             tags.append(tag)
-            if group_fields['feature'] == 'MAGAZINE':
-                category_slug = group_fields['slug']
-    return tags, category_slug
+    return tags
+
+
+def aggregate_gallery_body(gallery):
+    body = gallery['fields']['body']
+    for image in gallery['images']:
+        image_fields = image['fields']
+        image_src = normalize_image(image_fields['image'])
+        body += f'<p><img src="{image_src}" alt="{image_fields["title"]}"></p>'
+        body += image_fields['body']
+    return body
 
 
 def create_article(old_article):
+    is_gallery = False
     fields = old_article['fields']
     status = normalize_status(fields['status'])
     creation_date = timestamp_to_datetime(fields['created_at'])
     # Get rid of drafts older than 3 months.
     if status == 'draft' and creation_date + timedelta(days=90) < NOW:
         return
+    # Do not consider videos, a couple will be added manually after.
+    if 'video' in old_article:
+        return
     try:
         Article.objects.get(archive__pk=old_article['pk'])
         return
     except Article.DoesNotExist:
         pass
-    article_fields = old_article['article']['fields']
-    tags, category_slug = handle_groups(old_article['groups'])
+    if 'article' in old_article:
+        article_fields = old_article['article']['fields']
+    else:
+        article_fields = old_article['gallery']['fields']
+        is_gallery = True
+    tags = handle_groups(old_article['groups'])
     data = {
         'title': fields['title'],
         'summary': article_fields['original_header'] or 'TODO',
@@ -152,17 +175,19 @@ def create_article(old_article):
         'tags': tags or None,
         'archive': ArticleArchive(
             pk=old_article['pk'],
-            slug=fields['slug'],
-            category_slug=category_slug
+            url=old_article['url']
         )
     }
+    if is_gallery:
+        data['body'] = aggregate_gallery_body(old_article['gallery'])
     translation_from = fields['translation_from']
     if translation_from:
         try:
             original_article = Article.objects.get(
                 archive__pk=translation_from)
         except Article.DoesNotExist:
-            # print(old_pk, 'article does not exist')
+            # Will be checked again on second pass.
+            # click.echo(f'Article does not exist: {old_pk} (skipping)')
             return
         translator = data['author']
         data['author'] = original_article.author
@@ -173,6 +198,11 @@ def create_article(old_article):
                 **data
             )
         except mongo_errors.ValidationError:
-            print(f'Translator not found for {data["old_pk"]} (skipping)')
+            click.echo(f'Translator not found for {data["old_pk"]} (skipping)')
+            return
+        except mongo_errors.NotUniqueError:
+            click.echo(f'Not unique: {data["archive"].pk} '
+                       f'vs. {original_article.pk} (skipping)')
+            return
     else:
         Article.objects.create(**data)

@@ -14,8 +14,7 @@ from .tags.models import Tag
 
 class ArticleArchive(db.EmbeddedDocument):
     pk = db.IntField()  # In use for migrations (references in related).
-    category_slug = db.StringField()  # In use for redirections.
-    slug = db.StringField()  # In use for redirections.
+    url = db.StringField()  # In use for redirections.
 
 
 class Article(db.Document, UploadableImageMixin):
