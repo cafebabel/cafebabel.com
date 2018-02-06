@@ -104,7 +104,7 @@ def normalize_author(author_pk):
         if author_pk is not None:
             return User.objects.get(profile__old_pk=author_pk)
     except User.DoesNotExist:
-        click.echo(author_pk, 'user does not exist (outdated input file?)')
+        click.echo(f'User does not exist {author_pk} (outdated input file?)')
 
 
 def handle_groups(groups):
@@ -114,8 +114,7 @@ def handle_groups(groups):
             group_fields = group['fields']
             data = {
                 'name': group_fields['name'],
-                'language': normalize_language(group_fields['language']),
-                'summary': group_fields['about'],
+                'language': normalize_language(group_fields['language'])
             }
             if data['language'] == 'xx':
                 # It happens with unused tags(?)
@@ -125,7 +124,14 @@ def handle_groups(groups):
             except mongo_errors.NotUniqueError:
                 # We fallback on the old slug in that particular case.
                 data['slug'] = group_fields['slug']
-                tag = Tag.objects.get_or_create(**data)
+                try:
+                    tag = Tag.objects.get_or_create(**data)
+                except mongo_errors.NotUniqueError:
+                    del data['name']
+                    tag = Tag.objects.get(**data)
+            summary = group_fields['about']
+            if summary:
+                tag.modify(summary=summary)
             tags.append(tag)
     return tags
 
@@ -135,8 +141,10 @@ def aggregate_gallery_body(gallery):
     for image in gallery['images']:
         image_fields = image['fields']
         image_src = normalize_image(image_fields['image'])
-        body += f'<p><img src="{image_src}" alt="{image_fields["title"]}"></p>'
-        body += image_fields['body']
+        body += ('<figure>'
+                 f'<img src="{image_src}" alt="{image_fields["title"]}">'
+                 f'<figcaption>{image_fields["body"]}</figcaption>'
+                 '</figure>')
     return body
 
 
@@ -158,9 +166,15 @@ def create_article(old_article):
         pass
     if 'article' in old_article:
         article_fields = old_article['article']['fields']
-    else:
+    elif 'gallery' in old_article:
         article_fields = old_article['gallery']['fields']
         is_gallery = True
+    else:
+        click.echo(f'No content: {old_article["pk"]} (spam?)')
+        return
+    # Do not consider articles without body.
+    if not article_fields['body']:
+        return
     tags = handle_groups(old_article['groups'])
     data = {
         'title': fields['title'],
@@ -176,7 +190,8 @@ def create_article(old_article):
         'archive': ArticleArchive(
             pk=old_article['pk'],
             url=old_article['url']
-        )
+        ),
+        'relateds': fields['relateds']
     }
     if is_gallery:
         data['body'] = aggregate_gallery_body(old_article['gallery'])
@@ -198,7 +213,8 @@ def create_article(old_article):
                 **data
             )
         except mongo_errors.ValidationError:
-            click.echo(f'Translator not found for {data["old_pk"]} (skipping)')
+            click.echo(
+                f'Translator not found for {old_article["pk"]} (skipping)')
             return
         except mongo_errors.NotUniqueError:
             click.echo(f'Not unique: {data["archive"].pk} '

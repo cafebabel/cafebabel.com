@@ -93,13 +93,18 @@ def register_cli(app):
     @app.cli.command(short_help='Migrate data from old to new system')
     @click.option('--limit', default=0, help='Number of items migrated.')
     @click.option('--users-filepath', help='Path to users.json file.')
-    @click.option('--articles-filepath', help='Path to base.json file.')
-    def load_migrations(limit, users_filepath, articles_filepath):
+    @click.option('--articles-filepath',
+                  help='Path to articles40000.json file.')
+    @click.option('--articles-filepath2',
+                  help='Path to articles40000-70000.json file.')
+    def load_migrations(limit, users_filepath, articles_filepath,
+                        articles_filepath2):
         User.drop_collection()
         migrate_users(app, limit, users_filepath)
         Article.drop_collection()
         Tag.drop_collection()
         migrate_articles(app, limit, articles_filepath)
+        migrate_articles(app, limit, articles_filepath2)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():
