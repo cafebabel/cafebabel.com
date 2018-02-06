@@ -25,6 +25,12 @@ def test_access_article_with_large_slug_should_return_200(client,
     assert response.status_code == HTTPStatus.OK
 
 
+def test_article_with_non_ascii_title(published_article):
+    published_article.title = '\u4e2d\u56fd\u4e0e\u4e16\u754c'
+    published_article.save()
+    assert published_article.slug == 'zhong-guo-yu-shi-jie'
+
+
 def test_published_article_should_display_content(app, client,
                                                   published_article, user):
     published_article.author = user
