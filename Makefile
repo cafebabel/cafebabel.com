@@ -38,7 +38,7 @@ install:
 	make deploy
 
 make_dirs:
-	mkdir -p ./logs && mkdir -p ./cafebabel/static/uploads/{articles,users,tags}
+	mkdir -p ./logs
 
 reset-db:
 	${remote} "${goto_src} && FLASK_APP=prod flask initdb"
