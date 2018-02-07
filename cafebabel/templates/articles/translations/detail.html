@@ -1,8 +1,11 @@
 {% extends "base.html" %}
+{% from "_meta-macro.html" import meta without context %}
 {% import "articles/macros.html" as macros without context %}
 
 {% block meta_title %}{{ translation.title }}{% endblock %}
-{% block meta_description %}{{ translation.summary }}{% endblock %}
+{% block metas %}
+  {{ meta('name=description', translation.summary|striptags) }}
+{% endblock %}
 
 {% block body %}
 <article>
@@ -16,7 +19,9 @@
     <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
   {% endif %}
 
-  <p class=summary>{{ translation.summary }}</p>
+  {% if translation.summary %}
+    <div class=summary>{{ translation.summary|markdown }}</div>
+  {% endif %}
 
   {{ translation.body|markdown }}
 

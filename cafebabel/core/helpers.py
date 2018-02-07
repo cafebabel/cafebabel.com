@@ -9,6 +9,7 @@ import markdown as markdownlib
 from flask import Markup, abort, current_app, request
 from flask_login import current_user, fresh_login_required, login_required
 from jinja2.filters import do_wordcount
+from unidecode import unidecode
 
 
 def obfuscate_email(value):
@@ -16,6 +17,7 @@ def obfuscate_email(value):
 
 
 def slugify(value):
+    value = unidecode(value)
     value = (unicodedata.normalize('NFKD', str(value))
              .encode('ascii', 'ignore').decode('ascii'))
     value = re.sub('[^\w\s-]', '', value).strip().lower()

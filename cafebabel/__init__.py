@@ -51,6 +51,7 @@ def register_blueprints(app):
 
     app.url_map.converters['regex'] = RegexConverter
 
+    from .archives.views import archives
     from .articles.views import articles
     from .articles.drafts.views import drafts
     from .articles.proposals.views import proposals
@@ -66,12 +67,16 @@ def register_blueprints(app):
     app.register_blueprint(proposals, url_prefix='/article/proposal')
     app.register_blueprint(translations, url_prefix='/article/translation')
     app.register_blueprint(users, url_prefix='/profile')
+    app.register_blueprint(archives, url_prefix='')
 
 
 def register_cli(app):
     from .commands import (articles_fixtures, auth_fixtures, drop_collections,
                            relations_fixtures, tags_fixtures)
-    from .django_migrations import migrate_users
+    from .django_migrations import migrate_articles, migrate_users
+    from .users.models import User
+    from .articles.models import Article
+    from .articles.tags.models import Tag
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
@@ -90,8 +95,18 @@ def register_cli(app):
     @app.cli.command(short_help='Migrate data from old to new system')
     @click.option('--limit', default=0, help='Number of items migrated.')
     @click.option('--users-filepath', help='Path to users.json file.')
-    def load_migrations(limit, users_filepath):
+    @click.option('--articles-filepath',
+                  help='Path to articles40000.json file.')
+    @click.option('--articles-filepath2',
+                  help='Path to articles40000-70000.json file.')
+    def load_migrations(limit, users_filepath, articles_filepath,
+                        articles_filepath2):
+        User.drop_collection()
         migrate_users(app, limit, users_filepath)
+        Article.drop_collection()
+        Tag.drop_collection()
+        migrate_articles(app, limit, articles_filepath)
+        migrate_articles(app, limit, articles_filepath2)
 
     @app.cli.command(short_help='Display list of URLs')
     def urls():

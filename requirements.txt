@@ -7,3 +7,4 @@ gunicorn==19.7.1
 Markdown==2.6.9
 progressist==0.0.6
 pytest-flask==0.10.0
+Unidecode==1.0.22
