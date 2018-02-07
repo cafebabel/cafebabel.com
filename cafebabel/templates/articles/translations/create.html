@@ -1,5 +1,9 @@
 {% extends "base.html" %}
-{% block extra_js %}<script src={{ url_for('static', filename='js/articles-tags.js') }}></script>{% endblock %}
+{% from "_extrajs-macros.html" import extra_js %}
+
+{% block extra_js %}
+  {{ extra_js(['js/articles-tags.js']) }}
+{% endblock %}
 
 {% block body %}
 <h1>Creating a translation in {{ language }} for article “{{ article.title }}”</h1>

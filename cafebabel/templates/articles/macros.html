@@ -34,3 +34,24 @@
     <ul id=tags-suggestions class=inactive></ul>
   </div>
 {%- endmacro %}
+
+{%- macro image_upload(object) -%}
+  <div class=file>
+    {% if object.has_image %}
+      <output><img src={{ object.image_url }} alt="Image for {{ object.name }}"></output>
+      <div class=checkbox>
+        <label for=delete-image>Delete image</label>
+        <input type=checkbox name=delete-image id=delete-image value=1>
+      </div>
+    {% else %}
+      <canvas class=noise></canvas>
+      <output></output>
+    {% endif %}
+    <label for=image>Click here to add a cover picture or Drag & drop your pic here <small>File size: 1200x467px, less than 1Mo</small></label>
+    <input type=file id=image name=image>
+  </div>
+{%- endmacro %}
+
+{% macro default_article_picture() %}
+  <img src={{ url_for('static', filename='img/article-thumbnail-default.jpg') }} alt="Default thumbnail picture">
+{% endmacro %}

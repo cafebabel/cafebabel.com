@@ -710,12 +710,6 @@ button.main-menu {
   left: 1rem;
 }
 
-button.follow {
-  right: 2rem;
-  color: #00283c;
-  text-align: center;
-}
-
 button.language {
   left: 8.5rem;
   color: #00283c;
@@ -726,9 +720,7 @@ button.menu:focus {
 }
 
 button.main-menu:before,
-button.main-menu:after,
-button.follow.active:before,
-button.follow.active:after {
+button.main-menu:after {
   content: '';
   height: 0.3rem;
   width: 3.5rem;
@@ -821,65 +813,103 @@ button.menu + nav a {
   display: block;
 }
 
-button.follow:after,
-button.follow:before {
-  content: '';
+#social-networks {
+  position: fixed;
+  top: 2.5rem;
+  right: 3rem;
+  z-index: 1;
 }
 
-button.follow.active {
-  color: #fff;
+#social-networks li {
+  display: inline-block;
+  font-size: 1.7rem;
+  padding: 0.2rem;
 }
 
-button.follow.active:hover {
-  animation: none;
+#social-networks li:first-child {
+  margin-right: -0.2rem;
 }
 
-button.follow.active:before,
-button.follow.active:after {
-  font-family: sans-serif;
+#social-networks li:nth-child(2) {
+  font-size: 2.1rem;
+  top: 0.1rem;
+}
+
+#social-networks li:last-child {
+  font-size: 2.4rem;
+  top: 0.3rem;
+  margin-left: 0.2rem;
+}
+
+#social-networks li a {
+  top: 0;
+  transition: all 0.3s;
+}
+
+#social-networks li a:hover {
+  top: -0.2rem;
+}
+
+#social-networks li a:hover:after {
+  width: 0;
 }
 
 /* Editing place page */
 
-.create-article-page canvas,
+.create-article-page .file canvas,
 .create-article-page .file {
   position: relative;
   width: 100%;
-  height: 30vw;
+  max-width: 120rem;
+  height: 46.7rem;
   background: transparent;
   transition: all 0.3s;
 }
 
-.create-article-page canvas {
+.file canvas {
   float: left;
   opacity: 1;
 }
 
-.create-article-page canvas.active {
+.file canvas.active {
   opacity: 0.6;
 }
 
-.create-article-page .file label {
+.file canvas.hidden {
+  display: none;
+}
+
+.file label[for='image'] {
   position: absolute;
   top: 50%;
   left: 50%;
   text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 4rem;
   transform: translate(-50%, -50%);
 }
 
-.create-article-page .file label:before {
+.file label[for='image']:before {
   font-family: 'icomoon';
   content: '\e927';
   display: block;
   font-size: 4rem;
 }
 
-.create-article-page small {
+.file figcaption {
+  float: right;
+}
+
+.file small {
   display: block;
   margin-top: 2rem;
 }
 
-.create-article-page .file input {
+.file .checkbox {
+  margin: 0.5rem 0;
+}
+
+.file input[type='file'] {
   position: absolute;
   top: 0;
   margin: 0;
@@ -932,12 +962,11 @@ h1.edit input {
   background-color: #eee;
   display: inline-block;
   margin: 0 2rem 2rem 0;
-  color: #bbb1b1;
+  color: #696969;
 }
 
 .create-article-page .tags .tags-list li.saved {
   background-color: #ddd;
-  color: #aca3a3;
 }
 
 .create-article-page .tags .tags-list li button {
@@ -1057,7 +1086,7 @@ h1.edit input {
   margin: 0.2rem auto;
 }
 
-.file figcaption {
+.profile-page .file figcaption {
   text-align: center;
 }
 
@@ -1094,6 +1123,10 @@ h1.edit input {
   width: 20rem;
 }
 
+.profile-page .file label[for='image']:before {
+  content: '';
+}
+
 .profile-page main .file output + input {
   border-bottom: none;
   width: 0.01rem;
@@ -1104,17 +1137,24 @@ h1.edit input {
   z-index: -1;
 }
 
-.profile-page main .file input + label {
+.profile-page .file label[for='image'] {
   display: inline-block;
   cursor: pointer;
   margin-left: 50%;
-  transform: translateX(-50%);
+  padding: 0;
+  transform: translate(-50%, 0);
   transition: all 0.3s;
   position: absolute;
   top: 0;
+  left: 0;
   width: 20rem;
   height: 20rem;
   border-radius: 45%; /* with 50% we can see the image in the background on hover. Seems to be linked to the label dimensions */
+  background: transparent;
+}
+
+.profile-page .file figcaption {
+  float: none;
 }
 
 .profile-page main .file input + label strong {
@@ -1141,6 +1181,7 @@ h1.edit input {
   transform: translateX(-50%);
   left: 50%;
   margin-top: 1rem;
+  text-align: center;
 }
 
 .profile-page main .file input + label:hover {
@@ -1156,17 +1197,17 @@ h1.edit input {
 }
 
 .profile-page main .file .checkbox {
-  margin: 5rem 0 1rem 50%;
+  margin: 7rem 0 1rem 50%;
   transform: translateX(-50%);
 }
 
-.profile-page [class^='icon-'],
-.profile-page [class*=' icon-'] {
+.profile-page main [class^='icon-'],
+.profile-page main [class*=' icon-'] {
   font-size: 3rem;
 }
 
-.profile-page [class^='icon-']:before,
-.profile-page [class*=' icon-']:before {
+.profile-page main [class^='icon-']:before,
+.profile-page main [class*=' icon-']:before {
   position: absolute;
   bottom: 0;
   transition: all 0.3s;
@@ -1358,6 +1399,22 @@ h1.edit input {
   margin: 0 auto 5rem auto;
 }
 
+.create-article-page .file img,
+.article-page article img:first-of-type {
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.thumbnail-placeholder {
+  height: 46.7rem;
+  background: #e0e0e0;
+}
+
+.article-page a.button:first-of-type {
+  margin: 2rem auto -2rem auto;
+  max-width: 100%;
+}
+
 .article-page article h1 + p {
   text-align: center;
   margin-bottom: 3rem;
@@ -1420,9 +1477,7 @@ textarea#body {
   width: 5rem;
   height: 5rem;
   transition: all 0.3s;
-}
-
-.article-language-selector li span {
+  color: #d9d9d9;
   display: block;
 }
 
@@ -1434,12 +1489,12 @@ textarea#body {
   width: 0;
 }
 
-.article-language-selector span {
+.article-language-selector li span {
   color: #bde513;
 }
 
 .article-language-selector li.translated-language a {
-  color: #b3b69b;
+  color: #00283c;
 }
 
 .share {
@@ -1500,7 +1555,7 @@ textarea#body {
 }
 
 .flashes.hidden {
-  bottom: -10rem;
+  bottom: -50rem;
 }
 
 /* Tag page */
@@ -1510,11 +1565,16 @@ textarea#body {
 .tag-page-edit form .file {
   position: absolute;
   height: 70vh;
-  background: #e0e0e0 no-repeat center fixed;
+  background: #e0e0e0 no-repeat center 50% fixed;
   top: 10rem;
   left: 0;
   bottom: 0;
   right: 0;
+  overflow: hidden;
+}
+
+.tag-page .tag-header img.hidden {
+  display: none;
 }
 
 .tag-page header {
@@ -1602,13 +1662,28 @@ textarea#body {
 
 /* Tag page edit */
 
-.tag-page-edit form .file {
+.tag-page-edit .file {
+  position: relative;
+  width: 100%;
+}
+
+.tag-page-edit img {
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.tag-page-edit .checkbox {
+  position: absolute;
+  top: calc(50% - 12rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .tag-page-edit .edit-tag-detail-container {
   position: relative;
   max-width: 75rem;
-  margin: 30vh auto 2rem auto;
+  margin: 60vh auto 2rem auto;
   padding: 0 2rem;
   background: #fff;
   text-align: center;

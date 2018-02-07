@@ -1,7 +1,10 @@
-{% from "users/macros.html" import social_field, default_profile_picture with context %}
 {% extends 'base.html' %}
+{% from "users/macros.html" import social_field, default_profile_picture with context %}
+{% from "_extrajs-macros.html" import extra_js %}
 
-{% block extra_js %}<script src={{ url_for('static', filename='js/edit-profile.js') }}></script>{% endblock %}
+{% block extra_js %}
+  {{ extra_js(['js/image-preview.js']) }}
+{% endblock %}
 {% block body_class %}profile-page edit{% endblock %}
 {% block body %}
 <h1>{{ user }}'s profile</h1>
@@ -19,7 +22,7 @@
       </output>
       <input id=image type=file name=image>
       <label for=image><strong>Choose profile picture</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
-      <small class=size-info>500Ko maximum</small>
+      <small class=size-info>500Ko maximum<br>Square Picture</small>
       {% if user.profile.has_image %}
         <div class=checkbox>
           <label for=delete>Delete this picture</label>
