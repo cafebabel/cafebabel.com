@@ -69,14 +69,8 @@ def test_published_article_can_have_html_summary(client, published_article,
 
 
 def test_published_article_should_render_markdown(client, published_article):
-<<<<<<< HEAD
     published_article.modify(body='## Body title\n> quote me')
-    response = client.get(f'/article/{published_article.slug}-'
-=======
-    published_article.body = '## Body title\n> quote me'
-    published_article.save()
     response = client.get(f'/en/article/{published_article.slug}-'
->>>>>>> added language in URL with home redirecting to default by browser
                           f'{published_article.id}/')
     assert response.status_code == 200
     assert f'<h1>{published_article.title}</h1>' in response

@@ -17,8 +17,8 @@ def create_app(config_object):
     app.config.from_object(config_object)
     app.config.from_pyfile('config.local.py')
 
-    register_extensions(app)
     register_blueprints(app)
+    register_extensions(app)
     register_template_filters(app)
     register_context_processors(app)
     # register_cli is only called when necessary
@@ -47,9 +47,10 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
-    from .core.routing import RegexConverter
+    from .core.routing import RegexConverter, LangConverter
 
     app.url_map.converters['regex'] = RegexConverter
+    app.url_map.converters['lang'] = LangConverter
 
     from .archives.views import archives
     from .articles.views import articles
@@ -74,13 +75,14 @@ def register_blueprints(app):
         g.lang = values.pop('lang', app.config['DEFAULT_LANGUAGE'])
 
     app.register_blueprint(cores, url_prefix='')
-    app.register_blueprint(articles, url_prefix='/<lang>/article')
-    app.register_blueprint(tags, url_prefix='/<lang>/article/tag')
-    app.register_blueprint(drafts, url_prefix='/<lang>/article/draft')
-    app.register_blueprint(proposals, url_prefix='/<lang>/article/proposal')
+    app.register_blueprint(articles, url_prefix='/<lang:lang>/article')
+    app.register_blueprint(tags, url_prefix='/<lang:lang>/article/tag')
+    app.register_blueprint(drafts, url_prefix='/<lang:lang>/article/draft')
+    app.register_blueprint(proposals,
+                           url_prefix='/<lang:lang>/article/proposal')
     app.register_blueprint(translations,
-                           url_prefix='/<lang>/article/translation')
-    app.register_blueprint(users, url_prefix='/<lang>/profile')
+                           url_prefix='/<lang:lang>/article/translation')
+    app.register_blueprint(users, url_prefix='/<lang:lang>/profile')
     app.register_blueprint(archives, url_prefix='')
 
 
