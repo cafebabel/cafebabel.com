@@ -62,7 +62,7 @@ def test_published_article_can_have_html_summary(client, published_article,
                                                  user):
     published_article.author = user
     published_article.modify(summary='<p>summary text</p>')
-    response = client.get(f'/article/{published_article.slug}-'
+    response = client.get(f'/en/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert f'<meta name=description content="summary text">' in response
     assert f'<div class=summary><p>summary text</p></div>' in response
