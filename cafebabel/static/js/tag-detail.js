@@ -1,5 +1,5 @@
 const container = document.querySelector('.tag-header')
-const imgUrl = container.getAttribute('data-image')
+const imgUrl = container.querySelector('img')
 
 addBackgroundImage(container, imgUrl)
 parallax()
@@ -14,10 +14,7 @@ function parallax() {
 }
 
 function addBackgroundImage(container, imgUrl) {
-  if (!imgUrl) {
-    container.classList.add('default')
-  } else {
-    container.classList.add('image')
-    container.style.backgroundImage = `url(${imgUrl})`
-  }
+  if (!imgUrl) return
+  container.querySelector('img').classList.add('hidden')
+  container.style.backgroundImage = `url(${imgUrl.src})`
 }

@@ -1573,6 +1573,10 @@ textarea#body {
   overflow: hidden;
 }
 
+.tag-page .tag-header img.hidden {
+  display: none;
+}
+
 .tag-page header {
   position: relative;
   background-color: #fff;
