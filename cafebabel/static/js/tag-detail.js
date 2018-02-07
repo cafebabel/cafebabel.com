@@ -1,7 +1,7 @@
 const container = document.querySelector('.tag-header')
-const imgUrl = container.querySelector('img')
+const bgImg = document.querySelector('.tag-header img')
 
-addBackgroundImage(container, imgUrl)
+addBackgroundImage(container, bgImg)
 parallax()
 
 function parallax() {
@@ -13,8 +13,8 @@ function parallax() {
   })
 }
 
-function addBackgroundImage(container, imgUrl) {
-  if (!imgUrl) return
-  container.querySelector('img').classList.add('hidden')
-  container.style.backgroundImage = `url(${imgUrl.src})`
+function addBackgroundImage(container, bgImg) {
+  if (!bgImg) return
+  bgImg.classList.add('hidden')
+  container.style.backgroundImage = `url(${bgImg.src})`
 }
