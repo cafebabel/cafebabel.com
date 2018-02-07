@@ -15,6 +15,7 @@ from .tags.models import Tag
 class ArticleArchive(db.EmbeddedDocument):
     pk = db.IntField()  # In use for migrations (references in related).
     url = db.StringField()  # In use for redirections.
+    relateds = db.ListField()
 
 
 class Article(db.Document, UploadableImageMixin):
@@ -31,7 +32,6 @@ class Article(db.Document, UploadableImageMixin):
     publication_date = db.DateTimeField()
     tags = db.ListField(db.ReferenceField(Tag, reverse_delete_rule=PULL))
     archive = db.EmbeddedDocumentField(ArticleArchive)
-    relateds = db.ListField()
 
     _translations = None
 

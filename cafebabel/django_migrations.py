@@ -189,9 +189,9 @@ def create_article(old_article):
         'tags': tags or None,
         'archive': ArticleArchive(
             pk=old_article['pk'],
-            url=old_article['url']
+            url=old_article['url'],
+            relateds=fields['relateds']
         ),
-        'relateds': fields['relateds']
     }
     if is_gallery:
         data['body'] = aggregate_gallery_body(old_article['gallery'])
