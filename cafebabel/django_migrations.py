@@ -178,8 +178,8 @@ def create_article(old_article):
     tags = handle_groups(old_article['groups'])
     data = {
         'title': fields['title'],
-        'summary': article_fields['original_header'] or 'TODO',
-        'body': article_fields['body'] or 'TODO',
+        'summary': article_fields['original_header'] or '',
+        'body': article_fields['body'],
         'language': normalize_language(fields['language']),
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
