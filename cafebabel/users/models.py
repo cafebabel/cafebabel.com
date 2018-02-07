@@ -20,10 +20,6 @@ class UserProfile(db.EmbeddedDocument, UploadableImageMixin):
     about = db.StringField()
     old_pk = db.IntField()  # In use for migrations (references in articles).
 
-    meta = {
-        'indexes': ['old_pk']
-    }
-
     def __str__(self):
         return self.name or 'Anonymous'
 
@@ -44,6 +40,10 @@ class User(db.Document, UserMixin):
     roles = db.ListField(db.ReferenceField(Role, reverse_delete_rule=db.PULL),
                          default=[])
     profile = db.EmbeddedDocumentField(UserProfile)
+
+    meta = {
+        'indexes': ['profile.old_pk']
+    }
 
     def __str__(self):
         return str(self.profile)
