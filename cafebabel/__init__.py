@@ -2,7 +2,7 @@ from datetime import datetime
 from urllib.parse import quote_plus
 
 import click
-from flask import Flask
+from flask import Flask, g
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
@@ -60,13 +60,27 @@ def register_blueprints(app):
     from .core.views import cores
     from .users.views import users
 
+    @app.url_defaults
+    def add_lang(endpoint, values):
+        if 'lang' in values or not g.get('lang'):
+            return
+        if app.url_map.is_endpoint_expecting(endpoint, 'lang'):
+            values['lang'] = g.lang
+
+    @app.url_value_preprocessor
+    def retrieve_lang(endpoint, values):
+        if not (values and 'lang' in values):
+            return
+        g.lang = values.pop('lang', app.config['DEFAULT_LANGUAGE'])
+
     app.register_blueprint(cores, url_prefix='')
-    app.register_blueprint(articles, url_prefix='/article')
-    app.register_blueprint(tags, url_prefix='/article/tag')
-    app.register_blueprint(drafts, url_prefix='/article/draft')
-    app.register_blueprint(proposals, url_prefix='/article/proposal')
-    app.register_blueprint(translations, url_prefix='/article/translation')
-    app.register_blueprint(users, url_prefix='/profile')
+    app.register_blueprint(articles, url_prefix='/<lang>/article')
+    app.register_blueprint(tags, url_prefix='/<lang>/article/tag')
+    app.register_blueprint(drafts, url_prefix='/<lang>/article/draft')
+    app.register_blueprint(proposals, url_prefix='/<lang>/article/proposal')
+    app.register_blueprint(translations,
+                           url_prefix='/<lang>/article/translation')
+    app.register_blueprint(users, url_prefix='/<lang>/profile')
     app.register_blueprint(archives, url_prefix='')
 
 
