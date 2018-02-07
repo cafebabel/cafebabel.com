@@ -148,6 +148,14 @@ def aggregate_gallery_body(gallery):
     return body
 
 
+def sanitize_title(title):
+    # Only `em` HTML tags are present in titles.
+    if '<em>' in title:
+        title = title.replace('<em>', '')
+        title = title.replace('</em>', '')
+    return title
+
+
 def create_article(old_article):
     is_gallery = False
     fields = old_article['fields']
@@ -177,7 +185,7 @@ def create_article(old_article):
         return
     tags = handle_groups(old_article['groups'])
     data = {
-        'title': fields['title'],
+        'title': sanitize_title(fields['title']),
         'summary': article_fields['original_header'] or '',
         'body': article_fields['body'],
         'language': normalize_language(fields['language']),
