@@ -12,6 +12,7 @@ from progressist import ProgressBar
 PROGRESSIST_TEMPLATE = ('{prefix} {animation} {percent} ({done}/{total}) '
                         'ETA: {eta:%H:%M} {elapsed}')
 NOW = datetime.now()
+ALLOWED_LANGUAGES = ('en', 'fr', 'de', 'es', 'it', 'pl')
 
 
 def load_json_file(filename):
@@ -86,12 +87,6 @@ def normalize_language(language):
         language = 'es'
     elif language == 'pol':
         language = 'pl'
-    elif language == 'por':
-        language = 'pt'
-    elif language == 'ell':
-        language = 'gr'
-    elif language == 'zho':
-        language = 'cn'
     return language[:2]
 
 
@@ -112,13 +107,13 @@ def handle_groups(groups):
     if groups:
         for group in groups:
             group_fields = group['fields']
+            language = normalize_language(group_fields['language'])
+            if language not in ALLOWED_LANGUAGES:
+                continue
             data = {
                 'name': group_fields['name'],
-                'language': normalize_language(group_fields['language'])
+                'language': language
             }
-            if data['language'] == 'xx':
-                # It happens with unused tags(?)
-                continue
             try:
                 tag = Tag.objects.get_or_create(**data)
             except mongo_errors.NotUniqueError:
@@ -159,6 +154,10 @@ def sanitize_title(title):
 def create_article(old_article):
     is_gallery = False
     fields = old_article['fields']
+    language = normalize_language(fields['language'])
+    # Only keep relevant languages.
+    if language not in ALLOWED_LANGUAGES:
+        return
     status = normalize_status(fields['status'])
     creation_date = timestamp_to_datetime(fields['created_at'])
     # Get rid of drafts older than 3 months.
@@ -188,7 +187,7 @@ def create_article(old_article):
         'title': sanitize_title(fields['title']),
         'summary': article_fields['original_header'] or '',
         'body': article_fields['body'],
-        'language': normalize_language(fields['language']),
+        'language': language,
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
         'author': normalize_author(fields['created_by']),
