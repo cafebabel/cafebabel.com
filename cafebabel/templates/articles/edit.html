@@ -9,7 +9,7 @@
 {% block body_class %}create-article-page{% endblock %}
 
 {% block body %}
-<form method=post action={% block form_action %}{{ url_for('articles.edit', article_id=article.id) }}{% endblock %}
+<form method=post action={% block form_action %}{{ url_for('articles.edit', article_id=article.id) }}{% endblock %}>
 
   {% if article.id %}<input type=hidden name=id value="{{ article.id }}">{% endif %}
   {{ macros.image_upload(article) }}
