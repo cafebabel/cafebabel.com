@@ -30,7 +30,7 @@ def test_login_with_django_password(client):
     User.objects.create(email=data['email'], password=data['password'])
     user = User.objects.get(email=data['email'])
     login(client, user['email'], 'vincent')
-    response = client.get('/profile/', follow_redirects=True)
+    response = client.get('/en/profile/', follow_redirects=True)
     assert response.status_code == 200
 
 
@@ -44,5 +44,5 @@ def test_login_with_django_password_updates_password_to_bcrypt(client):
     assert user.password != data['password']
     assert user.password.startswith('$2b$12$')
     login(client, user['email'], 'vincent')
-    response = client.get('/profile/', follow_redirects=True)
+    response = client.get('/en/profile/', follow_redirects=True)
     assert response.status_code == 200
