@@ -1201,13 +1201,13 @@ h1.edit input {
   transform: translateX(-50%);
 }
 
-.profile-page [class^='icon-'],
-.profile-page [class*=' icon-'] {
+.profile-page main [class^='icon-'],
+.profile-page main [class*=' icon-'] {
   font-size: 3rem;
 }
 
-.profile-page [class^='icon-']:before,
-.profile-page [class*=' icon-']:before {
+.profile-page main [class^='icon-']:before,
+.profile-page main [class*=' icon-']:before {
   position: absolute;
   bottom: 0;
   transition: all 0.3s;
