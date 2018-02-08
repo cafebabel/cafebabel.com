@@ -534,6 +534,7 @@ select {
   border: 0.1rem solid #00283c;
   cursor: pointer;
   width: 100%;
+  min-width: 23rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -1047,13 +1048,21 @@ h1.edit input {
   margin-bottom: 0;
 }
 
+select#author {
+  min-width: 100%;
+}
+
 @media screen and (min-width: 750px) {
-  .create-article-page select {
+  .create-article-page .select:last-child select {
     margin-bottom: 5rem;
   }
 
   .create-article-page .select {
     display: inline-block;
+  }
+
+  select#author {
+    min-width: 75rem;
   }
 }
 
