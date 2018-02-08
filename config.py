@@ -71,10 +71,6 @@ class BaseConfig:
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
 
 
-class PreprodConfig(BaseConfig):
-    pass
-
-
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
