@@ -298,13 +298,14 @@ textarea {
   background: #fff;
   display: block;
   width: 100%;
-  transition: border-color 0.3s;
+  transition: all 0.3s;
 }
 
 textarea {
   max-width: 100%;
   min-width: 100%;
   height: 6.9rem;
+  overflow: hidden;
 }
 
 input:focus,
@@ -312,7 +313,6 @@ textarea:focus {
   border: none;
   border-bottom: 0.1rem solid #bde513;
   outline: none;
-  transition: border-color 0.3s;
 }
 
 input[type='submit'],
@@ -1463,7 +1463,7 @@ select#author {
 }
 
 textarea#body {
-  min-height: 80rem;
+  min-height: 30rem;
 }
 
 .article-language-selector {
