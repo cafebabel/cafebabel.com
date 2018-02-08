@@ -21,6 +21,7 @@ class BaseConfig:
         ('es', 'Español'),
         ('it', 'Italiano'),
         ('de', 'Deutsch'),
+        ('pl', 'Polszczyzna'),
     )
 
     CATEGORIES = ['society', 'lifestyle', 'politics', 'culture']
