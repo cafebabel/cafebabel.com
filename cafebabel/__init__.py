@@ -17,6 +17,7 @@ def create_app(config_object):
     app.config.from_object(config_object)
     app.config.from_pyfile('config.local.py')
 
+    # Blueprints must be before extensions as they require <lang> url pattern.
     register_blueprints(app)
     register_extensions(app)
     register_template_filters(app)
