@@ -46,14 +46,16 @@ def test_published_article_should_display_content(client, published_article,
             f'{published_article.creation_date.date()}</time>' in response)
     assert f'<span>{published_article.language}</span>' in response
     assert published_article.author.profile.name in response
-    assert ('href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
-            f'en%2Farticle%2F{published_article.slug}-{published_article.id}%2F'
-            f'&text={published_article.title}&via=cafebabel_eng"' in response)
+    assert ('href="https://twitter.com/share?'
+            'url=http%3A%2F%2Fcafebabel.test%2F'
+            f'en%2Farticle%2F{published_article.slug}-{published_article.id}'
+            f'%2F&text={published_article.title}&via=cafebabel_eng"'
+            in response)
     assert ('href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
-            f'localhost%2Fen%2Farticle%2F{published_article.slug}-'
+            f'cafebabel.test%2Fen%2Farticle%2F{published_article.slug}-'
             f'{published_article.id}%2F"' in response)
     assert '1 min' in response
-    assert ('<meta property=og:url content="http://localhost/en/article/'
+    assert ('<meta property=og:url content="http://cafebabel.test/en/article/'
             f'{published_article.slug}-{published_article.id}/">' in response)
     assert '<meta property=og:locale content="en">' in response
 
@@ -121,8 +123,8 @@ def test_update_published_article_should_return_200(app, client, user, editor,
         'author': user.id,
         'language': app.config['LANGUAGES'][1][0],
     }
-    response = client.post(f'/en/article/{published_article.id}/edit/', data=data,
-                           follow_redirects=True)
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
@@ -139,8 +141,8 @@ def test_update_published_article_to_draft_redirect(app, client, user, editor,
         'language': app.config['LANGUAGES'][1][0],
         'status': 'draft'
     }
-    response = client.post(f'/en/article/{published_article.id}/edit/', data=data,
-                           follow_redirects=True)
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
 
 
@@ -153,8 +155,8 @@ def test_update_published_article_with_tag(app, client, user, editor, tag,
         'language': app.config['LANGUAGES'][0][0],
         'tag-1': tag.name
     }
-    response = client.post(f'/en/article/{published_article.id}/edit/', data=data,
-                           follow_redirects=True)
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
@@ -173,8 +175,8 @@ def test_update_published_article_with_unkown_tag(app, client, user, editor,
         'tag-1': tag.name,
         'tag-2': tag2.name
     }
-    response = client.post(f'/en/article/{published_article.id}/edit/', data=data,
-                           follow_redirects=True)
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
@@ -191,8 +193,8 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
         'author': user.id,
         'image': (image_content, 'image-name.jpg'),
     }
-    response = client.post(f'/en/article/{published_article.id}/edit/', data=data,
-                           content_type='multipart/form-data',
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
@@ -203,7 +205,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert published_article.image_filename == 'image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') / 'articles' /
                 published_article.image_filename).exists()
-    assert ('<meta property=og:image content="http://localhost/uploads/'
+    assert ('<meta property=og:image content="http://cafebabel.test/uploads/'
             f'articles/{published_article.image_filename}">' in response)
 
 
@@ -218,8 +220,8 @@ def test_update_article_with_image_unallowed_extension(
         'image': (image_content, 'image-name.zip'),
     }
     assert 'zip' not in app.config.get('ALLOWED_EXTENSIONS')
-    response = client.post(f'/en/article/{published_article.id}/edit/', data=data,
-                           content_type='multipart/form-data',
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == [
@@ -238,7 +240,8 @@ def test_update_article_with_user_should_return_403(client, user,
         'title': 'updated',
         'author': user.id
     }
-    response = client.post(f'/en/article/{published_article.id}/edit/', data=data)
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data)
     assert response.status_code == HTTPStatus.FORBIDDEN
     published_article.reload()
     assert published_article.title == 'article title'

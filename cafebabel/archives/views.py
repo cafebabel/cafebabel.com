@@ -20,5 +20,6 @@ def archive(**kwargs):
                                           'http://www.cafebabel.')
         article = Article.objects.get_or_404(archive__url=archive_url)
     return redirect(url_for('articles.detail', slug=article.slug,
-                            article_id=article.id, lang=article.language),
+                            article_id=article.id, lang=article.language,
+                            _external=True),
                     HTTPStatus.MOVED_PERMANENTLY)

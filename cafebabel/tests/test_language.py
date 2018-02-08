@@ -6,7 +6,7 @@ def test_homepage_is_redirecting_to_browser_language(client):
         'Accept-Language': 'fr-FR,fr;q=0.5',
     })
     assert response.status_code == HTTPStatus.FOUND
-    assert response.headers.get('location') == 'http://localhost/fr/'
+    assert response.headers.get('location') == 'http://cafebabel.test/fr/'
 
 
 def test_homepage_is_redirecting_unknown_language_to_default(client):
@@ -14,11 +14,11 @@ def test_homepage_is_redirecting_unknown_language_to_default(client):
         'Accept-Language': 'xx-XX,xx;q=0.5',
     })
     assert response.status_code == HTTPStatus.FOUND
-    assert response.headers.get('location') == 'http://localhost/en/'
+    assert response.headers.get('location') == 'http://cafebabel.test/en/'
 
 
 def test_homepage_displays_languages_meta(client):
     response = client.get('/fr/')
     assert 'og:locale content="fr"' in response
-    assert 'og:url content="http://localhost/fr/"' in response
-    assert 'twitter:url content="http://localhost/fr/"' in response
+    assert 'og:url content="http://cafebabel.test/fr/"' in response
+    assert 'twitter:url content="http://cafebabel.test/fr/"' in response
