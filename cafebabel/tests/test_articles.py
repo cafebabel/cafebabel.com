@@ -25,17 +25,22 @@ def test_access_article_with_large_slug_should_return_200(client,
     assert response.status_code == HTTPStatus.OK
 
 
-def test_published_article_should_display_content(app, client,
-                                                  published_article, user):
+def test_article_with_non_ascii_title(published_article):
+    published_article.title = '\u4e2d\u56fd\u4e0e\u4e16\u754c'
+    published_article.save()
+    assert published_article.slug == 'zhong-guo-yu-shi-jie'
+
+
+def test_published_article_should_display_content(client, published_article,
+                                                  user):
     published_article.author = user
     response = client.get(f'/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert response.status_code == 200
     assert f'<h1>{published_article.title}</h1>' in response
     assert f'<title>{published_article.title}' in response
-    assert (f'<meta name=description content="{published_article.summary}"'
-            in response)
-    assert f'<p class=summary>{published_article.summary}</p>' in response
+    assert f'<meta name=description content="summary text">' in response
+    assert f'<div class=summary><p>summary text</p></div>' in response
     assert f'<p>{published_article.body}</p>' in response
     assert (f'<time pubdate="{published_article.creation_date.date()}">'
             f'{published_article.creation_date.date()}</time>' in response)
@@ -53,9 +58,18 @@ def test_published_article_should_display_content(app, client,
     assert '<meta property=og:locale content="en">' in response
 
 
+def test_published_article_can_have_html_summary(client, published_article,
+                                                 user):
+    published_article.author = user
+    published_article.modify(summary='<p>summary text</p>')
+    response = client.get(f'/article/{published_article.slug}-'
+                          f'{published_article.id}/')
+    assert f'<meta name=description content="summary text">' in response
+    assert f'<div class=summary><p>summary text</p></div>' in response
+
+
 def test_published_article_should_render_markdown(client, published_article):
-    published_article.body = '## Body title\n> quote me'
-    published_article.save()
+    published_article.modify(body='## Body title\n> quote me')
     response = client.get(f'/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert response.status_code == 200

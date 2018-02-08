@@ -34,7 +34,8 @@ class Tag(db.Document, UploadableImageMixin):
 
     @classmethod
     def update_slug(cls, sender, document, **kwargs):
-        document.slug = slugify(document.name)
+        if not document.slug:
+            document.slug = slugify(document.name)
 
     @property
     def upload_subpath(self):

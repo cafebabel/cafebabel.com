@@ -1,6 +1,5 @@
 import datetime
 
-from flask import current_app
 from flask_security import RoleMixin, UserMixin
 from flask_login import current_user
 from mongoengine import signals
@@ -41,6 +40,10 @@ class User(db.Document, UserMixin):
     roles = db.ListField(db.ReferenceField(Role, reverse_delete_rule=db.PULL),
                          default=[])
     profile = db.EmbeddedDocumentField(UserProfile)
+
+    meta = {
+        'indexes': ['profile.old_pk']
+    }
 
     def __str__(self):
         return str(self.profile)

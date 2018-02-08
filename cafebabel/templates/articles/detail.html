@@ -4,7 +4,7 @@
 
 {% block meta_title %}{{ article.title }}{% endblock %}
 {% block metas %}
-  {{ meta('name=description', article.summary) }}
+  {{ meta('name=description', article.summary|striptags) }}
   {{ meta('name=author', article.author) }}
 {% endblock %}
 
@@ -14,13 +14,13 @@
   {{ meta('property=og:url', request.url) }}
   {{ meta('property=og:title', self.meta_title()) }}
   {{ meta('property=og:type', 'article') }}
-  {{ meta('property=og:description', article.summary) }}
+  {{ meta('property=og:description', article.summary|striptags) }}
   {{ meta('property=og:site_name', 'Cafébabel') }}
   {{ meta('property=og:locale', current_language) }}
   {{ meta('name=twitter:card', 'summary') }}
   {{ meta('name=twitter:image', absolute(article.image_url)) }}
   {{ meta('name=twitter:title', self.meta_title()) }}
-  {{ meta('name=twitter:description', article.summary) }}
+  {{ meta('name=twitter:description', article.summary|striptags) }}
   {{ meta('name=twitter:url', request.url) }}
 {% endblock %}
 
@@ -78,7 +78,7 @@
     </div>
 
     {% if article.summary %}
-    <p class=summary>{{ article.summary }}</p>
+      <div class=summary>{{ article.summary|markdown }}</div>
     {% endif %}
 
     {{ article.body|markdown }}
