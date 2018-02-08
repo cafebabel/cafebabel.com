@@ -35,7 +35,8 @@ def test_translation_creation_should_display_form(app, client, user, article):
 def test_translation_creation_should_limit_languages(app, client, user,
                                                      translation):
     login(client, user.email, 'password')
-    response = client.get(f'/en/article/draft/{translation.original_article.id}/')
+    response = client.get(
+        f'/en/article/draft/{translation.original_article.id}/')
     assert response.status_code == HTTPStatus.OK
     assert ('href="/en/article/translation/new/?lang='
             f'{app.config["LANGUAGES"][2][0]}' in response)
@@ -56,7 +57,8 @@ def test_translation_creation_requires_login(app, client, article):
 def test_translation_creation_required_parameters(app, client, user, article):
     login(client, user.email, 'password')
     language = app.config['LANGUAGES'][1][0]
-    response = client.get(f'/en/article/translation/new/?original={article.id}')
+    response = client.get(
+        f'/en/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.BAD_REQUEST
     response = client.get(f'/en/article/translation/new/?lang={language}')
     assert response.status_code == HTTPStatus.BAD_REQUEST
@@ -79,7 +81,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
-            f'http://localhost/en/article/translation/{translation.id}/')
+            f'http://cafebabel.test/en/article/translation/{translation.id}/')
     assert (get_flashed_messages() ==
             ['Your translation was successfully created.'])
 
@@ -219,7 +221,7 @@ def test_translation_update_values_should_redirect(client, user, translation):
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
-            f'http://localhost/en/article/translation/{translation.id}/')
+            f'http://cafebabel.test/en/article/translation/{translation.id}/')
     assert translation.title == 'Modified title'
     assert (get_flashed_messages() ==
             ['Your translation was successfully updated.'])

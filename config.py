@@ -6,6 +6,7 @@ from cafebabel.users.forms import MultipleHashLoginForm
 class BaseConfig:
     DEBUG = False
     SECRET_KEY = 'TODO'
+    SERVER_NAME = 'cafebabel.test'
 
     MONGODB_SETTINGS = {
         'db': 'cafebabel',
@@ -70,6 +71,10 @@ class BaseConfig:
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
 
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
+
+
+class ProdConfig(BaseConfig):
+    SERVER_NAME = 'preprod.cafebabel.com'
 
 
 class DevelopmentConfig(BaseConfig):
