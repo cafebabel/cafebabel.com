@@ -33,7 +33,7 @@ def test_tag_deleted_remove_article_reference(app, tag, article):
 
 
 def test_tag_suggest_basics(client, tag):
-    response = client.get('/article/tag/suggest/?language=en&terms=wond')
+    response = client.get('/en/article/tag/suggest/?language=en&terms=wond')
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
         'language': 'en',
@@ -46,7 +46,7 @@ def test_tag_suggest_basics(client, tag):
 def test_tag_suggest_many(client, app, tag):
     language = app.config['LANGUAGES'][0][0]
     Tag.objects.create(name='Wondering', language=language)
-    response = client.get('/article/tag/suggest/?language=en&terms=wond')
+    response = client.get('/en/article/tag/suggest/?language=en&terms=wond')
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
         'language': 'en',
@@ -64,7 +64,7 @@ def test_tag_suggest_many(client, app, tag):
 def test_tag_only_language(client, app, tag):
     language = app.config['LANGUAGES'][1][0]
     Tag.objects.create(name='Wondering', language=language)
-    response = client.get('/article/tag/suggest/?language=fr&terms=wond')
+    response = client.get('/en/article/tag/suggest/?language=fr&terms=wond')
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
         'language': 'fr',
@@ -75,23 +75,24 @@ def test_tag_only_language(client, app, tag):
 
 
 def test_tag_suggest_too_short(client, tag):
-    response = client.get('/article/tag/suggest/?language=en&terms=wo')
+    response = client.get('/en/article/tag/suggest/?language=en&terms=wo')
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert (b'Suggestions made available from 3-chars and more.'
             in response.data)
 
 
 def test_tag_suggest_wrong_language(client, tag):
-    response = client.get('/article/tag/suggest/?language=ca&terms=wond')
+    response = client.get('/en/article/tag/suggest/?language=ca&terms=wond')
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert "Languages available: ['en', 'fr', 'es', 'it', 'de']" in response
+    assert ("Languages available: ['en', 'fr', 'es', 'it', 'de', 'pl']"
+            in response)
 
 
 def test_tag_detail(app, client, tag, published_article):
     Tag.objects.create(name='Wonderful', summary='text chapo',
                        language=app.config['LANGUAGES'][1][0])
     published_article.modify(tags=[tag])
-    response = client.get('/article/tag/wonderful/')
+    response = client.get('/en/article/tag/wonderful/')
     assert response.status_code == HTTPStatus.OK
     assert tag.name in response
     assert tag.summary in response
@@ -101,21 +102,21 @@ def test_tag_detail(app, client, tag, published_article):
 
 def test_tag_detail_draft(client, tag, article):
     article.modify(tags=[tag])
-    response = client.get('/article/tag/wonderful/')
+    response = client.get('/en/article/tag/wonderful/')
     assert response.status_code == HTTPStatus.OK
     assert tag.name in response
     assert article.title not in response
 
 
 def test_tag_detail_unknown(client, tag):
-    response = client.get('/article/tag/sensational/')
+    response = client.get('/en/article/tag/sensational/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
 def test_tag_update_summary(app, client, tag, editor):
     login(client, editor.email, 'password')
     data = {'summary': 'custom summary'}
-    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+    response = client.post(f'/en/article/tag/{tag.slug}/edit/', data=data,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your tag was successfully saved.']
@@ -131,7 +132,7 @@ def test_tag_update_image(app, client, tag, editor):
         'summary': 'custom summary',
         'image': (image_content, 'image-name.jpg'),
     }
-    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+    response = client.post(f'/en/article/tag/{tag.slug}/edit/', data=data,
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
@@ -152,7 +153,7 @@ def test_tag_update_image_unallowed_extension(app, client, tag, editor):
         'image': (image_content, 'image-name.zip'),
     }
     assert 'zip' not in app.config.get('ALLOWED_EXTENSIONS')
-    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+    response = client.post(f'/en/article/tag/{tag.slug}/edit/', data=data,
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
@@ -168,7 +169,7 @@ def test_tag_update_image_unallowed_extension(app, client, tag, editor):
 def test_tag_update_name_not_possible(app, client, tag, editor):
     login(client, editor.email, 'password')
     data = {'name': 'updated title'}
-    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+    response = client.post(f'/en/article/tag/{tag.slug}/edit/', data=data,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
@@ -176,6 +177,6 @@ def test_tag_update_name_not_possible(app, client, tag, editor):
 def test_tag_update_language_not_possible(app, client, tag, editor):
     login(client, editor.email, 'password')
     data = {'language': app.config['LANGUAGES'][2][0]}
-    response = client.post(f'/article/tag/{tag.slug}/edit/', data=data,
+    response = client.post(f'/en/article/tag/{tag.slug}/edit/', data=data,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.BAD_REQUEST
