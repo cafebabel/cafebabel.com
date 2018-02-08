@@ -6,7 +6,7 @@ from http import HTTPStatus
 from math import ceil
 
 import markdown as markdownlib
-from flask import Markup, abort, current_app, request, g
+from flask import Markup, abort, current_app, g, request
 from flask_login import current_user, fresh_login_required, login_required
 from jinja2.filters import do_wordcount
 from unidecode import unidecode

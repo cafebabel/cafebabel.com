@@ -2,8 +2,6 @@ from http import HTTPStatus
 
 from flask import Blueprint, redirect, request, url_for
 
-from ..core.helpers import current_language
-
 from ..articles.models import Article
 
 archives = Blueprint('archives', __name__)

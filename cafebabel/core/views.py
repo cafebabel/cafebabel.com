@@ -1,6 +1,5 @@
-from flask import (Blueprint, current_app, render_template, send_from_directory,
-                   redirect, url_for, request)
-
+from flask import (Blueprint, current_app, redirect, render_template, request,
+                   send_from_directory, url_for)
 
 cores = Blueprint('cores', __name__)
 
