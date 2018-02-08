@@ -162,6 +162,19 @@ def test_translation_access_have_original_article_link(client, translation):
              f'article title') in response)
 
 
+def test_translation_can_have_raw_summary(client, translation):
+    response = client.get(f'/article/translation/{translation.id}/')
+    assert '<div class=summary><p>summary text</p></div>' in response
+    assert '<meta name=description content="summary text">' in response
+
+
+def test_translation_can_have_html_summary(client, translation):
+    translation.modify(summary='<p>summary text</p>')
+    response = client.get(f'/article/translation/{translation.id}/')
+    assert '<div class=summary><p>summary text</p></div>' in response
+    assert '<meta name=description content="summary text">' in response
+
+
 def test_translation_access_have_translator(client, translation):
     response = client.get(f'/article/translation/{translation.id}/')
     assert f'by {translation.translator}.' in response

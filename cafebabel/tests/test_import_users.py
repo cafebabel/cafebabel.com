@@ -1,5 +1,5 @@
 from passlib.apps import django_context
-from flask_security.utils import verify_and_update_password, get_hmac
+from flask_security.utils import get_hmac
 
 from .utils import login
 from ..users.models import User

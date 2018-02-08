@@ -14,6 +14,13 @@ def test_tag_basics(tag):
     assert str(tag) == 'Wonderful (en)'
 
 
+def test_tag_non_ascii_name(app):
+    language = app.config['LANGUAGES'][0][0]
+    tag = Tag.objects.create(name='\u4e2d\u56fd\u4e0e\u4e16\u754c',
+                             language=language)
+    assert tag.slug == 'zhong-guo-yu-shi-jie'
+
+
 def test_tag_deleted_remove_article_reference(app, tag, article):
     language = app.config['LANGUAGES'][0][0]
     tag2 = Tag.objects.create(name='Sensational', language=language)
