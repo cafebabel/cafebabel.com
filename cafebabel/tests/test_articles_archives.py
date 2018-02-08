@@ -29,8 +29,8 @@ def test_archive_is_redirect_from_production(client, published_article):
 
 def test_archive_is_redirect_to_translation(client, translation):
     url = 'http://localhost/lifestyle/articolo/old-translation.html'
-    translation.status = 'published'
-    translation.modify(archive=ArticleArchive(id=1, url=url))
+    translation.modify(archive=ArticleArchive(id=1, url=url),
+                       status='published')
     response = client.get(url)
     assert response.status_code == HTTPStatus.MOVED_PERMANENTLY
     article_url = url_for('articles.detail', slug=translation.slug,

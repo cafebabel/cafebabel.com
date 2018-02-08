@@ -14,7 +14,8 @@ def archive(**kwargs):
     try:
         article = Article.objects.get(archive__url=request.url)
     except Article.DoesNotExist:
-        # Only in use for preproduction testing.
+        # Only in use for preproduction testing, could be safely kept or
+        # remove for production.
         archive_url = request.url.replace('http://preprod.cafebabel.',
                                           'http://www.cafebabel.')
         article = Article.objects.get_or_404(archive__url=archive_url)
