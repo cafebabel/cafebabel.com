@@ -90,7 +90,6 @@ class DevelopmentConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
-    SERVER_NAME = 'cafebabel.test'
     MONGODB_SETTINGS = {
         'db': 'cafebabel_test'
     }

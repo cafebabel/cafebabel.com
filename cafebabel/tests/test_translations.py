@@ -81,7 +81,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
-            f'http://cafebabel.test/en/article/translation/{translation.id}/')
+            f'http://localhost/en/article/translation/{translation.id}/')
     assert (get_flashed_messages() ==
             ['Your translation was successfully created.'])
 
@@ -221,7 +221,7 @@ def test_translation_update_values_should_redirect(client, user, translation):
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
-            f'http://cafebabel.test/en/article/translation/{translation.id}/')
+            f'http://localhost/en/article/translation/{translation.id}/')
     assert translation.title == 'Modified title'
     assert (get_flashed_messages() ==
             ['Your translation was successfully updated.'])
