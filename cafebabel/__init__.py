@@ -2,7 +2,7 @@ from datetime import datetime
 from urllib.parse import quote_plus
 
 import click
-from flask import Flask
+from flask import Flask, g
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
@@ -17,8 +17,9 @@ def create_app(config_object):
     app.config.from_object(config_object)
     app.config.from_pyfile('config.local.py')
 
-    register_extensions(app)
+    # Blueprints must be before extensions as they require <lang> url pattern.
     register_blueprints(app)
+    register_extensions(app)
     register_template_filters(app)
     register_context_processors(app)
     # register_cli is only called when necessary
@@ -29,7 +30,7 @@ def register_extensions(app):
     db.init_app(app)
     mail.init_app(app)
 
-    from cafebabel.users.models import Role, User
+    from .users.models import Role, User
 
     app.user_datastore = MongoEngineUserDatastore(db, User, Role)
     security.init_app(app, datastore=app.user_datastore)
@@ -42,14 +43,15 @@ def register_extensions(app):
             pass
 
     if app.testing:
-        from cafebabel.core.testing import ContainsResponse
+        from .core.testing import ContainsResponse
         app.response_class = ContainsResponse
 
 
 def register_blueprints(app):
-    from .core.routing import RegexConverter
+    from .core.routing import LangConverter, RegexConverter
 
     app.url_map.converters['regex'] = RegexConverter
+    app.url_map.converters['lang'] = LangConverter
 
     from .archives.views import archives
     from .articles.views import articles
@@ -60,13 +62,29 @@ def register_blueprints(app):
     from .core.views import cores
     from .users.views import users
 
+    @app.url_defaults
+    def add_lang(endpoint, values):
+        if 'lang' in values or not g.get('lang'):
+            return
+        if app.url_map.is_endpoint_expecting(endpoint, 'lang'):
+            values['lang'] = g.lang
+
+    @app.url_value_preprocessor
+    def retrieve_lang(endpoint, values):
+        if not (values and 'lang' in values):
+            return
+        g.lang = values.pop('lang', app.config['DEFAULT_LANGUAGE'])
+
     app.register_blueprint(cores, url_prefix='')
-    app.register_blueprint(articles, url_prefix='/article')
-    app.register_blueprint(tags, url_prefix='/article/tag')
-    app.register_blueprint(drafts, url_prefix='/article/draft')
-    app.register_blueprint(proposals, url_prefix='/article/proposal')
-    app.register_blueprint(translations, url_prefix='/article/translation')
-    app.register_blueprint(users, url_prefix='/profile')
+    app.register_blueprint(articles, url_prefix='/<lang:lang>/article')
+    app.register_blueprint(tags, url_prefix='/<lang:lang>/article/tag')
+    app.register_blueprint(drafts, url_prefix='/<lang:lang>/article/draft')
+    app.register_blueprint(proposals,
+                           url_prefix='/<lang:lang>/article/proposal')
+    app.register_blueprint(translations,
+                           url_prefix='/<lang:lang>/article/translation')
+    app.register_blueprint(users, url_prefix='/<lang:lang>/profile')
+    # Keep that blueprint in the latest position as a fallback.
     app.register_blueprint(archives, url_prefix='')
 
 
@@ -114,7 +132,7 @@ def register_cli(app):
 
 
 def register_template_filters(app):
-    from cafebabel.core import helpers
+    from .core import helpers
 
     app.add_template_filter(quote_plus, 'quote_plus')
     app.add_template_filter(helpers.slugify, 'slugify')

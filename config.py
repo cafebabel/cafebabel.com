@@ -21,6 +21,7 @@ class BaseConfig:
         ('es', 'Español'),
         ('it', 'Italiano'),
         ('de', 'Deutsch'),
+        ('pl', 'Polszczyzna'),
     )
 
     CATEGORIES = ['society', 'lifestyle', 'politics', 'culture']
@@ -34,6 +35,7 @@ class BaseConfig:
     SECURITY_POST_LOGIN_VIEW = '/profile/'
     SECURITY_PASSWORD_SCHEMES = ['bcrypt', 'django_pbkdf2_sha256']
     SECURITY_LOGIN_FORM = MultipleHashLoginForm
+    SECURITY_URL_PREFIX = '/<lang:lang>'
 
     SECURITY_SEND_REGISTER_EMAIL = True
 
@@ -67,24 +69,7 @@ class BaseConfig:
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
 
-    DOMAIN_LANGUAGES = {
-        'fr': 'cafebabel.fr',
-        'en': 'cafebabel.co.uk',
-        'de': 'cafebabel.de',
-        'es': 'cafebabel.es',
-        'it': 'cafebabel.it',
-    }
-
-
-class PreprodConfig(BaseConfig):
-
-    DOMAIN_LANGUAGES = {
-        'fr': 'preprod.cafebabel.fr',
-        'en': 'preprod.cafebabel.co.uk',
-        'de': 'preprod.cafebabel.de',
-        'es': 'preprod.cafebabel.es',
-        'it': 'preprod.cafebabel.it',
-    }
+    DEFAULT_LANGUAGE = LANGUAGES[0][0]
 
 
 class DevelopmentConfig(BaseConfig):
@@ -102,8 +87,6 @@ class DevelopmentConfig(BaseConfig):
     ]
     EXPLAIN_TEMPLATE_LOADING = False
 
-    DOMAIN_LANGUAGES = {'en': 'localhost:5000'}
-
 
 class TestingConfig(BaseConfig):
     TESTING = True
@@ -113,5 +96,3 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
     UPLOADS_FOLDER = Path(mkdtemp()) / 'cafebabel' / 'uploads'
     DEBUG_TB_ENABLED = False
-
-    DOMAIN_LANGUAGES = {'en': 'localhost'}
