@@ -115,16 +115,13 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
 })
 
 /* Auto-expand textarea when typing http://jsfiddle.net/hmelenok/WM6Gq/ */
-var textAreaAutoResize
-
-textAreaAutoResize = (element, event, handler) => {
+function textAreaAutoResize(element, event, handler) {
   element.addEventListener(event, handler, false)
 }
 
 function textAreaResizing() {
   Array.from(document.querySelectorAll('textarea')).forEach(textArea => {
     function resize() {
-      textArea.style.height = 'auto'
       textArea.style.height = `${textArea.scrollHeight}px`
     }
 
