@@ -1,12 +1,10 @@
 from http import HTTPStatus
 
-from flask import url_for
-
 from cafebabel.articles.models import ArticleArchive
 
 
 def test_archive_is_redirect_to_article_with_lang(client, published_article):
-    url = 'http://cafebabel.test/lifestyle/article/old-article.html'
+    url = 'http://cafebabel.test/lifestyle/article/ancien-article.html'
     published_article.modify(language='fr',
                              archive=ArticleArchive(id=1, url=url))
     response = client.get(url)
