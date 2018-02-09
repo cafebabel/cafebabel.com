@@ -6,7 +6,6 @@ from cafebabel.users.forms import MultipleHashLoginForm
 class BaseConfig:
     DEBUG = False
     SECRET_KEY = 'TODO'
-    SERVER_NAME = 'cafebabel.test'
 
     MONGODB_SETTINGS = {
         'db': 'cafebabel',
@@ -73,10 +72,6 @@ class BaseConfig:
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
 
 
-class ProdConfig(BaseConfig):
-    SERVER_NAME = 'preprod.cafebabel.com'
-
-
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
@@ -95,6 +90,7 @@ class DevelopmentConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
+    SERVER_NAME = 'cafebabel.test'
     MONGODB_SETTINGS = {
         'db': 'cafebabel_test'
     }
