@@ -1071,6 +1071,10 @@ select#author {
   margin: auto;
 }
 
+.create-article-page textarea {
+  font-weight: 100;
+}
+
 /* Profile page */
 
 .profile-page h1 {
@@ -1408,6 +1412,10 @@ select#author {
   margin: 0 auto 5rem auto;
 }
 
+.article-page p {
+  font-weight: 100;
+}
+
 .create-article-page .file img,
 .article-page article img:first-of-type {
   margin-left: 50%;
@@ -1452,10 +1460,12 @@ select#author {
   margin: 3rem auto 5rem auto;
 }
 
-.article-page article .summary {
+.article-page article .summary,
+.article-page article .summary > p {
   max-width: 100%;
   margin: 3rem auto 5rem auto;
   font-size: 2.8rem;
+  font-weight: 200;
 }
 
 .article-page article p img {
