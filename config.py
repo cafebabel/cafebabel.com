@@ -6,7 +6,12 @@ from cafebabel.users.forms import MultipleHashLoginForm
 class BaseConfig:
     DEBUG = False
     SECRET_KEY = 'TODO'
-    SERVER_NAME = 'cafebabel.test'
+    # Warning: this is not the same as SERVER_NAME!
+    # We set our custom domain name key to avoid Flask restriction:
+    # if you set SERVER_NAME, only requests issued with that domain will
+    # be handled. In our case we want to be permissive to be able to
+    # redirect old articles from different domains.
+    DOMAIN_NAME = 'cafebabel.test'
 
     MONGODB_SETTINGS = {
         'db': 'cafebabel',
@@ -74,7 +79,7 @@ class BaseConfig:
 
 
 class ProdConfig(BaseConfig):
-    SERVER_NAME = 'preprod.cafebabel.com'
+    DOMAIN_NAME = 'preprod.cafebabel.com'
 
 
 class DevelopmentConfig(BaseConfig):
@@ -95,6 +100,7 @@ class DevelopmentConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
+    SERVER_NAME = 'cafebabel.test'
     MONGODB_SETTINGS = {
         'db': 'cafebabel_test'
     }
