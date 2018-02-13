@@ -814,6 +814,39 @@ button.menu + nav a {
   display: block;
 }
 
+#participate,
+#translate {
+  display: none;
+}
+
+@media screen and (min-width: 750px) {
+  #participate,
+  #translate {
+    height: 40px;
+    padding: 0;
+    width: 128px;
+    background: none;
+    margin: auto;
+    border: none;
+    color: #00283c;
+    position: fixed;
+    top: 28px;
+  }
+
+  #participate {
+    left: 150px;
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #translate {
+    display: inline-block;
+    left: 270px;
+    width: 118px;
+  }
+}
+
 #social-networks {
   position: fixed;
   top: 2.5rem;
@@ -1641,6 +1674,10 @@ textarea#body {
 .tag-page article .article-detail p {
   margin: 0 0 2rem;
   font-size: 1.6rem;
+}
+
+.tag-page article .article-detail p:last-child {
+  margin: 0;
 }
 
 .tag-page article .article-detail p span {
