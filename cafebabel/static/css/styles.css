@@ -666,7 +666,7 @@ a.logo:after {
 
 /* Preloader */
 
-#preloader {
+#preloader-layer {
   position: absolute;
   top: 0;
   right: 0;
@@ -676,18 +676,18 @@ a.logo:after {
   transition: opacity 0.3s;
   z-index: 2;
 }
-#preloader img {
+#preloader-layer img {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-#preloader.fadeout {
+#preloader-layer.fadeout {
   opacity: 0;
 }
 
-#preloader.hidden {
+#preloader-layer.hidden {
   display: none;
 }
 
