@@ -822,19 +822,20 @@ button.menu + nav a {
 @media screen and (min-width: 750px) {
   #participate,
   #translate {
-    height: 40px;
+    height: 4rem;
     padding: 0;
-    width: 128px;
+    width: 12.8rem;
     background: none;
     margin: auto;
     border: none;
     color: #00283c;
     position: fixed;
-    top: 28px;
+    top: 2.8rem;
+    z-index: 1;
   }
 
   #participate {
-    left: 150px;
+    left: 15rem;
     display: inline-block;
   }
 }
@@ -842,8 +843,8 @@ button.menu + nav a {
 @media screen and (min-width: 1000px) {
   #translate {
     display: inline-block;
-    left: 270px;
-    width: 118px;
+    left: 27rem;
+    width: 11.8rem;
   }
 }
 
