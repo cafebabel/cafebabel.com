@@ -1421,15 +1421,6 @@ select#author {
   margin: 2rem auto;
 }
 
-.pitch-page button a {
-  color: #fff;
-  transition: all 0.3s;
-}
-
-.pitch-page button:hover a {
-  color: #00283c;
-}
-
 .pitch-page select {
   margin-top: 1rem;
 }
