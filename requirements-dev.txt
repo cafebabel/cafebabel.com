@@ -3,3 +3,4 @@ Flask-DebugToolbar
 ipdb
 ipython
 pytest
+mongomock

@@ -96,3 +96,7 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
     UPLOADS_FOLDER = Path(mkdtemp()) / 'cafebabel' / 'uploads'
     DEBUG_TB_ENABLED = False
+
+    MONGODB_SETTINGS = {
+        'host': 'mongomock://localhost'
+    }
