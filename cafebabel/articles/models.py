@@ -37,7 +37,8 @@ class Article(db.Document, UploadableImageMixin):
 
     meta = {
         'allow_inheritance': True,
-        'indexes': ['archive.pk']
+        'indexes': ['archive.pk'],
+        'ordering': ['-publication_date', '-creation_date']
     }
 
     def __str__(self):
