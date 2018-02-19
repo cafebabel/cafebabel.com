@@ -780,6 +780,49 @@ button.menu + nav ul {
   transform: translate(-50%, -50%);
 }
 
+button.menu + nav ul ul {
+  /* social network icons on mobile */
+  display: block;
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: translate(0, 0);
+  margin: 0.4rem;
+}
+
+@media screen and (min-width: 750px) {
+  button.menu + nav ul ul {
+    display: none;
+  }
+}
+
+button.menu + nav ul ul li {
+  display: inline-block;
+  font-size: 2rem;
+  padding: 0 0.3rem;
+}
+
+button.menu + nav ul ul li:nth-child(2) {
+  font-size: 2.4rem;
+  top: 0.1rem;
+  padding-left: 0;
+}
+
+button.menu + nav ul ul li:nth-child(3) {
+  font-size: 2.3rem;
+  top: 0.1rem;
+}
+
+button.menu + nav ul ul li:nth-child(4) {
+  font-size: 3.1rem;
+  top: 0.4rem;
+  padding-left: 0.5rem;
+}
+
+button.menu + nav ul ul li a:hover:after {
+  width: 0;
+}
+
 button.menu + nav ul li {
   text-align: center;
 }
@@ -845,44 +888,51 @@ button.menu + nav a {
 }
 
 #social-networks {
-  position: fixed;
-  top: 2.5rem;
-  right: 3rem;
-  z-index: 1;
+  display: none;
 }
+@media screen and (min-width: 750px) {
+  #social-networks {
+    display: block;
+    position: fixed;
+    top: 2.5rem;
+    right: 3rem;
+    z-index: 1;
+  }
 
-#social-networks li {
-  display: inline-block;
-  font-size: 1.7rem;
-  padding: 0.2rem;
-}
+  #social-networks li {
+    display: inline-block;
+    font-size: 1.7rem;
+    padding: 0.2rem;
+  }
 
-#social-networks li:first-child {
-  margin-right: -0.2rem;
-}
+  #social-networks li:first-child {
+    margin-right: -0.2rem;
+  }
 
-#social-networks li:nth-child(2) {
-  font-size: 2.1rem;
-  top: 0.1rem;
-}
+  #social-networks li:nth-child(2) {
+    font-size: 2.1rem;
+    top: 0.1rem;
+  }
 
-#social-networks li:last-child {
-  font-size: 2.4rem;
-  top: 0.3rem;
-  margin-left: 0.2rem;
-}
+  #social-networks li:last-child {
+    font-size: 2.4rem;
+    top: 0.3rem;
+    margin-left: 0.2rem;
+  }
 
-#social-networks li a {
-  top: 0;
-  transition: all 0.3s;
-}
+  #social-networks li a {
+    top: 0;
+    transition: all 0.3s;
+  }
 
-#social-networks li a:hover {
-  top: -0.2rem;
-}
+  #social-networks li a:hover {
+    top: -0.2rem;
+    color: #bde513;
+  }
 
-#social-networks li a:hover:after {
-  width: 0;
+  #social-networks li a:hover:after {
+    width: 0;
+  }
 }
 
 /* Editing place page */
@@ -1573,7 +1623,7 @@ textarea#body {
   margin-bottom: 8rem;
 }
 
-.translate-list-page ul {
+.translate-list-page main ul {
   max-width: 75rem;
   margin: 2rem auto 5rem auto;
 }
