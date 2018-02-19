@@ -104,8 +104,8 @@ main {
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('/static/fonts/vremenagroteskbold-webfont.woff2') format('woff2'),
-    url('/static/fonts/vremenagroteskbold-webfont.woff') format('woff');
+  src: url('../fonts/vremenagroteskbold-webfont.woff2') format('woff2'),
+    url('../fonts/vremenagroteskbold-webfont.woff') format('woff');
   font-weight: 800;
   font-style: normal;
 }
