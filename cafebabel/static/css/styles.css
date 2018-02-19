@@ -1565,6 +1565,10 @@ textarea#body {
   display: inline-block;
 }
 
+.translate-list-page .select label:after {
+  top: 4.5rem;
+}
+
 .translate-list-page input {
   margin-bottom: 8rem;
 }
