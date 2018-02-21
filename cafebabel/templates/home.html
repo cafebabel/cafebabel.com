@@ -22,4 +22,16 @@
 {% endblock %}
 
 
-{% block body %}{% endblock %}
+{% block body %}
+  {% for article in articles %}
+    {% if loop.first %}
+      {# TODO(Johan): particular treatment? #}
+      {% include "articles/_card.html" %}
+    {% elif loop.index < 5 %}
+      {# TODO(Johan): particular treatment? #}
+      {% include "articles/_card.html" %}
+    {% else %}
+      {% include "articles/_card.html" %}
+    {% endif %}
+  {% endfor %}
+{% endblock %}

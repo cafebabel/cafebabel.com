@@ -15,3 +15,13 @@ def test_homepage_is_displaying(client):
     assert ('<meta property=og:url content="http://localhost/en/">'
             in response)
     assert '<meta name=twitter:card content="summary">' in response
+
+
+def test_homepage_contains_published_articles(client, published_article):
+    response = client.get('/en/')
+    assert published_article.title in response
+
+
+def test_homepage_does_not_contain_draft_articles(client, article):
+    response = client.get('/en/')
+    assert article.title not in response

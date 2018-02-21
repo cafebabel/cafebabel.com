@@ -1,6 +1,8 @@
 from flask import (Blueprint, current_app, redirect, render_template, request,
                    send_from_directory, url_for)
 
+from ..articles.models import Article
+
 cores = Blueprint('cores', __name__)
 
 
@@ -14,7 +16,8 @@ def home():
 
 @cores.route('/<lang>/')
 def home_lang():
-    return render_template('home.html')
+    articles = Article.objects.published()[:25]
+    return render_template('home.html', articles=articles)
 
 
 @cores.route('/uploads/<path:filename>')
