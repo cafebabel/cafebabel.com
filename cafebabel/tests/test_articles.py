@@ -79,6 +79,16 @@ def test_published_article_should_render_markdown(client, published_article):
     assert f'<blockquote>\n<p>quote me</p>\n</blockquote>' in response
 
 
+def test_articles_sort_latest_published_first():
+    kw = {'language': 'en', 'summary': 'in short', 'body': 'in long'}
+    Article.objects.create(title='draft-2', creation_date='2013-03-03', **kw)
+    Article.objects.create(title='pub-1', publication_date='2011-01-01', **kw)
+    Article.objects.create(title='pub-2', publication_date='2012-02-02', **kw)
+    Article.objects.create(title='draft-1', creation_date='2010-12-12', **kw)
+    assert [a.title for a in Article.objects.all()] == ['pub-2', 'pub-1',
+                                                        'draft-2', 'draft-1']
+
+
 def test_access_no_article_should_return_404(client):
     response = client.get(f'/en/article/foo-bar/')
     assert response.status_code == HTTPStatus.NOT_FOUND
