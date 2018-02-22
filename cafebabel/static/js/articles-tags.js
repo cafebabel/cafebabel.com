@@ -45,7 +45,7 @@ class Tags {
   }
   _request(submission) {
     return request(
-      `/article/tag/suggest/?language=${this.language}&terms=${submission}`
+      `/${this.language}/article/tag/suggest/?language=${this.language}&terms=${submission}`
     ).catch(console.error.bind(console))
   }
   _isTagSaved(submission) {
