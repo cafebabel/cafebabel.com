@@ -1693,7 +1693,7 @@ textarea#body {
 }
 
 .tag-page article .article-detail,
-.home article:first-of-type .article-detail {
+.home article .article-detail {
   position: relative;
   background: #fff;
   width: 85%;
@@ -1705,7 +1705,7 @@ textarea#body {
 }
 
 .tag-page article .article-detail h3,
-.home article:first-of-type .article-detail h3 {
+.home article .article-detail h3 {
   margin: 1rem;
 }
 
@@ -1805,6 +1805,59 @@ textarea#body {
 
 /* Homepage */
 
+.home article:first-of-type {
+  grid-area: pick;
+}
+
+.home article:nth-of-type(2) {
+  grid-area: latest1;
+}
+
+.home article:nth-of-type(3) {
+  grid-area: latest2;
+}
+
+.home article:nth-of-type(4) {
+  grid-area: latest3;
+}
+
+.home article:nth-of-type(5) {
+  grid-area: latest4;
+}
+
+.home article:nth-of-type(6) {
+  grid-area: latest5;
+}
+
+.home article:nth-of-type(7) {
+  grid-area: latest6;
+}
+
+.home article:nth-of-type(8) {
+  grid-area: latest7;
+}
+
+.home article:nth-of-type(9) {
+  grid-area: latest8;
+}
+
+.home #content {
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas:
+    'detail detail detail detail detail detail'
+    'pick pick pick pick pick pick'
+    'latest1 latest1 latest1 latest1 ....... .......'
+    'latest2 latest2 latest2 latest2 ....... .......'
+    'latest3 latest3 latest3 latest3 ....... .......'
+    'latest4 latest4 latest4 latest4 ....... .......'
+    'latest5 latest5 latest5 latest5 ....... .......'
+    'latest6 latest6 latest6 latest6 ....... .......'
+    'latest7 latest7 latest7 latest7 ....... .......'
+    'latest8 latest8 latest8 latest8 ....... .......';
+}
+
 .home article {
   margin-bottom: 5rem;
 }
@@ -1830,6 +1883,7 @@ textarea#body {
 }
 
 .home h4 {
+  grid-area: detail;
   text-align: center;
   display: block;
   margin: 1.1rem;
