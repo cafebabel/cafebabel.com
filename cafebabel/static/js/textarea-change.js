@@ -1,6 +1,7 @@
 /* Auto-expand textarea when typing http://jsfiddle.net/hmelenok/WM6Gq/ */
 Array.from(document.querySelectorAll('textarea')).forEach(textArea => {
   function resize() {
+    textArea.style.height = 'auto'
     textArea.style.height = `${textArea.scrollHeight}px`
   }
 
