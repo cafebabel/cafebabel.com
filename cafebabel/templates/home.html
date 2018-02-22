@@ -21,14 +21,12 @@
   {{ meta('name=twitter:url', request.url) }}
 {% endblock %}
 
-
+{% block body_class %}home{% endblock %}
 {% block body %}
   {% for article in articles %}
     {% if loop.first %}
-      {# TODO(Johan): particular treatment? #}
       {% include "articles/_card.html" %}
     {% elif loop.index < 5 %}
-      {# TODO(Johan): particular treatment? #}
       {% include "articles/_card.html" %}
     {% else %}
       {% include "articles/_card.html" %}
