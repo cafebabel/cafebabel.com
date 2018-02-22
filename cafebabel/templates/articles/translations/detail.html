@@ -7,25 +7,25 @@
   {{ meta('name=description', translation.summary|striptags) }}
 {% endblock %}
 
+{% block body_class %}article-page{% endblock %}
 {% block body %}
 <article>
-  <h1>{{ translation.title }}</h1>
-
-  <p class=reading-time>Reading time: {{ translation.body|reading_time }} min.</p>
-
-  <p>Article in <span>{{ translation.language }}</span></p>
 
   {% if translation.has_image %}
     <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
   {% endif %}
+
+  <h1>{{ translation.title }}</h1>
+
+  {{ macros.article_meta(translation.original_article) }}
+
+  <p>Article in <span>{{ translation.language }}</span></p>
 
   {% if translation.summary %}
     <div class=summary>{{ translation.summary|markdown }}</div>
   {% endif %}
 
   {{ translation.body|markdown }}
-
-  {{ macros.article_meta(translation.original_article) }}
 
   <p>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a> by {{ translation.translator }}.

@@ -41,6 +41,14 @@
     <li><a href={{ url_for('drafts.list') }}>View existing drafts</a></li>
     {% endif %}
     <li><a href={{ url_for('articles.to_translate') }}>Translate an article</a></li>
+    <li>
+      <ul>
+        <li><a href=https://www.facebook.com/cafebabelenglish class=icon-facebook></a></li>
+        <li><a href=https://twitter.com/cafebabel_ENG class=icon-twitter></a></li>
+        <li><a href=https://www.instagram.com/inside.cafebabel class=icon-instagram></a></li>
+        <li><a href=https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg class=icon-youtube></a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -56,12 +64,15 @@
   </ul>
 </nav>
 
+<a href={{ url_for('proposals.create') }} id=participate>Participate</a>
+<a href={{ url_for('articles.to_translate') }} id=translate>Translate</a>
+
 <nav id=social-networks>
   <ul>
-    <li><a href=# class=icon-facebook></a></li>
-    <li><a href=# class=icon-twitter></a></li>
-    <li><a href=# class=icon-instagram></a></li>
-    <li><a href=# class=icon-youtube></a></li>
+    <li><a href=https://www.facebook.com/cafebabelenglish class=icon-facebook></a></li>
+    <li><a href=https://twitter.com/cafebabel_ENG class=icon-twitter></a></li>
+    <li><a href=https://www.instagram.com/inside.cafebabel class=icon-instagram></a></li>
+    <li><a href=https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg class=icon-youtube></a></li>
   </ul>
 </nav>
 {% include "security/_messages.html" %}
@@ -78,7 +89,7 @@
 <footer>
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
-<div id=preloader>
+<div id=preloader-layer>
     <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="preloader coffee grinder">
 </div>
 
