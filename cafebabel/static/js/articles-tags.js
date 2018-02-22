@@ -5,9 +5,11 @@ class Tags {
       input => input.value
     )
   }
+  get languages() {
+    return document.querySelector('#language')
+  }
   get language() {
-    const languages = document.querySelector('#language')
-    return languages.options[languages.selectedIndex].value
+    return this.languages.options[this.languages.selectedIndex].value
   }
   get list() {
     return this.context.querySelector('.tags-list')
