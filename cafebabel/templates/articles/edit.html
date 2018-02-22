@@ -29,17 +29,6 @@
         </select>
       </label>
     </div>
-    <div class=select>
-      <label for=category>
-        <select id=category name=category required>
-          <optgroup label=Category>
-            {% for category in get_categories() %}
-            <option value={{ category }}{% if article.category == category %} selected{% endif %}>{{ category }}</option>
-            {% endfor %}
-          </optgroup>
-        </select>
-      </label>
-    </div>
     {% if current_user.has_role('editor') %}
     <div class=select>
       <label for=status>
