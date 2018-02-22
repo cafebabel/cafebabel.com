@@ -2,7 +2,7 @@
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(['js/articles-tags.js', 'js/textarea-change.js']) }}
+  {{ extra_js(['js/articles-tags.js']) }}
 {% endblock %}
 
 {% block body %}
@@ -14,7 +14,7 @@
     <input id=title name=title value="{{ translation.title }}" required>
   </div>
   <div class=textarea>
-    <label for=summary>Teaser</label>
+    <label for=summary>Summary</label>
     <textarea id=summary name=summary required>{{ translation.summary }}</textarea>
   </div>
   <div class=textarea>

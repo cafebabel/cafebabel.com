@@ -1,5 +1,5 @@
 /* Preloader fadeout when page is loaded */
-const preloader = document.querySelector('#preloader-layer')
+const preloader = document.querySelector('#preloader')
 preloader.classList.add('fadeout')
 setTimeout(() => {
   preloader.classList.add('hidden')
