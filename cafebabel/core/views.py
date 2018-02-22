@@ -12,7 +12,7 @@ def home():
     return redirect(url_for('.home_lang', lang=lang))
 
 
-@cores.route('/<lang>/')
+@cores.route('/<lang:lang>/')
 def home_lang():
     return render_template('home.html')
 

@@ -22,3 +22,8 @@ def test_homepage_displays_languages_meta(client):
     assert 'og:locale content="fr"' in response
     assert 'og:url content="http://localhost/fr/"' in response
     assert 'twitter:url content="http://localhost/fr/"' in response
+
+
+def test_wrong_language_raises_404(client):
+    response = client.get('/profile/')
+    assert response.status_code == HTTPStatus.NOT_FOUND
