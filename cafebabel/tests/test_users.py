@@ -20,21 +20,23 @@ def test_user_add_custom_role(app, user):
     assert not user.has_role('whatever')
 
 
-def test_unauthenticated_user_cannot_access_login_required_page(client):
-    response = client.get('/en/profile/')
+def test_unauthenticated_user_cannot_access_login_required_page(client, user):
+    response = client.get(f'/en/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.FOUND
 
 
 def test_authenticated_user_can_access_login_required_page(client, user):
     login(client, user.email, 'password')
-    response = client.get('/en/profile/', follow_redirects=True)
+    response = client.get(f'/en/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.OK
     assert b"<h1>user@example.com's profile</h1>" in response.data
 
 
 def test_visitor_cannot_edit_user_profile(client, user):
     response = client.get(f'/en/profile/{user.id}/edit/')
-    assert response.status_code == HTTPStatus.UNAUTHORIZED
+    assert response.status_code == HTTPStatus.FOUND
+    assert ('/en/login?next=%2Fen%2Fprofile%2F'
+            in response.headers.get('Location'))
 
 
 def test_editor_can_edit_user_profile(client, user, editor):
@@ -46,7 +48,7 @@ def test_editor_can_edit_user_profile(client, user, editor):
 def test_logout_user_cannot_access_login_required_page(client, user):
     login(client, user.email, 'password')
     logout(client)
-    response = client.get('/en/profile/')
+    response = client.get(f'/en/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.FOUND
 
 
@@ -96,3 +98,18 @@ def test_profile_big_image_should_raise(app, client, user):
     assert response.status_code == HTTPStatus.REQUEST_ENTITY_TOO_LARGE
     user.reload()
     assert not user.profile.image_filename
+
+
+def test_login_complete_is_redirecting_to_appropriated_language(client, user):
+    login(client, user.email, 'password')
+    response = client.get('/login_complete/')
+    assert response.status_code == HTTPStatus.FOUND
+    assert (response.headers.get('Location') ==
+            f'http://localhost/en/profile/{user.id}/')
+
+
+def test_login_complete_redirects_if_not_logged_in(client, user):
+    response = client.get('/login_complete/')
+    assert response.status_code == HTTPStatus.FOUND
+    assert ('/en/login?next=%2Flogin_complete%2F'
+            in response.headers.get('Location'))
