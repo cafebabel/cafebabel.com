@@ -861,7 +861,7 @@ button.menu + nav a {
   #translate {
     position: fixed;
     top: 3.4rem;
-    z-index: 1;
+    z-index: 2;
   }
 
   #participate {
@@ -1692,18 +1692,20 @@ textarea#body {
   margin: 3rem auto;
 }
 
-.tag-page article .article-detail {
+.tag-page article .article-detail,
+.home article:first-of-type .article-detail {
   position: relative;
   background: #fff;
   width: 85%;
   margin: -4rem auto 0;
-  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.01);
-  padding: 2rem;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.02);
+  padding: 1.5rem;
   text-align: center;
   z-index: 1;
 }
 
-.tag-page article .article-detail h3 {
+.tag-page article .article-detail h3,
+.home article:first-of-type .article-detail h3 {
   margin: 1rem;
 }
 
@@ -1799,6 +1801,41 @@ textarea#body {
 
 .tag-page-edit .edit-tag-detail-container input[type='submit'] {
   display: inline-block;
+}
+
+/* Homepage */
+
+.home article {
+  margin-bottom: 5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .home article:first-of-type .article-detail h3 {
+    font-size: 4.2rem;
+  }
+}
+
+.home article .article-detail p {
+  margin: 0 0 2rem;
+  font-size: 1.6rem;
+}
+
+.home article .article-detail p:last-child {
+  margin: 0;
+}
+
+.home article .article-detail p span {
+  font-style: italic;
+  font-family: serif;
+}
+
+.home h4 {
+  text-align: center;
+  display: block;
+  margin: 1.1rem;
+  font-style: italic;
+  font-weight: 200;
+  font-size: 1.3rem;
 }
 
 /* Footer */
