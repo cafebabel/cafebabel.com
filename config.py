@@ -24,8 +24,6 @@ class BaseConfig:
         ('pl', 'Polszczyzna'),
     )
 
-    CATEGORIES = ['society', 'lifestyle', 'politics', 'culture']
-
     SECURITY_PASSWORD_SALT = 'and pepper'
     SECURITY_CONFIRMABLE = False
     SECURITY_REGISTERABLE = True
