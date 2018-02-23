@@ -30,7 +30,7 @@ class BaseConfig:
     SECURITY_RECOVERABLE = True
     SECURITY_CHANGEABLE = True
     SECURITY_EMAIL_SENDER = '@'.join(['no-reply', 'cafebabel.com'])
-    SECURITY_POST_LOGIN_VIEW = '/profile/'
+    SECURITY_POST_LOGIN_VIEW = '/login_complete/'
     SECURITY_PASSWORD_SCHEMES = ['bcrypt', 'django_pbkdf2_sha256']
     SECURITY_LOGIN_FORM = MultipleHashLoginForm
     SECURITY_URL_PREFIX = '/<lang:lang>'
@@ -94,7 +94,3 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
     UPLOADS_FOLDER = Path(mkdtemp()) / 'cafebabel' / 'uploads'
     DEBUG_TB_ENABLED = False
-
-    MONGODB_SETTINGS = {
-        'host': 'mongomock://localhost'
-    }

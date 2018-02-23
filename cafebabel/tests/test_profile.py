@@ -24,7 +24,7 @@ def test_author_profile_has_list_of_published_articles_and_drafts(
         client, user, article, published_article):
     login(client, user.email, 'password')
     published_article.modify(author=user)
-    response = client.get('/en/profile/', follow_redirects=True)
+    response = client.get(f'/en/profile/{user.id}/')
     assert response.status_code == HTTPStatus.OK
     assert article.title in response
     assert published_article.title in response

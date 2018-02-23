@@ -363,7 +363,7 @@ def test_article_to_translate_should_have_translation_links(
 
 def test_translation_to_translate_should_not_have_original_language(
         client, article, translation):
-    # Keep the `translation` fixture, even if not refered to.
+    # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/')
     assert (f'href=/en/article/translation/new/'
             f'?lang=en&original={article.id}>Translate in English</a>'
@@ -375,9 +375,7 @@ def test_translation_to_translate_should_not_have_original_language(
 
 def test_translation_to_translate_should_have_original_language(
         app, client, article, translation):
-    # Keep the `article` fixture, even if not refered to.
-    language = app.config['LANGUAGES'][1][0]
-    translation.modify(language=language)
+    # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
     assert (f'href="/en/article/translation/new/'
             f'?lang=es&original={translation.original_article.id}">'
