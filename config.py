@@ -64,6 +64,7 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
+    MEDIA_URL = 'https://media.cafebabel.com'
     UPLOADS_FOLDER = Path(__file__).parent / 'cafebabel' / 'uploads'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.

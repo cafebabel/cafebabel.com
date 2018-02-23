@@ -66,10 +66,10 @@ def migrate_articles(app, limit, article_filepath):
                       done_char='📃')
     with app.app_context():
         for old_article in bar.iter(old_articles):
-            create_article(old_article)
+            create_article(app, old_article)
         bar.done = 0  # Reset.
         for old_article in bar.iter(old_articles):
-            create_article(old_article)
+            create_article(app, old_article)
     click.echo('Articles migrated.')
 
 
@@ -151,7 +151,16 @@ def sanitize_title(title):
     return title
 
 
-def create_article(old_article):
+def sanitize_media_paths(app, content):
+    target = f'src="{app.config["MEDIA_URL"]}/archives'
+    return (content
+            .replace('src="http://m.cbabel.eu', target)
+            .replace('src="http://m.cafebabel.com', target)
+            .replace('src="/medias', target)
+            )
+
+
+def create_article(app, old_article):
     is_gallery = False
     fields = old_article['fields']
     language = normalize_language(fields['language'])
@@ -186,7 +195,7 @@ def create_article(old_article):
     data = {
         'title': sanitize_title(fields['title']),
         'summary': article_fields['original_header'] or '',
-        'body': article_fields['body'],
+        'body': sanitize_media_paths(app, article_fields['body']),
         'language': language,
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
