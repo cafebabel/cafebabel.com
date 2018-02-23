@@ -24,6 +24,6 @@ def test_homepage_displays_languages_meta(client):
     assert 'twitter:url content="http://localhost/fr/"' in response
 
 
-def test_wrong_language_raises_404(client):
-    response = client.get('/profile/')
+def test_long_language_raises_404(client):
+    response = client.get('/foo/')
     assert response.status_code == HTTPStatus.NOT_FOUND

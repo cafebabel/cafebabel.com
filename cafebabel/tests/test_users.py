@@ -100,7 +100,7 @@ def test_profile_big_image_should_raise(app, client, user):
     assert not user.profile.image_filename
 
 
-def test_login_complete_is_redirecting_to_appropriated_language(client, user):
+def test_login_complete_is_redirecting_to_appropriate_language(client, user):
     login(client, user.email, 'password')
     response = client.get('/login_complete/')
     assert response.status_code == HTTPStatus.FOUND
