@@ -29,7 +29,6 @@ class Article(db.Document, UploadableImageMixin):
     title = db.StringField(required=True)
     slug = db.StringField(required=True)
     language = db.StringField(max_length=2, required=True)
-    category = db.StringField()
     summary = db.StringField(required=True)
     body = db.StringField(required=True)
     status = db.StringField(default='draft')
