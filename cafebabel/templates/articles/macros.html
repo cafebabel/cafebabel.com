@@ -9,9 +9,6 @@
       {{ default_profile_picture() }}
     {% endif %}
     {{ article.author }}<br>
-    {% if article.category %}
-    in category {{ article.category }}<br>
-    {% endif %}
     Reading time: {{ article.body|reading_time }} min
   </p>
 {%- endmacro %}
