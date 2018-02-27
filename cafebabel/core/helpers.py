@@ -79,3 +79,10 @@ def allowed_file(filename):
     return ('.' in filename and
             filename.rsplit('.', 1)[1].lower()
             in current_app.config['ALLOWED_EXTENSIONS'])
+
+
+def rewrite_img_src(content):
+    media_url = current_app.config.get('MEDIA_URL')
+    if media_url:
+        return Markup(str(content).replace('src="/', f'src="{media_url}/'))
+    return content

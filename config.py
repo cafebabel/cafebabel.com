@@ -62,12 +62,17 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
+
     UPLOADS_FOLDER = Path(__file__).parent / 'cafebabel' / 'uploads'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
 
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
+
+
+class PreprodConfig(BaseConfig):
+    MEDIA_URL = 'https://media.preprod.cafebabel.com'
 
 
 class DevelopmentConfig(BaseConfig):
@@ -84,6 +89,7 @@ class DevelopmentConfig(BaseConfig):
         'flask_mongoengine.panels.MongoDebugPanel'
     ]
     EXPLAIN_TEMPLATE_LOADING = False
+    MEDIA_URL = 'https://media.preprod.cafebabel.com'
 
 
 class TestingConfig(BaseConfig):

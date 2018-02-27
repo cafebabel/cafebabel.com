@@ -140,6 +140,7 @@ def register_template_filters(app):
     app.add_template_filter(helpers.markdown, 'markdown')
     app.add_template_filter(helpers.reading_time, 'reading_time')
     app.add_template_filter(helpers.obfuscate_email, 'obfuscate_email')
+    app.add_template_filter(helpers.rewrite_img_src, 'rewrite_img_src')
 
 
 def register_context_processors(app):

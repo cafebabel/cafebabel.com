@@ -21,16 +21,16 @@ class UploadableImageMixin:
     @property
     def image_url(self):
         if self.has_image:
-            return url_for(
-                'cores.uploads',
-                filename=f'{self.upload_subpath}/{self.image_filename}')
+            media_url = current_app.config.get('MEDIA_URL')
+            if media_url:
+                return f'{media_url}{self.image_filename}'
+            return url_for('cores.uploads', filename=self.image_filename[1:])
 
     @property
     def image_path(self):
         if not self.has_image:
             return
-        return (current_app.config['UPLOADS_FOLDER'] / self.upload_subpath /
-                self.image_filename)
+        return str(current_app.config['UPLOADS_FOLDER']) + self.image_filename
 
     def attach_image(self, image):
         self._upload_image = image
@@ -45,13 +45,14 @@ class UploadableImageMixin:
     @classmethod
     def store_image(cls, sender, document, **kwargs):
         if document is not None and document._upload_image:
-            document.image_filename = secure_filename(
-                document._upload_image.filename)
+            image_filename = secure_filename(document._upload_image.filename)
+            document.image_filename = (f'/{document.upload_subpath}'
+                                       f'/{image_filename}')
             folder = (current_app.config['UPLOADS_FOLDER'] /
                       document.upload_subpath)
             if not os.path.isdir(folder):
                 os.makedirs(folder)
-            document._upload_image.save(str(folder / document.image_filename))
+            document._upload_image.save(str(folder / image_filename))
             document._upload_image = None
             document.save()
 
