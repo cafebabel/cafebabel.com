@@ -75,7 +75,7 @@ class BaseConfig:
 
 
 class PreprodConfig(BaseConfig):
-    MEDIA_URL = 'https://preprod.cafebabel.com/media'
+    MEDIA_URL = 'https://media.preprod.cafebabel.com'
 
 
 class DevelopmentConfig(BaseConfig):

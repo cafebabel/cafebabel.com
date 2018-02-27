@@ -154,9 +154,9 @@ def sanitize_title(title):
 def sanitize_media_paths(app, content):
     target = f'src="{app.config["MEDIA_URL"]}/archives'
     return (content
-            .replace('src="http://m.cbabel.eu', target)
-            .replace('src="http://m.cafebabel.com', target)
-            .replace('src="/medias', target)
+            .replace('src="http://m.cbabel.eu/cache', target)
+            .replace('src="http://m.cafebabel.com/cache', target)
+            .replace('src="/medias/cache', target)
             )
 
 
