@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% from "_meta-macro.html" import meta without context %}
+{% from "_meta-macro.html" import meta %}
+{% from "articles/macros.html" import card %}
 
 {% block metas %}
   {{ meta('name=description', 'Cafébabel is the first European participatory magazine made for young Europeans across borders.') }}
@@ -23,17 +24,17 @@
 
 {% block body_class %}home{% endblock %}
 {% block body %}
-  {% for article in articles %}
-    {% if loop.first %}
-      <h2>Editor's pick</h2>
-      {% include "articles/_card.html" %}
-    {% elif loop.index < 5 %}
-      {% if loop.index == 2 %}
-        <h2>Latest</h2>
-      {% endif %}
-      {% include "articles/_card.html" %}
-    {% else %}
-      {% include "articles/_card.html" %}
-    {% endif %}
+{% if articles %}
+  <h2>Editor's pick</h2>
+  {{ card(articles|first) }}
+{% endif %}
+
+{% if articles|length > 2 %}
+  <h2>Latest</h2>
+  {{ card(articles[1]) }}
+
+  {% for article in articles[3:] %}
+    {{ card(article) }}
   {% endfor %}
+{% endif %}
 {% endblock %}
