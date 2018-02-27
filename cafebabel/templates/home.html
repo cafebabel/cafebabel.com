@@ -25,9 +25,12 @@
 {% block body %}
   {% for article in articles %}
     {% if loop.first %}
-      <h4>Editor's pick</h4>
+      <h2>Editor's pick</h2>
       {% include "articles/_card.html" %}
     {% elif loop.index < 5 %}
+      {% if loop.index == 2 %}
+        <h2>Latest</h2>
+      {% endif %}
       {% include "articles/_card.html" %}
     {% else %}
       {% include "articles/_card.html" %}
