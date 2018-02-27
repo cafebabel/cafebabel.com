@@ -1699,9 +1699,16 @@ textarea#body {
   width: 85%;
   margin: -4rem auto 0;
   box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.02);
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   z-index: 1;
+}
+
+@media screen and (min-width: 750px) {
+  .tag-page article .article-detail,
+  .home article .article-detail {
+    padding: 1.5rem;
+  }
 }
 
 .tag-page article .article-detail h3,
@@ -1807,43 +1814,23 @@ textarea#body {
 
 .home #content {
   display: grid;
-  grid-gap: 2rem;
+  grid-gap: 1rem;
   grid-template-columns: repeat(6, 1fr);
 }
 
 .home article {
-  margin-bottom: 5rem;
-  grid-column: 2 / 6;
+  margin-bottom: 1rem;
+  grid-column: 1 / 7;
 }
 
 .home article:first-of-type {
   grid-column: 1 / 7;
 }
 
-@media screen and (min-width: 750px) {
-  .home article:first-of-type .article-detail h3 {
-    font-size: 4.2rem;
-  }
-}
-
-.home article .article-detail p {
-  margin: 0 0 2rem;
-  font-size: 1.6rem;
-}
-
-.home article .article-detail p:last-child {
-  margin: 0;
-}
-
-.home article .article-detail p span {
-  font-style: italic;
-  font-family: serif;
-}
-
 .home h2 {
   text-align: center;
   display: block;
-  margin: -2rem 0;
+  margin: -1rem 0;
   font-style: italic;
   font-weight: 200;
   font-size: 1.3rem;
@@ -1855,6 +1842,53 @@ textarea#body {
 
 .home h2:nth-of-type(2) {
   grid-column: 2 / 6;
+}
+
+.home article .article-detail h3 {
+  font-size: 2.2rem;
+}
+
+.home article .article-detail p {
+  margin: 0 0 2rem;
+  font-size: 1.6rem;
+}
+
+.home article .article-detail p:first-of-type {
+  display: none;
+}
+
+.home article .article-detail p:last-child {
+  margin: 0;
+}
+
+.home article .article-detail p span {
+  font-style: italic;
+  font-family: serif;
+}
+
+@media screen and (min-width: 750px) {
+  .home #content {
+    grid-gap: 2rem;
+  }
+  .home article {
+    margin-bottom: 5rem;
+    grid-column: 2 / 6;
+  }
+  .home article:first-of-type {
+    grid-column: 1 / 7;
+  }
+  .home article .article-detail h3 {
+    font-size: 2.8rem;
+  }
+  .home article:first-of-type .article-detail h3 {
+    font-size: 4.2rem;
+  }
+  .home h2 {
+    margin: -2rem 0;
+  }
+  .home article .article-detail p:first-of-type {
+    display: block;
+  }
 }
 
 /* Footer */
