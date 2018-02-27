@@ -1841,13 +1841,13 @@ textarea#body {
 }
 
 .home h4 {
-  grid-column: 1 / 7;
-  text-align: center;
-  display: block;
-  margin: 1.1rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-style: italic;
   font-weight: 200;
   font-size: 1.3rem;
+  margin-top: -2.5rem;
 }
 
 /* Footer */
