@@ -23,6 +23,7 @@ class BaseConfig:
         ('de', 'Deutsch'),
         ('pl', 'Polszczyzna'),
     )
+    CATEGORIES = ['impact', 'experience', 'raw', 'creative']
 
     SECURITY_PASSWORD_SALT = 'and pepper'
     SECURITY_CONFIRMABLE = False

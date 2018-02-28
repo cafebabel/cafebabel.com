@@ -113,25 +113,3 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
     () => inputh1.value || h1.classList.remove('active')
   )
 })
-
-const tagLinks = document.querySelectorAll('.tags-list a') /* https://stackoverflow.com/a/46791132/6481285 */
-
-for (let x = 0; x < tagLinks.length; x++) {
-  const tag = tagLinks[x],
-        content = tag.innerHTML.trim()
-
-  switch (content) {
-    case 'Impact':
-      tag.classList.add('impact')
-      break
-    case 'Experience':
-      tag.classList.add('experience')
-      break
-    case 'Raw':
-      tag.classList.add('raw')
-      break
-    case 'Creative':
-      tag.classList.add('creative')
-      break
-  }
-}

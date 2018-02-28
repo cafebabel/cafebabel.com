@@ -15,8 +15,8 @@ from .tags.models import Tag
 
 class ArticleQuerySet(BaseQuerySet):
 
-    def published(self):
-        return self.filter(status='published')
+    def published(self, language):
+        return self.filter(status='published', language=language)
 
 
 class ArticleArchive(db.EmbeddedDocument):

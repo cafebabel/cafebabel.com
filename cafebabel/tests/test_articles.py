@@ -269,12 +269,14 @@ def test_update_unpublished_article_should_return_404(client, user, editor,
     assert article.title == 'article title'
 
 
-def test_delete_article_should_return_200(client, editor, article):
+def test_delete_article_should_return_200(client, editor, article,
+                                          published_article):
+    assert Article.objects.all().count() == 2
     login(client, editor.email, 'password')
     response = client.post(f'/en/article/{article.id}/delete/',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert Article.objects.all().count() == 0
+    assert Article.objects.all().count() == 1
     assert get_flashed_messages() == ['Article was deleted.']
 
 
