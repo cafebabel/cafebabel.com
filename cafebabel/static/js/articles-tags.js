@@ -1,42 +1,25 @@
 class Tags {
-  constructor() {
-    this.context = document.querySelector('.tags')
-    this.values = Array.from(this.list.querySelectorAll('input')).map(
-      input => input.value
-    )
-  }
-  get language() {
+  get _language() {
     const languages = document.querySelector('#language')
     return languages.options[languages.selectedIndex].value
   }
-  get list() {
-    return this.context.querySelector('.tags-list')
+  get _tagsNames() {
+    const tags = document.querySelectorAll('.tags .tags-list input')
+    return Array.from(tags).map(({ value }) => value)
   }
-  get removeButtons() {
-    return this.list.querySelectorAll('li button')
-  }
-  get fieldAdd() {
-    return this.context.querySelector('input[name=tag-new]')
-  }
-  get buttonAdd() {
-    return this.context.querySelector('button.add')
-  }
-  get suggestions() {
-    return this.context.querySelector('#tags-suggestions')
+  get _suggestionsContainer() {
+    return document.querySelector('.tags #tags-suggestions')
   }
 
-  addNewTag(submission) {
-    if (!submission || tags._isTag(submission)) return
-    tags._addValue(submission)
-    tags._emptyAddField()
-    tags._inactiveSuggestionsList()
-    tags._render()
+  addTag(submission) {
+    if (!submission || this._isTagName(submission)) return
+    this._emptyAddField()
+    this._inactiveSuggestionsList()
+    return this._render(this._tagsNamesAdd(submission))
   }
-  removeTag(tagElement) {
-    const submission = tagElement.innerText.trim()
-    if (!tags._isTag(submission)) return
-    tags._removeValue(submission)
-    tags._render()
+  removeTag(submission) {
+    if (!this._isTagName(submission)) return
+    return this._render(this._tagsNamesRemove(submission))
   }
   handleSuggestion(submission) {
     this._request(submission).then(tagsApi =>
@@ -45,7 +28,7 @@ class Tags {
   }
   _request(submission) {
     return request(
-      `/article/tag/suggest/?language=${this.language}&terms=${submission}`
+      `/article/tag/suggest/?language=${this._language}&terms=${submission}`
     ).catch(console.error.bind(console))
   }
   _isTagSaved(submission) {
@@ -53,18 +36,18 @@ class Tags {
       tagsApi.some(tag => tag.name === submission)
     )
   }
-  _isTag(tag) {
-    return this.values.includes(tag)
+  _isTagName(tagName) {
+    return this._tagsNames.includes(tagName)
   }
-  _addValue(query) {
-    this.values.push(query)
+  _tagsNamesAdd(tagName) {
+    return this._tagsNames.concat([tagName])
   }
-  _removeValue(query) {
-    this.values = this.values.filter(value => value !== query)
+  _tagsNamesRemove(tagName) {
+    return this._tagsNames.filter(selfTagName => selfTagName !== tagName)
   }
   _createSuggestionList(tagsApi) {
     this._activeSuggestionsList()
-    const ul = this.suggestions.cloneNode(false)
+    const ul = this._suggestionsContainer.cloneNode(false)
     tagsApi.forEach(tag => {
       const li = `<li>${tag.name}</li>`
       ul.insertAdjacentHTML('afterbegin', li)
@@ -75,7 +58,7 @@ class Tags {
     return Promise.all(
       tagValues.map((tagValue, index) => this._createTag(tagValue, index))
     ).then(tagsList => {
-      tagsList.forEach(tagItem => {
+      Array.from(tagsList).forEach(tagItem => {
         container.insertAdjacentHTML('beforeend', tagItem)
       })
       return container
@@ -85,34 +68,35 @@ class Tags {
     return this._isTagSaved(tagValue).then(
       isSave =>
         `<li ${isSave ? 'class=saved' : ''}>${tagValue}
-          <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
+          <input name=tag-${++index} list=tags value="${tagValue}" type=hidden>
           <button type=button></button>
         </li>`
     )
   }
   _inactiveSuggestionsList() {
-    this.suggestions.classList.add('inactive')
+    this._suggestionsContainer.classList.add('inactive')
   }
   _activeSuggestionsList() {
-    this.suggestions.classList.remove('inactive')
+    this._suggestionsContainer.classList.remove('inactive')
   }
   _emptySuggestions() {
-    this.suggestions.innerHTML = ''
+    this._suggestionsContainer.innerHTML = ''
   }
   _emptyAddField() {
-    this.fieldAdd.value = ''
+    document.querySelector('.tags input[name=tag-new]').value = ''
   }
   _renderSuggestion(container) {
-    this.suggestions.replaceWith(container)
+    this._suggestionsContainer.replaceWith(container)
     TagEventListener.addSuggestion()
   }
-  _render() {
-    const container = this.list.cloneNode(false)
-    this._createTagsList(container, this.values).then(tagsList => {
-      this.list.replaceWith(tagsList)
-      if (!this.values.length) return
+  _render(tagsNames = this._tagsNames) {
+    const list = document.querySelector('.tags .tags-list')
+    const container = list.cloneNode(false)
+    return this._createTagsList(container, tagsNames).then(tagsList => {
+      list.replaceWith(tagsList)
+      if (!tagsNames.length) return
       TagEventListener.addRemoveListener()
-      TagEffect.fadeIn(this.list.querySelector('li:last-child'))
+      TagEffect.fadeIn(list.querySelector('li:last-child'))
     })
   }
 }
@@ -122,7 +106,7 @@ class TagEffect {
     function fade() {
       element.style.opacity = +element.style.opacity + 0.03
       if (element.style.opacity <= 1) {
-        requestAnimationFrame(fade)
+        window.requestAnimationFrame(fade)
       }
     }
     element.style.opacity = 0
@@ -134,7 +118,7 @@ class TagEffect {
       if (element.style.opacity < 0) {
         element.style.display = 'none'
       } else {
-        requestAnimationFrame(fade)
+        window.requestAnimationFrame(fade)
       }
     }
     element.style.opacity = 1
@@ -144,36 +128,42 @@ class TagEffect {
 
 class TagEventListener {
   static clickAdd() {
-    tags.buttonAdd.addEventListener('click', event => {
-      event.preventDefault()
-      const submission = event.target.previousSibling.value
-      if (submission.length < 3) return
-      tags.addNewTag(submission)
-    })
+    document
+      .querySelector('.tags button.add')
+      .addEventListener('click', event => {
+        event.preventDefault()
+        const submission = event.target.previousSibling.value
+        if (submission.length < 3) return
+        tags.addTag(submission)
+      })
   }
   static addSuggestion() {
-    tags.suggestions.querySelectorAll('li').forEach(li =>
+    const suggestions = document.querySelectorAll('.tags #tags-suggestions li')
+    suggestions.forEach(li =>
       li.addEventListener('click', event => {
         const submission = event.target.innerText
-        tags.addNewTag(submission)
+        tags.addTag(submission)
       })
     )
   }
   static addRemoveListener() {
-    tags.removeButtons.forEach(button =>
+    const RemoveButtons = document.querySelectorAll(
+      '.tags .tags-list li button'
+    )
+    Array.from(RemoveButtons).forEach(button =>
       button.addEventListener('click', event => {
-        const tagElement = event.target.parentElement
-        tags.removeTag(tagElement)
+        const tagName = event.target.parentElement.textContent.trim()
+        tags.removeTag(tagName)
       })
     )
   }
   static keyup() {
-    const inputNewTag = document.querySelector('.tags input[name=tag-new]')
-    inputNewTag.addEventListener('keyup', event => {
+    const fieldAdd = document.querySelector('.tags input[name=tag-new]')
+    fieldAdd.addEventListener('keyup', event => {
       event.preventDefault()
       /* Intercept -return- it's capture by 'click' for adding tags */
       if (event.keyCode == 38) return
-      const submission = event.target.value
+      const submission = event.target.value.trim()
       if (submission.length < 3) return
       tags.handleSuggestion(submission)
     })
@@ -186,3 +176,7 @@ window.addEventListener('load', () => {
   TagEventListener.addRemoveListener()
   TagEventListener.clickAdd()
 })
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { Tags }
+}
