@@ -87,7 +87,7 @@ class Tags {
     return this._isTagSaved(tagValue).then(
       isSave =>
         `<li ${isSave ? 'class=saved' : ''}>${tagValue}
-          <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
+          <input name=tag-${++index} list=tags value="${tagValue}" type=hidden>
           <button type=button></button>
         </li>`
     )
