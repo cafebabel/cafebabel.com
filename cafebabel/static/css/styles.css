@@ -587,6 +587,10 @@ img {
   height: auto;
 }
 
+a img {
+  background-color: #eee; /* display image background before image is fully loaded */
+}
+
 /* Links */
 
 a,
