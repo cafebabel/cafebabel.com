@@ -114,11 +114,11 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
   )
 })
 
-let tagLinks = document.querySelectorAll('.tags-list a')
+const tagLinks = document.querySelectorAll('.tags-list a') /* https://stackoverflow.com/a/46791132/6481285 */
 
 for (let x = 0; x < tagLinks.length; x++) {
-  let tag = tagLinks[x]
-  let content = tag.innerHTML.trim()
+  const tag = tagLinks[x],
+        content = tag.innerHTML.trim()
 
   switch (content) {
     case 'Impact':
