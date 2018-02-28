@@ -1772,23 +1772,24 @@ textarea#body {
 .tags-list a.raw:before,
 .tags-list a.creative:before {
   font-family: 'icomoon';
-  padding-right: 0.3rem;
+  padding-right: 0.4rem;
 }
 
 .tags-list a.impact:before {
-  content: '\e927 ';
+  content: '\e904';
 }
 
 .tags-list a.experience:before {
-  content: '\e9da ';
+  content: '\e903';
+  font-size: 1rem;
 }
 
 .tags-list a.raw:before {
-  content: '\ea0f ';
+  content: '\e905';
 }
 
 .tags-list a.creative:before {
-  content: '\e902 ';
+  content: '\e901';
 }
 
 .tags-list a:hover {
