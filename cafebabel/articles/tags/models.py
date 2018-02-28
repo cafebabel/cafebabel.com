@@ -45,6 +45,7 @@ class Tag(db.Document, UploadableImageMixin):
     def upload_subpath(self):
         return 'tags'
 
+    @property
     def is_category(self):
         return self.name.lower() in current_app.config['CATEGORIES']
 
