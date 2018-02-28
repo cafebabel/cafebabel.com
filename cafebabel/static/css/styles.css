@@ -1730,8 +1730,7 @@ textarea#body {
   font-family: serif;
 }
 
-.article-detail .tags-list a,
-.article-page .tags-list a {
+.tags-list a {
   position: relative;
   font-size: 1.3rem;
   padding: 0.5rem 0.7rem;
@@ -1741,66 +1740,50 @@ textarea#body {
   color: #696969;
 }
 
-.article-detail .tags-list a:after,
-.article-page .tags-list a:after {
+.tags-list a:after {
   content: none;
 }
 
-.article-detail .tags-list a:before,
-.article-page .tags-list a:before {
+.tags-list a:before {
   content: '#';
 }
 
-.article-detail .tags-list a.impact,
-.article-page .tags-list a.impact,
-.article-detail .tags-list a.experience,
-.article-page .tags-list a.experience,
-.article-detail .tags-list a.raw,
-.article-page .tags-list a.raw,
-.article-detail .tags-list a.creative,
-.article-page .tags-list a.creative {
+.tags-list a.impact,
+.tags-list a.experience,
+.tags-list a.raw,
+.tags-list a.creative {
   color: #00283c;
 }
 
-.article-detail .tags-list a.impact:before,
-.article-page .tags-list a.impact:before,
-.article-detail .tags-list a.experience:before,
-.article-page .tags-list a.experience:before,
-.article-detail .tags-list a.raw:before,
-.article-page .tags-list a.raw:before,
-.article-detail .tags-list a.creative:before,
-.article-page .tags-list a.creative:before {
+.tags-list a.impact:before,
+.tags-list a.experience:before,
+.tags-list a.raw:before,
+.tags-list a.creative:before {
   font-family: 'icomoon';
   padding-right: 0.3rem;
 }
 
-.article-detail .tags-list a.impact:before,
-.article-page .tags-list a.impact:before {
+.tags-list a.impact:before {
   content: '\e927 ';
 }
 
-.article-detail .tags-list a.experience:before,
-.article-page .tags-list a.experience:before {
+.tags-list a.experience:before {
   content: '\e9da ';
 }
 
-.article-detail .tags-list a.raw:before,
-.article-page .tags-list a.raw:before {
+.tags-list a.raw:before {
   content: '\ea0f ';
 }
 
-.article-detail .tags-list a.creative:before,
-.article-page .tags-list a.creative:before {
+.tags-list a.creative:before {
   content: '\e902 ';
 }
 
-.article-detail .tags-list a:hover,
-.article-page .tags-list a:hover {
+.tags-list a:hover {
   background-color: #e2e2e2;
 }
 
-.article-detail .tags-list a:hover:after,
-.article-page .tags-list a:hover:after {
+.tags-list a:hover:after {
   width: 0;
 }
 
