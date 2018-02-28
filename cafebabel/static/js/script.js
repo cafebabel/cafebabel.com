@@ -113,3 +113,19 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
     () => inputh1.value || h1.classList.remove('active')
   )
 })
+
+let tags = document.querySelectorAll('.tags-list a')
+
+for (let x = 0; x < tags.length; x++) {
+  let tag = tags[x]
+  let content = tag.innerHTML.trim()
+
+  if (
+    content == 'Impact' ||
+    content == 'Experience' ||
+    content == 'Raw' ||
+    content == 'Creative'
+  ) {
+    tag.classList.add('category')
+  }
+}

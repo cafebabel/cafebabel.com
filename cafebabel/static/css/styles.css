@@ -1751,6 +1751,11 @@ textarea#body {
   content: '#';
 }
 
+.article-detail .tags-list a.category:before,
+.article-page .tags-list a.category:before {
+  content: '>';
+}
+
 .article-detail .tags-list a:hover,
 .article-page .tags-list a:hover {
   background-color: #e2e2e2;
