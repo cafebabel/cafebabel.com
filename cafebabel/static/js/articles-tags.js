@@ -10,7 +10,7 @@ class Tags {
   }
   
   get language() {
-    return this.languagesDom.options[this.languages.selectedIndex].value
+    return this.languagesDom.options[this.languagesDom.selectedIndex].value
   }
   get list() {
     return this.context.querySelector('.tags-list')
