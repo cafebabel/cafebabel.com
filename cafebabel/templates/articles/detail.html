@@ -81,7 +81,7 @@
       <div class=summary>{{ article.summary|markdown }}</div>
     {% endif %}
 
-    {{ article.body|markdown }}
+    {{ article.body|markdown|rewrite_img_src }}
 
   {% block share_nav %}
   <nav class=share>
