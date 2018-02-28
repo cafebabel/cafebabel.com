@@ -114,18 +114,24 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
   )
 })
 
-let tags = document.querySelectorAll('.tags-list a')
+let tagLinks = document.querySelectorAll('.tags-list a')
 
-for (let x = 0; x < tags.length; x++) {
-  let tag = tags[x]
+for (let x = 0; x < tagLinks.length; x++) {
+  let tag = tagLinks[x]
   let content = tag.innerHTML.trim()
 
-  if (
-    content == 'Impact' ||
-    content == 'Experience' ||
-    content == 'Raw' ||
-    content == 'Creative'
-  ) {
-    tag.classList.add('category')
+  switch (content) {
+    case 'Impact':
+      tag.classList.add('impact')
+      break
+    case 'Experience':
+      tag.classList.add('experience')
+      break
+    case 'Raw':
+      tag.classList.add('raw')
+      break
+    case 'Creative':
+      tag.classList.add('creative')
+      break
   }
 }

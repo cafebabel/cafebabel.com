@@ -1751,9 +1751,47 @@ textarea#body {
   content: '#';
 }
 
-.article-detail .tags-list a.category:before,
-.article-page .tags-list a.category:before {
-  content: '>';
+.article-detail .tags-list a.impact,
+.article-page .tags-list a.impact,
+.article-detail .tags-list a.experience,
+.article-page .tags-list a.experience,
+.article-detail .tags-list a.raw,
+.article-page .tags-list a.raw,
+.article-detail .tags-list a.creative,
+.article-page .tags-list a.creative {
+  color: #00283c;
+}
+
+.article-detail .tags-list a.impact:before,
+.article-page .tags-list a.impact:before,
+.article-detail .tags-list a.experience:before,
+.article-page .tags-list a.experience:before,
+.article-detail .tags-list a.raw:before,
+.article-page .tags-list a.raw:before,
+.article-detail .tags-list a.creative:before,
+.article-page .tags-list a.creative:before {
+  font-family: 'icomoon';
+  padding-right: 0.3rem;
+}
+
+.article-detail .tags-list a.impact:before,
+.article-page .tags-list a.impact:before {
+  content: '\e927 ';
+}
+
+.article-detail .tags-list a.experience:before,
+.article-page .tags-list a.experience:before {
+  content: '\e9da ';
+}
+
+.article-detail .tags-list a.raw:before,
+.article-page .tags-list a.raw:before {
+  content: '\ea0f ';
+}
+
+.article-detail .tags-list a.creative:before,
+.article-page .tags-list a.creative:before {
+  content: '\e902 ';
 }
 
 .article-detail .tags-list a:hover,
