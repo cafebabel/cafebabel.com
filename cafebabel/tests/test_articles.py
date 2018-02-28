@@ -211,11 +211,11 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert published_article.title == 'updated'
     assert published_article.author == user
     assert published_article.editor == editor
-    assert published_article.image_filename == 'image-name.jpg'
+    assert published_article.image_filename == '/articles/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') / 'articles' /
-                published_article.image_filename).exists()
-    assert ('<meta property=og:image content="http://localhost/uploads/'
-            f'articles/{published_article.image_filename}">' in response)
+                'image-name.jpg').exists()
+    assert ('<meta property=og:image '
+            'content="http://localhost/articles/image-name.jpg">' in response)
 
 
 def test_update_article_with_image_unallowed_extension(
@@ -294,7 +294,7 @@ def test_delete_article_no_user_should_redirect(client, user, article):
 
 def test_delete_incorrect_id_should_return_404(client, editor, article):
     login(client, editor.email, 'password')
-    response = client.post(f'/en/article/{article.id}foo/delete/')
+    response = client.post(f'/en/article/{str(article.id)[:-3]}foo/delete/')
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert Article.objects.all().count() == 1
 
@@ -363,7 +363,7 @@ def test_article_to_translate_should_have_translation_links(
 
 def test_translation_to_translate_should_not_have_original_language(
         client, article, translation):
-    # Keep the `translation` fixture, even if not refered to.
+    # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/')
     assert (f'href=/en/article/translation/new/'
             f'?lang=en&original={article.id}>Translate in English</a>'
@@ -375,9 +375,7 @@ def test_translation_to_translate_should_not_have_original_language(
 
 def test_translation_to_translate_should_have_original_language(
         app, client, article, translation):
-    # Keep the `article` fixture, even if not refered to.
-    language = app.config['LANGUAGES'][1][0]
-    translation.modify(language=language)
+    # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
     assert (f'href="/en/article/translation/new/'
             f'?lang=es&original={translation.original_article.id}">'

@@ -139,9 +139,9 @@ def test_tag_update_image(app, client, tag, editor):
     assert get_flashed_messages() == ['Your tag was successfully saved.']
     tag.reload()
     assert tag.summary == 'custom summary'
-    assert tag.image_filename == 'image-name.jpg'
+    assert tag.image_filename == '/tags/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') /
-                'tags' / tag.image_filename).exists()
+                'tags' / 'image-name.jpg').exists()
 
 
 def test_tag_update_image_unallowed_extension(app, client, tag, editor):
