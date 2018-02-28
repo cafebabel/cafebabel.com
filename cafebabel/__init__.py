@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 from urllib.parse import quote_plus
 
 import click
@@ -15,7 +16,9 @@ security = Security()
 def create_app(config_object):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_object)
-    app.config.from_pyfile('../config.local.py')
+    local_config = Path(__file__).parent.parent / 'config.local.py'
+    if local_config.exists():
+        app.config.from_pyfile(local_config)
 
     # Blueprints must be before extensions as they require <lang> url pattern.
     register_blueprints(app)
