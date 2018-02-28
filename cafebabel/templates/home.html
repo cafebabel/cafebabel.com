@@ -24,12 +24,19 @@
 
 {% block body_class %}home{% endblock %}
 {% block body %}
-{% if last_article %}
+{% if articles %}
   <h2>Newest</h2>
-  {{ card(last_article) }}
+  {{ card(articles|first) }}
 {% endif %}
 
 {% for category in categories %}
   <a href={{ url_for('tags.detail', slug=category.slug) }}>{{ category.name }}</a>
 {% endfor %}
+
+{% if articles|length > 1 %}
+  <h2>Latest</h2>
+  {% for article in articles[2:] %}
+    {{ card(article) }}
+  {% endfor %}
+{% endif %}
 {% endblock %}
