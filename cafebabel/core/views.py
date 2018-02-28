@@ -1,5 +1,5 @@
-from flask import (Blueprint, current_app, redirect, render_template, request,
-                   send_from_directory, url_for)
+from flask import (Blueprint, abort, current_app, redirect, render_template,
+                   request, send_from_directory, url_for)
 from flask_login import current_user, login_required
 
 from ..articles.models import Article
@@ -37,6 +37,13 @@ def home_lang():
     return render_template('home.html', articles=articles)
 
 
-@cores.route('/uploads/<path:filename>')
+@cores.route('/<path:filename>')
 def uploads(filename):
-    return send_from_directory(current_app.config['UPLOADS_FOLDER'], filename)
+    """Fallback to local images available for dev only.
+
+    Note: this route will only be called if `MEDIA_URL` is not set.
+    """
+    if current_app.config.get('DEBUG'):
+        return send_from_directory(current_app.config['UPLOADS_FOLDER'],
+                                   filename)
+    abort(404)

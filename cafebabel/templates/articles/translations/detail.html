@@ -25,7 +25,7 @@
     <div class=summary>{{ translation.summary|markdown }}</div>
   {% endif %}
 
-  {{ translation.body|markdown }}
+  {{ translation.body|markdown|rewrite_img_src }}
 
   <p>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a> by {{ translation.translator }}.

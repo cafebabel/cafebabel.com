@@ -63,9 +63,9 @@ def test_profile_image_should_save_and_render(app, client, user):
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your profile was successfully saved.']
     user.reload()
-    assert user.profile.image_filename == 'image-name.jpg'
+    assert user.profile.image_filename == '/users/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') /
-                'users' / user.profile.image_filename).exists()
+                'users' / 'image-name.jpg').exists()
     assert f'<img src={user.profile.image_url}' in response
 
 
