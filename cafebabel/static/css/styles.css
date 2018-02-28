@@ -158,6 +158,18 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-creative:before {
+  content: '\e901';
+}
+.icon-experience:before {
+  content: '\e903';
+}
+.icon-impact:before {
+  content: '\e904';
+}
+.icon-raw:before {
+  content: '\e905';
+}
 .icon-file:before {
   content: '\e927';
 }
@@ -1868,10 +1880,6 @@ textarea#body {
 
 .home h2:nth-of-type(2) {
   grid-column: 2 / 6;
-}
-
-.home article .article-detail h3 {
-  font-size: 2.2rem;
 }
 
 .home article .article-detail p {
