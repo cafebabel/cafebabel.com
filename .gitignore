@@ -3,7 +3,7 @@ __pycache__/
 /cafebabel.db
 .cache
 /logs/
-/settings.local.py
+/config.local.py
 *.egg-info/
 /cafebabel/uploads/
 /data/

@@ -15,7 +15,7 @@ security = Security()
 def create_app(config_object):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_object)
-    app.config.from_pyfile('config.local.py')
+    app.config.from_pyfile('../config.local.py')
 
     # Blueprints must be before extensions as they require <lang> url pattern.
     register_blueprints(app)
