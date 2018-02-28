@@ -33,7 +33,10 @@ def profile_redirect():
 
 @cores.route('/<lang:lang>/')
 def home_lang():
-    articles = Article.objects.published()[:25]
+    # Force the execution of the limit by turning the queryset into
+    # a list, otherwise new boundaries in template will cancel this one
+    # and lead to a memory error.
+    articles = list(Article.objects.published()[:25])
     return render_template('home.html', articles=articles)
 
 
