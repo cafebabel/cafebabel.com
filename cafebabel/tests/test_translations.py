@@ -88,7 +88,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
 
 def test_translation_creation_should_keep_image(app, client, user, article):
     login(client, user.email, 'password')
-    article.modify(image_filename='image-name.jpg')
+    article.modify(image_filename='/articles/image-name.jpg')
     language = app.config['LANGUAGES'][1][0]
     data = {
         'title': 'title',
@@ -100,8 +100,8 @@ def test_translation_creation_should_keep_image(app, client, user, article):
     response = client.post('/en/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
-    assert translation.image_filename == 'image-name.jpg'
-    assert translation.image_url == '/uploads/articles/image-name.jpg'
+    assert translation.image_filename == '/articles/image-name.jpg'
+    assert translation.image_url == '/articles/image-name.jpg'
     assert str(translation.image_path).endswith(
         '/cafebabel/uploads/articles/image-name.jpg')
 

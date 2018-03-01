@@ -11,13 +11,8 @@ from .models import User
 users = Blueprint('users', __name__)
 
 
-@users.route('/')
-@login_required
-def my_profile():
-    return redirect(url_for('.detail', id=current_user.id))
-
-
 @users.route('/<id>/edit/', methods=['get', 'post'])
+@login_required
 def edit(id):
     user = User.objects.get_or_404(id=id)
     if not (user.is_me() or current_user.has_role('editor')):

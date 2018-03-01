@@ -140,6 +140,7 @@ def register_template_filters(app):
     app.add_template_filter(helpers.markdown, 'markdown')
     app.add_template_filter(helpers.reading_time, 'reading_time')
     app.add_template_filter(helpers.obfuscate_email, 'obfuscate_email')
+    app.add_template_filter(helpers.rewrite_img_src, 'rewrite_img_src')
 
 
 def register_context_processors(app):
@@ -149,7 +150,6 @@ def register_context_processors(app):
         from .core import helpers
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
-            get_categories=lambda: app.config.get('CATEGORIES', []),
             get_year=lambda: datetime.now().year,
             current_language=helpers.current_language(),
             absolute=helpers.absolute,

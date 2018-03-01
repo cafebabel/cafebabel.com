@@ -25,7 +25,6 @@ def create():
                 editor=article.editor,
                 authors=[article.author],
                 image_filename=article.image_filename,
-                category=article.category,
                 **data
             )
         except errors.ValidationError as e:
