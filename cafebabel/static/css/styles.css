@@ -1942,12 +1942,12 @@ a.section-link.creative {
   background: url('../img/bg-section-creative.jpg') center;
 }
 
-.home a.section-link {
-  grid-column: 4 / 7;
-}
-
 .home a.section-link:nth-of-type(odd) {
   grid-column: 1 / 4;
+}
+
+.home a.section-link:nth-of-type(even) {
+  grid-column: 4 / 7;
 }
 
 .home a.section-link:last-of-type {
@@ -2006,12 +2006,10 @@ a.section-link.creative {
   a.section-link.experience:before {
     font-size: 7rem;
   }
-  .home a.section-link:first-of-type,
-  .home a.section-link:nth-of-type(3) {
+  .home a.section-link:nth-of-type(odd) {
     grid-column: 2 / 4;
   }
-  .home a.section-link:nth-of-type(2),
-  .home a.section-link:nth-of-type(4) {
+  .home a.section-link:nth-of-type(even) {
     grid-column: 4 / 6;
   }
   .home article:first-of-type .article-detail h3 {
