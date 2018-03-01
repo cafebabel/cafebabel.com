@@ -54,7 +54,7 @@ def article(user):
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        author=user,
+        authors=[user],
         language=test_app.config['LANGUAGES'][0][0],
         body='body text')
 
@@ -64,7 +64,7 @@ def published_article(user):
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        author=user,
+        authors=[user],
         language=test_app.config['LANGUAGES'][0][0],
         body='body text',
         status='published')
@@ -78,6 +78,6 @@ def translation(user, article):
         summary='summary text',
         language=language,
         body='body text',
-        author=user,
+        authors=[user],
         translator=user.id,
         original_article=article.id)

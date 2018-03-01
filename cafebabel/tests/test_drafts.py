@@ -124,11 +124,13 @@ def test_draft_editing_should_update_content(client, user, editor):
         'summary': 'Summary',
         'body': 'Article body',
         'language': 'en',
-        'author': user.id
+        'authors': [user.id],
     }
     draft = Article.objects.create(**data)
     updated_data = data.copy()
     updated_data['language'] = 'fr'
+    updated_data['author'] = data['authors'][0]
+    del updated_data['authors']
     response = client.post(f'/en/article/draft/{draft.id}/edit/',
                            data=updated_data, follow_redirects=True)
     assert response.status_code == 200
@@ -167,17 +169,19 @@ def test_draft_should_not_offer_social_sharing(client, article):
     assert 'facebook.com/sharer' not in response
 
 
-def test_visitor_cannot_change_editor_nor_author(client, editor, user,
-                                                 article):
-    article.modify(status='draft', author=user, editor=editor)
-    client.post(f'/en/article/draft/{article.id}/edit/', data={
-        'title': 'Updated draft',
-        'author': editor,
+def test_visitor_cannot_edit_draft(client, article):
+    response = client.post(f'/en/article/draft/{article.id}/edit/', data={
+        'title': 'Updated draft'
     })
-    article.reload()
-    assert article.title == 'Updated draft'
-    assert article.author == user
-    assert article.editor == editor
+    assert '/login' in response.headers.get('Location')
+
+
+def test_author_cannot_edit_draft(client, user, article):
+    login(client, user.email, 'password')
+    response = client.post(f'/en/article/draft/{article.id}/edit/', data={
+        'title': 'Updated draft'
+    })
+    assert response.status_code == HTTPStatus.FORBIDDEN
 
 
 def test_access_published_draft_should_return_404(client, article):

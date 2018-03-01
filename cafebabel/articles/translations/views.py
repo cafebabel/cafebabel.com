@@ -23,7 +23,7 @@ def create():
                 original_article=article.id,
                 status='draft',
                 editor=article.editor,
-                author=article.author,
+                authors=[article.author],
                 image_filename=article.image_filename,
                 category=article.category,
                 **data

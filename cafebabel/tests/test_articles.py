@@ -33,7 +33,7 @@ def test_article_with_non_ascii_title(published_article):
 
 def test_published_article_should_display_content(client, published_article,
                                                   user):
-    published_article.author = user
+    published_article.authors = [user]
     response = client.get(f'/en/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert response.status_code == 200
@@ -61,7 +61,7 @@ def test_published_article_should_display_content(client, published_article,
 
 def test_published_article_can_have_html_summary(client, published_article,
                                                  user):
-    published_article.author = user
+    published_article.authors = [user]
     published_article.modify(summary='<p>summary text</p>')
     response = client.get(f'/en/article/{published_article.slug}-'
                           f'{published_article.id}/')
@@ -247,7 +247,7 @@ def test_update_article_with_user_should_return_403(client, user,
     login(client, user.email, 'password')
     data = {
         'title': 'updated',
-        'author': user.id
+        'author': user.id,
     }
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data)
@@ -261,7 +261,7 @@ def test_update_unpublished_article_should_return_404(client, user, editor,
     login(client, editor.email, 'password')
     data = {
         'title': 'updated',
-        'author': user.id
+        'author': user.id,
     }
     response = client.post(f'/en/article/{article.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.NOT_FOUND
@@ -400,6 +400,15 @@ def test_article_with_tag(app, tag, article):
     assert article2.tags[0].summary == 'summary text'
     Article.objects(id=article.id).update_one(pull__tags=tag)
     assert Article.objects(tags__in=[tag]).count() == 0
+
+
+def test_article_author_property_changes_authors(article, user, editor):
+    assert article.author == user
+    article.author = editor
+    assert article.authors == [editor, user]
+    assert article.author == editor
+    article.author = user
+    assert article.authors == [user, editor]
 
 
 def test_article_detail_contains_tags(client, app, tag, published_article):

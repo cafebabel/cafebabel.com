@@ -59,14 +59,14 @@ def edit(id):
         user.save()
         flash('Your profile was successfully saved.')
         return redirect(url_for('users.detail', id=user.id))
-    articles = Article.objects.filter(author=user)
+    articles = Article.objects.filter(authors=[user])
     return render_template('users/edit.html', user=user, articles=articles)
 
 
 @users.route('/<id>/')
 def detail(id):
     user = User.objects.get_or_404(id=id)
-    filters = {'author': user}
+    filters = {'authors__in': [user]}
     if not user.is_me():
         filters['status'] = 'published'
     articles = Article.objects(**filters)

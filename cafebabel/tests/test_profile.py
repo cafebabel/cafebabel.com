@@ -23,7 +23,7 @@ def test_user_profile_has_list_of_published_articles_no_draft(client, article):
 def test_author_profile_has_list_of_published_articles_and_drafts(
         client, user, article, published_article):
     login(client, user.email, 'password')
-    published_article.modify(author=user)
+    published_article.modify(authors=[user])
     response = client.get('/en/profile/', follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert article.title in response

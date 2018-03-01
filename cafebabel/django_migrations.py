@@ -94,12 +94,12 @@ def normalize_image(image):
     return image and image[len('editorials/'):] or ''
 
 
-def normalize_author(author_pk):
-    try:
-        if author_pk is not None:
-            return User.objects.get(profile__old_pk=author_pk)
-    except User.DoesNotExist:
-        click.echo(f'User does not exist {author_pk} (outdated input file?)')
+def normalize_authors(authors_pks):
+    if authors_pks:
+        authors = User.objects.filter(profile__old_pk__in=authors_pks)
+    if not authors:
+        click.echo(f'User does not exist {authors_pks} (outdated input file?)')
+    return authors
 
 
 def handle_groups(groups):
@@ -190,7 +190,7 @@ def create_article(old_article):
         'language': language,
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
-        'author': normalize_author(fields['created_by']),
+        'authors': normalize_authors(old_article['authors']),
         'image_filename': normalize_image(fields['image']),
         'status': status,
         'tags': tags or None,
@@ -211,8 +211,8 @@ def create_article(old_article):
             # Will be checked again on second pass.
             # click.echo(f'Article does not exist: {old_pk} (skipping)')
             return
-        translator = data['author']
-        data['author'] = original_article.author
+        translator = data['authors'][0]
+        data['authors'] = [original_article.author]
         try:
             Translation.objects.create(
                 translator=translator,
