@@ -73,6 +73,7 @@ class BaseConfig:
 
 
 class PreprodConfig(BaseConfig):
+    DEBUG = True
     MEDIA_URL = 'https://media.preprod.cafebabel.com'
 
 
