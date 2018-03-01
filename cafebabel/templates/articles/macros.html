@@ -67,7 +67,6 @@
     <p>
       <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
       — by {{ article.author }}<br>
-      Article in {{ article.language }}
     </p>
     <p class=tags-list>
       {% for tag in article.tags -%}
