@@ -2,6 +2,7 @@ import datetime
 
 from flask import url_for
 from flask_login import current_user
+from flask_mongoengine import BaseQuerySet
 from mongoengine import PULL, signals
 
 from .. import db
@@ -10,6 +11,12 @@ from ..core.helpers import allowed_file, slugify
 from ..core.mixins import UploadableImageMixin
 from ..users.models import User
 from .tags.models import Tag
+
+
+class ArticleQuerySet(BaseQuerySet):
+
+    def published(self, language):
+        return self.filter(status='published', language=language)
 
 
 class ArticleArchive(db.EmbeddedDocument):
@@ -36,6 +43,7 @@ class Article(db.Document, UploadableImageMixin):
     _translations = None
 
     meta = {
+        'queryset_class': ArticleQuerySet,
         'allow_inheritance': True,
         'indexes': ['archive.pk'],
         'ordering': ['-publication_date', '-creation_date']

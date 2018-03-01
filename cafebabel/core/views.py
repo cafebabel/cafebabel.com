@@ -1,6 +1,12 @@
+from random import shuffle
+
 from flask import (Blueprint, abort, current_app, redirect, render_template,
                    request, send_from_directory, url_for)
 from flask_login import current_user, login_required
+
+from .helpers import current_language
+from ..articles.models import Article
+from ..articles.tags.models import Tag
 
 cores = Blueprint('cores', __name__)
 
@@ -31,7 +37,17 @@ def profile_redirect():
 
 @cores.route('/<lang:lang>/')
 def home_lang():
-    return render_template('home.html')
+    categories = Tag.objects.categories(language=current_language())
+    articles = Article.objects.published(language=current_language())
+    # Force the execution of the limit by turning the queryset into
+    # a list, otherwise new boundaries in template will cancel this one
+    # and lead to a memory error.
+    articles = list(articles[:25])
+    # Randomize the list of categories for a dynamic home.
+    categories = list(categories)
+    shuffle(categories)
+    return render_template(
+        'home.html', articles=articles, categories=categories)
 
 
 @cores.route('/<path:filename>')
