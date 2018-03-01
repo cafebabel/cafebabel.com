@@ -24,15 +24,13 @@ class BaseConfig:
         ('pl', 'Polszczyzna'),
     )
 
-    CATEGORIES = ['society', 'lifestyle', 'politics', 'culture']
-
     SECURITY_PASSWORD_SALT = 'and pepper'
     SECURITY_CONFIRMABLE = False
     SECURITY_REGISTERABLE = True
     SECURITY_RECOVERABLE = True
     SECURITY_CHANGEABLE = True
     SECURITY_EMAIL_SENDER = '@'.join(['no-reply', 'cafebabel.com'])
-    SECURITY_POST_LOGIN_VIEW = '/profile/'
+    SECURITY_POST_LOGIN_VIEW = '/login_complete/'
     SECURITY_PASSWORD_SCHEMES = ['bcrypt', 'django_pbkdf2_sha256']
     SECURITY_LOGIN_FORM = MultipleHashLoginForm
     SECURITY_URL_PREFIX = '/<lang:lang>'
@@ -64,12 +62,17 @@ class BaseConfig:
         'es': '@'.join(['redaccion', 'cafebabel.com']),
         'it': '@'.join(['redazione', 'cafebabel.com']),
     }
+
     UPLOADS_FOLDER = Path(__file__).parent / 'cafebabel' / 'uploads'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
 
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
+
+
+class PreprodConfig(BaseConfig):
+    MEDIA_URL = 'https://media.preprod.cafebabel.com'
 
 
 class DevelopmentConfig(BaseConfig):
@@ -86,6 +89,7 @@ class DevelopmentConfig(BaseConfig):
         'flask_mongoengine.panels.MongoDebugPanel'
     ]
     EXPLAIN_TEMPLATE_LOADING = False
+    MEDIA_URL = 'https://media.preprod.cafebabel.com'
 
 
 class TestingConfig(BaseConfig):
@@ -96,7 +100,3 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
     UPLOADS_FOLDER = Path(mkdtemp()) / 'cafebabel' / 'uploads'
     DEBUG_TB_ENABLED = False
-
-    MONGODB_SETTINGS = {
-        'host': 'mongomock://localhost'
-    }

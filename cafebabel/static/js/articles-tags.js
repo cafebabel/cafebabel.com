@@ -5,9 +5,12 @@ class Tags {
       input => input.value
     )
   }
+  get languagesDom() {
+    return document.querySelector('#language')
+  }
+  
   get language() {
-    const languages = document.querySelector('#language')
-    return languages.options[languages.selectedIndex].value
+    return this.languagesDom.options[this.languagesDom.selectedIndex].value
   }
   get list() {
     return this.context.querySelector('.tags-list')
@@ -26,17 +29,17 @@ class Tags {
   }
 
   addNewTag(submission) {
-    if (!submission || tags._isTag(submission)) return
-    tags._addValue(submission)
-    tags._emptyAddField()
-    tags._inactiveSuggestionsList()
-    tags._render()
+    if (!submission || this._isTag(submission)) return
+    this._addValue(submission)
+    this._emptyAddField()
+    this._inactiveSuggestionsList()
+    this._render()
   }
   removeTag(tagElement) {
     const submission = tagElement.innerText.trim()
-    if (!tags._isTag(submission)) return
-    tags._removeValue(submission)
-    tags._render()
+    if (!this._isTag(submission)) return
+    this._removeValue(submission)
+    this._render()
   }
   handleSuggestion(submission) {
     this._request(submission).then(tagsApi =>
@@ -45,7 +48,7 @@ class Tags {
   }
   _request(submission) {
     return request(
-      `/article/tag/suggest/?language=${this.language}&terms=${submission}`
+      `/${this.language}/article/tag/suggest/?language=${this.language}&terms=${submission}`
     ).catch(console.error.bind(console))
   }
   _isTagSaved(submission) {
@@ -85,7 +88,7 @@ class Tags {
     return this._isTagSaved(tagValue).then(
       isSave =>
         `<li ${isSave ? 'class=saved' : ''}>${tagValue}
-          <input name=tag-${++index} list=tags value=${tagValue} type=hidden>
+          <input name=tag-${++index} list=tags value="${tagValue}" type=hidden>
           <button type=button></button>
         </li>`
     )
