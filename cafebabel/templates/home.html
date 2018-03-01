@@ -36,7 +36,7 @@
 
 {% if articles|length > 1 %}
   <h2>Latest</h2>
-  {% for article in articles[2:] %}
+  {% for article in articles[1:] %}
     {{ card(article) }}
   {% endfor %}
 {% endif %}

@@ -1899,6 +1899,7 @@ a.creative:before {
   padding-top: 55%;
   font-family: 'sporting_grotesque', sans-serif;
   font-size: 5vw;
+  bottom: 0;
   transition: all 0.3s;
 }
 
