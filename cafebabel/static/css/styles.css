@@ -1899,6 +1899,11 @@ a.creative:before {
   padding-top: 55%;
   font-family: 'sporting_grotesque', sans-serif;
   font-size: 5vw;
+  transition: all 0.3s;
+}
+
+.home a.section-link:hover {
+  bottom: 0.3rem;
 }
 
 .home a.section-link:before {
