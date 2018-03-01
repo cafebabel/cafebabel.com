@@ -212,7 +212,7 @@ def create_article(old_article):
             # click.echo(f'Article does not exist: {old_pk} (skipping)')
             return
         translator = data['authors'][0]
-        data['authors'] = [original_article.author]
+        data['authors'] = original_article.authors
         try:
             Translation.objects.create(
                 translator=translator,

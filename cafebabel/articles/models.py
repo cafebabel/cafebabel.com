@@ -74,7 +74,11 @@ class Article(db.Document, UploadableImageMixin):
 
     @property
     def author(self):
-        return len(self.authors) and self.authors[0]
+        """
+        This property and its setter below are temporary while the frontend
+        only allows selecting one single author.
+        """
+        return self.authors and self.authors[0]
 
     @author.setter
     def author(self, value):
@@ -104,7 +108,7 @@ class Article(db.Document, UploadableImageMixin):
         if current_user.has_role('editor'):
             if not self.editor:
                 data['editor'] = current_user.id
-            data['authors'] = [User.objects.get(id=data['author'])]
+            data['author'] = User.objects.get(id=data['author'])
         else:
             if data.get('authors'):
                 del data['authors']
