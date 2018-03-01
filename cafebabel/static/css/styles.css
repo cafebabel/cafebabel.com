@@ -1748,8 +1748,8 @@ textarea#body {
 
 .tags-list a {
   position: relative;
-  font-size: 1.3rem;
-  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
   background-color: #eeeeee;
   display: inline-block;
   margin: 0 1rem 1rem 0;
@@ -1976,6 +1976,11 @@ a.section-link.creative {
   font-family: serif;
 }
 
+.home .tags-list a {
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
 @media screen and (min-width: 750px) {
   .home #content {
     grid-gap: 2rem;
@@ -2017,6 +2022,10 @@ a.section-link.creative {
   }
   .home article:first-of-type .article-detail p:first-of-type {
     display: block;
+  }
+  .home .tags-list a {
+    font-size: 1.3rem;
+    padding: 0.5rem 0.7rem;
   }
 }
 
