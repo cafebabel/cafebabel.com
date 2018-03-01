@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% from "users/macros.html" import social_field, default_profile_picture with context %}
+{% from "articles/macros.html" import card %}
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
@@ -65,7 +66,7 @@
 <section>
   <h2>Contributions</h2>
   {% for article in articles %}
-    {% include "articles/_card.html" %}
+    {{ card(article) }}
   {% endfor %}
 </section>
 {% endblock %}

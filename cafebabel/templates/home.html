@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% from "_meta-macro.html" import meta without context %}
+{% from "_meta-macro.html" import meta %}
+{% from "articles/macros.html" import card %}
 
 {% block metas %}
   {{ meta('name=description', 'Cafébabel is the first European participatory magazine made for young Europeans across borders.') }}
@@ -21,5 +22,22 @@
   {{ meta('name=twitter:url', request.url) }}
 {% endblock %}
 
+{% block body_class %}home{% endblock %}
+{% block body %}
+{% if articles %}
+  <h2>Newest</h2>
+  {{ card(articles|first) }}
+{% endif %}
 
-{% block body %}{% endblock %}
+  <h2>Sections</h2>
+{% for category in categories %}
+  <a href={{ url_for('tags.detail', slug=category.slug) }} class="section-link {{ category.slug }}">{{ category.name }}</a>
+{% endfor %}
+
+{% if articles|length > 1 %}
+  <h2>Latest</h2>
+  {% for article in articles[1:] %}
+    {{ card(article) }}
+  {% endfor %}
+{% endif %}
+{% endblock %}

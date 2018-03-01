@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from flask import abort
+from flask import abort, current_app
 from flask_mongoengine import BaseQuerySet
 from mongoengine import signals
 
@@ -11,6 +11,10 @@ from ...core.mixins import UploadableImageMixin
 
 
 class TagQuerySet(BaseQuerySet):
+
+    def categories(self, language, **kwargs):
+        return self.filter(slug__in=current_app.config['CATEGORIES'],
+                           language=language)
 
     def get_or_create(self, **kwargs):
         try:
@@ -40,6 +44,10 @@ class Tag(db.Document, UploadableImageMixin):
     @property
     def upload_subpath(self):
         return 'tags'
+
+    @property
+    def is_category(self):
+        return self.name.lower() in current_app.config['CATEGORIES']
 
     def save_from_request(self, request):
         data = request.form.to_dict()
