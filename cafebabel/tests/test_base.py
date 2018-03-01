@@ -44,3 +44,9 @@ def test_homepage_contains_categories(app, client, published_article):
     response = client.get('/en/')
     assert impact.name in response
     assert url_for('tags.detail', slug=impact.slug) in response
+
+
+def test_homepage_contains_authors_links(app, client, published_article):
+    response = client.get('/en/')
+    assert (f'<a href=/en/profile/{published_article.author.pk}/>'
+            f'{published_article.author.profile.name}</a>' in response)
