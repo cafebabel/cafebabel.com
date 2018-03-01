@@ -95,6 +95,7 @@ def normalize_image(image):
 
 
 def normalize_authors(authors_pks):
+    authors = None
     if authors_pks:
         authors = User.objects.filter(profile__old_pk__in=authors_pks)
     if not authors:
