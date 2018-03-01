@@ -55,7 +55,7 @@
 <nav>
   <ul>
     {% for lang_code, lang_label in get_languages() %}
-      <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code }}</a></li>
+      <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
     {% endfor %}
   </ul>
 </nav>
