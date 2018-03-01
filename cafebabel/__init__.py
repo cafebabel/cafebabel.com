@@ -117,9 +117,9 @@ def register_cli(app):
     @click.option('--limit', default=0, help='Number of items migrated.')
     @click.option('--users-filepath', help='Path to users.json file.')
     @click.option('--articles-filepath',
-                  help='Path to articles40000.json file.')
+                  help='Path to articles35000.json file.')
     @click.option('--articles-filepath2',
-                  help='Path to articles40000-70000.json file.')
+                  help='Path to articles35000-70000.json file.')
     def load_migrations(limit, users_filepath, articles_filepath,
                         articles_filepath2):
         User.drop_collection()

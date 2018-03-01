@@ -95,11 +95,9 @@ def normalize_image(image):
 
 
 def normalize_authors(authors_pks):
-    authors = None
-    if authors_pks:
-        authors = User.objects.filter(profile__old_pk__in=authors_pks)
+    authors = User.objects.filter(profile__old_pk__in=authors_pks)
     if not authors:
-        click.echo(f'User does not exist {authors_pks} (outdated input file?)')
+        raise Exception('The users.json file is outdated compared to articles')
     return authors
 
 
@@ -186,8 +184,8 @@ def create_article(old_article):
     else:
         click.echo(f'No content: {old_article["pk"]} (spam?)')
         return
-    # Do not consider articles without body.
-    if not article_fields['body']:
+    # Do not consider articles without body or authors.
+    if not article_fields['body'] or not old_article['authors']:
         return
     tags = handle_groups(old_article['groups'])
     data = {
