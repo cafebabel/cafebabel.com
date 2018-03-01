@@ -50,15 +50,13 @@
   </ul>
 </nav>
 
-<button class="menu language">EN</button>
+<button class="menu language">{{ current_language }}</button>
 
 <nav>
   <ul>
-    <li><a href=#>EN</a></li>
-    <li><a href=#>FR</a></li>
-    <li><a href=#>DE</a></li>
-    <li><a href=#>IT</a></li>
-    <li><a href=#>ES</a></li>
+    {% for lang_code, lang_label in get_languages() %}
+      <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code }}</a></li>
+    {% endfor %}
   </ul>
 </nav>
 
