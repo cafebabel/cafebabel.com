@@ -35,9 +35,7 @@ class Translation(Article):
     def check_duplicate(cls, sender, document, **kwargs):
         first = Translation.objects(original_article=document.original_article,
                                     language=document.language).first()
-        # We need to compare strings of primary keys because of mongo
-        # duality of ObjectIDs vs. raw strings.
-        if ((first and str(first.pk) != str(document.pk)) or
+        if ((first and first != document) or
                 document.language == document.original_article.language):
             raise errors.NotUniqueError(
                 'This article already exists in this language.')
