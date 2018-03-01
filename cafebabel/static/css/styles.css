@@ -2015,7 +2015,7 @@ a.section-link.creative {
   .home h2 {
     margin: -2rem 0;
   }
-  .home article .article-detail p:first-of-type {
+  .home article:first-of-type .article-detail p:first-of-type {
     display: block;
   }
 }
