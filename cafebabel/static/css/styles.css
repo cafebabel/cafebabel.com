@@ -1874,6 +1874,10 @@ a.creative:before {
   grid-column: 1 / 7;
 }
 
+.home img {
+  margin: 0 auto;
+}
+
 .home h2 {
   text-align: center;
   display: block;
