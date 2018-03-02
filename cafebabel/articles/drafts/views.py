@@ -10,7 +10,7 @@ drafts = Blueprint('drafts', __name__)
 @drafts.route('/')
 @editor_required
 def list():
-    articles = Article.objects(status='draft')
+    articles = Article.objects(status='draft').hard_limit()
     return render_template('articles/drafts/list.html', articles=articles)
 
 
