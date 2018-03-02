@@ -37,6 +37,11 @@ def user():
 
 
 @pytest.fixture
+def user2():
+    return User.objects.get(email='user2@example.com')
+
+
+@pytest.fixture
 def editor():
     return User.objects.get(email='editor@example.com')
 

@@ -77,8 +77,7 @@ def test_tag_only_language(client, app, tag):
 def test_tag_suggest_too_short(client, tag):
     response = client.get('/en/article/tag/suggest/?language=en&terms=wo')
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert (b'Suggestions made available from 3-chars and more.'
-            in response.data)
+    assert 'Suggestions are made available from 3-chars and more.' in response
 
 
 def test_tag_suggest_wrong_language(client, tag):
