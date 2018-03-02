@@ -70,6 +70,7 @@ class BaseConfig:
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
 
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
+    HARD_LIMIT_PER_PAGE = 20
 
 
 class PreprodConfig(BaseConfig):
