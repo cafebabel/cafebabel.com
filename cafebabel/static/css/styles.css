@@ -1605,6 +1605,10 @@ textarea#body {
   position: static;
 }
 
+.article-language-selector li.original-language a:hover {
+  background-color: #b4db13;
+}
+
 .article-language-selector li.original-language a:before {
   content: 'Original language';
   position: absolute;
@@ -1616,6 +1620,7 @@ textarea#body {
   transition: all 0.3s;
   opacity: 0;
   z-index: -1;
+  display: none;
 }
 
 .article-language-selector li.original-language a:hover:before {
@@ -1634,6 +1639,9 @@ textarea#body {
     display: inline-block;
     margin-left: 0.5rem;
     vertical-align: middle;
+  }
+  .article-language-selector li.original-language a:before {
+    display: block;
   }
 }
 
