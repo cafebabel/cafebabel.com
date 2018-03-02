@@ -94,11 +94,11 @@ def normalize_image(image):
     return image and f'/articles/{image[len("editorials/"):]}' or ''
 
 
-def normalize_authors(authors_pks):
-    authors = User.objects.filter(profile__old_pk__in=authors_pks)
-    if not authors:
+def normalize_users(users_pks):
+    users = User.objects.filter(profile__old_pk__in=users_pks)
+    if not users:
         raise Exception('The users.json file is outdated compared to articles')
-    return authors
+    return users
 
 
 def handle_groups(groups):
@@ -195,7 +195,8 @@ def create_article(old_article):
         'language': language,
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
-        'authors': normalize_authors(old_article['authors']),
+        'authors': normalize_users(old_article['authors']),
+        'translators': normalize_users(old_article['translators']),
         'image_filename': normalize_image(fields['image']),
         'status': status,
         'tags': tags or None,
@@ -216,11 +217,10 @@ def create_article(old_article):
             # Will be checked again on second pass.
             # click.echo(f'Article does not exist: {old_pk} (skipping)')
             return
-        translator = data['authors'][0]
         data['authors'] = original_article.authors
         try:
             Translation.objects.create(
-                translator=translator,
+                translators=data['translators'],
                 original_article=original_article,
                 **data
             )

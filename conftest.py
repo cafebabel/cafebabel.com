@@ -79,5 +79,5 @@ def translation(user, article):
         language=language,
         body='body text',
         authors=[user],
-        translator=user.id,
+        translators=[user.id],
         original_article=article.id)

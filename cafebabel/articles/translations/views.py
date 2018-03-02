@@ -19,7 +19,7 @@ def create():
         article = Article.objects.get_or_404(id=data.pop('original'))
         try:
             translation = Translation.objects.create(
-                translator=current_user.id,
+                translators=[current_user.id],
                 original_article=article.id,
                 status='draft',
                 editor=article.editor,

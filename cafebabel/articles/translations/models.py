@@ -7,7 +7,7 @@ from ...articles.models import Article
 
 
 class Translation(Article):
-    translator = db.ReferenceField(User, required=True)
+    translators = db.ListField(b.ReferenceField(User, required=True))
     original_article = db.ReferenceField('Article', required=True)
 
     @property
