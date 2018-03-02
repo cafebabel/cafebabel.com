@@ -1591,8 +1591,6 @@ textarea#body {
 }
 
 .article-language-selector li span {
-  background-color: #bde513;
-  color: #00283c;
   background-color: #00283c;
   color: #fff;
 }
@@ -1602,8 +1600,6 @@ textarea#body {
 }
 
 .article-language-selector li.original-language a {
-  background-color: #00283c;
-  color: #fff;
   background-color: #bde513;
   color: #00283c;
 }
