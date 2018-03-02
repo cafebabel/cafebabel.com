@@ -2,8 +2,12 @@
 {% import "articles/macros.html" as macros %}
 {% from "_extrajs-macros.html" import extra_js %}
 
+{% block extra_head %}
+  <link rel=stylesheet href={{ url_for('static', filename='awesomplete/awesomplete.css') }}>
+{% endblock %}
+
 {% block extra_js %}
-  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js']) }}
+  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'awesomplete/awesomplete.js', 'js/articles-users.js']) }}
 {% endblock %}
 
 {% block body_class %}create-article-page{% endblock %}
@@ -43,14 +47,8 @@
       </label>
     </div>
     <div class=select>
-      <label for=author>
-        <select id=author name=author required>
-          <optgroup label=Author>
-            {% for author in article.authors %}
-            <option value={{author.id}} {% if author in article.authors %}selected{% endif %}>{{ author }}</option>
-            {% endfor %}
-          </optgroup>
-        </select>
+      <label for=authors>
+        <input id=authors name=authors data-multiple>
       </label>
     </div>
     {% endif %}
