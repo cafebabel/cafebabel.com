@@ -4,8 +4,8 @@ src_dir=~/cafebabel.com
 venv_dir=~/cafebabel.com/venv
 branch=master
 LOGS=access
-prod=prod@91.194.60.65
-prod_media_dir=~/cafebabel/data/medias
+old_prod=prod@91.194.60.65
+old_prod_media_dir=~/cafebabel/data/medias
 
 # Commands
 remote=ssh -t ${server}
@@ -34,10 +34,10 @@ deploy:
 	@echo "> App is deployed. Run \`make logs\` to follow activity."
 
 rsync:
-	@echo "> Synchronizing media from production server."
-	${remote} "rsync --archive --compress --human-readable --inplace --progress ${prod}:${prod_media_dir}/avatars/ ${src_dir}/cafebabel/uploads/users/"
-	${remote} "rsync --archive --compress --human-readable --inplace --progress ${prod}:${prod_media_dir}/editorials/ ${src_dir}/cafebabel/uploads/articles/"
-	${remote} "rsync --archive --compress --human-readable --inplace --progress ${prod}:${prod_media_dir}/cache/ ${src_dir}/cafebabel/uploads/archives/"
+	@echo "> Synchronizing archives media from old production server."
+	${remote} "rsync --archive --compress --human-readable --inplace --progress ${old_prod}:${old_prod_media_dir}/avatars/ ${src_dir}/cafebabel/uploads/users/"
+	${remote} "rsync --archive --compress --human-readable --inplace --progress ${old_prod}:${old_prod_media_dir}/editorials/ ${src_dir}/cafebabel/uploads/articles/"
+	${remote} "rsync --archive --compress --human-readable --inplace --progress ${old_prod}:${old_prod_media_dir}/cache/ ${src_dir}/cafebabel/uploads/archives/"
 
 install:
 	@echo "> Installing sources, dependencies and database."
