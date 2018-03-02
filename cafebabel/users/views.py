@@ -69,7 +69,7 @@ def edit(id):
         user.save()
         flash('Your profile was successfully saved.')
         return redirect(url_for('users.detail', id=user.id))
-    articles = Article.objects.filter(authors=[user])
+    articles = Article.objects.filter(author=user).hard_limit()
     return render_template('users/edit.html', user=user, articles=articles)
 
 
@@ -79,5 +79,5 @@ def detail(id):
     filters = {'authors__in': [user]}
     if not user.is_me():
         filters['status'] = 'published'
-    articles = Article.objects(**filters)
+    articles = Article.objects(**filters).hard_limit()
     return render_template('users/detail.html', user=user, articles=articles)
