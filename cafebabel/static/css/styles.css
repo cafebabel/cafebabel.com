@@ -1591,11 +1591,38 @@ textarea#body {
 }
 
 .article-language-selector li span {
-  color: #bde513;
+  background-color: #bde513;
+  color: #00283c;
+  background-color: #00283c;
+  color: #fff;
 }
 
 .article-language-selector li.translated-language a {
   color: #00283c;
+}
+
+.article-language-selector li.original-language a {
+  background-color: #00283c;
+  color: #fff;
+  background-color: #bde513;
+  color: #00283c;
+}
+
+.article-language-selector li.original-language a:before {
+  content: 'Original language';
+  position: absolute;
+  bottom: -35px;
+  font-size: 12px;
+  text-align: center;
+  left: -4px;
+  color: #00283c;
+  transition: all 0.3s;
+  opacity: 0;
+}
+
+.article-language-selector li.original-language a:hover:before {
+  bottom: -40px;
+  opacity: 1;
 }
 
 .share {
