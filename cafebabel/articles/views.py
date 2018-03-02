@@ -81,7 +81,7 @@ def to_translate():
               (f'You must specify valid languages. '
                f'`{from_language}` or `{to_language}` are not allowed, '
                f'only {languages_keys} are allowed for now.'))
-    articles = Article.objects.filter(language=from_language)
+    articles = Article.objects.filter(language=from_language).hard_limit()
     return render_template(
         'articles/to-translate.html', articles=articles,
         from_language_code=from_language,
