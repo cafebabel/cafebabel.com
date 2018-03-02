@@ -36,7 +36,7 @@ def suggest():
 def detail(slug):
     tag = Tag.objects.get_or_404(slug=slug, language=current_language())
     articles = (Article.objects(tags__in=[tag], status='published')
-                .order_by('-publication_date'))
+                .order_by('-publication_date').hard_limit())
     return render_template('articles/tags/detail.html', tag=tag,
                            articles=articles)
 
