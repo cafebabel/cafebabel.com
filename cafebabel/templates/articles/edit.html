@@ -46,8 +46,8 @@
       <label for=author>
         <select id=author name=author required>
           <optgroup label=Author>
-            {% for author in authors %}
-            <option value={{author.id}} {% if article.author == author %}selected{% endif %}>{{ author }}</option>
+            {% for author in article.authors %}
+            <option value={{author.id}} {% if author in article.authors %}selected{% endif %}>{{ author }}</option>
             {% endfor %}
           </optgroup>
         </select>

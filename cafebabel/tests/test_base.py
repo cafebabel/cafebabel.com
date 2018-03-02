@@ -48,5 +48,5 @@ def test_homepage_contains_categories(app, client, published_article):
 
 def test_homepage_contains_authors_links(app, client, published_article):
     response = client.get('/en/')
-    assert (f'<a href=/en/profile/{published_article.author.pk}/>'
-            f'{published_article.author.profile.name}</a>' in response)
+    assert (f'<a href=/en/profile/{published_article.authors[0].pk}/>'
+            f'{published_article.authors[0].profile.name}</a>' in response)

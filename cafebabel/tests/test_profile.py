@@ -15,7 +15,7 @@ def test_confirm_user_creates_default_profile(app):
 
 
 def test_user_profile_has_list_of_published_articles_no_draft(client, article):
-    response = client.get(f'/en/profile/{article.author.id}/')
+    response = client.get(f'/en/profile/{article.authors[0].id}/')
     assert response.status_code == HTTPStatus.OK
     assert article.title not in response
 

@@ -5,11 +5,11 @@
 {% block meta_title %}{{ article.title }}{% endblock %}
 {% block metas %}
   {{ meta('name=description', article.summary|striptags) }}
-  {{ meta('name=author', article.author) }}
+  {{ meta('name=author', article.authors|join(', ')) }}
 {% endblock %}
 
 {% block metas_social %}
-  {{ meta('property=article:author', article.author) }}
+  {{ meta('property=article:author', article.authors|join(', ')) }}
   {{ meta('property=og:image', absolute(article.image_url)) }}
   {{ meta('property=og:url', request.url) }}
   {{ meta('property=og:title', self.meta_title()) }}

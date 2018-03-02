@@ -3,12 +3,16 @@
 {%- macro article_meta(article) -%}
   <p>
     <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-    — by {% if article.author.profile.has_image %}
-      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
-    {% else %}
-      {{ default_profile_picture() }}
-    {% endif %}
-    {{ article.author }}<br>
+    — by
+    {% for author in article.authors %}
+      {% if author.profile.has_image %}
+        <img src={{ author.profile.image_url }} alt="Picture of {{ author }}">
+      {% else %}
+        {{ default_profile_picture() }}
+      {% endif %}
+      {{ author }}
+    {% endfor %}
+    <br>
     Reading time: {{ article.body|reading_time }} min
   </p>
 {%- endmacro %}
@@ -66,7 +70,10 @@
     <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>
     <p>
       <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-      — by <a href={{ url_for('users.detail', id=article.author.pk) }}>{{ article.author }}</a>
+      — by
+      {% for author in article.authors %}
+      <a href={{ url_for('users.detail', id=author.pk) }}>{{ author }}</a>
+      {% endfor %}
     </p>
     <p class=tags-list>
       {% for tag in article.tags -%}

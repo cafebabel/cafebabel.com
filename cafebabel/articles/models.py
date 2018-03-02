@@ -87,20 +87,6 @@ class Article(db.Document, UploadableImageMixin):
     def is_translated_in(self, language):
         return bool(self.get_translation(language))
 
-    @property
-    def author(self):
-        """
-        This property and its setter below are temporary while the frontend
-        only allows selecting one single author.
-        """
-        return self.authors and self.authors[0]
-
-    @author.setter
-    def author(self, value):
-        if value in self.authors:
-            self.authors.remove(value)
-        self.authors.insert(0, value)
-
     def get_translation(self, language):
         if not self._translations:
             from .translations.models import Translation  # NOQA: circular :/
@@ -123,7 +109,7 @@ class Article(db.Document, UploadableImageMixin):
         if current_user.has_role('editor'):
             if not self.editor:
                 data['editor'] = current_user.id
-            data['author'] = User.objects.get(id=data['author'])
+            data['authors'] = [User.objects.get(id=data['author'])]
         else:
             if data.get('authors'):
                 del data['authors']
