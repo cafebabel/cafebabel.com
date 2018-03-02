@@ -1,6 +1,6 @@
 import datetime
 
-from flask import url_for
+from flask import current_app, url_for
 from flask_login import current_user
 from flask_mongoengine import BaseQuerySet
 from mongoengine import PULL, signals
@@ -17,6 +17,9 @@ class ArticleQuerySet(BaseQuerySet):
 
     def published(self, language):
         return self.filter(status='published', language=language)
+
+    def hard_limit(self):
+        return self[:current_app.config['HARD_LIMIT_PER_PAGE']]
 
 
 class ArticleArchive(db.EmbeddedDocument):
