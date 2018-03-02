@@ -45,7 +45,7 @@ def test_published_article_should_display_content(client, published_article,
     assert (f'<time pubdate="{published_article.creation_date.date()}">'
             f'{published_article.creation_date.date()}</time>' in response)
     assert f'<span>{published_article.language}</span>' in response
-    assert published_article.author.profile.name in response
+    assert published_article.authors[0].profile.name in response
     assert ('href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
             f'en%2Farticle%2F{published_article.slug}-{published_article.id}'
             f'%2F&text={published_article.title}&via=cafebabel_eng"'
@@ -138,7 +138,7 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
     assert published_article.title == 'updated'
-    assert published_article.author == user
+    assert published_article.authors == [user]
 
 
 def test_update_published_article_with_many_authors(app, client, user, user2,
@@ -225,7 +225,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
     assert published_article.title == 'updated'
-    assert published_article.author == user
+    assert published_article.authors == [user]
     assert published_article.editor == editor
     assert published_article.image_filename == '/articles/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') / 'articles' /
@@ -416,15 +416,6 @@ def test_article_with_tag(app, tag, article):
     assert article2.tags[0].summary == 'summary text'
     Article.objects(id=article.id).update_one(pull__tags=tag)
     assert Article.objects(tags__in=[tag]).count() == 0
-
-
-def test_article_author_property_changes_authors(article, user, editor):
-    assert article.author == user
-    article.author = editor
-    assert article.authors == [editor, user]
-    assert article.author == editor
-    article.author = user
-    assert article.authors == [user, editor]
 
 
 def test_article_detail_contains_tags(client, app, tag, published_article):

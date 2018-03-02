@@ -46,10 +46,15 @@
         </select>
       </label>
     </div>
-    <div>
-      <label for=authors-complete>
-        <input id=authors-complete>
-        <input id=authors name=authors type=hidden>
+    <div class=select>
+      <label for=author>
+        <select id=author name=author required>
+          <optgroup label=Author>
+            {% for author in article.authors %}
+            <option value={{author.id}} {% if author in article.authors %}selected{% endif %}>{{ author }}</option>
+            {% endfor %}
+          </optgroup>
+        </select>
       </label>
     </div>
     {% endif %}
