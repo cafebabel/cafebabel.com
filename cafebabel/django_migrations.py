@@ -196,7 +196,6 @@ def create_article(old_article):
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
         'authors': normalize_users(old_article['authors']),
-        'translators': normalize_users(old_article['translators']),
         'image_filename': normalize_image(fields['image']),
         'status': status,
         'tags': tags or None,
@@ -210,6 +209,9 @@ def create_article(old_article):
         data['body'] = aggregate_gallery_body(old_article['gallery'])
     translation_from = fields['translation_from']
     if translation_from:
+        # Do not consider translations without translators.
+        if not old_article['translators']:
+            return
         try:
             original_article = Article.objects.get(
                 archive__pk=translation_from)
@@ -220,7 +222,7 @@ def create_article(old_article):
         data['authors'] = original_article.authors
         try:
             Translation.objects.create(
-                translators=data['translators'],
+                translators=normalize_users(old_article['translators']),
                 original_article=original_article,
                 **data
             )
