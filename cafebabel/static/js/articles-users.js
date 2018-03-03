@@ -20,15 +20,17 @@ const awesomplete = new Awesomplete('input[data-multiple]', {
 window.addEventListener('load', () => {
   document.querySelector('#authors').addEventListener('keyup', event => {
     event.preventDefault()
-    /* Intercept -return- it's capture by 'click' for adding tags */
+    /* Intercept -return- it's capture by 'click' for adding users */
     if (event.keyCode == 38) return
     let submission = event.target.value
-    submission = submission.split(',').pop()
+    submission = submission
+      .split(',')
+      .pop()
+      .trim()
     if (submission.length < 3) return
     request(`/en/profile/suggest/?terms=${submission}`)
       .catch(console.error.bind(console))
       .then(users => {
-        if (!users) awesomplete.destroy()
         awesomplete.list = users
       })
   })

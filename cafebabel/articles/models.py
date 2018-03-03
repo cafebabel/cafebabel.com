@@ -123,7 +123,10 @@ class Article(db.Document, UploadableImageMixin):
         if current_user.has_role('editor'):
             if not self.editor:
                 data['editor'] = current_user.id
-            data['author'] = User.objects.get(id=data['author'])
+            data['authors'] = [
+                User.objects.get(profile__name__exact=user.strip())
+                for user in data['authors'].split(',') if user.strip()
+            ]
         else:
             if data.get('authors'):
                 del data['authors']
