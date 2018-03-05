@@ -15,10 +15,10 @@ users = Blueprint('users', __name__)
 @users.route('/suggest/')
 def suggest():
     terms = request.args.get('terms')
-    if len(terms) < 3:
+    if not terms or len(terms) < 3:
         abort(HTTPStatus.BAD_REQUEST,
               'Suggestions are made available from 3-chars and more.')
-    users = User.objects(profile__name__istartswith=terms)
+    users = User.objects(profile__name__istartswith=terms) or {}
     cleaned_user = [{
         'name': user.profile.name,
         'pk': str(user.pk)
