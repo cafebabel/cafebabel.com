@@ -136,7 +136,6 @@ def test_draft_editing_should_update_content(client, user, editor):
     assert draft.id == draft.id
     assert draft.language == 'fr'
     assert draft.title == 'My article'
-    assert draft.author == user
 
 
 def test_draft_editing_with_many_authors(client, user, user2, editor):
@@ -155,7 +154,6 @@ def test_draft_editing_with_many_authors(client, user, user2, editor):
                            data=updated_data, follow_redirects=True)
     assert response.status_code == 200
     draft.reload()
-    assert draft.author == user
     assert draft.authors == [user, user2]
 
 
