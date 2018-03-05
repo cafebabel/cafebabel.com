@@ -179,7 +179,9 @@ def test_translation_can_have_html_summary(client, translation):
 
 def test_translation_access_have_translator(client, translation):
     response = client.get(f'/en/article/translation/{translation.id}/')
-    assert f'by {translation.translators[0]}.' in response
+    translator = translation.translators[0]
+    assert (f'by <a href="/en/profile/{translator.id}/">{translator}</a>.'
+            in response)
 
 
 def test_translation_access_published_should_return_404(client, translation):
@@ -236,13 +238,14 @@ def test_translation_published_should_return_200(client, translation):
 def test_translation_published_should_have_translator(client, translation):
     translation.status = 'published'
     translation.save()
+    translator = translation.translators[0]
     response = client.get(f'/en/article/{translation.slug}-{translation.id}/')
     assert response.status_code == HTTPStatus.OK
     assert ((f'Translated from '
              f'<a href="/en/article/draft/{translation.original_article.id}/">'
              f'article title') in response)
-    assert f'by {translation.translators[0]}.' in response
-
+    assert (f'by <a href="/en/profile/{translator.id}/">{translator}</a>.'
+            in response)
 
 def test_translation_published_should_have_reference(client, translation):
     translation.modify(status='published')
