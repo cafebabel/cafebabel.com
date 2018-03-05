@@ -92,10 +92,10 @@
 
   {% if article.is_translation %}
     <p>
-      Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a> by
-      {% for translator in article.translators %}
+      Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
+      by {% for translator in article.translators -%}
         <a href="{{ url_for('users.detail', id=translator.pk) }}">{{ translator }}</a>
-      {% endfor %}
+      {%- endfor %}.
     </p>
   {% endif %}
 
