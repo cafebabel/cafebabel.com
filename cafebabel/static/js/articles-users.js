@@ -1,4 +1,6 @@
-const awesomplete = new Awesomplete('input[data-multiple]', {
+const target = document.querySelector('#authors-complete')
+
+const awesomplete = new Awesomplete(target, {
   filter(text, input) {
     return Awesomplete.FILTER_CONTAINS(text, input.match(/[^,]*$/)[0])
   },
@@ -9,19 +11,15 @@ const awesomplete = new Awesomplete('input[data-multiple]', {
 
   replace(text) {
     const before = this.input.value.match(/^.+,\s*|/)[0]
-    this.input.value = before + text + ', '
-  },
-
-  data(text, input) {
-    return { label: text.name, value: text.pk }
+    this.input.value = `${before} ${text.label}, `
   }
 })
 
 window.addEventListener('load', () => {
-  document.querySelector('#authors').addEventListener('keyup', event => {
+  target.addEventListener('keyup', event => {
     event.preventDefault()
     /* Intercept -return- it's capture by 'click' for adding users */
-    if (event.keyCode == 38) return
+    if (event.keyCode === 38) return
     let submission = event.target.value
     submission = submission
       .split(',')
@@ -31,7 +29,14 @@ window.addEventListener('load', () => {
     request(`/en/profile/suggest/?terms=${submission}`)
       .catch(console.error.bind(console))
       .then(users => {
-        awesomplete.list = users
+        awesomplete.list = users.map(user => [user.name, user.pk])
       })
+  })
+  target.addEventListener('awesomplete-selectcomplete', event => {
+    console.log(event)
+    const authors = document.querySelector('#authors')
+    authors.value = authors.value
+      ? `${authors.value},${event.text.value}`
+      : event.text.value
   })
 })
