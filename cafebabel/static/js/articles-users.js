@@ -1,10 +1,14 @@
 window.addEventListener('load', () => {
-  const target = document.querySelector('#authors')
-  const authorsChoices = new Choices(target, {
-    removeItemButton: true
+  const authorsChoices = new Choices(document.querySelector('#authors'), {
+    removeItemButton: true,
+    duplicateItems: false,
+    searchFloor: 4,
+    searchResultLimit: 7
   })
   document.querySelector('.choices input').addEventListener('keyup', event => {
     event.preventDefault()
+    /* Reset choices when first new caracters are typed. */
+    authorsChoices.setChoices([], 'pk', 'name', true)
     /* Intercept -return- it's capture by 'click' for adding users */
     if (event.keyCode === 38) return
     if (event.target.value.length < 3) return

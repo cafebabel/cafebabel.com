@@ -153,7 +153,6 @@ def test_update_published_article_with_many_authors(app, client, user, user2,
     assert response.status_code == HTTPStatus.OK
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
-    assert published_article.author == user
     assert published_article.authors == [user, user2]
 
 
