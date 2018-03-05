@@ -132,10 +132,31 @@ def test_draft_editing_should_update_content(client, user, editor):
     response = client.post(f'/en/article/draft/{draft.id}/edit/',
                            data=updated_data, follow_redirects=True)
     assert response.status_code == 200
-    updated_draft = Article.objects.get(id=draft.id)
-    assert updated_draft.id == draft.id
-    assert updated_draft.language == 'fr'
-    assert updated_draft.title == 'My article'
+    draft.reload()
+    assert draft.id == draft.id
+    assert draft.language == 'fr'
+    assert draft.title == 'My article'
+    assert draft.author == user
+
+
+def test_draft_editing_with_many_authors(client, user, user2, editor):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'My article',
+        'summary': 'Summary',
+        'body': 'Article body',
+        'language': 'en',
+        'authors': [user.id],
+    }
+    draft = Article.objects.create(**data)
+    updated_data = data.copy()
+    updated_data['authors'] = f'{user.id},{user2.id}'
+    response = client.post(f'/en/article/draft/{draft.id}/edit/',
+                           data=updated_data, follow_redirects=True)
+    assert response.status_code == 200
+    draft.reload()
+    assert draft.author == user
+    assert draft.authors == [user, user2]
 
 
 def test_draft_image_should_save_and_render(app, client, user, editor):

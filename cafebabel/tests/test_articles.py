@@ -141,6 +141,22 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     assert published_article.author == user
 
 
+def test_update_published_article_with_many_authors(app, client, user, user2,
+                                                    editor, published_article):
+    login(client, editor.email, 'password')
+    data = {
+        'authors': f'{user.id},{user2.id}',
+        'language': app.config['LANGUAGES'][1][0],
+    }
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your article was successfully saved.']
+    published_article.reload()
+    assert published_article.author == user
+    assert published_article.authors == [user, user2]
+
+
 def test_update_published_article_to_draft_redirect(app, client, user, editor,
                                                     published_article):
     login(client, editor.email, 'password')
