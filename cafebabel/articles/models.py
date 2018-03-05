@@ -124,7 +124,8 @@ class Article(db.Document, UploadableImageMixin):
             if not self.editor:
                 data['editor'] = current_user.id
             data['authors'] = [
-                User.objects.get(pk=pk) for pk in data['authors'].split(',')
+                User.objects.get(pk=pk)
+                for pk in request.form.getlist('authors')
             ]
         else:
             if data.get('authors'):

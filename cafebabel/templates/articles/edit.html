@@ -3,11 +3,11 @@
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_head %}
-  <link rel=stylesheet href={{ url_for('static', filename='awesomplete/awesomplete.css') }}>
+  <link rel=stylesheet href={{ url_for('static', filename='choices/css/choices.min.css') }}>
 {% endblock %}
 
 {% block extra_js %}
-  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'awesomplete/awesomplete.js', 'js/articles-users.js']) }}
+  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'choices/js/choices.min.js', 'js/articles-users.js']) }}
 {% endblock %}
 
 {% block body_class %}create-article-page{% endblock %}
@@ -47,9 +47,12 @@
       </label>
     </div>
     <div>
-      <label for=authors-complete>
-        <input id=authors-complete>
-        <input id=authors name=authors type=hidden>
+      <label for=authors>
+        <select name=authors id=authors multiple>
+          {% for author in article.authors %}
+            <option value={{ author.id }} selected>{{ author }}</option>
+          {% endfor %}
+        </select>
       </label>
     </div>
     {% endif %}

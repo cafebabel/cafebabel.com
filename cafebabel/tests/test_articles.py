@@ -145,7 +145,7 @@ def test_update_published_article_with_many_authors(app, client, user, user2,
                                                     editor, published_article):
     login(client, editor.email, 'password')
     data = {
-        'authors': f'{user.id},{user2.id}',
+        'authors': [user.id, user2.id],
         'language': app.config['LANGUAGES'][1][0],
     }
     response = client.post(f'/en/article/{published_article.id}/edit/',
