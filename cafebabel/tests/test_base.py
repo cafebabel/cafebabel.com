@@ -46,7 +46,17 @@ def test_homepage_contains_categories(app, client, published_article):
     assert url_for('tags.detail', slug=impact.slug) in response
 
 
-def test_homepage_contains_authors_links(app, client, published_article):
+def test_homepage_contains_authors_links(client, published_article):
     response = client.get('/en/')
     assert (f'<a href=/en/profile/{published_article.author.pk}/>'
             f'{published_article.author.profile.name}</a>' in response)
+
+
+def test_logo_from_home_is_redirecting_to_localized_homepage(client):
+    response = client.get('/fr/')
+    assert '<a href=/fr/ class=logo>' in response
+
+
+def test_logo_from_tag_is_redirecting_to_localized_homepage(client, tag):
+    response = client.get('/en/article/tag/wonderful/')
+    assert '<a href=/en/ class=logo>' in response
