@@ -32,6 +32,7 @@ def test_create_draft_should_generate_article(client, user, editor):
         'author': user.id
     }, follow_redirects=True)
     assert response.status_code == 200
+    assert '<span>en</span>' in response
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
 
@@ -42,7 +43,6 @@ def test_create_draft_with_tag(client, user, editor, tag):
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'en',
         'author': user.id,
         'tag-1': 'Wonderful'
     }, follow_redirects=True)
@@ -59,7 +59,6 @@ def test_create_draft_with_tags(client, app, user, editor, tag):
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'en',
         'author': user.id,
         'tag-1': 'Wonderful',
         'tag-2': 'Sensational'
@@ -75,7 +74,6 @@ def test_create_draft_with_unknown_tag(client, user, editor, tag):
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'en',
         'author': user.id,
         'tag-1': 'Wonderful',
         'tag-2': 'Sensational'
@@ -93,7 +91,6 @@ def test_create_draft_with_preexising_translation(client, user, editor,
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'en',
         'author': user.id,
     }, follow_redirects=True)
     assert response.status_code == 200
@@ -107,12 +104,12 @@ def test_create_published_draft_should_display_article(client, user, editor):
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'en',
         'author': user.id,
         'status': 'published',
     }, follow_redirects=True)
     assert response.status_code == 200
     assert request.url_rule.endpoint == 'articles.detail'
+    assert '<span>en</span>' in response
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
 
@@ -123,18 +120,16 @@ def test_draft_editing_should_update_content(client, user, editor):
         'title': 'My article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'en',
         'author': user.id
     }
     draft = Article.objects.create(**data)
     updated_data = data.copy()
-    updated_data['language'] = 'fr'
     response = client.post(f'/en/article/draft/{draft.id}/edit/',
                            data=updated_data, follow_redirects=True)
     assert response.status_code == 200
     updated_draft = Article.objects.get(id=draft.id)
     assert updated_draft.id == draft.id
-    assert updated_draft.language == 'fr'
+    assert updated_draft.language == 'en'
     assert updated_draft.title == 'My article'
 
 
@@ -146,7 +141,6 @@ def test_draft_image_should_save_and_render(app, client, user, editor):
         'title': 'My article',
         'summary': 'Summary',
         'body': 'Article body',
-        'language': 'en',
         'author': user.id,
         'image': (image, 'image-name.jpg'),
     }

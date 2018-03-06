@@ -18,17 +18,6 @@
     <input id=title name=title value="{{ article.title or '' }}" required>
   </h1>
   <div class=article-settings>
-    <div class=select>
-      <label for=language>
-        <select id=language name=language required>
-          <optgroup label=Language>
-            {% for language in get_languages() %}
-            <option value={{language[0] }}{% if article.language == language[0] %} selected{% endif %}>{{ language[1] }}</option>
-            {% endfor %}
-          </optgroup>
-        </select>
-      </label>
-    </div>
     {% if current_user.has_role('editor') %}
     <div class=select>
       <label for=status>

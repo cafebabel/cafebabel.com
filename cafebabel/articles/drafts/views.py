@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request
 
-from ...core.helpers import editor_required
+from ...core.helpers import editor_required, current_language
 from ...users.models import User
 from ..models import Article
 

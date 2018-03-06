@@ -4,7 +4,7 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
 
 from ..core.exceptions import ValidationError
-from ..core.helpers import editor_required
+from ..core.helpers import editor_required, current_language
 from ..users.models import User
 from .models import Article
 from .translations.models import Translation

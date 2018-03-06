@@ -7,7 +7,7 @@ from mongoengine import PULL, signals
 
 from .. import db
 from ..core.exceptions import ValidationError
-from ..core.helpers import allowed_file, slugify
+from ..core.helpers import allowed_file, slugify, current_language
 from ..core.mixins import UploadableImageMixin
 from ..users.models import User
 from .tags.models import Tag
@@ -115,7 +115,7 @@ class Article(db.Document, UploadableImageMixin):
             if data.get('editor'):
                 del data['editor']
         self.tags = []
-        language = data.get('language')
+        data['language'] = self.language or current_language()
         for field, value in data.items():
             if field.startswith('tag-') and value:
                 tag = Tag.objects.get_or_create(name=value, language=language)
