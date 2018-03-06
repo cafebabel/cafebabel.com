@@ -20,7 +20,6 @@ def test_proposal_send_email(app, client):
     mail.init_app(app)  # Re-load using test configuration.
     with mail.record_messages() as outbox:
         response = client.post('/en/article/proposal/new/', data={
-            'language': app.config['LANGUAGES'][0][0],
             'email': 'email@example.com',
             'topic': 'Topic',
             'name': 'Name',
@@ -35,7 +34,7 @@ def test_proposal_send_email(app, client):
         assert len(outbox) == 1
         assert outbox[0].subject == 'Article proposal: Topic'
         assert outbox[0].body == f'''
-Language: {app.config['LANGUAGES'][0][0]}
+Language: en
 Name: Name
 Email: email@example.com
 City: City
