@@ -4,3 +4,28 @@
 <title>404 error</title>
 <!-- Lightest blank gif, avoids an extra query to the server. -->
 <link rel=icon href="data:;base64,iVBORw0KGgo=">
+<link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
+
+<body class=error-page>
+<nav id=social-networks>
+  <ul>
+    <li><a href=https://www.facebook.com/cafebabelenglish class=icon-facebook></a></li>
+    <li><a href=https://twitter.com/cafebabel_ENG class=icon-twitter></a></li>
+    <li><a href=https://www.instagram.com/inside.cafebabel class=icon-instagram></a></li>
+    <li><a href=https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg class=icon-youtube></a></li>
+  </ul>
+</nav>
+{% include "security/_messages.html" %}
+
+<main>
+  <a href={{ url_for('cores.home') }} class=logo>
+    <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
+  </a>
+  <div id=content>
+    <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="coffee grinder gif">
+    <h1>404 — Not found</h1>
+    <p>Sorry baby, we can’t find that page.
+    <a href={{ url_for('cores.home') }} class=button>Back to home?</a></p>
+  </div>
+</main>
+</body>

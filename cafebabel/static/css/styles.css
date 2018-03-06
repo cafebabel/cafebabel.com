@@ -2067,3 +2067,28 @@ footer p {
   top: 50%;
   left: 50%;
 }
+
+/* Error pages 404 & 500 */
+
+.error-page #content {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 45%;
+  left: 50%;
+}
+
+.error-page #content img {
+  margin: 0 auto;
+}
+
+.error-page #content h1,
+.error-page #content p {
+  border: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  text-align: center;
+}
+
+.error-page #content a {
+  margin-top: 5rem;
+}
