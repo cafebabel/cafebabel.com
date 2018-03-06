@@ -56,35 +56,27 @@
   <ul>
     {% for lang_code, lang_label in get_languages() %}
       {% if lang_code != current_language %}
+        {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
         {% if article and article.id %}
           {% if article.is_translated_in(lang_code) %}
             {% with translation = article.get_translation(lang_code) %}
               {% if translation.is_published %}
-                <li><a href={{ translation.detail_url }}>{{ lang_code|upper }}</a></li>
-              {% else %}
-                <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
+                {% set lang_url = translation.detail_url %}
               {% endif %}
             {% endwith %}
           {% elif article.is_translation %}
             {% if article.original_article.language == lang_code %}
-              <li><a href={{ article.original_article.detail_url }}>{{ lang_code|upper }}</a></li>
+              {% set lang_url = article.original_article.detail_url %}
             {% elif article.original_article.is_translated_in(lang_code) %}
               {% with translation = article.original_article.get_translation(lang_code) %}
                 {% if translation.is_published %}
-                  <li><a href={{ translation.detail_url }}>{{ lang_code|upper }}</a></li>
-                {% else %}
-                  <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
+                  {% set lang_url = translation.detail_url %}
                 {% endif %}
               {% endwith %}
-            {% else %}
-              <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
             {% endif %}
-          {% else %}
-            <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
           {% endif %}
-        {% else %}
-          <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
         {% endif %}
+        <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
       {% endif %}
     {% endfor %}
   </ul>
