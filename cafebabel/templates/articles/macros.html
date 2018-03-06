@@ -2,19 +2,20 @@
 
 {%- macro article_meta(article) -%}
   <p>
-    <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-    — by
-    {% for author in article.authors %}
-      {% if author.profile.has_image %}
-        <img src={{ author.profile.image_url }} alt="Picture of {{ author }}">
-      {% else %}
-        {{ default_profile_picture() }}
-      {% endif %}
-      {{ author }}
-    {% endfor %}
-    <br>
-    Reading time: {{ article.body|reading_time }} min
+    <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span> | Reading time: {{ article.body|reading_time }} min
   </p>
+    <div class=author-container>
+      {% for author in article.authors %}
+        <div class=author-link>
+          {% if author.profile.has_image %}
+            <img src={{ author.profile.image_url }} alt="Picture of {{ author }}">
+          {% else %}
+            {{ default_profile_picture() }}
+          {% endif %}
+          {{ author }}
+          </div>
+      {% endfor %}
+    </div>
 {%- endmacro %}
 
 {%- macro tags_fields(article=None) -%}

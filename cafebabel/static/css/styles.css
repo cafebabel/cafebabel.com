@@ -222,23 +222,41 @@ select,
 textarea {
   color: #00283c;
   font-family: 'vremena_grotesk', sans-serif;
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   line-height: 1.5;
   font-weight: 200;
   font-style: normal;
   border-radius: 0;
 }
 
+@media screen and (min-width: 750px) {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-size: 1.9rem;
+  }
+}
+
 /* Titles */
 
 h1,
 article h1:first-of-type {
-  font-size: 4.2rem;
+  font-size: 3rem;
   margin: 4rem 0;
   border: 0.3rem solid #00283c;
   padding: 5rem;
-  line-height: 6.3rem;
+  line-height: 3.5rem;
   text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+  h1,
+  article h1:first-of-type {
+    font-size: 4.2rem;
+    line-height: 6.3rem;
+  }
 }
 
 h2,
@@ -1499,6 +1517,10 @@ select#author {
   margin: 0 auto 5rem auto;
 }
 
+.article-page h1:first-of-type {
+  padding: 3rem 1.5rem 7rem;
+}
+
 .article-page article h2 {
   text-align: center;
 }
@@ -1508,7 +1530,7 @@ select#author {
 }
 
 .create-article-page .file img,
-.article-page article img:first-of-type {
+.article-page article + img {
   margin-left: 50%;
   transform: translateX(-50%);
 }
@@ -1525,19 +1547,48 @@ select#author {
 
 .article-page article h1 + p {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -10rem;
+  font-size: 1.5rem;
 }
 
 .article-page article h1 + p span {
   font-style: italic;
   font-family: serif;
-  font-size: 1.9rem;
 }
 
-.article-page article p span + img {
-  width: 8rem;
+.article-page .author-container {
+  display: inline-block;
+  transform: translateX(-50%);
+  margin-left: 50%;
+  margin-bottom: 3rem;
+  font-size: 1.3rem;
+}
+
+@media screen and (max-width: 750px) {
+  .article-page .author-container {
+    margin-right: 50%;
+  }
+}
+
+.article-page .author-link {
+  display: inline-block;
+  margin: 1rem;
+}
+
+.article-page .author-link img {
+  width: 6rem;
   border-radius: 50%;
-  margin: 1rem auto 0.5rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.article-page .author-container + p {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .article-page .tags-list {
@@ -1555,7 +1606,7 @@ select#author {
 .article-page article .summary > p {
   max-width: 100%;
   margin: 3rem auto 5rem auto;
-  font-size: 2.8rem;
+  font-size: 2rem;
   font-weight: 200;
 }
 
@@ -1613,11 +1664,21 @@ textarea#body {
 }
 
 @media screen and (min-width: 750px) {
+  .article-page h1:first-of-type {
+    padding: 4rem 5rem 6rem;
+  }
   .article-page article p time + img {
     width: 6rem;
     display: inline-block;
     margin-left: 0.5rem;
     vertical-align: middle;
+  }
+  .article-page article h1 + p {
+    margin-top: -9rem;
+  }
+  .article-page article .summary,
+  .article-page article .summary > p {
+    font-size: 2.8rem;
   }
 }
 
