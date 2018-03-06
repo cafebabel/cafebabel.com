@@ -122,7 +122,7 @@ def test_draft_editing_should_update_content(client, user, editor):
         'body': 'Article body',
         'author': user.id
     }
-    draft = Article.objects.create(**data)
+    draft = Article.objects.create(**data, language='en')
     updated_data = data.copy()
     response = client.post(f'/en/article/draft/{draft.id}/edit/',
                            data=updated_data, follow_redirects=True)
