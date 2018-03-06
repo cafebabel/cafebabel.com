@@ -1033,6 +1033,10 @@ h1.edit input {
   text-align: center;
 }
 
+.create-article-page .select:nth-child(2) select {
+  margin-bottom: 5rem;
+}
+
 .create-article-page .tags .tag-container,
 .create-article-page .tags label {
   max-width: 75rem;
@@ -1140,12 +1144,9 @@ select#author {
 }
 
 @media screen and (min-width: 750px) {
-  .create-article-page .select:last-child select {
-    margin-bottom: 5rem;
-  }
-
   .create-article-page .select {
     display: inline-block;
+    width: calc(50% - 0.3rem); /* space between the 2 .select */
   }
 
   select#author {
