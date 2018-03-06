@@ -53,8 +53,8 @@ def edit(slug):
             # TODO: see https://github.com/cafebabel/cafebabel.com/issues/187
             message = f'There was an error in your tag submission: {e}'
             flash(message, 'error')
-            return redirect(url_for('tags.edit', slug=slug))
+            return redirect(tag.edit_url)
         flash('Your tag was successfully saved.')
-        return redirect(url_for('tags.detail', slug=tag.slug))
+        return redirect(tag.detail_url)
 
     return render_template('articles/tags/edit.html', tag=tag)

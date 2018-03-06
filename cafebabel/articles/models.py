@@ -66,10 +66,11 @@ class Article(db.Document, UploadableImageMixin):
     @property
     def detail_url(self):
         if self.is_draft:
-            return url_for('drafts.detail', draft_id=self.id)
+            return url_for('drafts.detail', draft_id=self.id,
+                           lang=self.language)
         else:
             return url_for('articles.detail', slug=self.slug,
-                           article_id=self.id)
+                           article_id=self.id, lang=self.language)
 
     @property
     def is_draft(self):

@@ -316,7 +316,7 @@ def test_access_published_article_should_link_translations(client, article,
     translation.save()
     response = client.get(f'/en/article/{article.slug}-{article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert ((f'<li class=translated-language><a href=/en/article/'
+    assert ((f'<li class=translated-language><a href=/fr/article/'
              f'title-{translation.id}/>fr</a></li>') in response)
     assert ((f'<li class=to-translate-languages>'
              f'<a href="{url_for("translations.create")}'
