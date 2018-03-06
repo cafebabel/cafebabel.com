@@ -16,7 +16,7 @@
 <nav>
   <ul>
     {% if current_user.is_authenticated %}
-        <li><a href={{ url_for('users.detail', id=current_user.id) }}>Profile</a></li>
+        <li><a href={{ current_user.detail_url }}>Profile</a></li>
         <li><a href={{ url_for('security.logout') }}>Log out</a></li>
         <li><a href={{ url_for('security.change_password') }}>Change password</a></li>
     {% else %}

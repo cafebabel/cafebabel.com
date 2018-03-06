@@ -66,7 +66,7 @@
     <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>
     <p>
       <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-      — by <a href={{ url_for('users.detail', id=article.author.pk) }}>{{ article.author }}</a>
+      — by <a href={{ article.author.detail_url }}>{{ article.author }}</a>
     </p>
     <p class=tags-list>
       {% for tag in article.tags -%}
