@@ -1823,6 +1823,13 @@ textarea#body {
   color: #696969;
 }
 
+@media screen and (min-width: 750px) {
+  .tags-list a {
+    font-size: 1.3rem;
+    padding: 0.5rem 0.7rem;
+  }
+}
+
 .tags-list a:after {
   content: none;
 }
@@ -1938,6 +1945,10 @@ a.creative:before {
 
 .home article:first-of-type {
   grid-column: 1 / 7;
+}
+
+.home img {
+  margin: 0 auto;
 }
 
 .home h2 {
