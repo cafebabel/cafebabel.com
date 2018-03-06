@@ -68,9 +68,13 @@ def register_lang(app):
 
 def register_errors(app):
     @app.errorhandler(HTTPStatus.NOT_FOUND)
+    def error_not_found(error):
+        return render_template('404.html', error=error), HTTPStatus.NOT_FOUND
+
     @app.errorhandler(HTTPStatus.INTERNAL_SERVER_ERROR)
-    def error_to_template(error):
-        return render_template(f'{error.code}.html'), error.code
+    def error_internal_server_error(error):
+        return (render_template('500.html', error=error),
+                HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
 def register_blueprints(app):
