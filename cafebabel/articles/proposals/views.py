@@ -13,6 +13,7 @@ Name: {name}
 Email: {email}
 City: {city}
 Topic: {topic}
+Angle: {angle}
 Media: {media}
 Format: {format}
 Section: {section}

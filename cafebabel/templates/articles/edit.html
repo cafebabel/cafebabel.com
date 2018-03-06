@@ -4,6 +4,7 @@
 
 {% block extra_head %}
   <link rel=stylesheet href={{ url_for('static', filename='choices/css/choices.min.css') }}>
+  <link rel=stylesheet href={{ url_for('static', filename='css/choices.css') }}>
 {% endblock %}
 
 {% block extra_js %}
@@ -46,8 +47,8 @@
         </select>
       </label>
     </div>
-    <div>
-      <label for=authors>Authors
+    <div class=author-selector>
+      <label for=authors>Author(s)
         <select name=authors id=authors multiple>
           {% for author in article.authors %}
             <option value={{ author.id }} selected>{{ author }}</option>
