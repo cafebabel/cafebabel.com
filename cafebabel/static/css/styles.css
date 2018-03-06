@@ -1643,7 +1643,7 @@ textarea#body {
 }
 
 .article-language-selector li.original-language a:before {
-  content: 'Original language';
+  content: attr(title);
   position: absolute;
   bottom: 0;
   font-size: 12px;

@@ -54,7 +54,7 @@
       <ul>
         <li><span>{{ article.language }}</span></li>
           {% if article.is_translation %}
-            <li class=original-language><a href="{{ article.original_article.detail_url }}">{{ article.original_article.language }}</a></li>
+            <li class=original-language><a href="{{ article.original_article.detail_url }}" title="Original language">{{ article.original_article.language }}</a></li>
           {% endif %}
           {% if translations_publisheds %}
             {% for translation in translations_publisheds %}
