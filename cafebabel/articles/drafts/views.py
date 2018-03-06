@@ -21,11 +21,8 @@ def create():
         article = Article().save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
-
     article = Article()
-    authors = User.objects.all()
-    return render_template('articles/drafts/create.html', article=article,
-                           authors=authors)
+    return render_template('articles/drafts/create.html', article=article)
 
 
 @drafts.route('/<regex("\w{24}"):draft_id>/edit/', methods=['get', 'post'])
@@ -35,10 +32,7 @@ def edit(draft_id):
         article.save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
-
-    authors = User.objects.all()
-    return render_template('articles/drafts/edit.html', article=article,
-                           authors=authors)
+    return render_template('articles/drafts/edit.html', article=article)
 
 
 @drafts.route('/<regex("\w{24}"):draft_id>/')

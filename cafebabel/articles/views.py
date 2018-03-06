@@ -54,10 +54,8 @@ def edit(article_id):
             return redirect(url_for('articles.edit', article_id=article.id))
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
-
-    authors = User.objects.all()
     return render_template(
-        'articles/edit.html', article=article, authors=authors)
+        'articles/edit.html', article=article)
 
 
 @articles.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
