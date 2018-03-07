@@ -16,7 +16,7 @@ def suggest():
     terms = request.args.get('terms')
     if len(terms) < 3:
         abort(HTTPStatus.BAD_REQUEST,
-              'Suggestions made available from 3-chars and more.')
+              'Suggestions are made available from 3-chars and more.')
     languages = dict(current_app.config['LANGUAGES'])
     language = request.args.get('language')
     if language not in languages:
