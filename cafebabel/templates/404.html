@@ -1,0 +1,91 @@
+{# Beware of not adding any external dependencies here! #}
+<!doctype html>
+<meta charset=utf-8>
+<title>404 error</title>
+<!-- Lightest blank gif, avoids an extra query to the server. -->
+<link rel=icon href="data:;base64,iVBORw0KGgo=">
+<style>
+  html {
+    font-size: 62.5%;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  @font-face {
+    font-family: 'vremena_grotesk';
+    src: url('/static/fonts/vremenagrotesk-webfont.woff2') format('woff2'),
+    url('/static/fonts/vremenagrotesk-webfont.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+  }
+  body,
+  button {
+    color: #00283c;
+    font-family: 'vremena_grotesk', sans-serif;
+    font-size: 1.9rem;
+    border-radius: 0;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .logo {
+    position: relative;
+    width: 10rem;
+    display: block;
+    transition: all 0.2s;
+    top: 3.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .logo:hover {
+    top: 3.5rem;
+  }
+  #content {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 45%;
+    left: 50%;
+  }
+  #content img {
+    margin: 0 auto;
+  }
+  h1,
+  p {
+    margin: 0 0 1rem;
+    text-align: center;
+  }
+  #content a {
+    margin-top: 5rem;
+    text-decoration: none;
+  }
+  .button {
+    display: block;
+    padding: 2rem 4rem;
+    background-color: #00283c;
+    border: 0.1rem solid #00283c;
+    color: #fff;
+    transition: all 0.3s;
+  }
+  .button:hover {
+    background-color: #fff;
+    color: #00283c;
+    border: 0.1rem solid #00283c;
+  }
+</style>
+
+
+<a href=https://cafebabel.com class=logo>
+  <img src=/static/img/logo-cafebabel.svg alt="logo Cafébabel">
+</a>
+<div id=content>
+  <img src=/static/img/preloader-A.gif alt="coffee grinder gif">
+  <h1>404 — Not found</h1>
+  <p>We can’t find that page.
+    <a href=http://www.cafebabel.com class=button>Back to home?</a></p>
+</div>
