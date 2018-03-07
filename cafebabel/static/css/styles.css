@@ -1743,7 +1743,7 @@ textarea#body {
   .article-page article .summary,
   .article-page article .summary > p {
     font-size: 2.8rem;
-
+  }
   .article-language-selector li.original-language a:before {
     display: block;
   }
