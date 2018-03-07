@@ -1676,10 +1676,13 @@ textarea#body {
   min-height: 30rem;
 }
 
-.article-language-selector {
+.article-language-selector,
+p.translation-language {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 200;
 }
 
 .article-language-selector li {
@@ -1689,8 +1692,14 @@ textarea#body {
   z-index: 0;
 }
 
+.translation-language span {
+  text-align: center;
+  margin-left: 1rem;
+}
+
 .article-language-selector li a,
-.article-language-selector li span {
+.article-language-selector li span,
+.translation-language span {
   padding: 0.8rem;
   font-size: 1.6rem;
   background-color: #eeeeee;
@@ -1710,7 +1719,8 @@ textarea#body {
   width: 0;
 }
 
-.article-language-selector li span {
+.article-language-selector li span,
+.translation-language span {
   background-color: #00283c;
   color: #fff;
 }
@@ -1748,13 +1758,25 @@ textarea#body {
   opacity: 1;
 }
 
-.article-page article p:last-of-type {
+.article-page article .translation-details {
   text-align: center;
 }
 
 .share {
-  width: 15rem;
+  width: 16rem;
   margin: 0 auto;
+  text-align: center;
+  font-weight: 100;
+  line-height: 2;
+}
+
+.share a {
+  font-weight: 200;
+  margin: 2rem 0;
+}
+
+.share a:first-child {
+  margin-right: 1rem;
 }
 
 @media screen and (min-width: 750px) {
@@ -1785,7 +1807,8 @@ textarea#body {
     padding: 0 0 0 5rem;
   }
   .article-language-selector li a,
-  .article-language-selector li span {
+  .article-language-selector li span,
+  .translation-language span {
     font-size: 1.8rem;
     padding: 1.1rem;
     width: 5rem;

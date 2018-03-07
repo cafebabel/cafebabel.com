@@ -19,7 +19,7 @@
 
   {{ macros.article_meta(translation.original_article) }}
 
-  <p>Article in <span>{{ translation.language }}</span></p>
+  <p class="translation-language">Article in <span>{{ translation.language }}</span></p>
 
   {% if translation.summary %}
     <div class=summary>{{ translation.summary|markdown }}</div>
@@ -27,7 +27,7 @@
 
   {{ translation.body|markdown|rewrite_img_src }}
 
-  <p>
+  <p class=translation-details>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a>
     by {% for translator in translation.translators -%}
       <a href="{{ url_for('users.detail', id=translator.pk) }}">{{ translator }}</a>

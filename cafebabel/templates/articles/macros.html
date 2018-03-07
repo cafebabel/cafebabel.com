@@ -18,7 +18,7 @@
           </a>
       {% endfor %}
     </div>
-    {% if article.is_translation %}
+    {% if article.is_translation or article.is_translations_drafts %}
       <div class=translator-container>
         <h4>Translation by:</h4>
           {% for translator in article.translators -%}

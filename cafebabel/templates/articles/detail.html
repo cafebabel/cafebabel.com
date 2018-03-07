@@ -84,13 +84,13 @@
     {{ article.body|markdown|rewrite_img_src }}
 
   {% if article.is_translation %}
-    <p>
+    <p class=translation-details>
       Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
     </p>
   {% endif %}
 
   {% if translations_drafts %}
-    <p>Review this article in:</p>
+    <p class=translation-details>Review this article in:</p>
     <ul>
       {% for translation in translations_drafts %}
         <li>{{ translation.language }}: <a href={{ url_for('translations.detail', id=translation.id) }}>{{ translation.title }}</a></li>
@@ -100,6 +100,7 @@
 
   {% block share_nav %}
   <nav class=share>
+  Share this:
     <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
   </nav>
