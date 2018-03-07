@@ -244,8 +244,10 @@ def test_translation_published_should_have_translator(client, translation):
     assert ((f'Translated from '
              f'<a href="/en/article/draft/{translation.original_article.id}/">'
              f'article title') in response)
-    assert (f'by <a href="/en/profile/{translator.id}/">{translator}</a>.'
+    assert (f'<a href="/en/profile/{translator.id}/" class=translator-link>'
             in response)
+    assert f'{translator}' in response
+
 
 def test_translation_published_should_have_reference(client, translation):
     translation.modify(status='published')
