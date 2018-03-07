@@ -52,6 +52,16 @@ def test_homepage_contains_authors_links(client, published_article):
             f'{published_article.author.profile.name}</a>' in response)
 
 
+def test_logo_from_home_is_redirecting_to_localized_homepage(client):
+    response = client.get('/fr/')
+    assert '<a href=/fr/ class=logo>' in response
+
+
+def test_logo_from_tag_is_redirecting_to_localized_homepage(client, tag):
+    response = client.get('/en/article/tag/wonderful/')
+    assert '<a href=/en/ class=logo>' in response
+
+
 def test_error_not_found(client):
     response = client.get('/foobar/')
     assert response.status_code == HTTPStatus.NOT_FOUND
