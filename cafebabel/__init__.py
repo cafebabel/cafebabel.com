@@ -1,9 +1,10 @@
 from datetime import datetime
+from http import HTTPStatus
 from pathlib import Path
 from urllib.parse import quote_plus
 
 import click
-from flask import Flask, g
+from flask import Flask, g, render_template
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
@@ -50,6 +51,32 @@ def register_extensions(app):
         app.response_class = ContainsResponse
 
 
+def register_lang(app):
+    @app.url_defaults
+    def add_lang(endpoint, values):
+        if 'lang' in values or not g.get('lang'):
+            return
+        if app.url_map.is_endpoint_expecting(endpoint, 'lang'):
+            values['lang'] = g.lang
+
+    @app.url_value_preprocessor
+    def retrieve_lang(endpoint, values):
+        if not (values and 'lang' in values):
+            return
+        g.lang = values.pop('lang', app.config['DEFAULT_LANGUAGE'])
+
+
+def register_errors(app):
+    @app.errorhandler(HTTPStatus.NOT_FOUND)
+    def error_not_found(error):
+        return render_template('404.html', error=error), HTTPStatus.NOT_FOUND
+
+    @app.errorhandler(HTTPStatus.INTERNAL_SERVER_ERROR)
+    def error_internal_server_error(error):
+        return (render_template('500.html', error=error),
+                HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 def register_blueprints(app):
     from .core.routing import LangConverter, RegexConverter
 
@@ -65,19 +92,7 @@ def register_blueprints(app):
     from .core.views import cores
     from .users.views import users
 
-    @app.url_defaults
-    def add_lang(endpoint, values):
-        if 'lang' in values or not g.get('lang'):
-            return
-        if app.url_map.is_endpoint_expecting(endpoint, 'lang'):
-            values['lang'] = g.lang
-
-    @app.url_value_preprocessor
-    def retrieve_lang(endpoint, values):
-        if not (values and 'lang' in values):
-            return
-        g.lang = values.pop('lang', app.config['DEFAULT_LANGUAGE'])
-
+    register_lang(app)
     app.register_blueprint(cores, url_prefix='')
     app.register_blueprint(articles, url_prefix='/<lang:lang>/article')
     app.register_blueprint(tags, url_prefix='/<lang:lang>/article/tag')
@@ -89,6 +104,7 @@ def register_blueprints(app):
     app.register_blueprint(users, url_prefix='/<lang:lang>/profile')
     # Keep that blueprint in the latest position as a fallback.
     app.register_blueprint(archives, url_prefix='')
+    register_errors(app)
 
 
 def register_cli(app):
