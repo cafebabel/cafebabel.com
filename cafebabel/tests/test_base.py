@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 from cafebabel.articles.tags.models import Tag
-from flask import url_for
+from flask import abort, url_for
 
 
 def test_homepage_is_redirecting_to_default_language(client):
@@ -60,3 +60,20 @@ def test_logo_from_home_is_redirecting_to_localized_homepage(client):
 def test_logo_from_tag_is_redirecting_to_localized_homepage(client, tag):
     response = client.get('/en/article/tag/wonderful/')
     assert '<a href=/en/ class=logo>' in response
+
+
+def test_error_not_found(client):
+    response = client.get('/foobar/')
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert '404 error' in response
+
+
+def test_error_internal_server_error(app, client):
+
+    @app.route('/foobar/')
+    def error():
+        abort(500)
+
+    response = client.get('/foobar/')
+    assert response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR
+    assert '500 error' in response
