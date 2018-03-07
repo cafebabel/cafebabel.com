@@ -72,14 +72,17 @@ def delete(article_id):
 @articles.route('/to-translate/')
 def to_translate():
     languages = dict(current_app.config['LANGUAGES'])
-    languages_keys = list(languages.keys())
-    language = request.args.get('to', languages_keys[1])
-    if language not in languages_keys:
+    languages_codes = list(languages.keys())
+    from_lang = current_language()
+    default_lang = (languages_codes[0]
+                    if languages_codes[0] != from_lang else languages_codes[1])
+    to_lang = request.args.get('lang', default_lang)
+    if to_lang not in languages_codes:
         abort(HTTPStatus.BAD_REQUEST,
               (f'You must specify valid languages. '
-               f'`{language}` is not allowed, only {languages_keys} '
-               'are allowed for now.'))
-    articles = Article.objects.filter(language=current_language()).hard_limit()
+               f'`{to_lang}` is not allowed, only {languages} are allowed '
+               'for now.'))
+    articles = Article.objects.filter(language=from_lang).hard_limit()
     return render_template(
         'articles/to-translate.html', articles=articles,
-        to_language_code=language, to_language_label=languages[language])
+        language_code=to_lang, language_label=languages[to_lang])
