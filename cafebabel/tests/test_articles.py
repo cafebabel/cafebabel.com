@@ -333,12 +333,6 @@ def test_article_to_translate_should_return_200(client):
     assert response.status_code == HTTPStatus.OK
 
 
-def test_article_to_translate_should_have_default_languages(client):
-    response = client.get(f'/en/article/to-translate/')
-    assert '<option value=en selected>English</option>' in response
-    assert '<option value=fr selected>Français</option>' in response
-
-
 def test_article_to_translate_should_filter_by_language(client):
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
     assert '<option value=fr selected>Français</option>' in response

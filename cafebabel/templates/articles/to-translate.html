@@ -6,22 +6,14 @@
 
   <form method=get action=.>
     <h1>
-      Articles to translate from
-      <div class=select>
-        <label for=from>
-          <select id=from name=from required>
-            {% for language_code, language_label in get_languages() %}
-            <option value={{ language_code }}{% if from_language_code == language_code %} selected{% endif %}>{{ language_label }}</option>
-            {% endfor %}
-          </select>
-        </label>
-      </div>
-      to
+      Articles to translate to
       <div class=select>
         <label for=to>
           <select id=to name=to required>
             {% for language_code, language_label in get_languages() %}
-            <option value={{ language_code }}{% if to_language_code == language_code %} selected{% endif %}>{{ language_label }}</option>
+              {% if language_code != current_language %}
+              <option value={{ language_code }}{% if to_language_code == language_code %} selected{% endif %}>{{ language_label }}</option>
+              {% endif %}
             {% endfor %}
           </select>
         </label>
