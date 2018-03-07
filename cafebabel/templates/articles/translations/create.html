@@ -5,16 +5,19 @@
   {{ extra_js(['js/articles-tags.js', 'js/textarea-change.js']) }}
 {% endblock %}
 
+{% block body_class %}create-article-page{% endblock %}
 {% block body %}
-<h1>Creating a translation in {{ language }} for article “{{ article.title }}”</h1>
 
 <form method=post action=.>
   <input type=hidden name=language value="{{ language }}">
   <input type=hidden name=original value="{{ article.id }}">
-  <div class=text>
+  {% if article.has_image %}
+    <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
+  {% endif %}
+  <h1 class="edit active">
     <label for=title>Title</label>
-    <input id=title name=title required>
-  </div>
+    <input id=title name=title required value="Translation in {{ language }} for article “{{ article.title }}”">
+  </h1>
   <div class=textarea>
     <label for=summary>Teaser</label>
     <textarea id=summary name=summary required></textarea>
@@ -27,3 +30,8 @@
   <input type=submit value="Create">
 </form>
 {% endblock %}
+
+
+
+
+
