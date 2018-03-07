@@ -1593,29 +1593,54 @@ select#author {
   font-family: serif;
 }
 
-.article-page .author-container {
+.article-page .contributor-container {
   display: inline-block;
-  transform: translateX(-50%);
-  margin-left: 50%;
   margin-bottom: 3rem;
   font-size: 1.3rem;
 }
 
 @media screen and (max-width: 750px) {
-  .article-page .author-container {
-    margin-right: 50%;
+  .article-page .contributor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
-.article-page .author-link {
-  display: inline-block;
-  margin: 1rem;
+.article-page .author-container,
+.article-page .translator-container {
+  display: block;
 }
 
-.article-page .author-link img {
-  width: 6rem;
+.article-page .contributor-container h4 {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 200;
+  margin-bottom: 1.3rem;
+}
+
+.article-page .translator-container {
+  padding: 3rem 0 0;
+}
+
+.article-page .author-link,
+.article-page .translator-link {
+  display: inline-block;
+  margin: 0.5rem;
+  max-width: 19rem;
+  text-align: center;
+  vertical-align: top;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.article-page .author-link img,
+.article-page .translator-link img {
+  width: 5.5rem;
   border-radius: 50%;
   margin-left: 50%;
+  margin-bottom: 0.5rem;
   transform: translateX(-50%);
 }
 
@@ -1652,24 +1677,26 @@ textarea#body {
 }
 
 .article-language-selector {
-  display: inline-block;
-  transform: translateX(-50%);
-  margin-left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .article-language-selector li {
   display: inline-block;
   margin: 0 0.2rem;
   text-align: center;
+  z-index: 0;
 }
 
 .article-language-selector li a,
 .article-language-selector li span {
-  padding: 1rem;
+  padding: 0.8rem;
+  font-size: 1.6rem;
   background-color: #eeeeee;
   border-radius: 50%;
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   transition: all 0.3s;
   color: #d9d9d9;
   display: block;
@@ -1721,6 +1748,10 @@ textarea#body {
   opacity: 1;
 }
 
+.article-page article p:last-of-type {
+  text-align: center;
+}
+
 .share {
   width: 15rem;
   margin: 0 auto;
@@ -1736,9 +1767,29 @@ textarea#body {
     margin-left: 0.5rem;
     vertical-align: middle;
   }
-
   .article-page article h1 + p {
     margin-top: -9rem;
+  }
+  .article-page .contributor-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    font-size: 1.3rem;
+  }
+  .article-page .author-container,
+  .article-page .translator-container {
+    display: inline-block;
+  }
+  .article-page .translator-container {
+    padding: 0 0 0 5rem;
+  }
+  .article-language-selector li a,
+  .article-language-selector li span {
+    font-size: 1.8rem;
+    padding: 1.1rem;
+    width: 5rem;
+    height: 5rem;
   }
   .article-page article .summary,
   .article-page article .summary > p {

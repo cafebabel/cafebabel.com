@@ -83,19 +83,9 @@
 
     {{ article.body|markdown|rewrite_img_src }}
 
-  {% block share_nav %}
-  <nav class=share>
-    <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
-  </nav>
-  {% endblock %}
-
   {% if article.is_translation %}
     <p>
       Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
-      by {% for translator in article.translators -%}
-        <a href="{{ url_for('users.detail', id=translator.pk) }}">{{ translator }}</a>
-      {%- endfor %}.
     </p>
   {% endif %}
 
@@ -107,6 +97,14 @@
       {% endfor %}
     </ul>
   {% endif %}
+
+  {% block share_nav %}
+  <nav class=share>
+    <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
+  </nav>
+  {% endblock %}
+
   {{ self.edit_button() }}
 
 </article>
