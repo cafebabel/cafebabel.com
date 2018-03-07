@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros without context %}
 
 {% block body_class %}translate-list-page{% endblock %}
 {% block body %}
@@ -38,7 +39,7 @@
           {% if article.has_image %}
               <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
           {% endif %}
-          <time>Published on {{ article.creation_date.date() }}</time>
+          {{ macros.article_publication_date(article) }}
           <h2>{{ article.title }}</h2>
 
             {% if article.is_translation %}

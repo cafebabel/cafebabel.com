@@ -42,8 +42,9 @@ def test_published_article_should_display_content(client, published_article,
     assert f'<meta name=description content="summary text">' in response
     assert f'<div class=summary><p>summary text</p></div>' in response
     assert f'<p>{published_article.body}</p>' in response
-    assert (f'<time pubdate="{published_article.creation_date.date()}">'
-            f'{published_article.creation_date.date()}</time>' in response)
+    assert (f'<time pubdate="{published_article.publication_date.date()}">'
+            f'{published_article.publication_date.strftime("%B %-d, %Y")}'
+            '</time>' in response)
     assert f'<span>{published_article.language}</span>' in response
     assert published_article.authors[0].profile.name in response
     assert ('href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
