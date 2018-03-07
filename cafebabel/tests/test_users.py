@@ -113,3 +113,30 @@ def test_login_complete_redirects_if_not_logged_in(client, user):
     assert response.status_code == HTTPStatus.FOUND
     assert ('/en/login?next=%2Flogin_complete%2F'
             in response.headers.get('Location'))
+
+
+def test_user_suggest_basics(client, user):
+    response = client.get('/en/profile/suggest/?terms=user@')
+    assert response.status_code == HTTPStatus.OK
+    assert response.json == [{
+        'name': 'user@example.com',
+        'pk': str(user.pk)
+    }]
+
+
+def test_user_suggest_many(client, user, user2):
+    response = client.get('/en/profile/suggest/?terms=user')
+    assert response.status_code == HTTPStatus.OK
+    assert response.json == [{
+        'name': 'user@example.com',
+        'pk': str(user.pk)
+    }, {
+        'name': 'user2@example.com',
+        'pk': str(user2.pk)
+    }]
+
+
+def test_user_suggest_too_short(client, tag):
+    response = client.get('/en/profile/suggest/?terms=wo')
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert 'Suggestions are made available from 3-chars and more.' in response

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% from "_meta-macro.html" import meta without context %}
-{% import "articles/macros.html" as macros without context %}
+{% from "_meta-macro.html" import meta %}
+{% import "articles/macros.html" as macros %}
 
 {% block meta_title %}{{ translation.title }}{% endblock %}
 {% block metas %}
@@ -17,9 +17,9 @@
 
   <h1>{{ translation.title }}</h1>
 
-  {{ macros.article_meta(translation.original_article) }}
+  {{ macros.article_meta(translation) }}
 
-  <p>Article in <span>{{ translation.language }}</span></p>
+  <p class="translation-language">Article in <span>{{ translation.language }}</span></p>
 
   {% if translation.summary %}
     <div class=summary>{{ translation.summary|markdown }}</div>
@@ -27,11 +27,14 @@
 
   {{ translation.body|markdown|rewrite_img_src }}
 
-  <p>
-    Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a> by {{ translation.translator }}.
+  <p class=translation-details>
+    Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a>
+    by {% for translator in translation.translators -%}
+      <a href="{{ url_for('users.detail', id=translator.pk) }}">{{ translator }}</a>
+    {%- endfor %}.
   </p>
 
-  {% if current_user.has_role('editor') or translation.translator == current_user %}
+  {% if current_user.has_role('editor') or current_user in translation.translators %}
     <p>
       <a class=button href={{ url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
     </p>
