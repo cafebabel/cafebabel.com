@@ -37,6 +37,11 @@ def user():
 
 
 @pytest.fixture
+def user2():
+    return User.objects.get(email='user2@example.com')
+
+
+@pytest.fixture
 def editor():
     return User.objects.get(email='editor@example.com')
 
@@ -54,7 +59,7 @@ def article(user):
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        author=user,
+        authors=[user],
         language=test_app.config['LANGUAGES'][0][0],
         body='body text')
 
@@ -64,7 +69,7 @@ def published_article(user):
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        author=user,
+        authors=[user],
         language=test_app.config['LANGUAGES'][0][0],
         body='body text',
         status='published')
@@ -78,6 +83,6 @@ def translation(user, article):
         summary='summary text',
         language=language,
         body='body text',
-        author=user,
-        translator=user.id,
+        authors=[user],
+        translators=[user.id],
         original_article=article.id)
