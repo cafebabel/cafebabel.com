@@ -15,6 +15,12 @@
     <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
   {% endif %}
 
+  {% block edit_button %}
+    {% if current_user.has_role('editor') or current_user in translation.translators %}
+      <a class=button href={{ url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
+    {% endif %}
+  {% endblock %}
+
   <h1>{{ translation.title }}</h1>
 
   {{ macros.article_meta(translation) }}
@@ -34,10 +40,6 @@
     {%- endfor %}.
   </p>
 
-  {% if current_user.has_role('editor') or current_user in translation.translators %}
-    <p>
-      <a class=button href={{ url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
-    </p>
-  {% endif %}
+  {{ self.edit_button() }}
 </article>
 {% endblock %}
