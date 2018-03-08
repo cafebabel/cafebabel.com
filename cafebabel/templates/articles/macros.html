@@ -18,7 +18,7 @@
       {% for author in article.authors %}
           <a href="{{ url_for('users.detail', id=author.pk) }}" class=author-link>
             {% if author.profile.has_image %}
-              <img src={{ author.profile.image_url }} alt="Picture of {{ author }}">
+              <div style="background-image:url({{ author.profile.image_url }})" class=image></div>
             {% else %}
               {{ default_profile_picture() }}
             {% endif %}
@@ -32,7 +32,7 @@
           {% for translator in article.translators -%}
               <a href="{{ url_for('users.detail', id=translator.pk) }}" class=translator-link>
                 {% if translator.profile.has_image %}
-                  <img src={{ translator.profile.image_url }} alt="Picture of {{ translator }}">
+                  <div style="background-image:url({{ translator.profile.image_url }})" class=image></div>
                 {% else %}
                   {{ default_profile_picture() }}
                 {% endif %}

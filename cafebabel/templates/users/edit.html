@@ -16,7 +16,7 @@
     <div class=file>
       <output>
         {% if user.profile.has_image %}
-          <img src={{ user.profile.image_url }} alt="My picture">
+          <div style="background-image:url({{ user.profile.image_url }})"></div>
         {% else %}
           {{ default_profile_picture() }}
         {% endif %}

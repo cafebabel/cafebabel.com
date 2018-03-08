@@ -1239,11 +1239,19 @@ select#author {
   text-align: center;
 }
 
-.profile-page main section:first-of-type img {
+.profile-page main section:first-of-type img,
+.profile-page main section h2 + div {
   display: block;
   border-radius: 50%;
   max-width: 20rem;
   margin: 0.2rem auto;
+}
+
+.profile-page main section h2 + div {
+  width: 20rem;
+  height: 20rem;
+  background-size: cover;
+  background-position: center;
 }
 
 .profile-page .file figcaption {
@@ -1636,12 +1644,19 @@ select#author {
 }
 
 .article-page .author-link img,
-.article-page .translator-link img {
+.article-page .translator-link img,
+.article-page .contributor-container .image {
   width: 5.5rem;
   border-radius: 50%;
   margin-left: 50%;
   margin-bottom: 0.5rem;
   transform: translateX(-50%);
+}
+
+.article-page .contributor-container .image {
+  height: 5.5rem;
+  background-size: cover;
+  background-position: center;
 }
 
 .article-page .author-container + p {
