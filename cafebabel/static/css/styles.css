@@ -1475,7 +1475,7 @@ select#author {
   width: 0;
 }
 
-.profile-page.edit .oversized {
+.profile-page .oversized {
   color: red;
   font-weight: bold;
 }
