@@ -66,7 +66,8 @@ def test_profile_image_should_save_and_render(app, client, user):
     assert user.profile.image_filename == '/users/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') /
                 'users' / 'image-name.jpg').exists()
-    assert f'<img src={user.profile.image_url}' in response
+    assert (f'<div style="background-image:url({user.profile.image_url}'
+            in response)
 
 
 def test_profile_image_unallowed_extension(app, client, user):
