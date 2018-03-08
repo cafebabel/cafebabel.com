@@ -1177,10 +1177,6 @@ select#author {
     margin-bottom: 5rem;
   }
 
-  .create-article-page .select {
-    display: inline-block;
-  }
-
   select#author {
     min-width: 75rem;
   }
