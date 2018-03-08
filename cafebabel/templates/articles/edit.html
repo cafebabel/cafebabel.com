@@ -11,7 +11,7 @@
   {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'choices/js/choices.min.js', 'js/articles-users.js']) }}
 {% endblock %}
 
-{% block body_class %}create-article-page{% endblock %}
+{% block body_class %}article-page-edit{% endblock %}
 
 {% block body %}
 <form method=post action={% block form_action %}{{ url_for('articles.edit', article_id=article.id) }}{% endblock %} enctype=multipart/form-data>

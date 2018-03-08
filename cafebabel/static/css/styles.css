@@ -995,8 +995,8 @@ button.menu + nav a {
 
 /* Editing place page */
 
-.create-article-page .file canvas,
-.create-article-page .file {
+.article-page-edit .file canvas,
+.article-page-edit .file {
   position: relative;
   width: 100%;
   max-width: 120rem;
@@ -1084,7 +1084,7 @@ h1.edit input {
   text-align: center;
 }
 
-.create-article-page .select:nth-child(2) select {
+.article-page-edit .select:nth-child(2) select {
   margin-bottom: 5rem;
 }
 
@@ -1092,18 +1092,18 @@ h1.edit input {
   margin-bottom: 5rem;
 }
 
-.create-article-page .tags .tag-container,
-.create-article-page .tags label {
+.article-page-edit .tags .tag-container,
+.article-page-edit .tags label {
   max-width: 75rem;
   margin: 0 auto 2rem;
 }
 
-.create-article-page .tags .tags-list {
+.article-page-edit .tags .tags-list {
   max-width: 75rem;
   margin: 0 auto;
 }
 
-.create-article-page .tags .tags-list li {
+.article-page-edit .tags .tags-list li {
   position: relative;
   padding: 1rem 4rem 1rem 2rem;
   background-color: #eee;
@@ -1112,11 +1112,11 @@ h1.edit input {
   color: #696969;
 }
 
-.create-article-page .tags .tags-list li.saved {
+.article-page-edit .tags .tags-list li.saved {
   background-color: #ddd;
 }
 
-.create-article-page .tags .tags-list li button {
+.article-page-edit .tags .tags-list li button {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 1.7rem;
@@ -1129,33 +1129,33 @@ h1.edit input {
   z-index: 1;
 }
 
-.create-article-page .tags .tags-list li button:after {
+.article-page-edit .tags .tags-list li button:after {
   font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.3rem;
   margin-left: 1rem;
 }
 
-.create-article-page .tags .tag-container {
+.article-page-edit .tags .tag-container {
   display: flex;
   flex-direction: row;
 }
 
-.create-article-page .tags .tag-container input {
+.article-page-edit .tags .tag-container input {
   width: 90%;
 }
 
-.create-article-page .tags .tag-container button {
+.article-page-edit .tags .tag-container button {
   width: 7rem;
   padding: 2rem;
   margin-right: 0;
 }
 
-.create-article-page .tags #tags-suggestions.inactive {
+.article-page-edit .tags #tags-suggestions.inactive {
   display: none;
 }
 
-.create-article-page .tags #tags-suggestions {
+.article-page-edit .tags #tags-suggestions {
   width: 100%;
   max-width: 75rem;
   border: 0.1rem solid #00283c;
@@ -1169,28 +1169,28 @@ h1.edit input {
   transition: all 0.3s;
 }
 
-.create-article-page .tags #tags-suggestions li:hover {
+.article-page-edit .tags #tags-suggestions li:hover {
   background-color: #eeeeee;
   cursor: pointer;
 }
 
-.create-article-page .tags #tags-suggestions li {
+.article-page-edit .tags #tags-suggestions li {
   padding: 2rem;
 }
 
-.create-article-page .article-settings {
+.article-page-edit .article-settings {
   max-width: 75rem;
   margin: auto;
   text-align: justify;
 }
 
-.create-article-page .article-settings:after {
+.article-page-edit .article-settings:after {
   /* https://codepen.io/gcyrillus/pen/ruhCg */
   content: '';
   padding-right: 100%;
 }
 
-.create-article-page select {
+.article-page-edit select {
   margin: 0 0 2rem 0;
 }
 
@@ -1203,7 +1203,7 @@ select#author {
 }
 
 @media screen and (min-width: 750px) {
-  .create-article-page .select {
+  .article-page-edit .select {
     display: inline-block;
     width: calc(50% - 0.3rem); /* space between the 2 .select */
   }
@@ -1213,12 +1213,12 @@ select#author {
   }
 }
 
-.create-article-page .textarea {
+.article-page-edit .textarea {
   max-width: 75rem;
   margin: auto;
 }
 
-.create-article-page textarea {
+.article-page-edit textarea {
   font-weight: 100;
 }
 
@@ -1570,7 +1570,7 @@ select#author {
   font-weight: 100;
 }
 
-.create-article-page .file img,
+.article-page-edit .file img,
 .article-page article + img {
   margin-left: 50%;
   transform: translateX(-50%);
