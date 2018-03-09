@@ -273,7 +273,7 @@ article h1 {
 
 h3 {
   font-size: 2.8rem;
-  margin: 3rem 0;
+  margin: 2rem 0;
   line-height: 1.4;
 }
 
@@ -1856,7 +1856,7 @@ p.translation-language {
   margin: 2rem auto 5rem auto;
 }
 
-.translate-list-page ul article a:hover:after {
+.translate-list-page ul article a:first-child:hover:after {
   width: 0;
 }
 
@@ -1930,8 +1930,7 @@ p.translation-language {
   margin: 3rem auto;
 }
 
-.tag-page article .article-detail,
-.home article .article-detail {
+article .article-detail {
   position: relative;
   background: #fff;
   width: 85%;
@@ -1943,27 +1942,25 @@ p.translation-language {
 }
 
 @media screen and (min-width: 750px) {
-  .tag-page article .article-detail,
-  .home article .article-detail {
+  article .article-detail {
     padding: 1.5rem;
   }
 }
 
-.tag-page article .article-detail h3,
-.home article .article-detail h3 {
+.tag-page article .article-detail h3 {
   margin: 1rem;
 }
 
-.tag-page article .article-detail p {
+article .article-detail p {
   margin: 0 0 2rem;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 
-.tag-page article .article-detail p:last-child {
+article .article-detail p:last-child {
   margin: 0;
 }
 
-.tag-page article .article-detail p span {
+article .article-detail p span {
   font-style: italic;
   font-family: serif;
 }
@@ -2185,8 +2182,12 @@ a.section-link.creative {
   margin-bottom: 5rem;
 }
 
-.home article .article-detail h3 {
+article .article-detail h3 {
   font-size: 2.2rem;
+}
+
+article .article-detail h3 a:hover:after {
+  width: 0;
 }
 
 .home article .article-detail p {
@@ -2223,7 +2224,7 @@ a.section-link.creative {
   .home article:first-of-type {
     grid-column: 1 / 7;
   }
-  .home article .article-detail h3 {
+  article .article-detail h3 {
     font-size: 2.8rem;
   }
   .home a.section-link {
