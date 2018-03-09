@@ -113,3 +113,13 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
     () => inputh1.value || h1.classList.remove('active')
   )
 })
+
+/* animation picto sections */
+Array.from(document.querySelectorAll('.svg-animation')).forEach(svg => {
+  window.addEventListener('scroll', function() {
+    if (svg.getBoundingClientRect().top < 600) {
+      svg.classList.add('active')
+      window.onscroll = null
+    }
+  })
+})

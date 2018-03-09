@@ -2119,7 +2119,7 @@ a.creative:before {
   max-height: 52rem;
   background-color: aliceblue;
   text-align: center;
-  padding-top: 55%;
+  padding-top: 15%;
   font-family: 'sporting_grotesque', sans-serif;
   font-size: 5vw;
   bottom: 0;
@@ -2137,10 +2137,35 @@ a.creative:before {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 5rem;
+  display: none;
 }
 
 .home a.section-link:hover:after {
   width: 0;
+}
+
+.home svg {
+  width: 13rem;
+}
+
+.home svg path {
+  display: none;
+}
+
+.home .active svg path {
+  display: block;
+  stroke-dasharray: 400%;
+  stroke-dashoffset: 10%;
+  animation: impact 3s linear 1;
+}
+
+@keyframes impact {
+  from {
+    stroke-dashoffset: 400%;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 a.section-link.impact {
@@ -2220,6 +2245,10 @@ a.section-link.creative {
     height: 28vw;
     max-height: 38rem;
     font-size: 3rem;
+    padding-top: 30%;
+  }
+  .home svg {
+    width: 15rem;
   }
   .home a.section-link:before {
     font-size: 8rem;
