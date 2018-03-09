@@ -1,16 +1,47 @@
-{% from "users/macros.html" import default_profile_picture without context %}
+{% from "users/macros.html" import default_profile_picture %}
+
+{% macro article_publication_date(article) %}
+  {% if article.publication_date %}
+    <span>Published on <time pubdate="{{ article.publication_date.date() }}">{{ article.publication_date.strftime('%B %-d, %Y') }}</time></span>
+  {% else %}
+    <span>Created on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.strftime('%B %-d, %Y') }}</time></span>
+  {% endif %}
+{% endmacro %}
 
 {%- macro article_meta(article) -%}
   <p>
-    <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-    — by {% if article.author.profile.has_image %}
-      <img src={{ article.author.profile.image_url }} alt="Picture of {{ article.author }}">
-    {% else %}
-      {{ default_profile_picture() }}
-    {% endif %}
-    {{ article.author }}<br>
-    Reading time: {{ article.body|reading_time }} min
+    {{ article_publication_date(article) }} | Reading time: {{ article.body|reading_time }} min
   </p>
+  <div class=contributor-container>
+    <div class=author-container>
+      <h4>Words by:</h4>
+      {% for author in article.authors %}
+          <a href="{{ url_for('users.detail', id=author.pk) }}" class=author-link>
+            {% if author.profile.has_image %}
+              <img src={{ author.profile.image_url }} alt="Picture of {{ author }}">
+            {% else %}
+              {{ default_profile_picture() }}
+            {% endif %}
+            {{ author }}
+          </a>
+      {% endfor %}
+    </div>
+    {% if article.is_translation %}
+      <div class=translator-container>
+        <h4>Translation by:</h4>
+          {% for translator in article.translators -%}
+              <a href="{{ url_for('users.detail', id=translator.pk) }}" class=translator-link>
+                {% if translator.profile.has_image %}
+                  <img src={{ translator.profile.image_url }} alt="Picture of {{ translator }}">
+                {% else %}
+                  {{ default_profile_picture() }}
+                {% endif %}
+                {{ translator }}
+              </a>
+          {%- endfor %}
+      </div>
+    {% endif %}
+  </div>
 {%- endmacro %}
 
 {%- macro tags_fields(article=None) -%}
@@ -65,8 +96,11 @@
   <div class=article-detail>
     <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>
     <p>
-      <span>Published on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.date() }}</time></span>
-      — by <a href={{ article.author.detail_url }}>{{ article.author }}</a>
+      {{ article_publication_date(article) }}
+      — by
+      {% for author in article.authors %}
+        <a href={{ author.detail_url }}>{{ author }}</a>
+      {% endfor %}
     </p>
     <p class=tags-list>
       {% for tag in article.tags -%}

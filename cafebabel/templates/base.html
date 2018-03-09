@@ -8,6 +8,7 @@
 {% block metas_social %}{% endblock %}
 
 <link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
+{% block extra_head %}{% endblock %}
 
 <body class="{% block body_class %}{% endblock %}">
 
@@ -96,7 +97,7 @@
 {% include "security/_messages.html" %}
 
 <main>
-  <a href={{ url_for('cores.home') }} class=logo>
+  <a href={{ url_for('cores.home_lang', lang=current_language) }} class=logo>
     <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
   </a>
   <div id=content>

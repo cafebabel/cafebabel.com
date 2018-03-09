@@ -36,7 +36,8 @@ class Article(db.Document, UploadableImageMixin):
     body = db.StringField(required=True)
     status = db.StringField(default='draft')
     editor = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
-    author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
+    authors = db.ListField(db.ReferenceField(User,
+                                             reverse_delete_rule=db.PULL))
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
     tags = db.ListField(db.ReferenceField(Tag, reverse_delete_rule=PULL))
@@ -109,10 +110,13 @@ class Article(db.Document, UploadableImageMixin):
         if current_user.has_role('editor'):
             if not self.editor:
                 data['editor'] = current_user.id
-            data['author'] = User.objects.get(id=data['author'])
+            data['authors'] = [
+                User.objects.get(pk=pk)
+                for pk in request.form.getlist('authors')
+            ]
         else:
-            if data.get('author'):
-                del data['author']
+            if data.get('authors'):
+                del data['authors']
             if data.get('editor'):
                 del data['editor']
         self.tags = []

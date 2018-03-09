@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% import "articles/macros.html" as macros without context %}
-{% from "_meta-macro.html" import meta without context %}
+{% import "articles/macros.html" as macros %}
+{% from "_meta-macro.html" import meta %}
 
 {% block meta_title %}{{ article.title }}{% endblock %}
 {% block metas %}
   {{ meta('name=description', article.summary|striptags) }}
-  {{ meta('name=author', article.author) }}
+  {{ meta('name=author', article.authors|join(', ')) }}
 {% endblock %}
 
 {% block metas_social %}
-  {{ meta('property=article:author', article.author) }}
+  {{ meta('property=article:author', article.authors|join(', ')) }}
   {{ meta('property=og:image', absolute(article.image_url)) }}
   {{ meta('property=og:url', request.url) }}
   {{ meta('property=og:title', self.meta_title()) }}
@@ -83,27 +83,29 @@
 
     {{ article.body|markdown|rewrite_img_src }}
 
-  {% block share_nav %}
-  <nav class=share>
-    <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
-  </nav>
-  {% endblock %}
-
   {% if article.is_translation %}
-    <p>
-      Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a> by {{ article.translator }}.
+    <p class=translation-details>
+      Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
     </p>
   {% endif %}
 
   {% if translations_drafts %}
-    <p>Review this article in:</p>
+    <p class=translation-details>Review this article in:</p>
     <ul>
       {% for translation in translations_drafts %}
         <li>{{ translation.language }}: <a href={{ translation.detail_url }}>{{ translation.title }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}
+
+  {% block share_nav %}
+  <nav class=share>
+  Share this:
+    <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
+  </nav>
+  {% endblock %}
+
   {{ self.edit_button() }}
 
 </article>

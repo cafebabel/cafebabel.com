@@ -111,7 +111,7 @@ def test_translation_creation_already_existing(app, client, user, article):
     language = app.config['LANGUAGES'][1][0]
     translation = Translation(
         title='foo', summary='summary', body='bar',
-        original_article=article.id, translator=user.id, language=language,
+        original_article=article.id, translators=[user.id], language=language,
         status='published')
     translation.save()
     data = {
@@ -179,7 +179,9 @@ def test_translation_can_have_html_summary(client, translation):
 
 def test_translation_access_have_translator(client, translation):
     response = client.get(f'/fr/article/translation/{translation.id}/')
-    assert f'by {translation.translator}.' in response
+    translator = translation.translators[0]
+    assert (f'by <a href="/fr/profile/{translator.id}/">{translator}</a>.'
+            in response)
 
 
 def test_translation_access_published_should_return_404(client, translation):
@@ -237,11 +239,14 @@ def test_translation_published_should_have_translator(client, translation):
     translation.status = 'published'
     translation.save()
     response = client.get(f'/fr/article/{translation.slug}-{translation.id}/')
+    translator = translation.translators[0]
     assert response.status_code == HTTPStatus.OK
     assert ((f'Translated from '
              f'<a href="/en/article/draft/{translation.original_article.id}/">'
              f'article title') in response)
-    assert f'by {translation.translator}.' in response
+    assert (f'<a href="/fr/profile/{translator.id}/" class=translator-link>'
+            in response)
+    assert f'{translator}' in response
 
 
 def test_translation_published_should_have_reference(client, translation):
