@@ -184,10 +184,10 @@ def test_translation_access_have_translator(client, translation):
             in response)
 
 
-def test_translation_access_published_should_return_404(client, translation):
-    translation.status = 'published'
-    translation.save()
-    response = client.get(f'/fr/article/translation/{translation.id}/')
+def test_translation_access_published_should_return_404(
+        client, published_translation):
+    response = client.get(
+        f'/fr/article/translation/{published_translation.id}/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
@@ -229,34 +229,38 @@ def test_translation_update_values_should_redirect(client, user, translation):
             ['Your translation was successfully updated.'])
 
 
-def test_translation_published_should_return_200(client, translation):
-    translation.modify(status='published')
-    response = client.get(f'/fr/article/{translation.slug}-{translation.id}/')
+def test_translation_published_should_return_200(
+        client, published_translation):
+    response = client.get(
+        f'/fr/article/{published_translation.slug}-{published_translation.id}/'
+    )
     assert response.status_code == HTTPStatus.OK
 
 
-def test_translation_published_should_have_translator(client, translation):
-    translation.status = 'published'
-    translation.save()
-    response = client.get(f'/fr/article/{translation.slug}-{translation.id}/')
-    translator = translation.translators[0]
+def test_translation_published_should_have_translator(
+        client, published_translation):
+    response = client.get(
+        f'/fr/article/{published_translation.slug}-{published_translation.id}/'
+    )
+    translator = published_translation.translators[0]
+    published_article = published_translation.original_article
     assert response.status_code == HTTPStatus.OK
-    assert ((f'Translated from '
-             f'<a href="/en/article/draft/{translation.original_article.id}/">'
+    assert ((f'Translated from <a href="/en/article/'
+             f'{published_article.slug}-{published_article.id}/">'
              f'article title') in response)
     assert (f'<a href="/fr/profile/{translator.id}/" class=translator-link>'
             in response)
     assert f'{translator}' in response
 
 
-def test_translation_published_should_have_reference(client, translation):
-    translation.modify(status='published')
-    article = translation.original_article
-    article.modify(status='published')
-    response = client.get(f'/en/article/{article.slug}-{article.id}/')
+def test_translation_published_should_have_reference(
+        client, published_translation):
+    published_article = published_translation.original_article
+    response = client.get(
+        f'/en/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
     assert ((f'<li class=translated-language><a href='
-             f'/fr/article/title-{translation.id}/>') in response)
+             f'/fr/article/title-{published_translation.id}/>') in response)
 
 
 def test_article_model_is_translated_in(translation):
@@ -276,3 +280,14 @@ def test_translation_editing_language_prevents_duplicates(translation):
     with pytest.raises(mongoengine.errors.NotUniqueError) as error:
         translation.save()
     assert str(error.value) == 'This article already exists in this language.'
+
+
+def test_translation_published_translation_links_defaults(
+        app, published_translation):
+    language = app.config['LANGUAGES'][2][0]
+    translation_url = published_translation.get_published_translation_url
+    published_article = published_translation.original_article
+    assert translation_url(published_translation.language) is None
+    assert translation_url(language) is None
+    assert (translation_url(published_article.language) ==
+            f'/en/article/{published_article.slug}-{published_article.id}/')

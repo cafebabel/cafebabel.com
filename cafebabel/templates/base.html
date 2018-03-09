@@ -59,23 +59,7 @@
       {% if lang_code != current_language %}
         {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
         {% if article and article.id %}
-          {% if article.is_translated_in(lang_code) %}
-            {% with translation = article.get_translation(lang_code) %}
-              {% if translation.is_published %}
-                {% set lang_url = translation.detail_url %}
-              {% endif %}
-            {% endwith %}
-          {% elif article.is_translation %}
-            {% if article.original_article.language == lang_code %}
-              {% set lang_url = article.original_article.detail_url %}
-            {% elif article.original_article.is_translated_in(lang_code) %}
-              {% with translation = article.original_article.get_translation(lang_code) %}
-                {% if translation.is_published %}
-                  {% set lang_url = translation.detail_url %}
-                {% endif %}
-              {% endwith %}
-            {% endif %}
-          {% endif %}
+          {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
         {% endif %}
         <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
       {% endif %}

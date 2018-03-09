@@ -324,19 +324,17 @@ def test_delete_inexistent_article_should_return_404(client, editor, article):
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_access_published_article_should_link_translations(client, article,
-                                                           translation):
-    article.status = 'published'
-    article.save()
-    translation.status = 'published'
-    translation.save()
-    response = client.get(f'/en/article/{article.slug}-{article.id}/')
+def test_access_published_article_should_link_translations(
+        client, published_article, published_translation):
+    response = client.get(
+        f'/en/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
     assert ((f'<li class=translated-language><a href=/fr/article/'
-             f'title-{translation.id}/>fr</a></li>') in response)
+             f'title-{published_translation.id}/>fr</a></li>') in response)
     assert ((f'<li class=to-translate-languages>'
              f'<a href="{url_for("translations.create")}'
-             f'?lang=es&original={article.id}">es</a></li>') in response)
+             f'?lang=es&original={published_article.id}">es</a></li>')
+            in response)
 
 
 def test_article_should_know_its_translations(client, article, translation):
@@ -427,3 +425,27 @@ def test_article_detail_contains_tags(client, app, tag, published_article):
     assert response.status_code == HTTPStatus.OK
     assert '<a href=/en/article/tag/wonderful/>Wonderful</a>' in response
     assert '<a href=/en/article/tag/sensational/>Sensational</a>' in response
+
+
+def test_article_published_translation_links_default(app, published_article):
+    translation_url = published_article.get_published_translation_url
+    assert translation_url(published_article.language) is None
+    language = app.config['LANGUAGES'][1][0]
+    assert translation_url(language) is None
+
+
+def test_article_published_translation_links_with_draft_translation(
+        app, published_article, translation):
+    translation_url = published_article.get_published_translation_url
+    assert translation_url(published_article.language) is None
+    language = app.config['LANGUAGES'][1][0]
+    assert translation_url(language) is None
+
+
+def test_article_published_translation_links_with_published_translation(
+        app, published_article, published_translation):
+    translation_url = published_article.get_published_translation_url
+    assert translation_url(published_article.language) is None
+    language = app.config['LANGUAGES'][1][0]
+    assert (translation_url(language) ==
+            f'/fr/article/title-{published_translation.id}/')
