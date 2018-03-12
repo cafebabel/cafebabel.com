@@ -12,7 +12,7 @@ def test_proposal_display_form(app, client):
 def test_proposal_display_emails(app, client):
     response = client.get('/en/article/proposal/new/')
     assert response.status_code == 200
-    assert "'editors@c&amp;#x61;feb&amp;#x61;bel&amp;#46;com'" in response
+    assert "mailto:editors@c&amp;#x61;feb&amp;#x61;bel&amp;#46;com" in response
 
 
 def test_proposal_send_email(app, client):
