@@ -201,10 +201,8 @@ def test_author_cannot_edit_draft(client, user, article):
     assert response.status_code == HTTPStatus.FORBIDDEN
 
 
-def test_access_published_draft_should_return_404(client, article):
-    article.status = 'published'
-    article.save()
-    response = client.get(f'/en/article/draft/{article.id}/')
+def test_access_published_article_should_return_404(client, published_article):
+    response = client.get(f'/en/article/draft/{published_article.id}/')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
