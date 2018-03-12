@@ -48,7 +48,7 @@ main {
 
 #content {
   max-width: 120rem;
-  margin: 10rem auto 70rem auto;
+  margin: 10rem auto 7rem auto;
   padding: 2rem 2rem 7rem 2rem;
 }
 
@@ -2255,6 +2255,61 @@ a.section-link.creative {
 }
 
 /* Footer */
+
+#static-pages-links {
+  margin-bottom: 70rem;
+  background-color: #00283c;
+  height: 10rem;
+  padding: 2.2rem;
+}
+
+#static-pages-links a {
+  color: #fff;
+}
+
+#static-pages-links a:after {
+  background-color: #fff;
+}
+
+#static-pages-links ul {
+  margin: 0 auto;
+  max-width: 75rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+#static-pages-links ul li {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+
+#static-pages-links ul li ul,
+#static-pages-links ul li ul li {
+  display: block;
+}
+
+#static-pages-links ul li ul li {
+  padding: 0.5rem 0;
+}
+
+#static-pages-links ul li ul li ul,
+#static-pages-links ul li ul li ul li {
+  display: inline-block;
+}
+
+#static-pages-links ul li ul li ul li {
+  padding: 0 0.5rem 0 0;
+}
+
+#static-pages-links ul li ul li ul li a:hover:after {
+  width: 0;
+}
+
+#static-pages-links ul li ul li ul li a:hover {
+  color: #bde513;
+}
 
 footer {
   width: 100%;
