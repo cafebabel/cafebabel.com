@@ -56,7 +56,6 @@ class BaseConfig:
     MAIL_DEFAULT_SENDER = None
 
     # Prevent writing clear email for avoiding robots on Github sources.
-    EDITORS_EMAIL_DEFAULT = '@'.join(['editors', 'cafebabel.com'])
     EDITOR_EMAILS = {
         'fr': '@'.join(['redaction', 'cafebabel.com']),
         'en': '@'.join(['editors', 'cafebabel.com']),

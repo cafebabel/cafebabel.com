@@ -7,17 +7,6 @@
   <h1>Contribute</h1>
   <h3>Wanna be part of Cafébabel project? That’s the right place</h3>
   <form action=. method=post>
-    <div class=select>
-      <label for=field-language>Mother tongue
-        <select name=language id=field-language required>
-          <option value=en>English</option>
-          <option value=fr>French</option>
-          <option value=it>Italian</option>
-          <option value=de>German</option>
-          <option value=es>Spanish</option>
-        </select>
-      </label>
-    </div>
     <label for=field_name>Name *</label><input name=name id=field_name required>
     <label for=field_email>Contact *</label><input type=email name=email id=field_email required>
     <label for=field_city>City</label><input name=city id=field_city>
@@ -57,15 +46,10 @@
 
     <button type=submit>Suggest this article</button>
   </form>
-  <a class="button proposal-email" href=m&#x61;ilto:{{ EDITORS_EMAIL_DEFAULT|urlencode|obfuscate_email|safe }}>Or send your proposal by email</a>
+  <a class="button proposal-email" href="m&#x61;ilto:{{ editor_email }}">Or send your proposal by email</a>
   <script>
-     const editorEmails = {{ editor_emails|to_json }}
-     const link = document.querySelector('.proposal-email')
-     const unobfuscateEmail = (email) => email.replace(/&#46;/g, '.').replace(/&#x61;/g, 'a')
-     document.querySelector('#field-language').addEventListener('change', (event) => {
-         const selectedLanguage = event.target.value
-         link.href = `mailto:${unobfuscateEmail(editorEmails[selectedLanguage])}`
-     })
+    const email = document.querySelector('.proposal-email').href
+    document.querySelector('.proposal-email').href = email.replace(/&#46;/g, '.').replace(/&#x61;/g, 'a')
   </script>
 </section>
 {% endblock %}
