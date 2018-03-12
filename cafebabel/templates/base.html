@@ -82,22 +82,23 @@
 {% block body %}{% endblock %}
   </div>
   <div id=static-pages-links>
+    {% set static_pages = static_pages_for(current_language) %}
     <ul>
       <li>
         <ul>
-          <li><a href=#>About</a></li>
-          <li><a href=#>Contact</a></li>
+          <li><a href={{ static_pages.about }}>About</a></li>
+          <li><a href={{ static_pages.contact }}>Contact</a></li>
         </ul>
       </li>
       <li>
         <ul>
-          <li><a href=#>Editorial vision</a></li>
-          <li><a href=#>FAQ</a></li>
+          <li><a href={{ static_pages.vision }}>Editorial vision</a></li>
+          <li><a href={{ static_pages.faq }}>FAQ</a></li>
         </ul>
       </li>
       <li>
         <ul>
-          <li><a href=#>Terms and conditons</a></li>
+          <li><a href={{ static_pages.terms }}>Terms and conditons</a></li>
           <li>
             <ul>
               <li><a href=https://www.facebook.com/cafebabelenglish class=icon-facebook></a></li>

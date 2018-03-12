@@ -86,3 +86,14 @@ def rewrite_img_src(content):
     if media_url:
         return Markup(str(content).replace('src="/', f'src="{media_url}/'))
     return content
+
+
+def static_pages_for(language):
+    from ..articles.models import Article  # Circular imports.
+    static_pages_slugs = current_app.config.get('STATIC_PAGES_SLUGS')
+    static_pages = {slug: '#' for slug in static_pages_slugs}
+    articles = (Article.objects.published(language)
+                       .filter(slug__in=static_pages_slugs))
+    for article in articles:
+        static_pages[article.slug] = article.detail_url
+    return static_pages

@@ -24,6 +24,7 @@ class BaseConfig:
         ('pl', 'Polszczyzna'),
     )
     CATEGORIES = ['impact', 'experience', 'raw', 'creative']
+    STATIC_PAGES_SLUGS = ['about', 'contact', 'vision', 'faq', 'terms']
 
     SECURITY_PASSWORD_SALT = 'and pepper'
     SECURITY_CONFIRMABLE = False

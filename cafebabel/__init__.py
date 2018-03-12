@@ -172,4 +172,5 @@ def register_context_processors(app):
             get_year=lambda: datetime.now().year,
             current_language=helpers.current_language(),
             absolute=helpers.absolute,
+            static_pages_for=helpers.static_pages_for,
         )
