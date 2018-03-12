@@ -9,6 +9,7 @@
 {% block metas_social %}{% endblock %}
 
 <link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
+{% block extra_head %}{% endblock %}
 
 <body class="{% block body_class %}{% endblock %}">
 
@@ -17,7 +18,7 @@
 <nav>
   <ul>
     {% if current_user.is_authenticated %}
-        <li><a href={{ url_for('users.detail', id=current_user.id) }}>Profile</a></li>
+        <li><a href={{ current_user.detail_url }}>Profile</a></li>
         <li><a href={{ url_for('security.logout') }}>Log out</a></li>
         <li><a href={{ url_for('security.change_password') }}>Change password</a></li>
     {% else %}
@@ -56,7 +57,13 @@
 <nav>
   <ul>
     {% for lang_code, lang_label in get_languages() %}
-      <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
+      {% if lang_code != current_language %}
+        {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
+        {% if article and article.id %}
+          {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
+        {% endif %}
+        <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
+      {% endif %}
     {% endfor %}
   </ul>
 </nav>

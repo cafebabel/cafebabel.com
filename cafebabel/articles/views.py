@@ -5,7 +5,6 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
 
 from ..core.exceptions import ValidationError
 from ..core.helpers import editor_required
-from ..users.models import User
 from .models import Article
 from .translations.models import Translation
 
@@ -17,9 +16,7 @@ articles = Blueprint('articles', __name__)
 def detail(slug, article_id):
     article = Article.objects.get_or_404(id=article_id, status='published')
     if article.slug != slug:
-        return redirect(
-            url_for('.detail', article_id=article.id, slug=article.slug),
-            code=HTTPStatus.MOVED_PERMANENTLY)
+        return redirect(article.detail_url, code=HTTPStatus.MOVED_PERMANENTLY)
     if article.is_translation:
         translations = Translation.objects(
             original_article=article.original_article.id)
@@ -55,9 +52,7 @@ def edit(article_id):
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
 
-    authors = User.objects.all()
-    return render_template(
-        'articles/edit.html', article=article, authors=authors)
+    return render_template('articles/edit.html', article=article)
 
 
 @articles.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
@@ -66,7 +61,7 @@ def delete(article_id):
     article = Article.objects.get_or_404(id=article_id)
     article.delete()
     flash('Article was deleted.', 'success')
-    return redirect(url_for('cores.home'))
+    return redirect(url_for('cores.home_lang', lang=article.language))
 
 
 @articles.route('/to-translate/')

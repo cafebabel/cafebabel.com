@@ -36,7 +36,8 @@ class Article(db.Document, UploadableImageMixin):
     body = db.StringField(required=True)
     status = db.StringField(default='draft')
     editor = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
-    author = db.ReferenceField(User, reverse_delete_rule=db.NULLIFY)
+    authors = db.ListField(db.ReferenceField(User,
+                                             reverse_delete_rule=db.PULL))
     creation_date = db.DateTimeField(default=datetime.datetime.utcnow)
     publication_date = db.DateTimeField()
     tags = db.ListField(db.ReferenceField(Tag, reverse_delete_rule=PULL))
@@ -66,10 +67,11 @@ class Article(db.Document, UploadableImageMixin):
     @property
     def detail_url(self):
         if self.is_draft:
-            return url_for('drafts.detail', draft_id=self.id)
+            return url_for('drafts.detail', draft_id=self.id,
+                           lang=self.language)
         else:
             return url_for('articles.detail', slug=self.slug,
-                           article_id=self.id)
+                           article_id=self.id, lang=self.language)
 
     @property
     def is_draft(self):
@@ -93,6 +95,21 @@ class Article(db.Document, UploadableImageMixin):
             self._translations = {t.language: t for t in translations}
         return self._translations.get(language)
 
+    def get_published_translation_url(self, language):
+        if language == self.language:
+            return
+        if self.is_translated_in(language):
+            translation = self.get_translation(language)
+            if translation.is_published:
+                return translation.detail_url
+        elif self.is_translation:
+            if self.original_article.language == language:
+                return self.original_article.detail_url
+            elif self.original_article.is_translated_in(language):
+                translation = self.original_article.get_translation(language)
+                if translation.is_published:
+                    return translation.detail_url
+
     @classmethod
     def update_publication_date(cls, sender, document, **kwargs):
         if document.is_published and not document.publication_date:
@@ -108,10 +125,13 @@ class Article(db.Document, UploadableImageMixin):
         if current_user.has_role('editor'):
             if not self.editor:
                 data['editor'] = current_user.id
-            data['author'] = User.objects.get(id=data['author'])
+            data['authors'] = [
+                User.objects.get(pk=pk)
+                for pk in request.form.getlist('authors')
+            ]
         else:
-            if data.get('author'):
-                del data['author']
+            if data.get('authors'):
+                del data['authors']
             if data.get('editor'):
                 del data['editor']
         self.tags = []

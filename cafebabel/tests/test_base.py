@@ -1,7 +1,8 @@
 from http import HTTPStatus
 
+from flask import abort
+
 from cafebabel.articles.tags.models import Tag
-from flask import abort, url_for
 
 
 def test_homepage_is_redirecting_to_default_language(client):
@@ -23,18 +24,13 @@ def test_homepage_is_displaying(client):
 def test_homepage_contains_published_articles(client, published_article):
     response = client.get('/en/')
     assert published_article.title in response
-    assert (url_for(
-        'articles.detail',
-        slug=published_article.slug, article_id=published_article.pk)
-        in response)
+    assert published_article.detail_url in response
 
 
 def test_homepage_does_not_contain_draft_articles(client, article):
     response = client.get('/en/')
     assert article.title not in response
-    assert (url_for(
-        'articles.detail', slug=article.slug, article_id=article.pk)
-        not in response)
+    assert article.detail_url not in response
 
 
 def test_homepage_contains_categories(app, client, published_article):
@@ -43,13 +39,13 @@ def test_homepage_contains_categories(app, client, published_article):
     impact = Tag.objects.create(name='Impact', language=language)
     response = client.get('/en/')
     assert impact.name in response
-    assert url_for('tags.detail', slug=impact.slug) in response
+    assert impact.detail_url in response
 
 
 def test_homepage_contains_authors_links(client, published_article):
     response = client.get('/en/')
-    assert (f'<a href=/en/profile/{published_article.author.pk}/>'
-            f'{published_article.author.profile.name}</a>' in response)
+    assert (f'<a href=/en/profile/{published_article.authors[0].pk}/>'
+            f'{published_article.authors[0].profile.name}</a>' in response)
 
 
 def test_logo_from_home_is_redirecting_to_localized_homepage(client):

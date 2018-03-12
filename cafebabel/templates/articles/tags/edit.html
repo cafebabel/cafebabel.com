@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "articles/macros.html" as macros without context %}
+{% import "articles/macros.html" as macros %}
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
@@ -8,7 +8,7 @@
 
 {% block body_class %}tag-page-edit{% endblock %}
 {% block body %}
-<form method=post action={{ url_for('tags.edit', slug=tag.slug) }} enctype=multipart/form-data>
+<form method=post action={{ tag.edit_url }} enctype=multipart/form-data>
   <input type=hidden name=slug value="{{ tag.slug }}">
   {{ macros.image_upload(tag) }}
   <div class=edit-tag-detail-container>
