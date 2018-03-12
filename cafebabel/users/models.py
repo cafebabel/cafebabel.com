@@ -1,11 +1,10 @@
 import datetime
 
-from flask import url_for
 from flask_security import RoleMixin, UserMixin
 from flask_login import current_user
 from mongoengine import signals
 
-from ..core.helpers import current_language
+from ..core.helpers import lang_url_for
 from ..core.mixins import UploadableImageMixin
 from .. import db
 
@@ -52,7 +51,7 @@ class User(db.Document, UserMixin):
 
     @property
     def detail_url(self):
-        return url_for('users.detail', id=self.id, lang=current_language())
+        return lang_url_for('users.detail', id=self.id)
 
     def is_me(self):
         return hasattr(current_user, 'id') and self.id == current_user.id
