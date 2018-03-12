@@ -1,5 +1,5 @@
 {% extends "articles/drafts/create.html" %}
 {% from "articles/macros.html" import image_upload %}
 
-{% block form_action %}{{ url_for('drafts.edit', draft_id=article.id, lang=current_language) }}{% endblock %}
+{% block form_action %}{{ lang_url_for('drafts.edit', draft_id=article.id) }}{% endblock %}
 {% block form_image_field %}{{ image_upload(article) }}{% endblock %}

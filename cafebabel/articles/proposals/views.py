@@ -1,9 +1,9 @@
 from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, url_for)
+                   request)
 from flask_mail import Message
 
 from ... import mail
-from ...core.helpers import current_language, obfuscate_email
+from ...core.helpers import current_language, lang_url_for, obfuscate_email
 
 proposals = Blueprint('proposals', __name__)
 
@@ -35,7 +35,7 @@ def create():
         )
         mail.send(msg)
         flash('Your proposal was successfully sent.', 'success')
-        return redirect(url_for('cores.home_lang', lang=current_language()))
+        return redirect(lang_url_for('cores.home_lang'))
 
     return render_template(
         'articles/proposals/create.html',

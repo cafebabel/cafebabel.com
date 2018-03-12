@@ -1,12 +1,12 @@
 from http import HTTPStatus
 
 from flask import (Blueprint, abort, current_app, flash, jsonify, redirect,
-                   render_template, request, url_for)
+                   render_template, request)
 from flask_login import current_user, login_required
 from werkzeug import exceptions
 
 from ..articles.models import Article
-from ..core.helpers import allowed_file, current_language, file_exceeds
+from ..core.helpers import allowed_file, lang_url_for, file_exceeds
 from .models import User
 
 users = Blueprint('users', __name__)
@@ -58,15 +58,13 @@ def edit(id):
                 message = ('There was an error in your profile submission: '
                            'No selected file.')
                 flash(message, 'error')
-                return redirect(url_for('users.edit', id=user.id,
-                                        language=current_language()))
+                return redirect(lang_url_for('users.edit', id=user.id))
             if not allowed_file(image.filename):
                 # TODO: https://github.com/cafebabel/cafebabel.com/issues/187
                 message = ('There was an error in your profile submission: '
                            'Unallowed extension.')
                 flash(message, 'error')
-                return redirect(url_for('users.edit', id=user.id,
-                                        language=current_language()))
+                return redirect(lang_url_for('users.edit', id=user.id))
             user.profile.attach_image(image)
         user.save()
         flash('Your profile was successfully saved.')
