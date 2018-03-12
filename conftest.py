@@ -86,3 +86,17 @@ def translation(user, article):
         authors=[user],
         translators=[user.id],
         original_article=article.id)
+
+
+@pytest.fixture
+def published_translation(user, published_article):
+    language = test_app.config['LANGUAGES'][1][0]
+    return Translation.objects.create(
+        title='title',
+        summary='summary text',
+        language=language,
+        body='body text',
+        authors=[user],
+        translators=[user.id],
+        original_article=published_article.id,
+        status='published')

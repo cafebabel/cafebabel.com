@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from flask import abort, current_app
+from flask import abort, current_app, url_for
 from flask_mongoengine import BaseQuerySet
 from mongoengine import signals
 
@@ -40,6 +40,14 @@ class Tag(db.Document, UploadableImageMixin):
     def update_slug(cls, sender, document, **kwargs):
         if not document.slug:
             document.slug = slugify(document.name)
+
+    @property
+    def detail_url(self):
+        return url_for('tags.detail', slug=self.slug, lang=self.language)
+
+    @property
+    def edit_url(self):
+        return url_for('tags.edit', slug=self.slug, lang=self.language)
 
     @property
     def upload_subpath(self):
