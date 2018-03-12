@@ -12,15 +12,14 @@ def test_proposal_display_form(app, client):
 def test_proposal_display_emails(app, client):
     response = client.get('/en/article/proposal/new/')
     assert response.status_code == 200
-    assert 'href=m&#x61;ilto:editors%40c&#x61;feb&#x61;bel&#46;com' in response
-    assert '"fr": "red&#x61;ction@c&#x61;feb&#x61;bel&#46;com"' in response
+    assert ('m&#x61;ilto:editors@c&amp;#x61;feb&amp;#x61;bel&amp;#46;com'
+            in response)
 
 
 def test_proposal_send_email(app, client):
     mail.init_app(app)  # Re-load using test configuration.
     with mail.record_messages() as outbox:
-        response = client.post('/en/article/proposal/new/', data={
-            'language': app.config['LANGUAGES'][0][0],
+        response = client.post('/de/article/proposal/new/', data={
             'email': 'email@example.com',
             'topic': 'Topic',
             'name': 'Name',
@@ -35,7 +34,7 @@ def test_proposal_send_email(app, client):
         assert len(outbox) == 1
         assert outbox[0].subject == 'Article proposal: Topic'
         assert outbox[0].body == f'''
-Language: {app.config['LANGUAGES'][0][0]}
+Language: de
 Name: Name
 Email: email@example.com
 City: City
