@@ -5,12 +5,9 @@ class Tags {
       input => input.value
     )
   }
-  get languagesDom() {
-    return document.querySelector('#language')
-  }
-  
+
   get language() {
-    return this.languagesDom.options[this.languagesDom.selectedIndex].value
+    return document.querySelector('html').getAttribute('lang') || 'en'
   }
   get list() {
     return this.context.querySelector('.tags-list')
