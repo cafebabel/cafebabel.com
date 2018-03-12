@@ -4,7 +4,7 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
 
 from ..core.exceptions import ValidationError
-from ..core.helpers import editor_required
+from ..core.helpers import editor_required, current_language
 from .models import Article
 from .translations.models import Translation
 
@@ -69,17 +69,17 @@ def delete(article_id):
 @articles.route('/to-translate/')
 def to_translate():
     languages = dict(current_app.config['LANGUAGES'])
-    languages_keys = list(languages.keys())
-    from_language = request.args.get('from', languages_keys[0])
-    to_language = request.args.get('to', languages_keys[1])
-    if (from_language not in languages_keys or
-            to_language not in languages_keys):
+    languages_codes = list(languages.keys())
+    from_lang = current_language()
+    default_lang = (languages_codes[0]
+                    if languages_codes[0] != from_lang else languages_codes[1])
+    to_lang = request.args.get('lang', default_lang)
+    if to_lang not in languages_codes:
         abort(HTTPStatus.BAD_REQUEST,
               (f'You must specify valid languages. '
-               f'`{from_language}` or `{to_language}` are not allowed, '
-               f'only {languages_keys} are allowed for now.'))
-    articles = Article.objects.filter(language=from_language).hard_limit()
+               f'`{to_lang}` is not allowed, only {languages} are allowed '
+               'for now.'))
+    articles = Article.objects.filter(language=from_lang).hard_limit()
     return render_template(
         'articles/to-translate.html', articles=articles,
-        from_language_code=from_language,
-        to_language_code=to_language, to_language_label=languages[to_language])
+        language_code=to_lang, language_label=languages[to_lang])
