@@ -1,7 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request
 
-from ...core.helpers import editor_required, current_language
-from ...users.models import User
+from ...core.helpers import editor_required
 from ..models import Article
 
 drafts = Blueprint('drafts', __name__)
