@@ -46,10 +46,10 @@
 
     <button type=submit>Suggest this article</button>
   </form>
-  <a class="button proposal-email">Or send your proposal by email</a>
+  <a class="button proposal-email" href="mailto:{{ editor_email }}">Or send your proposal by email</a>
   <script>
-    const editorEmail = '{{ editor_email }}'
-    document.querySelector('.proposal-email').href = `mailto:${editorEmail.replace(/&amp;#46;/g, '.').replace(/&amp;#x61;/g, 'a')}`
+    const email = document.querySelector('.proposal-email').href
+    document.querySelector('.proposal-email').href = email.replace(/&#46;/g, '.').replace(/&#x61;/g, 'a')
   </script>
 </section>
 {% endblock %}

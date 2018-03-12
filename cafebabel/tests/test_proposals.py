@@ -18,7 +18,7 @@ def test_proposal_display_emails(app, client):
 def test_proposal_send_email(app, client):
     mail.init_app(app)  # Re-load using test configuration.
     with mail.record_messages() as outbox:
-        response = client.post('/en/article/proposal/new/', data={
+        response = client.post('/de/article/proposal/new/', data={
             'email': 'email@example.com',
             'topic': 'Topic',
             'name': 'Name',
@@ -33,7 +33,7 @@ def test_proposal_send_email(app, client):
         assert len(outbox) == 1
         assert outbox[0].subject == 'Article proposal: Topic'
         assert outbox[0].body == f'''
-Language: en
+Language: de
 Name: Name
 Email: email@example.com
 City: City
