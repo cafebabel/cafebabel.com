@@ -33,7 +33,7 @@ def test_article_with_non_ascii_title(published_article):
 
 def test_published_article_should_display_content(client, published_article,
                                                   user):
-    published_article.author = user
+    published_article.authors = [user]
     response = client.get(f'/en/article/{published_article.slug}-'
                           f'{published_article.id}/')
     assert response.status_code == 200
@@ -42,10 +42,11 @@ def test_published_article_should_display_content(client, published_article,
     assert f'<meta name=description content="summary text">' in response
     assert f'<div class=summary><p>summary text</p></div>' in response
     assert f'<p>{published_article.body}</p>' in response
-    assert (f'<time pubdate="{published_article.creation_date.date()}">'
-            f'{published_article.creation_date.date()}</time>' in response)
+    assert (f'<time pubdate="{published_article.publication_date.date()}">'
+            f'{published_article.publication_date.strftime("%B %-d, %Y")}'
+            '</time>' in response)
     assert f'<span>{published_article.language}</span>' in response
-    assert published_article.author.profile.name in response
+    assert published_article.authors[0].profile.name in response
     assert ('href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
             f'en%2Farticle%2F{published_article.slug}-{published_article.id}'
             f'%2F&text={published_article.title}&via=cafebabel_eng"'
@@ -61,7 +62,7 @@ def test_published_article_should_display_content(client, published_article,
 
 def test_published_article_can_have_html_summary(client, published_article,
                                                  user):
-    published_article.author = user
+    published_article.authors = [user]
     published_article.modify(summary='<p>summary text</p>')
     response = client.get(f'/en/article/{published_article.slug}-'
                           f'{published_article.id}/')
@@ -129,7 +130,7 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     login(client, editor.email, 'password')
     data = {
         'title': 'updated',
-        'author': user.id,
+        'authors': user.id,
         'language': app.config['LANGUAGES'][1][0],
     }
     response = client.post(f'/en/article/{published_article.id}/edit/',
@@ -138,7 +139,22 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
     assert published_article.title == 'updated'
-    assert published_article.author == user
+    assert published_article.authors == [user]
+
+
+def test_update_published_article_with_many_authors(app, client, user, user2,
+                                                    editor, published_article):
+    login(client, editor.email, 'password')
+    data = {
+        'authors': [user.id, user2.id],
+        'language': app.config['LANGUAGES'][1][0],
+    }
+    response = client.post(f'/en/article/{published_article.id}/edit/',
+                           data=data, follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert get_flashed_messages() == ['Your article was successfully saved.']
+    published_article.reload()
+    assert published_article.authors == [user, user2]
 
 
 def test_update_published_article_to_draft_redirect(app, client, user, editor,
@@ -146,7 +162,7 @@ def test_update_published_article_to_draft_redirect(app, client, user, editor,
     login(client, editor.email, 'password')
     data = {
         'title': 'updated',
-        'author': user.id,
+        'authors': user.id,
         'language': app.config['LANGUAGES'][1][0],
         'status': 'draft'
     }
@@ -160,7 +176,7 @@ def test_update_published_article_with_tag(app, client, user, editor, tag,
     login(client, editor.email, 'password')
     data = {
         'title': 'updated',
-        'author': user.id,
+        'authors': user.id,
         'language': app.config['LANGUAGES'][0][0],
         'tag-1': tag.name
     }
@@ -179,7 +195,7 @@ def test_update_published_article_with_unkown_tag(app, client, user, editor,
     tag2 = Tag.objects.create(name='Sensational', language=language)
     data = {
         'title': 'updated',
-        'author': user.id,
+        'authors': user.id,
         'language': language,
         'tag-1': tag.name,
         'tag-2': tag2.name
@@ -199,7 +215,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
         image_content = BytesIO(content.read())
     data = {
         'title': 'updated',
-        'author': user.id,
+        'authors': user.id,
         'image': (image_content, 'image-name.jpg'),
     }
     response = client.post(f'/en/article/{published_article.id}/edit/',
@@ -209,7 +225,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
     assert get_flashed_messages() == ['Your article was successfully saved.']
     published_article.reload()
     assert published_article.title == 'updated'
-    assert published_article.author == user
+    assert published_article.authors == [user]
     assert published_article.editor == editor
     assert published_article.image_filename == '/articles/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') / 'articles' /
@@ -225,7 +241,7 @@ def test_update_article_with_image_unallowed_extension(
         image_content = BytesIO(content.read())
     data = {
         'title': 'updated',
-        'author': user.id,
+        'authors': user.id,
         'image': (image_content, 'image-name.zip'),
     }
     assert 'zip' not in app.config.get('ALLOWED_EXTENSIONS')
@@ -247,7 +263,7 @@ def test_update_article_with_user_should_return_403(client, user,
     login(client, user.email, 'password')
     data = {
         'title': 'updated',
-        'author': user.id
+        'authors': user.id,
     }
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data)
@@ -261,7 +277,7 @@ def test_update_unpublished_article_should_return_404(client, user, editor,
     login(client, editor.email, 'password')
     data = {
         'title': 'updated',
-        'author': user.id
+        'authors': user.id,
     }
     response = client.post(f'/en/article/{article.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.NOT_FOUND

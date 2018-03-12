@@ -61,7 +61,7 @@ def articles_fixtures(app):
         Article.objects.create(
             title=ARTICLE['title'],
             summary=ARTICLE['summary'],
-            author=user,
+            authors=[user],
             editor=editor,
             language=app.config['LANGUAGES'][0][0],
             body=ARTICLE['body'])

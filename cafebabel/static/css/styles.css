@@ -226,23 +226,41 @@ select,
 textarea {
   color: #00283c;
   font-family: 'vremena_grotesk', sans-serif;
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   line-height: 1.5;
   font-weight: 200;
   font-style: normal;
   border-radius: 0;
 }
 
+@media screen and (min-width: 750px) {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-size: 1.9rem;
+  }
+}
+
 /* Titles */
 
 h1,
 article h1:first-of-type {
-  font-size: 4.2rem;
+  font-size: 3rem;
   margin: 4rem 0;
   border: 0.3rem solid #00283c;
   padding: 5rem;
-  line-height: 6.3rem;
+  line-height: 3.5rem;
   text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+  h1,
+  article h1:first-of-type {
+    font-size: 4.2rem;
+    line-height: 6.3rem;
+  }
 }
 
 h2,
@@ -1066,6 +1084,14 @@ h1.edit input {
   text-align: center;
 }
 
+.create-article-page .select:nth-child(2) select {
+  margin-bottom: 5rem;
+}
+
+.select-multi {
+  margin-bottom: 5rem;
+}
+
 .create-article-page .tags .tag-container,
 .create-article-page .tags label {
   max-width: 75rem;
@@ -1165,7 +1191,11 @@ h1.edit input {
 }
 
 .create-article-page select {
-  margin-bottom: 0;
+  margin: 0 0 2rem 0;
+}
+
+.select label:after {
+  top: 1.2rem;
 }
 
 select#author {
@@ -1173,9 +1203,7 @@ select#author {
 }
 
 @media screen and (min-width: 750px) {
-  .create-article-page .select:last-child select {
-    margin-bottom: 5rem;
-  }
+<<<<<<< HEAD
 
   select#author {
     min-width: 75rem;
@@ -1519,6 +1547,10 @@ select#author {
   margin: 0 auto 5rem auto;
 }
 
+.article-page h1:first-of-type {
+  padding: 3rem 1.5rem 7rem;
+}
+
 .article-page article h2 {
   text-align: center;
 }
@@ -1528,7 +1560,7 @@ select#author {
 }
 
 .create-article-page .file img,
-.article-page article img:first-of-type {
+.article-page article + img {
   margin-left: 50%;
   transform: translateX(-50%);
 }
@@ -1545,19 +1577,73 @@ select#author {
 
 .article-page article h1 + p {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -10rem;
+  font-size: 1.5rem;
 }
 
 .article-page article h1 + p span {
   font-style: italic;
   font-family: serif;
-  font-size: 1.9rem;
 }
 
-.article-page article p span + img {
-  width: 8rem;
+.article-page .contributor-container {
+  display: inline-block;
+  margin-bottom: 3rem;
+  font-size: 1.3rem;
+}
+
+@media screen and (max-width: 750px) {
+  .article-page .contributor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.article-page .author-container,
+.article-page .translator-container {
+  display: block;
+}
+
+.article-page .contributor-container h4 {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 200;
+  margin-bottom: 1.3rem;
+}
+
+.article-page .translator-container {
+  padding: 3rem 0 0;
+}
+
+.article-page .author-link,
+.article-page .translator-link {
+  display: inline-block;
+  margin: 0.5rem;
+  max-width: 19rem;
+  text-align: center;
+  vertical-align: top;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.article-page .author-link img,
+.article-page .translator-link img {
+  width: 5.5rem;
   border-radius: 50%;
-  margin: 1rem auto 0.5rem;
+  margin-left: 50%;
+  margin-bottom: 0.5rem;
+  transform: translateX(-50%);
+}
+
+.article-page .author-container + p {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .article-page .tags-list {
@@ -1575,7 +1661,7 @@ select#author {
 .article-page article .summary > p {
   max-width: 100%;
   margin: 3rem auto 5rem auto;
-  font-size: 2.8rem;
+  font-size: 2rem;
   font-weight: 200;
 }
 
@@ -1587,25 +1673,36 @@ textarea#body {
   min-height: 30rem;
 }
 
-.article-language-selector {
-  display: inline-block;
-  transform: translateX(-50%);
-  margin-left: 50%;
+.article-language-selector,
+p.translation-language {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 200;
 }
 
 .article-language-selector li {
   display: inline-block;
   margin: 0 0.2rem;
   text-align: center;
+  z-index: 0;
+}
+
+.translation-language span {
+  text-align: center;
+  margin-left: 1rem;
 }
 
 .article-language-selector li a,
-.article-language-selector li span {
-  padding: 1rem;
+.article-language-selector li span,
+.translation-language span {
+  padding: 0.8rem;
+  font-size: 1.6rem;
   background-color: #eeeeee;
   border-radius: 50%;
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   transition: all 0.3s;
   color: #d9d9d9;
   display: block;
@@ -1619,7 +1716,8 @@ textarea#body {
   width: 0;
 }
 
-.article-language-selector li span {
+.article-language-selector li span,
+.translation-language span {
   background-color: #00283c;
   color: #fff;
 }
@@ -1657,17 +1755,65 @@ textarea#body {
   opacity: 1;
 }
 
+.article-page article .translation-details {
+  text-align: center;
+}
+
 .share {
-  width: 15rem;
+  width: 16rem;
   margin: 0 auto;
+  text-align: center;
+  font-weight: 100;
+  line-height: 2;
+}
+
+.share a {
+  font-weight: 200;
+  margin: 2rem 0;
+}
+
+.share a:first-child {
+  margin-right: 1rem;
 }
 
 @media screen and (min-width: 750px) {
+  .article-page h1:first-of-type {
+    padding: 4rem 5rem 6rem;
+  }
   .article-page article p time + img {
     width: 6rem;
     display: inline-block;
     margin-left: 0.5rem;
     vertical-align: middle;
+  }
+  .article-page article h1 + p {
+    margin-top: -9rem;
+  }
+  .article-page .contributor-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    font-size: 1.3rem;
+  }
+  .article-page .author-container,
+  .article-page .translator-container {
+    display: inline-block;
+  }
+  .article-page .translator-container {
+    padding: 0 0 0 5rem;
+  }
+  .article-language-selector li a,
+  .article-language-selector li span,
+  .translation-language span {
+    font-size: 1.8rem;
+    padding: 1.1rem;
+    width: 5rem;
+    height: 5rem;
+  }
+  .article-page article .summary,
+  .article-page article .summary > p {
+    font-size: 2.8rem;
   }
   .article-language-selector li.original-language a:before {
     display: block;

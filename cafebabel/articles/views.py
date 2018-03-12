@@ -4,8 +4,7 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
 
 from ..core.exceptions import ValidationError
-from ..core.helpers import editor_required, current_language
-from ..users.models import User
+from ..core.helpers import editor_required
 from .models import Article
 from .translations.models import Translation
 
@@ -54,8 +53,8 @@ def edit(article_id):
             return redirect(url_for('articles.edit', article_id=article.id))
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
-    return render_template(
-        'articles/edit.html', article=article)
+
+    return render_template('articles/edit.html', article=article)
 
 
 @articles.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])

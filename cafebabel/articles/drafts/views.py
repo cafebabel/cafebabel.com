@@ -26,6 +26,7 @@ def create():
 
 
 @drafts.route('/<regex("\w{24}"):draft_id>/edit/', methods=['get', 'post'])
+@editor_required
 def edit(draft_id):
     article = Article.objects.get_or_404(id=draft_id)
     if request.method == 'POST':
