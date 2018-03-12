@@ -704,8 +704,10 @@ a.logo:after {
   right: 0;
   bottom: 0;
   left: 0;
+  height: 100%;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.1);
   background: white;
-  transition: opacity 0.3s;
+  transition: all 0.6s ease-out;
   z-index: 2;
 }
 #preloader-layer img {
@@ -715,8 +717,14 @@ a.logo:after {
   transform: translate(-50%, -50%);
 }
 
-#preloader-layer.fadeout {
-  opacity: 0;
+#preloader-layer.slideup {
+  top: -110%;
+  bottom: auto;
+}
+
+#preloader-layer.slidedown {
+  top: 0;
+  bottom: 0;
 }
 
 #preloader-layer.hidden {
