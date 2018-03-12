@@ -24,14 +24,14 @@ def test_create_draft_should_display_form(client, editor):
 
 def test_create_draft_should_generate_article(client, user, editor):
     login(client, editor.email, 'password')
-    response = client.post('/en/article/draft/new/', data={
+    response = client.post('/fr/article/draft/new/', data={
         'title': 'Test article',
         'summary': 'Summary',
         'body': 'Article body',
         'authors': user.id
     }, follow_redirects=True)
     assert response.status_code == 200
-    assert '<span>en</span>' in response
+    assert '<span>fr</span>' in response
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
 
@@ -121,16 +121,15 @@ def test_draft_editing_should_update_content(client, user, editor):
         'body': 'Article body',
         'authors': [user.id],
     }
-    draft = Article.objects.create(**data, language='en')
-    updated_data = data.copy()
-    updated_data['authors'] = user.id
+    draft = Article.objects.create(language='en', **data)
+    data['title'] = 'Updated title'
+    data['authors'] = user.id
     response = client.post(f'/en/article/draft/{draft.id}/edit/',
-                           data=updated_data, follow_redirects=True)
+                           data=data, follow_redirects=True)
     assert response.status_code == 200
     draft.reload()
     assert draft.id == draft.id
-    assert draft.language == 'en'
-    assert draft.title == 'My article'
+    assert draft.title == 'Updated title'
 
 
 def test_draft_editing_with_many_authors(client, user, user2, editor):
