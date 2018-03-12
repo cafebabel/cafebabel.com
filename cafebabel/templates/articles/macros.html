@@ -1,5 +1,3 @@
-{% from "users/macros.html" import default_profile_picture %}
-
 {% macro article_publication_date(article) %}
   {% if article.publication_date %}
     <span>Published on <time pubdate="{{ article.publication_date.date() }}">{{ article.publication_date.strftime('%B %-d, %Y') }}</time></span>
@@ -12,7 +10,7 @@
   {% if author.profile.has_image %}
     <div style="background-image:url({{ author.profile.image_url }})" class=image></div>
   {% else %}
-    {{ default_profile_picture() }}
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
   {% endif %}
 {% endmacro %}
 
