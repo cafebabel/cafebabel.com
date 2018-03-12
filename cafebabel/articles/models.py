@@ -58,7 +58,7 @@ class Article(db.Document, UploadableImageMixin):
     def __eq__(self, other):
         # We need to compare strings of primary keys because of mongo
         # duality of ObjectIDs vs. raw strings.
-        return str(self.pk) == str(other.pk)
+        return str(self.id) == str(other.id)
 
     @property
     def upload_subpath(self):
@@ -126,8 +126,8 @@ class Article(db.Document, UploadableImageMixin):
             if not self.editor:
                 data['editor'] = current_user.id
             data['authors'] = [
-                User.objects.get(pk=pk)
-                for pk in request.form.getlist('authors')
+                User.objects.get(id=id_)
+                for id_ in request.form.getlist('authors')
             ]
         else:
             if data.get('authors'):

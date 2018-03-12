@@ -8,12 +8,12 @@ window.addEventListener('load', () => {
   document.querySelector('.choices input').addEventListener('keyup', event => {
     event.preventDefault()
     /* Reset choices when first new caracters are typed. */
-    authorsChoices.setChoices([], 'pk', 'name', true)
+    authorsChoices.setChoices([], 'id', 'name', true)
     /* Intercept -return- it's capture by 'click' for adding users */
     if (event.keyCode === 38) return
     if (event.target.value.length < 3) return
     request(`/en/profile/suggest/?terms=${event.target.value}`)
       .catch(console.error.bind(console))
-      .then(users => authorsChoices.setChoices(users, 'pk', 'name', true))
+      .then(users => authorsChoices.setChoices(users, 'id', 'name', true))
   })
 })

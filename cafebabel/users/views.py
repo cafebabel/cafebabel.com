@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from werkzeug import exceptions
 
 from ..articles.models import Article
-from ..core.helpers import allowed_file, file_exceeds
+from ..core.helpers import allowed_file, current_language, file_exceeds
 from .models import User
 
 users = Blueprint('users', __name__)
@@ -21,7 +21,7 @@ def suggest():
     users = User.objects(profile__name__istartswith=terms)
     cleaned_user = [{
         'name': user.profile.name,
-        'pk': str(user.pk)
+        'id': str(user.id)
     } for user in users]
     return jsonify(cleaned_user)
 
@@ -58,13 +58,15 @@ def edit(id):
                 message = ('There was an error in your profile submission: '
                            'No selected file.')
                 flash(message, 'error')
-                return redirect(url_for('users.edit', id=user.id))
+                return redirect(url_for('users.edit', id=user.id,
+                                        language=current_language()))
             if not allowed_file(image.filename):
                 # TODO: https://github.com/cafebabel/cafebabel.com/issues/187
                 message = ('There was an error in your profile submission: '
                            'Unallowed extension.')
                 flash(message, 'error')
-                return redirect(url_for('users.edit', id=user.id))
+                return redirect(url_for('users.edit', id=user.id,
+                                        language=current_language()))
             user.profile.attach_image(image)
         user.save()
         flash('Your profile was successfully saved.')
