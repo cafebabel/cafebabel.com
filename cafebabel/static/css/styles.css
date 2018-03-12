@@ -1235,14 +1235,16 @@ select#author {
 }
 
 .profile-page main section:first-of-type img,
-.profile-page main section h2 + div {
+.profile-page main section h2 + div,
+.profile-page main section output .image {
   display: block;
   border-radius: 50%;
   max-width: 20rem;
   margin: 0.2rem auto;
 }
 
-.profile-page main section h2 + div {
+.profile-page main section h2 + div,
+.profile-page main section output .image {
   width: 20rem;
   height: 20rem;
   background-size: cover;

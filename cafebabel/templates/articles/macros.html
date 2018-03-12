@@ -8,6 +8,14 @@
   {% endif %}
 {% endmacro %}
 
+{% macro profile_image(author) %}
+  {% if author.profile.has_image %}
+    <div style="background-image:url({{ author.profile.image_url }})" class=image></div>
+  {% else %}
+    {{ default_profile_picture() }}
+  {% endif %}
+{% endmacro %}
+
 {%- macro article_meta(article) -%}
   <p>
     {{ article_publication_date(article) }} | Reading time: {{ article.body|reading_time }} min
@@ -17,11 +25,7 @@
       <h4>Words by:</h4>
       {% for author in article.authors %}
           <a href="{{ url_for('users.detail', id=author.pk) }}" class=author-link>
-            {% if author.profile.has_image %}
-              <div style="background-image:url({{ author.profile.image_url }})" class=image></div>
-            {% else %}
-              {{ default_profile_picture() }}
-            {% endif %}
+            {{ profile_image(author) }}
             {{ author }}
           </a>
       {% endfor %}
@@ -31,11 +35,7 @@
         <h4>Translation by:</h4>
           {% for translator in article.translators -%}
               <a href="{{ url_for('users.detail', id=translator.pk) }}" class=translator-link>
-                {% if translator.profile.has_image %}
-                  <div style="background-image:url({{ translator.profile.image_url }})" class=image></div>
-                {% else %}
-                  {{ default_profile_picture() }}
-                {% endif %}
+                {{ profile_image(translator) }}
                 {{ translator }}
               </a>
           {%- endfor %}
