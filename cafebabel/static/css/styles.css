@@ -1868,6 +1868,11 @@ p.translation-language {
   border: 0.1rem solid;
 }
 
+.translate-list-page a.button {
+  margin: 0 auto 5rem;
+  width: 85%;
+}
+
 /* Flash infos */
 
 .flashes {
