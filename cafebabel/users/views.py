@@ -68,7 +68,7 @@ def edit(id):
             user.profile.attach_image(image)
         user.save()
         flash('Your profile was successfully saved.')
-        return redirect(url_for('users.detail', id=user.id))
+        return redirect(user.detail_url)
     articles = Article.objects.filter(authors=user).hard_limit()
     return render_template('users/edit.html', user=user, articles=articles)
 

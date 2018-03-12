@@ -9,7 +9,6 @@
 {% block body %}
 
 <form method=post action=.>
-  <input type=hidden name=language value="{{ language }}">
   <input type=hidden name=original value="{{ article.id }}">
   {% if article.has_image %}
     <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">

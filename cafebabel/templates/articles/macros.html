@@ -97,12 +97,12 @@
       {{ article_publication_date(article) }}
       — by
       {% for author in article.authors %}
-      <a href={{ url_for('users.detail', id=author.pk) }}>{{ author }}</a>
+        <a href={{ author.detail_url }}>{{ author }}</a>
       {% endfor %}
     </p>
     <p class=tags-list>
       {% for tag in article.tags -%}
-        <a href={{ url_for('tags.detail', slug=tag.slug) }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
+        <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
       {%- endfor %}
     </p>
   </div>
