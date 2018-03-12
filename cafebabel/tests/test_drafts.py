@@ -141,11 +141,10 @@ def test_draft_editing_with_many_authors(client, user, user2, editor):
         'body': 'Article body',
         'authors': [user.id],
     }
-    draft = Article.objects.create(**data)
-    updated_data = data.copy()
-    updated_data['authors'] = [user.id, user2.id]
+    draft = Article.objects.create(**data, language='en')
+    data['authors'] = [user.id, user2.id]
     response = client.post(f'/en/article/draft/{draft.id}/edit/',
-                           data=updated_data, follow_redirects=True)
+                           data=data, follow_redirects=True)
     assert response.status_code == 200
     draft.reload()
     assert draft.authors == [user, user2]
