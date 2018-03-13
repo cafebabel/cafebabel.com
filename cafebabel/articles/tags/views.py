@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 from flask import (Blueprint, abort, current_app, flash, jsonify, redirect,
-                   render_template, request, url_for)
+                   render_template, request)
 
 from ...core.exceptions import ValidationError
 from ...core.helpers import editor_required, current_language

@@ -53,7 +53,7 @@ def test_homepage_contains_static_pages_if_present(client, published_article):
 
 def test_homepage_contains_authors_links(client, published_article):
     response = client.get('/en/')
-    assert (f'<a href=/en/profile/{published_article.authors[0].pk}/>'
+    assert (f'<a href=/en/profile/{published_article.authors[0].id}/>'
             f'{published_article.authors[0].profile.name}</a>' in response)
 
 

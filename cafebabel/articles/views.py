@@ -4,7 +4,7 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
 
 from ..core.exceptions import ValidationError
-from ..core.helpers import editor_required
+from ..core.helpers import lang_url_for, editor_required
 from .models import Article
 from .translations.models import Translation
 
@@ -48,7 +48,8 @@ def edit(article_id):
             # TODO: see https://github.com/cafebabel/cafebabel.com/issues/187
             message = f'There was an error in your article submission: {e}'
             flash(message, 'error')
-            return redirect(url_for('articles.edit', article_id=article.id))
+            return redirect(
+                lang_url_for('articles.edit', article_id=article.id))
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
 

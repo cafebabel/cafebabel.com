@@ -6,7 +6,7 @@ from http import HTTPStatus
 from math import ceil
 
 import markdown as markdownlib
-from flask import Markup, abort, current_app, g, request
+from flask import Markup, abort, current_app, g, request, url_for
 from flask_login import current_user, fresh_login_required, login_required
 from jinja2.filters import do_wordcount
 from unidecode import unidecode
@@ -65,6 +65,10 @@ def file_exceeds(file_, size):
 
 def current_language():
     return g.get('lang', current_app.config['DEFAULT_LANGUAGE'])
+
+
+def lang_url_for(*args, **kwargs):
+    return url_for(lang=current_language(), *args, **kwargs)
 
 
 def absolute(url):
