@@ -2280,29 +2280,29 @@ a.section-link.creative {
   font-weight: 100;
 }
 
-#static-pages-links ul li ul,
-#static-pages-links ul li ul li {
+#static-pages-links ul ul,
+#static-pages-links ul ul li {
   display: block;
 }
 
-#static-pages-links ul li ul li {
+#static-pages-links ul ul li {
   padding: 0.5rem 0;
 }
 
-#static-pages-links ul li ul li ul,
-#static-pages-links ul li ul li ul li {
+#static-pages-links ul ul ul,
+#static-pages-links ul ul ul li {
   display: inline-block;
 }
 
-#static-pages-links ul li ul li ul li {
+#static-pages-links ul ul ul li {
   padding: 0 0.5rem 0 0;
 }
 
-#static-pages-links ul li ul li ul li a:hover:after {
+#static-pages-links ul ul ul li a:hover:after {
   width: 0;
 }
 
-#static-pages-links ul li ul li ul li a:hover {
+#static-pages-links ul ul ul li a:hover {
   color: #bde513;
 }
 

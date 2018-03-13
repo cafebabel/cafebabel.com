@@ -88,7 +88,7 @@
   <div id=content>
 {% block body %}{% endblock %}
   </div>
-  <div id=static-pages-links>
+  <nav id=static-pages-links>
     {% set static_pages = static_pages_for(current_language) %}
     <ul>
       <li>
@@ -118,7 +118,7 @@
         </ul>
       </li>
     </ul>
-  </div>
+  </nav>
 </main>
 
 <footer>
