@@ -1,0 +1,8 @@
+{% macro social_networks() %}
+  <ul>
+    <li><a href={{ social_network_url_for('facebook') }} class=icon-facebook></a></li>
+    <li><a href={{ social_network_url_for('twitter') }} class=icon-twitter></a></li>
+    <li><a href={{ social_network_url_for('instagram') }} class=icon-instagram></a></li>
+    <li><a href={{ social_network_url_for('youtube') }} class=icon-youtube></a></li>
+  </ul>
+{% endmacro %}

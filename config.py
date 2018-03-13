@@ -24,6 +24,30 @@ class BaseConfig:
         ('pl', 'Polszczyzna'),
     )
     CATEGORIES = ['impact', 'experience', 'raw', 'creative']
+    SOCIAL_NETWORKS = {
+        'facebook': {
+            'en': 'https://www.facebook.com/cafebabelmagazine/',
+            'fr': 'https://www.facebook.com/cafebabelfrance/',
+            'de': 'https://www.facebook.com/cafebabelDeutsch/',
+            'it': 'https://www.facebook.com/CafebabelItalia/',
+            'es': 'https://www.facebook.com/cafebabelenespanol/',
+            'pl': 'https://www.facebook.com/cafebabelpolski/'
+        },
+        'twitter': {
+            'en': 'https://twitter.com/cafebabel_ENG',
+            'fr': 'https://twitter.com/cafebabel_FR',
+            'de': 'https://twitter.com/cafebabel_DE',
+            'it': 'https://twitter.com/cafebabel_IT',
+            'es': 'https://twitter.com/cafebabel_ES',
+            'pl': 'https://twitter.com/cafebabel_POL'
+        },
+        'instagram': {
+            'en': 'https://www.instagram.com/inside.cafebabel/'
+        },
+        'youtube': {
+            'en': 'https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg'
+        }
+    }
 
     SECURITY_PASSWORD_SALT = 'and pepper'
     SECURITY_CONFIRMABLE = False

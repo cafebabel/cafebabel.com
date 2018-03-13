@@ -90,3 +90,8 @@ def rewrite_img_src(content):
     if media_url:
         return Markup(str(content).replace('src="/', f'src="{media_url}/'))
     return content
+
+
+def social_network_url_for(kind):
+    social_networks = current_app.config.get('SOCIAL_NETWORKS')
+    return social_networks[kind].get(current_language(), 'en')
