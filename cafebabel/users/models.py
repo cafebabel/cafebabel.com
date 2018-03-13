@@ -4,6 +4,7 @@ from flask_security import RoleMixin, UserMixin
 from flask_login import current_user
 from mongoengine import signals
 
+from ..core.helpers import lang_url_for
 from ..core.mixins import UploadableImageMixin
 from .. import db
 
@@ -49,17 +50,11 @@ class User(db.Document, UserMixin):
         return str(self.profile)
 
     @property
-    def idstr(self):
-        # Otherwise returns an ObjectID, not good in url_for.
-        return str(self.id)
+    def detail_url(self):
+        return lang_url_for('users.detail', id=self.id)
 
     def is_me(self):
         return hasattr(current_user, 'id') and self.id == current_user.id
-
-    def to_dict(self):
-        return {
-            'id': self.idstr,
-        }
 
     def has_role(self, role, or_admin=True):
         if super(User, self).has_role('admin') and or_admin:

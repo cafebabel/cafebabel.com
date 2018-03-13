@@ -120,7 +120,7 @@ def test_user_suggest_basics(client, user):
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
         'name': 'user@example.com',
-        'pk': str(user.pk)
+        'id': str(user.id)
     }]
 
 
@@ -129,10 +129,10 @@ def test_user_suggest_many(client, user, user2):
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
         'name': 'user@example.com',
-        'pk': str(user.pk)
+        'id': str(user.id)
     }, {
         'name': 'user2@example.com',
-        'pk': str(user2.pk)
+        'id': str(user2.id)
     }]
 
 
