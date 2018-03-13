@@ -2254,8 +2254,8 @@ a.section-link.creative {
 #static-pages-links {
   margin-bottom: 70rem;
   background-color: #00283c;
-  height: 10rem;
-  padding: 2.2rem;
+  height: 9rem;
+  padding: 1.7rem;
 }
 
 #static-pages-links a {
@@ -2266,7 +2266,7 @@ a.section-link.creative {
   background-color: #fff;
 }
 
-#static-pages-links ul {
+#static-pages-links nav {
   margin: 0 auto;
   max-width: 75rem;
   display: grid;
@@ -2274,35 +2274,36 @@ a.section-link.creative {
   grid-gap: 1rem;
 }
 
-#static-pages-links ul li {
+#static-pages-links nav li {
   display: inline-block;
   font-size: 1.3rem;
   font-weight: 100;
 }
 
-#static-pages-links ul ul,
-#static-pages-links ul ul li {
+#static-pages-links nav ul,
+#static-pages-links nav ul li {
   display: block;
+  margin: 0;
 }
 
-#static-pages-links ul ul li {
+#static-pages-links nav ul li {
   padding: 0.5rem 0;
 }
 
-#static-pages-links ul ul ul,
-#static-pages-links ul ul ul li {
+#static-pages-links nav ul ul,
+#static-pages-links nav ul ul li {
   display: inline-block;
 }
 
-#static-pages-links ul ul ul li {
+#static-pages-links nav ul ul li {
   padding: 0 0.5rem 0 0;
 }
 
-#static-pages-links ul ul ul li a:hover:after {
+#static-pages-links nav ul ul li a:hover:after {
   width: 0;
 }
 
-#static-pages-links ul ul ul li a:hover {
+#static-pages-links nav ul ul li a:hover {
   color: #bde513;
 }
 
