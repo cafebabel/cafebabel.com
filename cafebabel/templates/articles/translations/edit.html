@@ -42,6 +42,7 @@
     <textarea id=body name=body required>{{ translation.body }}</textarea>
     {% include "articles/markdown-helper.html" %}
   </div>
+  {{ macros.tags_fields(translation) }}
   <input type=submit value="Update">
 </form>
 {% endblock %}

@@ -27,6 +27,16 @@
 
   <p class="translation-language">Article in <span>{{ translation.language }}</span></p>
 
+  {% block tag_list %}
+    {% if translation.tags %}
+      <p class=tags-list>
+        {% for tag in translation.tags -%}
+          <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
+        {%- endfor %}
+      </p>
+    {% endif %}
+  {% endblock %}
+
   {% if translation.summary %}
     <div class=summary>{{ translation.summary|markdown }}</div>
   {% endif %}
