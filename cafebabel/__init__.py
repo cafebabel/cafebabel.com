@@ -169,6 +169,7 @@ def register_context_processors(app):
         from .core import helpers
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
+            get_categories=lambda: app.config.get('CATEGORIES', tuple()),
             get_year=lambda: datetime.now().year,
             current_language=helpers.current_language(),
             lang_url_for=helpers.lang_url_for,
