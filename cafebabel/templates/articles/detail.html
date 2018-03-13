@@ -33,7 +33,7 @@
     {% endif %}
     {% block edit_button %}
       {% if current_user.has_role('editor') and article.is_published %}
-        <a class=button href={{ url_for('articles.edit', article_id=article.id) }}>Edit this article</a>
+        <a class=button href={{ lang_url_for('articles.edit', article_id=article.id) }}>Edit this article</a>
       {% endif %}
     {% endblock %}
     <h1>{{ article.title }}</h1>
@@ -44,7 +44,7 @@
     {% if article.tags %}
       <p class=tags-list>
         {% for tag in article.tags -%}
-          <a href={{ url_for('tags.detail', slug=tag.slug) }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
+          <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
         {%- endfor %}
       </p>
     {% endif %}
@@ -65,14 +65,14 @@
             {% if article.language != lang_code and lang_code not in translations_langs %}
               {% if article.is_translation %}
                 {% if lang_code != article.original_article.language %}
-                  <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.original_article.id }}">{{ lang_code }}</a></li>
+                  <li class=to-translate-languages><a href="{{ lang_url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.original_article.id }}">{{ lang_code }}</a></li>
                 {% endif %}
-                {% elif article.is_translated_in(lang_code) %}
-                  <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_code }}</a></li>
-                {% else %}
-                  <li class=to-translate-languages><a href="{{ url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.id }}">{{ lang_code }}</a></li>
-                {% endif %}
-             {% endif %}
+              {% elif article.is_translated_in(lang_code) %}
+                <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_code }}</a></li>
+              {% else %}
+                <li class=to-translate-languages><a href="{{ lang_url_for('translations.create') }}?lang={{ lang_code }}&original={{ article.id }}">{{ lang_code }}</a></li>
+              {% endif %}
+            {% endif %}
           {% endfor %}
       </ul>
     </div>
@@ -93,7 +93,7 @@
     <p class=translation-details>Review this article in:</p>
     <ul>
       {% for translation in translations_drafts %}
-        <li>{{ translation.language }}: <a href={{ url_for('translations.detail', id=translation.id) }}>{{ translation.title }}</a></li>
+        <li>{{ translation.language }}: <a href={{ translation.detail_url }}>{{ translation.title }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}

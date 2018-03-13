@@ -30,13 +30,13 @@
   <p class=translation-details>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a>
     by {% for translator in translation.translators -%}
-      <a href="{{ url_for('users.detail', id=translator.pk) }}">{{ translator }}</a>
+      <a href="{{ translator.detail_url }}">{{ translator }}</a>
     {%- endfor %}.
   </p>
 
   {% if current_user.has_role('editor') or current_user in translation.translators %}
     <p>
-      <a class=button href={{ url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
+      <a class=button href={{ translation.edit_url }}>Edit this translation</a>
     </p>
   {% endif %}
 </article>

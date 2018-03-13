@@ -31,6 +31,8 @@ def profile_redirect():
     Flask-login does not allow us to redirect dynamically to the current
     language so we set that fake view to proper redirect.
     """
+    # Do not use `current_user.detail_url` here as we do not have
+    # a current language yet, hence guessing it from browser.
     return redirect(
         url_for('users.detail', lang=get_language(), id=current_user.id))
 

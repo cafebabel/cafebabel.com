@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang={{ current_language }}>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
@@ -17,7 +18,7 @@
 <nav>
   <ul>
     {% if current_user.is_authenticated %}
-        <li><a href={{ url_for('users.detail', id=current_user.id) }}>Profile</a></li>
+        <li><a href={{ current_user.detail_url }}>Profile</a></li>
         <li><a href={{ url_for('security.logout') }}>Log out</a></li>
         <li><a href={{ url_for('security.change_password') }}>Change password</a></li>
     {% else %}
@@ -34,12 +35,12 @@
         {% endif %}
       {% endif %}
     {% endif %}
-    <li><a href={{ url_for('proposals.create') }}>Suggest an article</a></li>
+    <li><a href={{ lang_url_for('proposals.create') }}>Suggest an article</a></li>
     {% if current_user.has_role('editor') %}
-      <li><a href={{ url_for('drafts.create') }}>Write an article</a></li>
-      <li><a href={{ url_for('drafts.list') }}>View existing drafts</a></li>
+      <li><a href={{ lang_url_for('drafts.create') }}>Write an article</a></li>
+      <li><a href={{ lang_url_for('drafts.list') }}>View existing drafts</a></li>
     {% endif %}
-    <li><a href={{ url_for('articles.to_translate') }}>Translate an article</a></li>
+    <li><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
     <li>
       <ul>
         <li><a href=https://www.facebook.com/cafebabelenglish class=icon-facebook></a></li>
@@ -56,13 +57,19 @@
 <nav>
   <ul>
     {% for lang_code, lang_label in get_languages() %}
-      <li><a href={{ url_for('cores.home_lang', lang=lang_code) }}>{{ lang_code|upper }}</a></li>
+      {% if lang_code != current_language %}
+        {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
+        {% if article and article.id %}
+          {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
+        {% endif %}
+        <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
+      {% endif %}
     {% endfor %}
   </ul>
 </nav>
 
-<a href={{ url_for('proposals.create') }} id=participate>Participate</a>
-<a href={{ url_for('articles.to_translate') }} id=translate>Translate</a>
+<a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
+<a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
 
 <nav id=social-networks>
   <ul>
@@ -75,7 +82,7 @@
 {% include "security/_messages.html" %}
 
 <main>
-  <a href={{ url_for('cores.home_lang', lang=current_language) }} class=logo>
+  <a href={{ lang_url_for('cores.home_lang') }} class=logo>
     <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
   </a>
   <div id=content>
@@ -93,3 +100,4 @@
 <script src={{ url_for('static', filename='js/utils.js') }}></script>
 <script src={{ url_for('static', filename='js/script.js') }}></script>
 {% block extra_js %}{% endblock %}
+</html>

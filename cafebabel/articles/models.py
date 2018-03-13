@@ -7,7 +7,7 @@ from mongoengine import PULL, signals
 
 from .. import db
 from ..core.exceptions import ValidationError
-from ..core.helpers import allowed_file, slugify
+from ..core.helpers import allowed_file, slugify, current_language
 from ..core.mixins import UploadableImageMixin
 from ..users.models import User
 from .tags.models import Tag
@@ -58,7 +58,7 @@ class Article(db.Document, UploadableImageMixin):
     def __eq__(self, other):
         # We need to compare strings of primary keys because of mongo
         # duality of ObjectIDs vs. raw strings.
-        return str(self.pk) == str(other.pk)
+        return str(self.id) == str(other.id)
 
     @property
     def upload_subpath(self):
@@ -67,10 +67,11 @@ class Article(db.Document, UploadableImageMixin):
     @property
     def detail_url(self):
         if self.is_draft:
-            return url_for('drafts.detail', draft_id=self.id)
+            return url_for('drafts.detail', draft_id=self.id,
+                           lang=self.language)
         else:
             return url_for('articles.detail', slug=self.slug,
-                           article_id=self.id)
+                           article_id=self.id, lang=self.language)
 
     @property
     def is_draft(self):
@@ -94,6 +95,21 @@ class Article(db.Document, UploadableImageMixin):
             self._translations = {t.language: t for t in translations}
         return self._translations.get(language)
 
+    def get_published_translation_url(self, language):
+        if language == self.language:
+            return
+        if self.is_translated_in(language):
+            translation = self.get_translation(language)
+            if translation.is_published:
+                return translation.detail_url
+        elif self.is_translation:
+            if self.original_article.language == language:
+                return self.original_article.detail_url
+            elif self.original_article.is_translated_in(language):
+                translation = self.original_article.get_translation(language)
+                if translation.is_published:
+                    return translation.detail_url
+
     @classmethod
     def update_publication_date(cls, sender, document, **kwargs):
         if document.is_published and not document.publication_date:
@@ -110,8 +126,8 @@ class Article(db.Document, UploadableImageMixin):
             if not self.editor:
                 data['editor'] = current_user.id
             data['authors'] = [
-                User.objects.get(pk=pk)
-                for pk in request.form.getlist('authors')
+                User.objects.get(id=id_)
+                for id_ in request.form.getlist('authors')
             ]
         else:
             if data.get('authors'):
@@ -119,10 +135,11 @@ class Article(db.Document, UploadableImageMixin):
             if data.get('editor'):
                 del data['editor']
         self.tags = []
-        language = data.get('language')
+        data['language'] = self.language or current_language()
         for field, value in data.items():
             if field.startswith('tag-') and value:
-                tag = Tag.objects.get_or_create(name=value, language=language)
+                tag = Tag.objects.get_or_create(name=value,
+                                                language=data['language'])
                 if tag not in self.tags:
                     self.tags.append(tag)
             else:

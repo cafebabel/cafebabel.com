@@ -16,7 +16,7 @@
     <div class=author-container>
       <h4>Words by:</h4>
       {% for author in article.authors %}
-          <a href="{{ url_for('users.detail', id=author.pk) }}" class=author-link>
+          <a href="{{ author.detail_url }}" class=author-link>
             {% if author.profile.has_image %}
               <img src={{ author.profile.image_url }} alt="Picture of {{ author }}">
             {% else %}
@@ -30,7 +30,7 @@
       <div class=translator-container>
         <h4>Translation by:</h4>
           {% for translator in article.translators -%}
-              <a href="{{ url_for('users.detail', id=translator.pk) }}" class=translator-link>
+              <a href="{{ translator.detail_url }}" class=translator-link>
                 {% if translator.profile.has_image %}
                   <img src={{ translator.profile.image_url }} alt="Picture of {{ translator }}">
                 {% else %}
@@ -99,12 +99,12 @@
       {{ article_publication_date(article) }}
       — by
       {% for author in article.authors %}
-      <a href={{ url_for('users.detail', id=author.pk) }}>{{ author }}</a>
+        <a href={{ author.detail_url }}>{{ author }}</a>
       {% endfor %}
     </p>
     <p class=tags-list>
       {% for tag in article.tags -%}
-        <a href={{ url_for('tags.detail', slug=tag.slug) }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
+        <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
       {%- endfor %}
     </p>
   </div>
