@@ -1667,7 +1667,7 @@ select#author {
   margin-bottom: 2rem;
 }
 
-article p.video-wrapper {
+.article-page article p.video-wrapper {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
