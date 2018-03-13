@@ -46,6 +46,9 @@ class BaseConfig:
         },
         'youtube': {
             'en': 'https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg'
+        },
+        'linkedin': {
+            'en': 'https://www.linkedin.com/company/cafebabel-com/'
         }
     }
 
