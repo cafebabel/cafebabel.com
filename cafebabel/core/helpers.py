@@ -94,4 +94,5 @@ def rewrite_img_src(content):
 
 def social_network_url_for(kind):
     social_networks = current_app.config.get('SOCIAL_NETWORKS')
-    return social_networks[kind].get(current_language(), 'en')
+    return social_networks[kind].get(current_language(),
+                                     social_networks[kind]['en'])
