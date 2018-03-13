@@ -54,16 +54,12 @@ def test_translation_creation_requires_login(app, client, article):
             in response.headers.get('Location'))
 
 
-def test_translation_creation_required_parameters(app, client, user, article):
+def test_translation_creation_required_parameters(client, user, article):
     login(client, user.email, 'password')
-    language = app.config['LANGUAGES'][1][0]
-    response = client.get(
-        f'/en/article/translation/new/?original={article.id}')
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-    response = client.get(f'/en/article/translation/new/?lang={language}')
+    response = client.get('/en/article/translation/new/')
     assert response.status_code == HTTPStatus.BAD_REQUEST
     response = client.get(
-        f'/en/article/translation/new/?lang={language}&original={article.id}$')
+        f'/en/article/translation/new/?original={article.id}$')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
@@ -77,7 +73,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post(f'/en/article/translation/new/', data=data)
+    response = client.post(f'/fr/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
@@ -97,7 +93,7 @@ def test_translation_creation_should_keep_image(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post('/en/article/translation/new/', data=data)
+    response = client.post('/fr/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert translation.image_filename == '/articles/image-name.jpg'

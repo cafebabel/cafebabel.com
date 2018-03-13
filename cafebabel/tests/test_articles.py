@@ -370,10 +370,10 @@ def test_article_to_translate_should_have_translation_links(
     article.modify(language=language)
     response = client.get(f'/en/article/to-translate/?from=fr&to=en')
     assert (f'href="/en/article/translation/new/'
-            f'?lang=en&original={article.id}">Translate in English</a>'
+            f'?original={article.id}">Translate in English</a>'
             in response)
-    assert (f'href="/en/article/translation/new/'
-            f'?lang=fr&original={article.id}">Translate in Français</a>'
+    assert (f'href="/fr/article/translation/new/'
+            f'?original={article.id}">Translate in Français</a>'
             not in response)
 
 
@@ -382,10 +382,10 @@ def test_translation_to_translate_should_not_have_original_language(
     # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/')
     assert (f'href=/en/article/translation/new/'
-            f'?lang=en&original={article.id}>Translate in English</a>'
+            f'?original={article.id}>Translate in English</a>'
             not in response)
-    assert (f'href=/en/article/translation/new/'
-            f'?lang=fr&original={article.id}>Translate in Français</a>'
+    assert (f'href=/fr/article/translation/new/'
+            f'?original={article.id}>Translate in Français</a>'
             not in response)
 
 
@@ -393,8 +393,8 @@ def test_translation_to_translate_should_have_original_language(
         app, client, article, translation):
     # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
-    assert (f'href="/en/article/translation/new/'
-            f'?lang=es&original={translation.original_article.id}">'
+    assert (f'href="/es/article/translation/new/'
+            f'?original={translation.original_article.id}">'
             f'Translate in Español</a>'
             in response)
 
