@@ -35,7 +35,7 @@ def test_homepage_does_not_contain_draft_articles(client, article):
 
 def test_homepage_contains_categories(app, client, published_article):
     language = app.config['LANGUAGES'][0][0]
-    assert 'impact' in app.config['CATEGORIES']
+    assert 'impact' in app.config['CATEGORIES_SLUGS']
     impact = Tag.objects.create(name='Impact', language=language)
     response = client.get('/en/')
     assert impact.name in response

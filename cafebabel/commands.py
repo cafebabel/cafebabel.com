@@ -1,11 +1,12 @@
+from datetime import datetime
+
 import click
 from flask_security.utils import hash_password
 
 from cafebabel.users.models import Role, User
 from cafebabel.articles.models import Article
 from cafebabel.articles.tags.models import Tag
-
-from .fixtures import ARTICLES, TAGS
+from cafebabel.articles.translations.models import Translation
 
 
 def drop_collections():
@@ -16,22 +17,16 @@ def drop_collections():
     click.echo('Roles, Users, Articles and Tags dropped.')
 
 
-def users_fixtures(ds):
-    user = ds.create_user(email='user@example.com',
-                          password=hash_password('password'))
-    ds.activate_user(user)
-    user2 = ds.create_user(email='user2@example.com',
-                           password=hash_password('password'))
-    ds.activate_user(user2)
-    editor = ds.create_user(email='editor@example.com',
+def editor_fixtures(ds, app):
+    editor = ds.create_user(email=app.config['EDITOR_EMAILS']['en'],
                             password=hash_password('password'))
     ds.activate_user(editor)
-    click.echo('Users intialized.')
+    click.echo('Editor intialized.')
+    return editor
 
 
-def roles_fixtures(ds):
+def roles_fixtures(ds, editor):
     editor_role = Role.objects.create(name='editor')
-    editor = User.objects.get(email='editor@example.com')
     ds.add_role_to_user(editor, editor_role)
     click.echo('Roles intialized.')
 
@@ -39,44 +34,49 @@ def roles_fixtures(ds):
 def auth_fixtures(app):
     ds = app.user_datastore
     with app.app_context():
-        users_fixtures(ds)
-        roles_fixtures(ds)
+        editor = editor_fixtures(ds, app)
+        roles_fixtures(ds, editor)
         ds.commit()
     click.echo('Auth intialized.')
 
 
-def tags_fixtures(app):
-    for TAG in TAGS:
-        Tag.objects.create(
-            name=TAG['name'],
-            summary=TAG['summary'],
-            language=app.config['LANGUAGES'][0][0])
-    click.echo('Tags intialized.')
+def categories_fixtures(app):
+    for category_slug in app.config['CATEGORIES_SLUGS']:
+        for lang_code, _ in app.config['LANGUAGES']:
+            if not Tag.objects.filter(slug=category_slug).count():
+                Tag.objects.create(
+                    name=category_slug.title(),
+                    language=lang_code)
+    click.echo('Categories intialized.')
 
 
-def articles_fixtures(app):
-    user = User.objects.get(email='user@example.com')
-    editor = User.objects.get(email='editor@example.com')
-    for ARTICLE in ARTICLES:
-        Article.objects.create(
-            title=ARTICLE['title'],
-            summary=ARTICLE['summary'],
-            authors=[user],
-            editor=editor,
-            language=app.config['LANGUAGES'][0][0],
-            body=ARTICLE['body'])
-    click.echo('Articles intialized.')
-
-
-def relations_fixtures(app):
-    """Must be done *after* `tags_fixtures` and `articles_fixtures`."""
-    travel = Tag.objects.get(name='Travel')
-    drugs = Tag.objects.get(name='Drugs')
-    sport = Tag.objects.get(name='Sport')
-    articles = Article.objects()
-    Article.objects.get(id=articles[0].id).modify(tags=[travel])
-    Article.objects.get(id=articles[1].id).modify(tags=[travel])
-    Article.objects.get(id=articles[2].id).modify(tags=[drugs, travel])
-    Article.objects.get(id=articles[3].id).modify(tags=[drugs, travel])
-    Article.objects.get(id=articles[4].id).modify(tags=[drugs, sport])
-    click.echo('Articles/tags relations intialized.')
+def static_pages_fixtures(app):
+    editor = User.objects.get(email=app.config['EDITOR_EMAILS']['en'])
+    for static_page_slug in app.config['STATIC_PAGES_SLUGS']:
+        if not Article.objects.filter(slug=static_page_slug).count():
+            article = Article.objects.create(
+                title=static_page_slug,
+                summary='Lorem ipsum…',
+                authors=[editor],
+                editor=editor,
+                status='published',
+                language=app.config['LANGUAGES'][0][0],
+                body='…dolor sit amet.',
+                creation_date=datetime(1970, 1, 1),
+                publication_date=datetime(1970, 1, 1))
+        for lang_code, _ in app.config['LANGUAGES'][1:]:
+            slug = f'{lang_code}-{static_page_slug}'
+            if not Translation.objects.filter(slug=slug).count():
+                Translation.objects.create(
+                    title=f'[{lang_code}] {article.title}',
+                    summary=f'[{lang_code}] {article.summary}',
+                    body=f'[{lang_code}] {article.body}',
+                    translators=[editor],
+                    original_article=article.id,
+                    language=lang_code,
+                    status=article.status,
+                    editor=article.editor,
+                    authors=article.authors,
+                    creation_date=article.creation_date,
+                    publication_date=article.publication_date)
+    click.echo('Static pages intialized.')

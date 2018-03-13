@@ -1,5 +1,7 @@
 import pytest
 
+from flask_security.utils import hash_password
+
 from cafebabel import create_app
 from cafebabel.commands import auth_fixtures, drop_collections
 from cafebabel.articles.models import Article
@@ -12,6 +14,15 @@ test_app = create_app('config.TestingConfig')
 
 def pytest_runtest_setup():
     auth_fixtures(test_app)
+    ds = test_app.user_datastore
+    with test_app.app_context():
+        user = ds.create_user(email='user@example.com',
+                              password=hash_password('password'))
+        ds.activate_user(user)
+        user2 = ds.create_user(email='user2@example.com',
+                               password=hash_password('password'))
+        ds.activate_user(user2)
+        ds.commit()
 
 
 def pytest_runtest_teardown():
@@ -43,7 +54,7 @@ def user2():
 
 @pytest.fixture
 def editor():
-    return User.objects.get(email='editor@example.com')
+    return User.objects.get(email=test_app.config['EDITOR_EMAILS']['en'])
 
 
 @pytest.fixture
