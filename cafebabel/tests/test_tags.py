@@ -88,8 +88,6 @@ def test_tag_suggest_wrong_language(client, tag):
 
 
 def test_tag_detail(app, client, tag, published_article):
-    Tag.objects.create(name='Wonderful', summary='text chapo',
-                       language=app.config['LANGUAGES'][1][0])
     published_article.modify(tags=[tag])
     response = client.get('/en/article/tag/wonderful/')
     assert response.status_code == HTTPStatus.OK
@@ -196,3 +194,17 @@ def test_tag_categories_by_language(app, tag):
     impact = Tag.objects.create(name='Impact', language=language1)
     assert not Tag.objects.categories(language=language2)
     assert Tag.objects.categories(language=language1)[0].slug == impact.slug
+
+
+def test_tag_menu_categories_redirect(app, client):
+    Tag.objects.create(name='Raw', summary='text chapo',
+                       language=app.config['LANGUAGES'][0][0])
+    response = client.get('/en/article/tag/raw/')
+    assert response.status_code == HTTPStatus.OK
+    assert '<a href=/fr/article/tag/raw/>FR</a></li>' in response
+
+
+def test_tag_menu_regular_do_not_redirect(app, client, tag):
+    response = client.get(f'/en/article/tag/{tag.slug}/')
+    assert response.status_code == HTTPStatus.OK
+    assert f'<a href=/fr/article/tag/{tag.slug}/>FR</a></li>' not in response
