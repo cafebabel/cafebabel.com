@@ -36,13 +36,16 @@
     {% if not article.is_translated_in(to_language_code) %}
       <li>
         {{ card(article) }}
-        {% if article.is_translation %}
           {% if article.original_article.language != to_language_code %}
             <a class=button href="{{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}">Translate in {{ to_language_label }}</a>
           {% endif %}
-        {% else %}
-          <a class=button href="{{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}">Translate in {{ to_language_label }}</a>
-        {% endif %}
+          {% if article.is_translation %}
+            {% if article.original_article.language != to_language_code %}
+              <a class=button href="{{ lang_url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}">Translate in {{ to_language_label }}</a>
+            {% endif %}
+          {% else %}
+            <a class=button href="{{ lang_url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}">Translate in {{ to_language_label }}</a>
+          {% endif %}
       </li>
     {% endif %}
   {% endfor %}

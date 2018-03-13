@@ -14,7 +14,7 @@
 {% block body_class %}article-page-edit{% endblock %}
 
 {% block body %}
-<form method=post action={% block form_action %}{{ url_for('articles.edit', article_id=article.id) }}{% endblock %} enctype=multipart/form-data>
+<form method=post action={% block form_action %}{{ lang_url_for('articles.edit', article_id=article.id) }}{% endblock %} enctype=multipart/form-data>
 
   {% if article.id %}<input type=hidden name=id value="{{ article.id }}">{% endif %}
   {{ macros.image_upload(article) }}
@@ -62,7 +62,7 @@
 
 {% block form_extra_actions %}
   {% if current_user.has_role('editor') %}
-  <form method=post action={{ url_for('articles.delete', article_id=article.id) }}>
+  <form method=post action={{ lang_url_for('articles.delete', article_id=article.id) }}>
     <input type=submit value="Delete this article">
   </form>
   {% endif %}

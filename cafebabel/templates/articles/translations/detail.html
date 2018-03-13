@@ -36,7 +36,7 @@
   <p class=translation-details>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a>
     by {% for translator in translation.translators -%}
-      <a href="{{ url_for('users.detail', id=translator.pk) }}">{{ translator }}</a>
+      <a href="{{ translator.detail_url }}">{{ translator }}</a>
     {%- endfor %}.
   </p>
 
