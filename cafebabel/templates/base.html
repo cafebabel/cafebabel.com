@@ -86,7 +86,7 @@
     {% set static_pages = static_pages_for(current_language) %}
     <nav>
       <ul>
-        <li><a href={{ static_pages.get('about', '#') }}>About</a></li>
+        <li><a href={{ static_pages.get('about-us', '#') }}>About us</a></li>
         <li><a href={{ static_pages.get('contact', '#') }}>Contact</a></li>
       </ul>
       <ul>
@@ -94,7 +94,7 @@
         <li><a href={{ static_pages.get('faq', '#') }}>FAQ</a></li>
       </ul>
       <ul>
-        <li><a href={{ static_pages.get('terms-and-conditions', '#') }}>Terms and conditons</a></li>
+        <li><a href={{ static_pages.get('terms-and-privacy', '#') }}>Terms and privacy</a></li>
         <li>
           {{ social_networks() }}
         </li>

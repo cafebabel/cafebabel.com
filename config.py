@@ -25,11 +25,11 @@ class BaseConfig:
     )
     CATEGORIES_SLUGS = ['impact', 'experience', 'raw', 'creative']
     STATIC_PAGES_SLUGS = [
-        'about',
+        'about-us',
         'contact',
         'editorial-vision',
-        'faq',
-        'terms-and-conditions'
+        'terms-and-privacy',
+        'faq'
     ]
     SOCIAL_NETWORKS = {
         'facebook': {
