@@ -5,6 +5,7 @@ import mongoengine
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
+from ..articles.tags.models import Tag
 from ..articles.translations.models import Translation
 from .utils import login
 
@@ -80,6 +81,50 @@ def test_translation_creation_should_redirect(app, client, user, article):
             f'http://localhost/fr/article/translation/{translation.id}/')
     assert (get_flashed_messages() ==
             ['Your translation was successfully created.'])
+
+
+def test_translation_creation_with_existing_tag(app, client, user, article):
+    login(client, user.email, 'password')
+    language = app.config['LANGUAGES'][1][0]
+    tag = Tag.objects.create(name='Sensational', language=language)
+    data = {
+        'title': 'title',
+        'summary': 'summary',
+        'body': 'body',
+        'original': article.id,
+        'language': language,
+        'tag-1': tag.name
+    }
+    response = client.post(f'/fr/article/translation/new/', data=data)
+    assert response.status_code == HTTPStatus.FOUND
+    translation = Translation.objects.first()
+    assert (response.headers.get('Location') ==
+            f'http://localhost/fr/article/translation/{translation.id}/')
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully created.'])
+    assert translation.tags == [tag]
+
+
+def test_translation_creation_with_unknown_tag(app, client, user, article):
+    login(client, user.email, 'password')
+    language = app.config['LANGUAGES'][1][0]
+    data = {
+        'title': 'title',
+        'summary': 'summary',
+        'body': 'body',
+        'original': article.id,
+        'language': language,
+        'tag-1': 'Sensational'
+    }
+    response = client.post(f'/fr/article/translation/new/', data=data)
+    assert response.status_code == HTTPStatus.FOUND
+    translation = Translation.objects.first()
+    tag = Tag.objects.get(name='Sensational', language=language)
+    assert (response.headers.get('Location') ==
+            f'http://localhost/fr/article/translation/{translation.id}/')
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully created.'])
+    assert translation.tags == [tag]
 
 
 def test_translation_creation_should_keep_image(app, client, user, article):
@@ -217,12 +262,48 @@ def test_translation_update_values_should_redirect(client, user, translation):
     response = client.post(
         f'/fr/article/translation/{translation.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.FOUND
-    translation = Translation.objects.first()
+    translation.reload()
     assert (response.headers.get('Location') ==
             f'http://localhost/fr/article/translation/{translation.id}/')
     assert translation.title == 'Modified title'
     assert (get_flashed_messages() ==
             ['Your translation was successfully updated.'])
+
+
+def test_update_translation_with_tag(client, user, editor, tag, translation):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'Modified title',
+        'tag-1': tag.name
+    }
+    response = client.post(f'/fr/article/translation/{translation.id}/edit/',
+                           data=data, follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully updated.'])
+    translation.reload()
+    assert translation.title == 'Modified title'
+    tag = Tag.objects.get(name=tag.name, language=translation.language)
+    assert translation.tags == [tag]
+
+
+def test_update_translation_with_unkown_tag(client, user, editor, tag,
+                                            translation):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'Modified title',
+        'tag-1': tag.name,
+        'tag-2': 'Sensational'
+    }
+    response = client.post(f'/fr/article/translation/{translation.id}/edit/',
+                           data=data, follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully updated.'])
+    translation.reload()
+    tag = Tag.objects.get(name=tag.name, language=translation.language)
+    tag2 = Tag.objects.get(name='Sensational', language=translation.language)
+    assert translation.tags == [tag, tag2]
 
 
 def test_translation_published_should_return_200(
