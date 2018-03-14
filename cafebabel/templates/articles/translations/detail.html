@@ -17,7 +17,7 @@
 
   {% block edit_button %}
     {% if current_user.has_role('editor') or current_user in translation.translators %}
-      <p><a class=button href={{ lang_url_for('translations.edit', id=translation.id) }}>Edit this translation</a></p>
+      <a class=button href={{ lang_url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
     {% endif %}
   {% endblock %}
 
