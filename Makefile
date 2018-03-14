@@ -43,13 +43,16 @@ install:
 	@echo "> Installing sources, dependencies and database."
 	-${remote} "git clone https://github.com/cafebabel/cafebabel.com.git ${src_dir}"
 	-${remote} "python3.6 -m venv ${venv_dir}"
-	-${remote} "${goto_src} && make make_dirs"
+	-${remote} "${goto_src} && make make-dirs"
 	make reset-db
 	make deploy
 
-make_dirs:
+make-dirs:
 	mkdir -p ./logs
 
 reset-db:
-	${remote} "${goto_src} && FLASK_APP=prod flask initdb"
-	${remote} "${goto_src} && FLASK_APP=prod flask load_fixtures"
+	make flask-command command=initdb
+	make flask-command command=load_fixtures
+
+flask-command:
+	${remote} "${goto_src} && FLASK_APP=prod flask $(command)"
