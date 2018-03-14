@@ -1,0 +1,11 @@
+{% macro social_networks(with_linkedin=False) %}
+  <ul>
+    <li><a href={{ social_network_url_for('facebook') }} class=icon-facebook></a></li>
+    <li><a href={{ social_network_url_for('twitter') }} class=icon-twitter></a></li>
+    <li><a href={{ social_network_url_for('instagram') }} class=icon-instagram></a></li>
+    <li><a href={{ social_network_url_for('youtube') }} class=icon-youtube></a></li>
+    {% if with_linkedin %}
+        <li><a href={{ social_network_url_for('linkedin') }} class=icon-linkedin></a></li>
+    {% endif %}
+  </ul>
+{% endmacro %}
