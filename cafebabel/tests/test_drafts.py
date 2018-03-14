@@ -231,6 +231,12 @@ def test_drafts_list_only_displays_drafts(client, editor, article,
     assert published_article.title not in response
 
 
+def test_drafts_list_menu_link_localized_list(client, editor, article):
+    login(client, editor.email, 'password')
+    response = client.get('/en/article/draft/')
+    assert '<a href=/fr/article/draft/>FR</a>' in response
+
+
 def test_draft_detail_contains_tags_without_links(client, app, tag, article):
     language = app.config['LANGUAGES'][0][0]
     tag2 = Tag.objects.create(name='Sensational', language=language)

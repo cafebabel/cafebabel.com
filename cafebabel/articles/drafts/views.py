@@ -9,8 +9,8 @@ drafts = Blueprint('drafts', __name__)
 @drafts.route('/')
 @editor_required
 def list():
-    articles = Article.objects.drafts(language=current_language()).hard_limit()
-    return render_template('articles/drafts/list.html', articles=articles)
+    drafts = Article.objects.drafts(language=current_language()).hard_limit()
+    return render_template('articles/drafts/list.html', drafts=drafts)
 
 
 @drafts.route('/new/', methods=['get', 'post'])
