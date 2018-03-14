@@ -4,6 +4,8 @@
 <meta name=viewport content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
 
+{% from "_social-networks-macro.html" import social_networks with context %}
+
 {% block metas %}{% endblock %}
 
 {% block metas_social %}{% endblock %}
@@ -42,12 +44,7 @@
     {% endif %}
     <li><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
     <li>
-      <ul>
-        <li><a href=https://www.facebook.com/cafebabelenglish class=icon-facebook></a></li>
-        <li><a href=https://twitter.com/cafebabel_ENG class=icon-twitter></a></li>
-        <li><a href=https://www.instagram.com/inside.cafebabel class=icon-instagram></a></li>
-        <li><a href=https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg class=icon-youtube></a></li>
-      </ul>
+      {{ social_networks() }}
     </li>
   </ul>
 </nav>
@@ -74,12 +71,7 @@
 <a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
 
 <nav id=social-networks>
-  <ul>
-    <li><a href=https://www.facebook.com/cafebabelenglish class=icon-facebook></a></li>
-    <li><a href=https://twitter.com/cafebabel_ENG class=icon-twitter></a></li>
-    <li><a href=https://www.instagram.com/inside.cafebabel class=icon-instagram></a></li>
-    <li><a href=https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg class=icon-youtube></a></li>
-  </ul>
+  {{ social_networks(with_linkedin=False) }}
 </nav>
 {% include "security/_messages.html" %}
 
