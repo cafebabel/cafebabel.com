@@ -55,7 +55,7 @@ def static_pages_fixtures(app):
     for static_page_slug in app.config['STATIC_PAGES_SLUGS']:
         if not Article.objects.filter(slug=static_page_slug).count():
             article = Article.objects.create(
-                title=static_page_slug,
+                title=static_page_slug.capitalize().replace('-', ' '),
                 summary='Lorem ipsum…',
                 authors=[editor],
                 editor=editor,
