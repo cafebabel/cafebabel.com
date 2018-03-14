@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request
 
-from ...core.helpers import editor_required
+from ...core.helpers import current_language, editor_required
 from ..models import Article
 
 drafts = Blueprint('drafts', __name__)
@@ -9,18 +9,18 @@ drafts = Blueprint('drafts', __name__)
 @drafts.route('/')
 @editor_required
 def list():
-    articles = Article.objects(status='draft').hard_limit()
+    articles = Article.objects.drafts(language=current_language()).hard_limit()
     return render_template('articles/drafts/list.html', articles=articles)
 
 
 @drafts.route('/new/', methods=['get', 'post'])
 @editor_required
 def create():
+    article = Article()
     if request.method == 'POST':
-        article = Article().save_from_request(request)
+        article = article.save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
-    article = Article()
     return render_template('articles/drafts/create.html', article=article)
 
 

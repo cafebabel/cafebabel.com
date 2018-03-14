@@ -204,6 +204,17 @@ def test_editor_access_drafts_list(client, editor, article):
     assert article.title in response
 
 
+def test_editor_access_drafts_list_localized(client, editor, article):
+    login(client, editor.email, 'password')
+    response = client.get('/fr/article/draft/')
+    assert response.status_code == HTTPStatus.OK
+    assert article.title not in response
+    article.modify(language='fr')
+    response = client.get('/fr/article/draft/')
+    assert response.status_code == HTTPStatus.OK
+    assert article.title in response
+
+
 def test_author_cannot_access_drafts_list(client, user):
     login(client, user.email, 'password')
     response = client.get('/en/article/draft/')

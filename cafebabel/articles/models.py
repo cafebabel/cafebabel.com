@@ -18,6 +18,9 @@ class ArticleQuerySet(BaseQuerySet):
     def published(self, language):
         return self.filter(status='published', language=language)
 
+    def drafts(self, language):
+        return self.filter(status='draft', language=language)
+
     def hard_limit(self):
         return self[:current_app.config['HARD_LIMIT_PER_PAGE']]
 
