@@ -139,7 +139,9 @@ def register_cli(app):
         User.drop_collection()
         migrate_users(app, limit, users_filepath)
         Article.drop_collection()
+        static_pages_fixtures(app)
         Tag.drop_collection()
+        categories_fixtures(app)
         migrate_articles(app, limit, articles_filepath)
         migrate_articles(app, limit, articles_filepath2)
 
