@@ -1356,13 +1356,13 @@ select#author {
   transform: translateX(-50%);
 }
 
-.profile-page main [class^='icon-'],
-.profile-page main [class*=' icon-'] {
+.profile-page main .social-networks [class^='icon-'],
+.profile-page main .social-networks [class*=' icon-'] {
   font-size: 3rem;
 }
 
-.profile-page main [class^='icon-']:before,
-.profile-page main [class*=' icon-']:before {
+.profile-page main .social-networks [class^='icon-']:before,
+.profile-page main .social-networks [class*=' icon-']:before {
   position: absolute;
   bottom: 0;
   transition: all 0.3s;
