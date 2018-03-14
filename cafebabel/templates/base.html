@@ -60,6 +60,8 @@
           {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
         {% elif tag and tag.slug in get_categories() %}
           {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
+        {% elif drafts %}
+          {% set lang_url = url_for('drafts.list', lang=lang_code) %}
         {% endif %}
         <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
       {% endif %}
