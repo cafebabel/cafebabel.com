@@ -67,6 +67,20 @@ def test_logo_from_tag_is_redirecting_to_localized_homepage(client, tag):
     assert '<a href=/en/ class=logo>' in response
 
 
+def test_social_networks_are_redirected_to_localized_accounts(client):
+    response = client.get('/en/')
+    assert '<a href=https://www.facebook.com/cafebabelmagazine/' in response
+    response = client.get('/fr/')
+    assert '<a href=https://www.facebook.com/cafebabelfrance/' in response
+
+
+def test_social_networks_fallback_on_english_accounts(client):
+    response = client.get('/en/')
+    assert '<a href=https://www.instagram.com/inside.cafebabel/' in response
+    response = client.get('/fr/')
+    assert '<a href=https://www.instagram.com/inside.cafebabel/' in response
+
+
 def test_error_not_found(client):
     response = client.get('/foobar/')
     assert response.status_code == HTTPStatus.NOT_FOUND

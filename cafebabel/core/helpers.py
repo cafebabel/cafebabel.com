@@ -106,3 +106,9 @@ def static_pages_for(language):
             original_slug = translation.original_article.slug
             static_pages[original_slug] = translation.detail_url
     return static_pages
+
+
+def social_network_url_for(kind):
+    social_networks = current_app.config.get('SOCIAL_NETWORKS')
+    return social_networks[kind].get(current_language(),
+                                     social_networks[kind]['en'])

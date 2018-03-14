@@ -176,4 +176,5 @@ def register_context_processors(app):
             lang_url_for=helpers.lang_url_for,
             absolute=helpers.absolute,
             static_pages_for=helpers.static_pages_for,
+            social_network_url_for=helpers.social_network_url_for
         )
