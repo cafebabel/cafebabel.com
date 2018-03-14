@@ -24,34 +24,31 @@ def test_translation_query_should_retrieve_all(app, article, translation):
     assert article.id not in [a.id for a in articles]
 
 
-def test_translation_creation_should_display_form(app, client, user, article):
+def test_translation_creation_should_display_form(client, user, article):
     login(client, user.email, 'password')
-    language = app.config['LANGUAGES'][1][0]
     response = client.get(
-        f'/en/article/translation/new/?lang={language}&original={article.id}')
+        f'/fr/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.OK
     assert '<textarea id=body name=body required></textarea>' in response
 
 
-def test_translation_creation_should_limit_languages(app, client, user,
+def test_translation_creation_should_limit_languages(client, user,
                                                      translation):
     login(client, user.email, 'password')
     response = client.get(
         f'/en/article/draft/{translation.original_article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert ('href="/en/article/translation/new/?lang='
-            f'{app.config["LANGUAGES"][2][0]}' in response)
-    assert (f'href="/en/article/translation/new/?lang={translation.language}'
+    assert 'href="/de/article/translation/new/' in response
+    assert (f'href="/{translation.language}/article/translation/new/'
             not in response)
     assert f'value={translation.original_article.language}' not in response
 
 
-def test_translation_creation_requires_login(app, client, article):
-    language = app.config['LANGUAGES'][1][0]
+def test_translation_creation_requires_login(client, article):
     response = client.get(
-        f'/en/article/translation/new/?lang={language}&original={article.id}')
+        f'/fr/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.FOUND
-    assert ('/en/login?next=%2Fen%2Farticle%2Ftranslation%2F'
+    assert ('/fr/login?next=%2Ffr%2Farticle%2Ftranslation%2F'
             in response.headers.get('Location'))
 
 

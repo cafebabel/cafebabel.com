@@ -332,8 +332,8 @@ def test_access_published_article_should_link_translations(
     assert ((f'<li class=translated-language><a href=/fr/article/'
              f'title-{published_translation.id}/>fr</a></li>') in response)
     assert ((f'<li class=to-translate-languages>'
-             f'<a href="{url_for("translations.create")}'
-             f'?lang=es&original={published_article.id}">es</a></li>')
+             f'<a href="/es/article/translation/new/'
+             f'?original={published_article.id}">es</a></li>')
             in response)
 
 
