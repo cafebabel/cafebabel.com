@@ -71,11 +71,12 @@ def test_translation_creation_should_redirect(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post(f'/fr/article/translation/new/', data=data)
+    response = client.post(f'/{language}/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
-            f'http://localhost/fr/article/translation/{translation.id}/')
+            ('http://localhost'
+             f'/{language}/article/translation/{translation.id}/'))
     assert (get_flashed_messages() ==
             ['Your translation was successfully created.'])
 
@@ -92,11 +93,12 @@ def test_translation_creation_with_existing_tag(app, client, user, article):
         'language': language,
         'tag-1': tag.name
     }
-    response = client.post(f'/fr/article/translation/new/', data=data)
+    response = client.post(f'/{language}/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
-            f'http://localhost/fr/article/translation/{translation.id}/')
+            ('http://localhost'
+             f'/{language}/article/translation/{translation.id}/'))
     assert (get_flashed_messages() ==
             ['Your translation was successfully created.'])
     assert translation.tags == [tag]
@@ -113,12 +115,13 @@ def test_translation_creation_with_unknown_tag(app, client, user, article):
         'language': language,
         'tag-1': 'Sensational'
     }
-    response = client.post(f'/fr/article/translation/new/', data=data)
+    response = client.post(f'/{language}/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     tag = Tag.objects.get(name='Sensational', language=language)
     assert (response.headers.get('Location') ==
-            f'http://localhost/fr/article/translation/{translation.id}/')
+            ('http://localhost'
+             f'/{language}/article/translation/{translation.id}/'))
     assert (get_flashed_messages() ==
             ['Your translation was successfully created.'])
     assert translation.tags == [tag]
@@ -135,7 +138,7 @@ def test_translation_creation_should_keep_image(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post('/fr/article/translation/new/', data=data)
+    response = client.post(f'/{language}/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert translation.image_filename == '/articles/image-name.jpg'
