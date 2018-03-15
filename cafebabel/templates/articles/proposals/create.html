@@ -1,5 +1,9 @@
 {% extends "base.html" %}
+{% from "_extrajs-macros.html" import extra_js %}
 
+{% block extra_js %}
+  {{ extra_js(['js/textarea-change.js']) }}
+{% endblock %}
 {% block body_class %}pitch-page{% endblock %}
 {% block body %}
 
@@ -7,17 +11,17 @@
   <h1>Contribute</h1>
   <h3>Wanna be part of Cafébabel project? That’s the right place</h3>
   <form action=. method=post>
-    <label for=field_name>Name *</label><input name=name id=field_name required>
-    <label for=field_email>Contact *</label><input type=email name=email id=field_email required>
-    <label for=field_city>City</label><input name=city id=field_city>
-    <label for=field_topic>Topic in a sentence *<p>ex: Digital nomads in Lisbon</p></label><input name=topic id=field_topic required>
-    <label for=field_angle>Pitch your story<p>ex: I want to meet young people/ participants of the three major digital nomad communities/ events in Lisbon and use their personal stories as an insight to describe the digital nomads landscape in Portugal</p></label><input name=angle id=field_angle>
+    <label for=field_name>Name*</label><input name=name id=field_name required>
+    <label for=field_email>Email*</label><input type=email name=email id=field_email required>
+    <label for=field_city>Current location</label><input name=city id=field_city>
+    <label for=field_topic>Topic in a sentence *<p>ex: Digital nomads in Lisbon</p></label><textarea name=topic id=field_topic required></textarea>
+    <label for=field_angle>Detailed pitch<p>ex: I want to meet young people/ participants of the three major digital nomad communities/ events in Lisbon and use their personal stories as an insight to describe the digital nomads landscape in Portugal</p></label><textarea name=angle id=field_angle></textarea>
       <div class=select>
-        <label for=media-type>Media
+        <label for=media-type>Type of contribution
           <select name=media id=media-type required>
-            <option value=text>Text</option>
+            <option value=text>Written</option>
             <option value=video>Video</option>
-            <option value=photo>Photo Gallery</option>
+            <option value=photo>Photo</option>
           </select>
         </label>
       </div>
@@ -42,11 +46,11 @@
           </select>
         </label>
       </div>
-    <label for=field_additional>Additional informations</label><textarea name=additional id=field_additional></textarea>
+    <label for=field_additional>Additional information</label><textarea name=additional id=field_additional></textarea>
 
     <button type=submit>Suggest this article</button>
   </form>
-  <a class="button proposal-email" href="m&#x61;ilto:{{ editor_email }}">Or send your proposal by email</a>
+  <a class="button proposal-email" href="m&#x61;ilto:{{ editor_email }}">Or contact your editor</a>
   <script>
     const email = document.querySelector('.proposal-email').href
     document.querySelector('.proposal-email').href = email.replace(/&#46;/g, '.').replace(/&#x61;/g, 'a')
