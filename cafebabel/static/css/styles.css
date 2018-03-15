@@ -48,7 +48,7 @@ main {
 
 #content {
   max-width: 120rem;
-  margin: 10rem auto 70rem auto;
+  margin: 10rem auto 7rem auto;
   padding: 2rem 2rem 7rem 2rem;
 }
 
@@ -1366,13 +1366,13 @@ select#author {
   transform: translateX(-50%);
 }
 
-.profile-page main [class^='icon-'],
-.profile-page main [class*=' icon-'] {
+.profile-page main .social-networks [class^='icon-'],
+.profile-page main .social-networks [class*=' icon-'] {
   font-size: 3rem;
 }
 
-.profile-page main [class^='icon-']:before,
-.profile-page main [class*=' icon-']:before {
+.profile-page main .social-networks [class^='icon-']:before,
+.profile-page main .social-networks [class*=' icon-']:before {
   position: absolute;
   bottom: 0;
   transition: all 0.3s;
@@ -2273,6 +2273,62 @@ article .article-detail h3 a:hover:after {
 }
 
 /* Footer */
+
+#static-pages-links {
+  margin-bottom: 70rem;
+  background-color: #00283c;
+  height: 9rem;
+  padding: 1.7rem;
+}
+
+#static-pages-links a {
+  color: #fff;
+}
+
+#static-pages-links a:after {
+  background-color: #fff;
+}
+
+#static-pages-links nav {
+  margin: 0 auto;
+  max-width: 75rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+#static-pages-links nav li {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+
+#static-pages-links nav ul,
+#static-pages-links nav ul li {
+  display: block;
+  margin: 0;
+}
+
+#static-pages-links nav ul li {
+  padding: 0.5rem 0;
+}
+
+#static-pages-links nav ul ul,
+#static-pages-links nav ul ul li {
+  display: inline-block;
+}
+
+#static-pages-links nav ul ul li {
+  padding: 0 0.5rem 0 0;
+}
+
+#static-pages-links nav ul ul li a:hover:after {
+  width: 0;
+}
+
+#static-pages-links nav ul ul li a:hover {
+  color: #bde513;
+}
 
 footer {
   width: 100%;
