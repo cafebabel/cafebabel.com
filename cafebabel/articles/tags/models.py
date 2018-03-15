@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from flask import abort, current_app
+from flask import abort, current_app, url_for
 from flask_mongoengine import BaseQuerySet
 from mongoengine import signals
 
@@ -13,7 +13,7 @@ from ...core.mixins import UploadableImageMixin
 class TagQuerySet(BaseQuerySet):
 
     def categories(self, language, **kwargs):
-        return self.filter(slug__in=current_app.config['CATEGORIES'],
+        return self.filter(slug__in=current_app.config['CATEGORIES_SLUGS'],
                            language=language)
 
     def get_or_create(self, **kwargs):
@@ -42,12 +42,20 @@ class Tag(db.Document, UploadableImageMixin):
             document.slug = slugify(document.name)
 
     @property
+    def detail_url(self):
+        return url_for('tags.detail', slug=self.slug, lang=self.language)
+
+    @property
+    def edit_url(self):
+        return url_for('tags.edit', slug=self.slug, lang=self.language)
+
+    @property
     def upload_subpath(self):
         return 'tags'
 
     @property
     def is_category(self):
-        return self.name.lower() in current_app.config['CATEGORIES']
+        return self.name.lower() in current_app.config['CATEGORIES_SLUGS']
 
     def save_from_request(self, request):
         data = request.form.to_dict()

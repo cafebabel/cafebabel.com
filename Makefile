@@ -27,14 +27,14 @@ deploy:  # env=prod|preprod
 	@echo "\n> Fetching master branch and updating sources."
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
-	make sync_archives_media
+	make sync-archives-media
 	@echo "\n> Launching gunicorn daemon."
 	${remote} "${goto_src} && pkill gunicorn 2> /dev/null; \
 		gunicorn --daemon -b ${${env}_server} ${env}:app \
 		--error-logfile ~/log/error.log --access-logfile ~/log/access.log"
 	@echo "\n> App is deployed. Run \`make logs env=${env} type=access|error\` to follow activity."
 
-sync_archives_media:
+sync-archives-media:
 	@echo "\n> Synchronizing archives media from old production server."
 	${remote} "rsync --archive --compress --human-readable --inplace --progress ${old_prod}:${old_prod_media_dir}/avatars/ ${src_dir}/cafebabel/uploads/users/"
 	${remote} "rsync --archive --compress --human-readable --inplace --progress ${old_prod}:${old_prod_media_dir}/editorials/ ${src_dir}/cafebabel/uploads/articles/"
@@ -44,9 +44,17 @@ install:  # env=prod|preprod
 	@echo "\n> Installing sources, dependencies and database."
 	-${remote} "git clone https://github.com/cafebabel/cafebabel.com.git ${src_dir}"
 	-${remote} "python3.6 -m venv ${venv_dir}"
-	-${remote} "${goto_src} && make make_dirs"
+	-${remote} "${goto_src} && make make-dirs"
+	make reset-db
 	make deploy
 
-make_dirs:
+make-dirs:
 	mkdir -p ./logs
 	mkdir -p ./cafebabel/uploads/{archives,articles,tags,users}
+
+reset-db:
+	make flask-command command=initdb
+	make flask-command command=load_fixtures
+
+flask-command:
+	${remote} "${goto_src} && FLASK_APP=prod flask ${command}"

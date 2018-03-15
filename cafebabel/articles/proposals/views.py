@@ -1,9 +1,9 @@
 from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, url_for)
+                   request)
 from flask_mail import Message
 
 from ... import mail
-from ...core.helpers import obfuscate_email
+from ...core.helpers import current_language, lang_url_for, obfuscate_email
 
 proposals = Blueprint('proposals', __name__)
 
@@ -23,26 +23,21 @@ Addiction comment: {additional}
 
 @proposals.route('/new/', methods=['get', 'post'])
 def create():
+    editor_email = current_app.config['EDITOR_EMAILS'][current_language()]
     if request.method == 'POST':
-        data = request.form
+        data = request.form.to_dict()
+        data['language'] = current_language()
         msg = Message(
             f'Article proposal: {data["topic"]}',
             sender=data['email'],
-            recipients=[
-                current_app.config['EDITOR_EMAILS'][data.get('language', 'en')]
-            ],
-            body=BODY_EMAIL_TEMPLATE.format(**data.to_dict())
+            recipients=[editor_email],
+            body=BODY_EMAIL_TEMPLATE.format(**data)
         )
         mail.send(msg)
         flash('Your proposal was successfully sent.', 'success')
-        return redirect(url_for('cores.home'))
-
-    editor_emails = {
-        lang: obfuscate_email(email)
-        for lang, email in current_app.config['EDITOR_EMAILS'].items()}
+        return redirect(lang_url_for('cores.home_lang'))
 
     return render_template(
         'articles/proposals/create.html',
-        EDITORS_EMAIL_DEFAULT=current_app.config['EDITORS_EMAIL_DEFAULT'],
-        editor_emails=editor_emails
+        editor_email=obfuscate_email(editor_email)
     )

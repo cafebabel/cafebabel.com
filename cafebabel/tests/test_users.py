@@ -66,7 +66,8 @@ def test_profile_image_should_save_and_render(app, client, user):
     assert user.profile.image_filename == '/users/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') /
                 'users' / 'image-name.jpg').exists()
-    assert f'<img src={user.profile.image_url}' in response
+    assert (f'<div style="background-image:url({user.profile.image_url}'
+            in response)
 
 
 def test_profile_image_unallowed_extension(app, client, user):
@@ -113,3 +114,30 @@ def test_login_complete_redirects_if_not_logged_in(client, user):
     assert response.status_code == HTTPStatus.FOUND
     assert ('/en/login?next=%2Flogin_complete%2F'
             in response.headers.get('Location'))
+
+
+def test_user_suggest_basics(client, user):
+    response = client.get('/en/profile/suggest/?terms=user@')
+    assert response.status_code == HTTPStatus.OK
+    assert response.json == [{
+        'name': 'user@example.com',
+        'id': str(user.id)
+    }]
+
+
+def test_user_suggest_many(client, user, user2):
+    response = client.get('/en/profile/suggest/?terms=user')
+    assert response.status_code == HTTPStatus.OK
+    assert response.json == [{
+        'name': 'user@example.com',
+        'id': str(user.id)
+    }, {
+        'name': 'user2@example.com',
+        'id': str(user2.id)
+    }]
+
+
+def test_user_suggest_too_short(client, tag):
+    response = client.get('/en/profile/suggest/?terms=wo')
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert 'Suggestions are made available from 3-chars and more.' in response

@@ -2,14 +2,19 @@
 {% import "articles/macros.html" as macros %}
 {% from "_extrajs-macros.html" import extra_js %}
 
-{% block extra_js %}
-  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js']) }}
+{% block extra_head %}
+  <link rel=stylesheet href={{ url_for('static', filename='choices/css/choices.min.css') }}>
+  <link rel=stylesheet href={{ url_for('static', filename='css/choices.css') }}>
 {% endblock %}
 
-{% block body_class %}create-article-page{% endblock %}
+{% block extra_js %}
+  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'choices/js/choices.min.js', 'js/articles-users.js']) }}
+{% endblock %}
+
+{% block body_class %}article-page-edit{% endblock %}
 
 {% block body %}
-<form method=post action={% block form_action %}{{ url_for('articles.edit', article_id=article.id) }}{% endblock %} enctype=multipart/form-data>
+<form method=post action={% block form_action %}{{ lang_url_for('articles.edit', article_id=article.id) }}{% endblock %} enctype=multipart/form-data>
 
   {% if article.id %}<input type=hidden name=id value="{{ article.id }}">{% endif %}
   {{ macros.image_upload(article) }}
@@ -18,17 +23,6 @@
     <input id=title name=title value="{{ article.title or '' }}" required>
   </h1>
   <div class=article-settings>
-    <div class=select>
-      <label for=language>
-        <select id=language name=language required>
-          <optgroup label=Language>
-            {% for language in get_languages() %}
-            <option value={{language[0] }}{% if article.language == language[0] %} selected{% endif %}>{{ language[1] }}</option>
-            {% endfor %}
-          </optgroup>
-        </select>
-      </label>
-    </div>
     {% if current_user.has_role('editor') %}
     <div class=select>
       <label for=status>
@@ -42,14 +36,12 @@
         </select>
       </label>
     </div>
-    <div class=select>
-      <label for=author>
-        <select id=author name=author required>
-          <optgroup label=Author>
-            {% for author in authors %}
-            <option value={{author.id}} {% if article.author == author %}selected{% endif %}>{{ author }}</option>
-            {% endfor %}
-          </optgroup>
+    <div class=select-multi>
+      <label for=authors>Author(s)
+        <select name=authors id=authors multiple>
+          {% for author in article.authors %}
+            <option value={{ author.id }} selected>{{ author }}</option>
+          {% endfor %}
         </select>
       </label>
     </div>
@@ -70,7 +62,7 @@
 
 {% block form_extra_actions %}
   {% if current_user.has_role('editor') %}
-  <form method=post action={{ url_for('articles.delete', article_id=article.id) }}>
+  <form method=post action={{ lang_url_for('articles.delete', article_id=article.id) }}>
     <input type=submit value="Delete this article">
   </form>
   {% endif %}

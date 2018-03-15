@@ -6,7 +6,7 @@ from http import HTTPStatus
 from math import ceil
 
 import markdown as markdownlib
-from flask import Markup, abort, current_app, g, request
+from flask import Markup, abort, current_app, g, request, url_for
 from flask_login import current_user, fresh_login_required, login_required
 from jinja2.filters import do_wordcount
 from unidecode import unidecode
@@ -67,6 +67,10 @@ def current_language():
     return g.get('lang', current_app.config['DEFAULT_LANGUAGE'])
 
 
+def lang_url_for(*args, **kwargs):
+    return url_for(lang=current_language(), *args, **kwargs)
+
+
 def absolute(url):
     if not url:
         return ''
@@ -86,3 +90,25 @@ def rewrite_img_src(content):
     if media_url:
         return Markup(str(content).replace('src="/', f'src="{media_url}/'))
     return content
+
+
+def static_pages_for(language):
+    from ..articles.models import Article  # Circular imports.
+    static_pages_slugs = current_app.config.get('STATIC_PAGES_SLUGS')
+    default_language = current_app.config.get('DEFAULT_LANGUAGE')
+    static_pages = {slug: '#' for slug in static_pages_slugs}  # Defaults.
+    articles = Article.objects.static_pages(default_language)
+    for article in articles:
+        if language == default_language:
+            static_pages[article.slug] = article.detail_url
+        else:
+            translation = article.get_translation(language)
+            original_slug = translation.original_article.slug
+            static_pages[original_slug] = translation.detail_url
+    return static_pages
+
+
+def social_network_url_for(kind):
+    social_networks = current_app.config.get('SOCIAL_NETWORKS')
+    return social_networks[kind].get(current_language(),
+                                     social_networks[kind]['en'])

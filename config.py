@@ -23,7 +23,41 @@ class BaseConfig:
         ('de', 'Deutsch'),
         ('pl', 'Polszczyzna'),
     )
-    CATEGORIES = ['impact', 'experience', 'raw', 'creative']
+    CATEGORIES_SLUGS = ['impact', 'experience', 'raw', 'creative']
+    STATIC_PAGES_SLUGS = [
+        'about-us',
+        'contact',
+        'editorial-vision',
+        'terms-and-privacy',
+        'faq'
+    ]
+    SOCIAL_NETWORKS = {
+        'facebook': {
+            'en': 'https://www.facebook.com/cafebabelmagazine/',
+            'fr': 'https://www.facebook.com/cafebabelfrance/',
+            'de': 'https://www.facebook.com/cafebabelDeutsch/',
+            'it': 'https://www.facebook.com/CafebabelItalia/',
+            'es': 'https://www.facebook.com/cafebabelenespanol/',
+            'pl': 'https://www.facebook.com/cafebabelpolski/'
+        },
+        'twitter': {
+            'en': 'https://twitter.com/cafebabel_ENG',
+            'fr': 'https://twitter.com/cafebabel_FR',
+            'de': 'https://twitter.com/cafebabel_DE',
+            'it': 'https://twitter.com/cafebabel_IT',
+            'es': 'https://twitter.com/cafebabel_ES',
+            'pl': 'https://twitter.com/cafebabel_POL'
+        },
+        'instagram': {
+            'en': 'https://www.instagram.com/inside.cafebabel/'
+        },
+        'youtube': {
+            'en': 'https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg'
+        },
+        'linkedin': {
+            'en': 'https://www.linkedin.com/company/cafebabel-com/'
+        }
+    }
 
     SECURITY_PASSWORD_SALT = 'and pepper'
     SECURITY_CONFIRMABLE = False
@@ -55,7 +89,6 @@ class BaseConfig:
     MAIL_DEFAULT_SENDER = None
 
     # Prevent writing clear email for avoiding robots on Github sources.
-    EDITORS_EMAIL_DEFAULT = '@'.join(['editors', 'cafebabel.com'])
     EDITOR_EMAILS = {
         'fr': '@'.join(['redaction', 'cafebabel.com']),
         'en': '@'.join(['editors', 'cafebabel.com']),

@@ -15,7 +15,7 @@ def test_confirm_user_creates_default_profile(app):
 
 
 def test_user_profile_has_list_of_published_articles_no_draft(client, article):
-    response = client.get(f'/en/profile/{article.author.id}/')
+    response = client.get(f'/en/profile/{article.authors[0].id}/')
     assert response.status_code == HTTPStatus.OK
     assert article.title not in response
 
@@ -23,7 +23,7 @@ def test_user_profile_has_list_of_published_articles_no_draft(client, article):
 def test_author_profile_has_list_of_published_articles_and_drafts(
         client, user, article, published_article):
     login(client, user.email, 'password')
-    published_article.modify(author=user)
+    published_article.modify(authors=[user])
     response = client.get(f'/en/profile/{user.id}/')
     assert response.status_code == HTTPStatus.OK
     assert article.title in response

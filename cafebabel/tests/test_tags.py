@@ -77,8 +77,7 @@ def test_tag_only_language(client, app, tag):
 def test_tag_suggest_too_short(client, tag):
     response = client.get('/en/article/tag/suggest/?language=en&terms=wo')
     assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert (b'Suggestions made available from 3-chars and more.'
-            in response.data)
+    assert 'Suggestions are made available from 3-chars and more.' in response
 
 
 def test_tag_suggest_wrong_language(client, tag):
@@ -89,8 +88,6 @@ def test_tag_suggest_wrong_language(client, tag):
 
 
 def test_tag_detail(app, client, tag, published_article):
-    Tag.objects.create(name='Wonderful', summary='text chapo',
-                       language=app.config['LANGUAGES'][1][0])
     published_article.modify(tags=[tag])
     response = client.get('/en/article/tag/wonderful/')
     assert response.status_code == HTTPStatus.OK
@@ -184,7 +181,7 @@ def test_tag_update_language_not_possible(app, client, tag, editor):
 
 def test_tag_categories(app, tag):
     language = app.config['LANGUAGES'][0][0]
-    assert 'impact' in app.config['CATEGORIES']
+    assert 'impact' in app.config['CATEGORIES_SLUGS']
     impact = Tag.objects.create(name='Impact', language=language)
     assert Tag.objects.categories(language=language)[0].slug == impact.slug
     assert impact.is_category
@@ -193,7 +190,21 @@ def test_tag_categories(app, tag):
 def test_tag_categories_by_language(app, tag):
     language1 = app.config['LANGUAGES'][0][0]
     language2 = app.config['LANGUAGES'][1][0]
-    assert 'impact' in app.config['CATEGORIES']
+    assert 'impact' in app.config['CATEGORIES_SLUGS']
     impact = Tag.objects.create(name='Impact', language=language1)
     assert not Tag.objects.categories(language=language2)
     assert Tag.objects.categories(language=language1)[0].slug == impact.slug
+
+
+def test_tag_menu_categories_redirect(app, client):
+    Tag.objects.create(name='Raw', summary='text chapo',
+                       language=app.config['LANGUAGES'][0][0])
+    response = client.get('/en/article/tag/raw/')
+    assert response.status_code == HTTPStatus.OK
+    assert '<a href=/fr/article/tag/raw/>FR</a></li>' in response
+
+
+def test_tag_menu_regular_do_not_redirect(app, client, tag):
+    response = client.get(f'/en/article/tag/{tag.slug}/')
+    assert response.status_code == HTTPStatus.OK
+    assert f'<a href=/fr/article/tag/{tag.slug}/>FR</a></li>' not in response
