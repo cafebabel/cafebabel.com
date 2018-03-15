@@ -21,7 +21,7 @@ def create():
             abort(HTTPStatus.BAD_REQUEST, str(e))
         except errors.NotUniqueError as e:
             abort(HTTPStatus.BAD_REQUEST, str(e))
-        flash('Your translation was successfully created.')
+        flash('Thanks! Your translation has been sent to your editor')
         return redirect(translation.detail_url)
 
     original_article = request.args.get('original')

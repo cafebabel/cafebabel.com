@@ -50,7 +50,7 @@ def edit(article_id):
             flash(message, 'error')
             return redirect(
                 lang_url_for('articles.edit', article_id=article.id))
-        flash('Your article was successfully updated.')
+        flash('Your article has been updated')
         return redirect(article.detail_url)
 
     return render_template('articles/edit.html', article=article)
@@ -61,7 +61,7 @@ def edit(article_id):
 def delete(article_id):
     article = Article.objects.get_or_404(id=article_id)
     article.delete()
-    flash('Article was deleted.', 'success')
+    flash('Article was deleted', 'success')
     return redirect(url_for('cores.home_lang', lang=article.language))
 
 
