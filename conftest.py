@@ -1,5 +1,7 @@
 import pytest
 
+from flask_security.utils import hash_password
+
 from cafebabel import create_app
 from cafebabel.commands import auth_fixtures, drop_collections
 from cafebabel.articles.models import Article
@@ -12,6 +14,15 @@ test_app = create_app('config.TestingConfig')
 
 def pytest_runtest_setup():
     auth_fixtures(test_app)
+    ds = test_app.user_datastore
+    with test_app.app_context():
+        user = ds.create_user(email='user@example.com',
+                              password=hash_password('password'))
+        ds.activate_user(user)
+        user2 = ds.create_user(email='user2@example.com',
+                               password=hash_password('password'))
+        ds.activate_user(user2)
+        ds.commit()
 
 
 def pytest_runtest_teardown():
@@ -37,8 +48,13 @@ def user():
 
 
 @pytest.fixture
+def user2():
+    return User.objects.get(email='user2@example.com')
+
+
+@pytest.fixture
 def editor():
-    return User.objects.get(email='editor@example.com')
+    return User.objects.get(email=test_app.config['EDITOR_EMAILS']['en'])
 
 
 @pytest.fixture
@@ -54,7 +70,7 @@ def article(user):
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        author=user,
+        authors=[user],
         language=test_app.config['LANGUAGES'][0][0],
         body='body text')
 
@@ -64,7 +80,7 @@ def published_article(user):
     return Article.objects.create(
         title='article title',
         summary='summary text',
-        author=user,
+        authors=[user],
         language=test_app.config['LANGUAGES'][0][0],
         body='body text',
         status='published')
@@ -78,6 +94,20 @@ def translation(user, article):
         summary='summary text',
         language=language,
         body='body text',
-        author=user,
-        translator=user.id,
+        authors=[user],
+        translators=[user.id],
         original_article=article.id)
+
+
+@pytest.fixture
+def published_translation(user, published_article):
+    language = test_app.config['LANGUAGES'][1][0]
+    return Translation.objects.create(
+        title='title',
+        summary='summary text',
+        language=language,
+        body='body text',
+        authors=[user],
+        translators=[user.id],
+        original_article=published_article.id,
+        status='published')

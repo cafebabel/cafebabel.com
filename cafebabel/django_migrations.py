@@ -94,12 +94,11 @@ def normalize_image(image):
     return image and f'/articles/{image[len("editorials/"):]}' or ''
 
 
-def normalize_author(author_pk):
-    try:
-        if author_pk is not None:
-            return User.objects.get(profile__old_pk=author_pk)
-    except User.DoesNotExist:
-        click.echo(f'User does not exist {author_pk} (outdated input file?)')
+def normalize_users(users_pks):
+    users = User.objects.filter(profile__old_pk__in=users_pks)
+    if not users:
+        raise Exception('The users.json file is outdated compared to articles')
+    return users
 
 
 def handle_groups(groups):
@@ -185,8 +184,8 @@ def create_article(old_article):
     else:
         click.echo(f'No content: {old_article["pk"]} (spam?)')
         return
-    # Do not consider articles without body.
-    if not article_fields['body']:
+    # Do not consider articles without body or authors.
+    if not article_fields['body'] or not old_article['authors']:
         return
     tags = handle_groups(old_article['groups'])
     data = {
@@ -196,7 +195,7 @@ def create_article(old_article):
         'language': language,
         'creation_date': creation_date,
         'publication_date': timestamp_to_datetime(fields['publication_date']),
-        'author': normalize_author(fields['created_by']),
+        'authors': normalize_users(old_article['authors']),
         'image_filename': normalize_image(fields['image']),
         'status': status,
         'tags': tags or None,
@@ -206,10 +205,15 @@ def create_article(old_article):
             relateds=fields['relateds']
         ),
     }
+    if status == 'draft':
+        del data['publication_date']
     if is_gallery:
         data['body'] = aggregate_gallery_body(old_article['gallery'])
     translation_from = fields['translation_from']
     if translation_from:
+        # Do not consider translations without translators.
+        if not old_article['translators']:
+            return
         try:
             original_article = Article.objects.get(
                 archive__pk=translation_from)
@@ -217,11 +221,10 @@ def create_article(old_article):
             # Will be checked again on second pass.
             # click.echo(f'Article does not exist: {old_pk} (skipping)')
             return
-        translator = data['author']
-        data['author'] = original_article.author
+        data['authors'] = original_article.authors
         try:
             Translation.objects.create(
-                translator=translator,
+                translators=normalize_users(old_article['translators']),
                 original_article=original_article,
                 **data
             )

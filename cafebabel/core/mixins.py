@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from flask import current_app, url_for
 from werkzeug.utils import secure_filename
@@ -38,7 +39,10 @@ class UploadableImageMixin:
     def delete_image(self):
         if not self.has_image:
             return
-        self.image_path.unlink()
+        try:
+            Path(self.image_path).unlink()
+        except FileNotFoundError:
+            pass  # The image cannot been found anymore on the server.
         self.image_filename = None
         self.save()
 

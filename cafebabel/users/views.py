@@ -1,14 +1,29 @@
-from flask import (Blueprint, flash, render_template, redirect, url_for,
-                   request, abort, current_app)
-from flask_login import login_required, current_user
+from http import HTTPStatus
+
+from flask import (Blueprint, abort, current_app, flash, jsonify, redirect,
+                   render_template, request)
+from flask_login import current_user, login_required
 from werkzeug import exceptions
 
-from ..core.helpers import allowed_file, file_exceeds
 from ..articles.models import Article
+from ..core.helpers import allowed_file, lang_url_for, file_exceeds
 from .models import User
 
-
 users = Blueprint('users', __name__)
+
+
+@users.route('/suggest/')
+def suggest():
+    terms = request.args.get('terms')
+    if len(terms) < 3:
+        abort(HTTPStatus.BAD_REQUEST,
+              'Suggestions are made available from 3-chars and more.')
+    users = User.objects(profile__name__istartswith=terms)
+    cleaned_user = [{
+        'name': user.profile.name,
+        'id': str(user.id)
+    } for user in users]
+    return jsonify(cleaned_user)
 
 
 @users.route('/<id>/edit/', methods=['get', 'post'])
@@ -43,25 +58,25 @@ def edit(id):
                 message = ('There was an error in your profile submission: '
                            'No selected file.')
                 flash(message, 'error')
-                return redirect(url_for('users.edit', id=user.id))
+                return redirect(lang_url_for('users.edit', id=user.id))
             if not allowed_file(image.filename):
                 # TODO: https://github.com/cafebabel/cafebabel.com/issues/187
                 message = ('There was an error in your profile submission: '
                            'Unallowed extension.')
                 flash(message, 'error')
-                return redirect(url_for('users.edit', id=user.id))
+                return redirect(lang_url_for('users.edit', id=user.id))
             user.profile.attach_image(image)
         user.save()
         flash('Your profile was successfully saved.')
-        return redirect(url_for('users.detail', id=user.id))
-    articles = Article.objects.filter(author=user).hard_limit()
+        return redirect(user.detail_url)
+    articles = Article.objects.filter(authors=user).hard_limit()
     return render_template('users/edit.html', user=user, articles=articles)
 
 
 @users.route('/<id>/')
 def detail(id):
     user = User.objects.get_or_404(id=id)
-    filters = {'author': user}
+    filters = {'authors__in': [user]}
     if not user.is_me():
         filters['status'] = 'published'
     articles = Article.objects(**filters).hard_limit()

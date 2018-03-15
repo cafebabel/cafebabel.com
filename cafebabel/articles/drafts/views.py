@@ -1,7 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request
 
-from ...core.helpers import editor_required
-from ...users.models import User
+from ...core.helpers import current_language, editor_required
 from ..models import Article
 
 drafts = Blueprint('drafts', __name__)
@@ -10,35 +9,30 @@ drafts = Blueprint('drafts', __name__)
 @drafts.route('/')
 @editor_required
 def list():
-    articles = Article.objects(status='draft').hard_limit()
-    return render_template('articles/drafts/list.html', articles=articles)
+    drafts = Article.objects.drafts(language=current_language()).hard_limit()
+    return render_template('articles/drafts/list.html', drafts=drafts)
 
 
 @drafts.route('/new/', methods=['get', 'post'])
 @editor_required
 def create():
+    article = Article()
     if request.method == 'POST':
-        article = Article().save_from_request(request)
+        article = article.save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
-
-    article = Article()
-    authors = User.objects.all()
-    return render_template('articles/drafts/create.html', article=article,
-                           authors=authors)
+    return render_template('articles/drafts/create.html', article=article)
 
 
 @drafts.route('/<regex("\w{24}"):draft_id>/edit/', methods=['get', 'post'])
+@editor_required
 def edit(draft_id):
     article = Article.objects.get_or_404(id=draft_id)
     if request.method == 'POST':
         article.save_from_request(request)
         flash('Your article was successfully saved.')
         return redirect(article.detail_url)
-
-    authors = User.objects.all()
-    return render_template('articles/drafts/edit.html', article=article,
-                           authors=authors)
+    return render_template('articles/drafts/edit.html', article=article)
 
 
 @drafts.route('/<regex("\w{24}"):draft_id>/')

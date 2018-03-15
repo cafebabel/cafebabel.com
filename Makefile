@@ -44,9 +44,12 @@ install:  # env=prod|preprod
 	@echo "\n> Installing sources, dependencies and database."
 	-${remote} "git clone https://github.com/cafebabel/cafebabel.com.git ${src_dir}"
 	-${remote} "python3.6 -m venv ${venv_dir}"
-	-${remote} "${goto_src} && make make_dirs"
+	-${remote} "${goto_src} && make make-dirs"
 	make deploy
 
-make_dirs:
+make-dirs:
 	mkdir -p ./logs
 	mkdir -p ./cafebabel/uploads/{archives,articles,tags,users}
+
+flask-command:  # command=whatever flask command
+	${remote} "${goto_src} && FLASK_APP=prod flask ${command}"

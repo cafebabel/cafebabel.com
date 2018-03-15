@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "articles/macros.html" import card %}
 
 {% block body_class %}translate-list-page{% endblock %}
 {% block body %}
@@ -34,22 +35,14 @@
   {% for article in articles %}
     {% if not article.is_translated_in(to_language_code) %}
       <li>
-        <article>
-          {% if article.has_image %}
-              <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
+        {{ card(article) }}
+        {% if article.is_translation %}
+          {% if article.original_article.language != to_language_code %}
+            <a class=button href="{{ url_for('translations.create', lang=to_language_code) }}?original={{ article.original_article.id }}">Translate in {{ to_language_label }}</a>
           {% endif %}
-          <time>Published on {{ article.creation_date.date() }}</time>
-          <h2>{{ article.title }}</h2>
-
-            {% if article.is_translation %}
-              {% if article.original_article.language != to_language_code %}
-                <a class=button href="{{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}">Translate in {{ to_language_label }}</a>
-              {% endif %}
-            {% else %}
-              <a class=button href="{{ url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}">Translate in {{ to_language_label }}</a>
-            {% endif %}
-
-        </article>
+        {% elif article.language != to_language_code %}
+          <a class=button href="{{ url_for('translations.create', lang=to_language_code) }}?original={{ article.id }}">Translate in {{ to_language_label }}</a>
+        {% endif %}
       </li>
     {% endif %}
   {% endfor %}
