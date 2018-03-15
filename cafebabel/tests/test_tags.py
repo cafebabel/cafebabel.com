@@ -181,7 +181,7 @@ def test_tag_update_language_not_possible(app, client, tag, editor):
 
 def test_tag_categories(app, tag):
     language = app.config['LANGUAGES'][0][0]
-    assert 'impact' in app.config['CATEGORIES']
+    assert 'impact' in app.config['CATEGORIES_SLUGS']
     impact = Tag.objects.create(name='Impact', language=language)
     assert Tag.objects.categories(language=language)[0].slug == impact.slug
     assert impact.is_category
@@ -190,7 +190,7 @@ def test_tag_categories(app, tag):
 def test_tag_categories_by_language(app, tag):
     language1 = app.config['LANGUAGES'][0][0]
     language2 = app.config['LANGUAGES'][1][0]
-    assert 'impact' in app.config['CATEGORIES']
+    assert 'impact' in app.config['CATEGORIES_SLUGS']
     impact = Tag.objects.create(name='Impact', language=language1)
     assert not Tag.objects.categories(language=language2)
     assert Tag.objects.categories(language=language1)[0].slug == impact.slug

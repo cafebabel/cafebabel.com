@@ -1,10 +1,16 @@
-{% from "users/macros.html" import default_profile_picture %}
-
 {% macro article_publication_date(article) %}
   {% if article.publication_date %}
     <span>Published on <time pubdate="{{ article.publication_date.date() }}">{{ article.publication_date.strftime('%B %-d, %Y') }}</time></span>
   {% else %}
     <span>Created on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.strftime('%B %-d, %Y') }}</time></span>
+  {% endif %}
+{% endmacro %}
+
+{% macro profile_image(author) %}
+  {% if author.profile.has_image %}
+    <div style="background-image:url({{ author.profile.image_url }})" class=image></div><!-- preserve image ratio centered in a round shape -->
+  {% else %}
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
   {% endif %}
 {% endmacro %}
 
@@ -16,12 +22,8 @@
     <div class=author-container>
       <h4>Words by:</h4>
       {% for author in article.authors %}
-          <a href="{{ author.detail_url }}" class=author-link>
-            {% if author.profile.has_image %}
-              <img src={{ author.profile.image_url }} alt="Picture of {{ author }}">
-            {% else %}
-              {{ default_profile_picture() }}
-            {% endif %}
+          <a href="{{ url_for('users.detail', id=author.pk) }}" class=author-link>
+            {{ profile_image(author) }}
             {{ author }}
           </a>
       {% endfor %}
@@ -30,12 +32,8 @@
       <div class=translator-container>
         <h4>Translation by:</h4>
           {% for translator in article.translators -%}
-              <a href="{{ translator.detail_url }}" class=translator-link>
-                {% if translator.profile.has_image %}
-                  <img src={{ translator.profile.image_url }} alt="Picture of {{ translator }}">
-                {% else %}
-                  {{ default_profile_picture() }}
-                {% endif %}
+              <a href="{{ url_for('users.detail', id=translator.pk) }}" class=translator-link>
+                {{ profile_image(translator) }}
                 {{ translator }}
               </a>
           {%- endfor %}

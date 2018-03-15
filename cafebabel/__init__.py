@@ -108,8 +108,8 @@ def register_blueprints(app):
 
 
 def register_cli(app):
-    from .commands import (articles_fixtures, auth_fixtures, drop_collections,
-                           relations_fixtures, tags_fixtures)
+    from .commands import (auth_fixtures, categories_fixtures,
+                           drop_collections, static_pages_fixtures)
     from .django_migrations import migrate_articles, migrate_users
     from .users.models import User
     from .articles.models import Article
@@ -119,15 +119,13 @@ def register_cli(app):
     def initdb():
         drop_collections()
         auth_fixtures(app)
-        articles_fixtures(app)
-        tags_fixtures(app)
-        relations_fixtures(app)
+        static_pages_fixtures(app)
+        categories_fixtures(app)
 
     @app.cli.command(short_help='Load articles and tags fixtures')
     def load_fixtures():
-        articles_fixtures(app)
-        tags_fixtures(app)
-        relations_fixtures(app)
+        static_pages_fixtures(app)
+        categories_fixtures(app)
 
     @app.cli.command(short_help='Migrate data from old to new system')
     @click.option('--limit', default=0, help='Number of items migrated.')
@@ -141,7 +139,9 @@ def register_cli(app):
         User.drop_collection()
         migrate_users(app, limit, users_filepath)
         Article.drop_collection()
+        static_pages_fixtures(app)
         Tag.drop_collection()
+        categories_fixtures(app)
         migrate_articles(app, limit, articles_filepath)
         migrate_articles(app, limit, articles_filepath2)
 
@@ -169,10 +169,12 @@ def register_context_processors(app):
         from .core import helpers
         return dict(
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
-            get_categories=lambda: app.config.get('CATEGORIES', tuple()),
+            get_categories_slugs=(
+                lambda: app.config.get('CATEGORIES_SLUGS', tuple())),
             get_year=lambda: datetime.now().year,
             current_language=helpers.current_language(),
             lang_url_for=helpers.lang_url_for,
             absolute=helpers.absolute,
+            static_pages_for=helpers.static_pages_for,
             social_network_url_for=helpers.social_network_url_for
         )
