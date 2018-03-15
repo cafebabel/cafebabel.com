@@ -13,7 +13,7 @@ from ...core.mixins import UploadableImageMixin
 class TagQuerySet(BaseQuerySet):
 
     def categories(self, language, **kwargs):
-        return self.filter(slug__in=current_app.config['CATEGORIES'],
+        return self.filter(slug__in=current_app.config['CATEGORIES_SLUGS'],
                            language=language)
 
     def get_or_create(self, **kwargs):
@@ -55,7 +55,7 @@ class Tag(db.Document, UploadableImageMixin):
 
     @property
     def is_category(self):
-        return self.name.lower() in current_app.config['CATEGORIES']
+        return self.name.lower() in current_app.config['CATEGORIES_SLUGS']
 
     def save_from_request(self, request):
         data = request.form.to_dict()

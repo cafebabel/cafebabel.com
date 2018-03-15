@@ -1,9 +1,12 @@
 from flask import url_for
+from flask_login import current_user
 from mongoengine import signals, errors, ValidationError
 
 from ... import db
 from ...users.models import User
 from ...articles.models import Article
+from ...articles.tags.models import Tag
+from ...core.helpers import current_language
 
 
 class Translation(Article):
@@ -41,6 +44,28 @@ class Translation(Article):
             raise errors.NotUniqueError(
                 'This article already exists in this language.')
         return document
+
+    def save_from_request(self, request):
+        data = request.form.to_dict()
+        article = (self.original_article or
+                   Article.objects.get_or_404(id=data.pop('original')))
+        self.editor = self.editor or article.editor
+        self.authors = self.authors or article.authors
+        self.original_article = article
+        self.status = self.status or 'draft'
+        self.image_filename = self.image_filename or article.image_filename
+        self.translators = self.translators or [current_user.id]
+        self.tags = []
+        data['language'] = self.language or current_language()
+        for field, value in data.items():
+            if field.startswith('tag-') and value:
+                tag = Tag.objects.get_or_create(name=value,
+                                                language=data['language'])
+                if tag not in self.tags:
+                    self.tags.append(tag)
+            else:
+                setattr(self, field, value)
+        return self.save()
 
 
 signals.pre_save.connect(Article.update_publication_date, sender=Translation)
