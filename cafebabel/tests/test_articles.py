@@ -137,7 +137,7 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article was successfully updated.']
+    assert get_flashed_messages() == ['Your article has been updated']
     published_article.reload()
     assert published_article.title == 'updated'
     assert published_article.authors == [user]
@@ -153,7 +153,7 @@ def test_update_published_article_with_many_authors(app, client, user, user2,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article was successfully updated.']
+    assert get_flashed_messages() == ['Your article has been updated']
     published_article.reload()
     assert published_article.authors == [user, user2]
 
@@ -184,7 +184,7 @@ def test_update_published_article_with_tag(app, client, user, editor, tag,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article was successfully updated.']
+    assert get_flashed_messages() == ['Your article has been updated']
     published_article.reload()
     assert published_article.tags == [tag]
 
@@ -203,7 +203,7 @@ def test_update_published_article_with_unkown_tag(app, client, user, editor,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article was successfully updated.']
+    assert get_flashed_messages() == ['Your article has been updated']
     published_article.reload()
     tag2 = Tag.objects.get(name='Sensational', language=language)
     assert published_article.tags == [tag, tag2]
@@ -223,7 +223,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
                            data=data, content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article was successfully updated.']
+    assert get_flashed_messages() == ['Your article has been updated']
     published_article.reload()
     assert published_article.title == 'updated'
     assert published_article.authors == [user]
@@ -294,7 +294,7 @@ def test_delete_article_should_return_200(client, editor, article,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
     assert Article.objects.all().count() == 1
-    assert get_flashed_messages() == ['Article was deleted.']
+    assert get_flashed_messages() == ['Article was deleted']
 
 
 def test_delete_article_regular_user_should_return_403(client, user, article):
