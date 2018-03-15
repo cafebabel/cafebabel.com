@@ -37,7 +37,7 @@
       </label>
     </div>
     <div class=select-multi>
-      <label for=authors>Author(s)
+      <label for=authors>Contributor(s)
         <select name=authors id=authors multiple>
           {% for author in article.authors %}
             <option value={{ author.id }} selected>{{ author }}</option>
@@ -48,11 +48,11 @@
     {% endif %}
   </div>
   <div class=textarea>
-    <label for=summary>Teaser</label>
+    <label for=summary>Lead paragraph</label>
     <textarea id=summary name=summary required>{{ article.summary or '' }}</textarea>
   </div>
   <div class=textarea>
-    <label for=body>Body</label>
+    <label for=body>Body text</label>
     <textarea id=body name=body required>{{ article.body or '' }}</textarea>
     {% include "articles/markdown-helper.html" %}
   </div>
@@ -63,7 +63,7 @@
 {% block form_extra_actions %}
   {% if current_user.has_role('editor') %}
   <form method=post action={{ lang_url_for('articles.delete', article_id=article.id) }}>
-    <input type=submit value="Delete this article">
+    <input type=submit value="Delete article">
   </form>
   {% endif %}
 {% endblock %}
