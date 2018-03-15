@@ -205,6 +205,8 @@ def create_article(old_article):
             relateds=fields['relateds']
         ),
     }
+    if status == 'draft':
+        del data['publication_date']
     if is_gallery:
         data['body'] = aggregate_gallery_body(old_article['gallery'])
     translation_from = fields['translation_from']
