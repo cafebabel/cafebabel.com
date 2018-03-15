@@ -48,7 +48,7 @@ main {
 
 #content {
   max-width: 120rem;
-  margin: 10rem auto 70rem auto;
+  margin: 10rem auto 7rem auto;
   padding: 2rem 2rem 7rem 2rem;
 }
 
@@ -273,7 +273,7 @@ article h1 {
 
 h3 {
   font-size: 2.8rem;
-  margin: 3rem 0;
+  margin: 2rem 0;
   line-height: 1.4;
 }
 
@@ -995,8 +995,8 @@ button.menu + nav a {
 
 /* Editing place page */
 
-.create-article-page .file canvas,
-.create-article-page .file {
+.article-page-edit .file canvas,
+.article-page-edit .file {
   position: relative;
   width: 100%;
   max-width: 120rem;
@@ -1084,7 +1084,7 @@ h1.edit input {
   text-align: center;
 }
 
-.create-article-page .select:nth-child(2) select {
+.article-page-edit .select:nth-child(2) select {
   margin-bottom: 5rem;
 }
 
@@ -1092,18 +1092,18 @@ h1.edit input {
   margin-bottom: 5rem;
 }
 
-.create-article-page .tags .tag-container,
-.create-article-page .tags label {
+.article-page-edit .tags .tag-container,
+.article-page-edit .tags label {
   max-width: 75rem;
   margin: 0 auto 2rem;
 }
 
-.create-article-page .tags .tags-list {
+.article-page-edit .tags .tags-list {
   max-width: 75rem;
   margin: 0 auto;
 }
 
-.create-article-page .tags .tags-list li {
+.article-page-edit .tags .tags-list li {
   position: relative;
   padding: 1rem 4rem 1rem 2rem;
   background-color: #eee;
@@ -1112,11 +1112,11 @@ h1.edit input {
   color: #696969;
 }
 
-.create-article-page .tags .tags-list li.saved {
+.article-page-edit .tags .tags-list li.saved {
   background-color: #ddd;
 }
 
-.create-article-page .tags .tags-list li button {
+.article-page-edit .tags .tags-list li button {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 1.7rem;
@@ -1129,33 +1129,33 @@ h1.edit input {
   z-index: 1;
 }
 
-.create-article-page .tags .tags-list li button:after {
+.article-page-edit .tags .tags-list li button:after {
   font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.3rem;
   margin-left: 1rem;
 }
 
-.create-article-page .tags .tag-container {
+.article-page-edit .tags .tag-container {
   display: flex;
   flex-direction: row;
 }
 
-.create-article-page .tags .tag-container input {
+.article-page-edit .tags .tag-container input {
   width: 90%;
 }
 
-.create-article-page .tags .tag-container button {
+.article-page-edit .tags .tag-container button {
   width: 7rem;
   padding: 2rem;
   margin-right: 0;
 }
 
-.create-article-page .tags #tags-suggestions.inactive {
+.article-page-edit .tags #tags-suggestions.inactive {
   display: none;
 }
 
-.create-article-page .tags #tags-suggestions {
+.article-page-edit .tags #tags-suggestions {
   width: 100%;
   max-width: 75rem;
   border: 0.1rem solid #00283c;
@@ -1169,28 +1169,28 @@ h1.edit input {
   transition: all 0.3s;
 }
 
-.create-article-page .tags #tags-suggestions li:hover {
+.article-page-edit .tags #tags-suggestions li:hover {
   background-color: #eeeeee;
   cursor: pointer;
 }
 
-.create-article-page .tags #tags-suggestions li {
+.article-page-edit .tags #tags-suggestions li {
   padding: 2rem;
 }
 
-.create-article-page .article-settings {
+.article-page-edit .article-settings {
   max-width: 75rem;
   margin: auto;
   text-align: justify;
 }
 
-.create-article-page .article-settings:after {
+.article-page-edit .article-settings:after {
   /* https://codepen.io/gcyrillus/pen/ruhCg */
   content: '';
   padding-right: 100%;
 }
 
-.create-article-page select {
+.article-page-edit select {
   margin: 0 0 2rem 0;
 }
 
@@ -1208,12 +1208,12 @@ select#author {
   }
 }
 
-.create-article-page .textarea {
+.article-page-edit .textarea {
   max-width: 75rem;
   margin: auto;
 }
 
-.create-article-page textarea {
+.article-page-edit textarea {
   font-weight: 100;
 }
 
@@ -1234,11 +1234,21 @@ select#author {
   text-align: center;
 }
 
-.profile-page main section:first-of-type img {
+.profile-page main section:first-of-type img,
+.profile-page main section h2 + div,
+.profile-page main section output .image {
   display: block;
   border-radius: 50%;
   max-width: 20rem;
   margin: 0.2rem auto;
+}
+
+.profile-page main section h2 + div,
+.profile-page main section output .image {
+  width: 20rem;
+  height: 20rem;
+  background-size: cover;
+  background-position: center;
 }
 
 .profile-page .file figcaption {
@@ -1356,13 +1366,13 @@ select#author {
   transform: translateX(-50%);
 }
 
-.profile-page main [class^='icon-'],
-.profile-page main [class*=' icon-'] {
+.profile-page main .social-networks [class^='icon-'],
+.profile-page main .social-networks [class*=' icon-'] {
   font-size: 3rem;
 }
 
-.profile-page main [class^='icon-']:before,
-.profile-page main [class*=' icon-']:before {
+.profile-page main .social-networks [class^='icon-']:before,
+.profile-page main .social-networks [class*=' icon-']:before {
   position: absolute;
   bottom: 0;
   transition: all 0.3s;
@@ -1470,7 +1480,7 @@ select#author {
   width: 0;
 }
 
-.profile-page.edit .oversized {
+.profile-page .oversized {
   color: red;
   font-weight: bold;
 }
@@ -1557,7 +1567,7 @@ select#author {
   font-weight: 100;
 }
 
-.create-article-page .file img,
+.article-page-edit .file img,
 .article-page article + img {
   margin-left: 50%;
   transform: translateX(-50%);
@@ -1631,12 +1641,19 @@ select#author {
 }
 
 .article-page .author-link img,
-.article-page .translator-link img {
+.article-page .translator-link img,
+.article-page .contributor-container .image {
   width: 5.5rem;
   border-radius: 50%;
   margin-left: 50%;
   margin-bottom: 0.5rem;
   transform: translateX(-50%);
+}
+
+.article-page .contributor-container .image {
+  height: 5.5rem;
+  background-size: cover;
+  background-position: center;
 }
 
 .article-page .author-container + p {
@@ -1841,7 +1858,7 @@ p.translation-language {
   margin: 2rem auto 5rem auto;
 }
 
-.translate-list-page ul article a:hover:after {
+.translate-list-page ul article a:first-child:hover:after {
   width: 0;
 }
 
@@ -1849,6 +1866,11 @@ p.translation-language {
   display: inline-block;
   padding: 1rem;
   border: 0.1rem solid;
+}
+
+.translate-list-page a.button {
+  margin: 0 auto 12rem;
+  width: 85%;
 }
 
 /* Flash infos */
@@ -1915,8 +1937,7 @@ p.translation-language {
   margin: 3rem auto;
 }
 
-.tag-page article .article-detail,
-.home article .article-detail {
+article .article-detail {
   position: relative;
   background: #fff;
   width: 85%;
@@ -1928,27 +1949,25 @@ p.translation-language {
 }
 
 @media screen and (min-width: 750px) {
-  .tag-page article .article-detail,
-  .home article .article-detail {
+  article .article-detail {
     padding: 1.5rem;
   }
 }
 
-.tag-page article .article-detail h3,
-.home article .article-detail h3 {
+.tag-page article .article-detail h3 {
   margin: 1rem;
 }
 
-.tag-page article .article-detail p {
+article .article-detail p {
   margin: 0 0 2rem;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 
-.tag-page article .article-detail p:last-child {
+article .article-detail p:last-child {
   margin: 0;
 }
 
-.tag-page article .article-detail p span {
+article .article-detail p span {
   font-style: italic;
   font-family: serif;
 }
@@ -2195,8 +2214,12 @@ a.section-link.creative {
   margin-bottom: 5rem;
 }
 
-.home article .article-detail h3 {
+article .article-detail h3 {
   font-size: 2.2rem;
+}
+
+article .article-detail h3 a:hover:after {
+  width: 0;
 }
 
 .home article .article-detail p {
@@ -2233,7 +2256,7 @@ a.section-link.creative {
   .home article:first-of-type {
     grid-column: 1 / 7;
   }
-  .home article .article-detail h3 {
+  article .article-detail h3 {
     font-size: 2.8rem;
   }
   .home a.section-link {
@@ -2279,6 +2302,62 @@ a.section-link.creative {
 }
 
 /* Footer */
+
+#static-pages-links {
+  margin-bottom: 70rem;
+  background-color: #00283c;
+  height: 9rem;
+  padding: 1.7rem;
+}
+
+#static-pages-links a {
+  color: #fff;
+}
+
+#static-pages-links a:after {
+  background-color: #fff;
+}
+
+#static-pages-links nav {
+  margin: 0 auto;
+  max-width: 75rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+#static-pages-links nav li {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+
+#static-pages-links nav ul,
+#static-pages-links nav ul li {
+  display: block;
+  margin: 0;
+}
+
+#static-pages-links nav ul li {
+  padding: 0.5rem 0;
+}
+
+#static-pages-links nav ul ul,
+#static-pages-links nav ul ul li {
+  display: inline-block;
+}
+
+#static-pages-links nav ul ul li {
+  padding: 0 0.5rem 0 0;
+}
+
+#static-pages-links nav ul ul li a:hover:after {
+  width: 0;
+}
+
+#static-pages-links nav ul ul li a:hover {
+  color: #bde513;
+}
 
 footer {
   width: 100%;

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% from "users/macros.html" import social_field, default_profile_picture with context %}
-{% from "articles/macros.html" import card %}
+{% from "users/macros.html" import social_field with context %}
+{% from "articles/macros.html" import card, profile_image %}
 
 {% block body_class %}profile-page{% endblock %}
 {% block body %}
@@ -8,11 +8,7 @@
 
 <section>
   <h2>About</h2>
-  {% if user.profile.has_image %}
-    <img src={{ user.profile.image_url }} alt="Picture of {{ user }}">
-  {% else %}
-    {{ default_profile_picture() }}
-  {% endif %}
+  {{ profile_image(user) }}
 
   {% if user.profile.socials %}
   <ul class=social-networks>

@@ -1,18 +1,38 @@
 {% extends "base.html" %}
+{% import "articles/macros.html" as macros %}
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
   {{ extra_js(['js/articles-tags.js', 'js/textarea-change.js']) }}
 {% endblock %}
 
+{% block body_class %}article-page-edit{% endblock %}
 {% block body %}
-<h1>Updating translation in {{ translation.language }} for article “{{ translation.original_article.title }}”</h1>
 
 <form method=post action=.>
-  <div class=text>
+  {% if translation.has_image %}
+    <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
+  {% endif %}
+  <h1 class="edit active">
     <label for=title>Title</label>
-    <input id=title name=title value="{{ translation.title }}" required>
-  </div>
+    <input id=title name=title required value="{{ translation.title }}">
+  </h1>
+  {% if current_user.has_role('editor') %}
+    <div class=article-settings>
+      <div class=select>
+        <label for=status>
+          <select id=status name=status required>
+            <optgroup label=Status>
+              {% block form_status_options %}
+                <option value=draft{% if translation.is_draft %} selected{% endif %}>Draft</option>
+                <option value=published{% if translation.is_published %} selected{% endif %}>Published</option>
+              {% endblock %}
+            </optgroup>
+          </select>
+        </label>
+      </div>
+    </div>
+  {% endif %}
   <div class=textarea>
     <label for=summary>Teaser</label>
     <textarea id=summary name=summary required>{{ translation.summary }}</textarea>
@@ -22,15 +42,7 @@
     <textarea id=body name=body required>{{ translation.body }}</textarea>
     {% include "articles/markdown-helper.html" %}
   </div>
-  {% if current_user.has_role('editor') %}
-    <div class=select>
-      <label for=status>Status</label>
-      <select id=status name=status required>
-        <option value=draft{% if translation.is_draft %} selected{% endif %}>Draft</option>
-        <option value=published{% if translation.is_published %} selected{% endif %}>Published</option>
-      </select>
-    </div>
-  {% endif %}
+  {{ macros.tags_fields(translation) }}
   <input type=submit value="Update">
 </form>
 {% endblock %}

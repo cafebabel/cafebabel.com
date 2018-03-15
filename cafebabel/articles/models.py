@@ -18,6 +18,10 @@ class ArticleQuerySet(BaseQuerySet):
     def published(self, language):
         return self.filter(status='published', language=language)
 
+    def static_pages(self, language):
+        static_page_slugs = current_app.config.get('STATIC_PAGES_SLUGS')
+        return self.published(language).filter(slug__in=static_page_slugs)
+
     def drafts(self, language):
         return self.filter(status='draft', language=language)
 

@@ -35,11 +35,22 @@ def test_homepage_does_not_contain_draft_articles(client, article):
 
 def test_homepage_contains_categories(app, client, published_article):
     language = app.config['LANGUAGES'][0][0]
-    assert 'impact' in app.config['CATEGORIES']
+    assert 'impact' in app.config['CATEGORIES_SLUGS']
     impact = Tag.objects.create(name='Impact', language=language)
     response = client.get('/en/')
     assert impact.name in response
     assert impact.detail_url in response
+
+
+def test_homepage_contains_static_pages_if_present(client, published_article):
+    response = client.get('/en/')
+    assert '<a href=#>About us</a>' in response
+    published_article.modify(slug='about-us')
+    response = client.get('/en/')
+    assert (
+        f'<a href=/en/article/about-us-{published_article.id}/>About us</a>'
+        in response
+    )
 
 
 def test_homepage_contains_authors_links(client, published_article):
