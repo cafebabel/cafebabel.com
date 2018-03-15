@@ -115,9 +115,13 @@ Array.from(document.querySelectorAll('h1.edit input')).forEach(inputh1 => {
 })
 
 /* animation picto sections */
+const viewportHeight = Math.max(
+  document.documentElement.clientHeight,
+  window.innerHeight || 0
+) /* https://stackoverflow.com/a/8876069/6481285 */
 Array.from(document.querySelectorAll('.svg-animation')).forEach(svg => {
-  window.addEventListener('scroll', function() {
-    if (svg.getBoundingClientRect().top < 600) {
+  window.addEventListener('scroll', () => {
+    if (svg.getBoundingClientRect().top < viewportHeight) {
       svg.classList.add('active')
       window.onscroll = null
     }
