@@ -50,7 +50,7 @@ def edit(article_id):
             flash(message, 'error')
             return redirect(
                 lang_url_for('articles.edit', article_id=article.id))
-        flash('Your article was successfully saved.')
+        flash('Your article was successfully updated.')
         return redirect(article.detail_url)
 
     return render_template('articles/edit.html', article=article)
