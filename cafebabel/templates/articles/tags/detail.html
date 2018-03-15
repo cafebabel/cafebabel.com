@@ -47,7 +47,7 @@
   </header>
   {% if current_user.has_role('editor') %}
     <p>
-      <a class=button href={{ tag.edit_url }}>Edit this tag</a>
+      <a class=button href={{ tag.edit_url }}>Edit tag page</a>
     </p>
   {% endif %}
   {% for article in articles %}

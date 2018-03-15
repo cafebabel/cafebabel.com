@@ -54,7 +54,7 @@ def edit(slug):
             message = f'There was an error in your tag submission: {e}'
             flash(message, 'error')
             return redirect(tag.edit_url)
-        flash('Your tag was successfully saved.')
+        flash('Your tag has been updated')
         return redirect(tag.detail_url)
 
     return render_template('articles/tags/edit.html', tag=tag)

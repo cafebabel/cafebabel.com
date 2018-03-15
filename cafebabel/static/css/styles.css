@@ -1255,9 +1255,12 @@ select#author {
   text-align: center;
 }
 
-.profile-page main section:first-of-type h3 {
-  font-weight: 100;
-  font-size: 1.4rem;
+.profile-page main section .info-profile li {
+  margin: 3rem 0;
+}
+
+.profile-page main section .info-profile li .bio {
+  font-style: italic;
 }
 
 .profile-page main section:nth-of-type(2) article {
@@ -1735,7 +1738,7 @@ p.translation-language {
   width: 4rem;
   height: 4rem;
   transition: all 0.3s;
-  color: #d9d9d9;
+  color: #00283c;
   display: block;
 }
 
@@ -1747,24 +1750,27 @@ p.translation-language {
   width: 0;
 }
 
-.article-language-selector li span,
-.translation-language span {
+.article-language-selector li span.original-language,
+.translation-language span.original-language {
   background-color: #00283c;
   color: #fff;
 }
 
-.article-language-selector li.translated-language a {
+.article-language-selector li.translated-language a,
+.article-language-selector li span,
+.translation-language span {
+  background-color: #bde513;
   color: #00283c;
 }
 
 .article-language-selector li.original-language a {
-  background-color: #bde513;
-  color: #00283c;
+  background-color: #00283c;
+  color: #fff;
   position: static;
 }
 
 .article-language-selector li.original-language a:hover {
-  background-color: #b4db13;
+  background-color: #003c5a;
 }
 
 .article-language-selector li.original-language a:before {
@@ -1790,20 +1796,24 @@ p.translation-language {
   text-align: center;
 }
 
-.share {
-  width: 16rem;
+article .share {
+  width: 23rem;
   margin: 0 auto;
   text-align: center;
-  font-weight: 100;
-  line-height: 2;
+  font-weight: 200;
+  line-height: 1.5;
 }
 
-.share a {
-  font-weight: 200;
+article .share p {
+  font-size: 1.3rem;
+}
+
+article .share a {
+  font-size: 1.9rem;
   margin: 2rem 0;
 }
 
-.share a:first-child {
+article .share a:first-child {
   margin-right: 1rem;
 }
 
@@ -1899,8 +1909,12 @@ p.translation-language {
   left: 50%;
   bottom: 5rem;
   transform: translate(-50%, 0);
-  transition: all 0.1s ease-out;
+  transition: all 3s ease-out;
   z-index: 2;
+}
+
+.flashes li {
+  text-align: center;
 }
 
 .flashes.hidden {
@@ -2137,10 +2151,6 @@ a.creative:before {
 
 .home h2 {
   grid-column: 2 / 6;
-}
-
-.home h2:first-of-type {
-  grid-column: 1 / 7;
 }
 
 .home a.section-link {

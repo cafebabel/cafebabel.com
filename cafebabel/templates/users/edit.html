@@ -4,7 +4,7 @@
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(['js/image-preview.js']) }}
+  {{ extra_js(['js/image-preview.js', 'js/textarea-change.js']) }}
 {% endblock %}
 {% block body_class %}profile-page{% endblock %}
 {% block body %}
@@ -18,11 +18,11 @@
         {{ profile_image(user) }}
       </output>
       <input id=image type=file name=image>
-      <label for=image><strong>Choose profile picture</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
-      <small class=size-info>(500Ko maximum - Square Picture)</small>
+      <label for=image><strong>Upload profile photo</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
+      <small class=size-info>Maximum 500 KB</small>
       {% if user.profile.has_image %}
         <div class=checkbox>
-          <label for=delete>Delete this picture</label>
+          <label for=delete>Delete picture</label>
           <input type=checkbox name=delete id=delete value=1>
         </div>
       {% endif %}
@@ -55,7 +55,7 @@
       <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor') %}checked{% endif %}>
     </div>
     {% endif %}
-    <input type=submit value="Save this profile">
+    <input type=submit value="Save profile">
   </form>
 </section>
 
