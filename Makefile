@@ -55,4 +55,4 @@ reset-db:
 	make flask-command command=load_fixtures
 
 flask-command:
-	${remote} "${goto_src} && FLASK_APP=prod flask $(command)"
+	${remote} "${goto_src} && FLASK_APP=prod flask ${command}"
