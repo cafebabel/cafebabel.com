@@ -382,10 +382,10 @@ def test_translation_to_translate_should_not_have_original_language(
     # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/')
     assert (f'href=/en/article/translation/new/'
-            f'?lang=en&original={article.id}>Translate in English</a>'
+            f'?lang=en&original={article.id}>Translate into English</a>'
             not in response)
     assert (f'href=/en/article/translation/new/'
-            f'?lang=fr&original={article.id}>Translate in Français</a>'
+            f'?lang=fr&original={article.id}>Translate into Français</a>'
             not in response)
 
 
@@ -404,7 +404,7 @@ def test_article_to_translate_should_have_only_other_links(
     language = app.config['LANGUAGES'][1][0]
     article.modify(language=language)
     response = client.get(f'/en/article/to-translate/?from=en&to=fr')
-    assert 'Translate in ' not in response
+    assert 'Translate into ' not in response
 
 
 def test_article_with_tag(app, tag, article):
