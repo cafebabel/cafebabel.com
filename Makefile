@@ -31,7 +31,7 @@ deploy:  # env=prod|preprod
 	@echo "\n> Launching gunicorn daemon."
 	${remote} "${goto_src} && pkill gunicorn 2> /dev/null; \
 		gunicorn --daemon -b ${${env}_server} ${env}:app \
-		--error-logfile ~/log/error-`date +%Y%m%d`.log --access-logfile ~/log/access-`date +%Y%m%d`.log"
+		--error-logfile ~/log/error.log --access-logfile ~/log/access.log"
 	@echo "\n> App is deployed. Run \`make logs env=${env} type=access|error\` to follow activity."
 
 sync_archives_media:
