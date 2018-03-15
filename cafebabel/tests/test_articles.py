@@ -370,10 +370,10 @@ def test_article_to_translate_should_have_translation_links(
     article.modify(language=language)
     response = client.get(f'/en/article/to-translate/?from=fr&to=en')
     assert (f'href="/en/article/translation/new/'
-            f'?lang=en&original={article.id}">Translate in English</a>'
+            f'?lang=en&original={article.id}">Translate into English</a>'
             in response)
     assert (f'href="/en/article/translation/new/'
-            f'?lang=fr&original={article.id}">Translate in Français</a>'
+            f'?lang=fr&original={article.id}">Translate into Français</a>'
             not in response)
 
 
@@ -395,7 +395,7 @@ def test_translation_to_translate_should_have_original_language(
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
     assert (f'href="/en/article/translation/new/'
             f'?lang=es&original={translation.original_article.id}">'
-            f'Translate in Español</a>'
+            f'Translate into Español</a>'
             in response)
 
 
