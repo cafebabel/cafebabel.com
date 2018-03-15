@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% from "users/macros.html" import social_field, default_profile_picture with context %}
-{% from "articles/macros.html" import card %}
+{% from "users/macros.html" import social_field with context %}
+{% from "articles/macros.html" import card, profile_image %}
 {% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
   {{ extra_js(['js/image-preview.js']) }}
 {% endblock %}
-{% block body_class %}profile-page edit{% endblock %}
+{% block body_class %}profile-page{% endblock %}
 {% block body %}
 <h1>{{ user }}'s profile</h1>
 
@@ -15,11 +15,7 @@
   <form method=post action=. enctype=multipart/form-data>
     <div class=file>
       <output>
-        {% if user.profile.has_image %}
-          <img src={{ user.profile.image_url }} alt="My picture">
-        {% else %}
-          {{ default_profile_picture() }}
-        {% endif %}
+        {{ profile_image(user) }}
       </output>
       <input id=image type=file name=image>
       <label for=image><strong>Choose profile picture</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->

@@ -23,7 +23,14 @@ class BaseConfig:
         ('de', 'Deutsch'),
         ('pl', 'Polszczyzna'),
     )
-    CATEGORIES = ['impact', 'experience', 'raw', 'creative']
+    CATEGORIES_SLUGS = ['impact', 'experience', 'raw', 'creative']
+    STATIC_PAGES_SLUGS = [
+        'about-us',
+        'contact',
+        'editorial-vision',
+        'terms-and-privacy',
+        'faq'
+    ]
     SOCIAL_NETWORKS = {
         'facebook': {
             'en': 'https://www.facebook.com/cafebabelmagazine/',

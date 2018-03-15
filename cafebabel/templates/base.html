@@ -58,7 +58,7 @@
         {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
         {% if article and article.id %}
           {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
-        {% elif tag and tag.slug in get_categories() %}
+        {% elif tag and tag.slug in get_categories_slugs() %}
           {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
         {% elif drafts %}
           {% set lang_url = url_for('drafts.list', lang=lang_code) %}
@@ -84,6 +84,25 @@
   <div id=content>
 {% block body %}{% endblock %}
   </div>
+  <nav id=static-pages-links>
+    {% set static_pages = static_pages_for(current_language) %}
+    <nav>
+      <ul>
+        <li><a href={{ static_pages.get('about-us', '#') }}>About us</a></li>
+        <li><a href={{ static_pages.get('contact', '#') }}>Contact</a></li>
+      </ul>
+      <ul>
+        <li><a href={{ static_pages.get('editorial-vision', '#') }}>Editorial vision</a></li>
+        <li><a href={{ static_pages.get('faq', '#') }}>FAQ</a></li>
+      </ul>
+      <ul>
+        <li><a href={{ static_pages.get('terms-and-privacy', '#') }}>Terms and privacy</a></li>
+        <li>
+          {{ social_networks() }}
+        </li>
+      </ul>
+    </nav>
+  </nav>
 </main>
 
 <footer>

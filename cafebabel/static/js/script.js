@@ -59,7 +59,7 @@ if (flashes) {
 
 /* display profile social network field on click */
 const socialIcons = Array.from(
-  document.querySelectorAll('.edit .social-networks li')
+  document.querySelectorAll('.profile-page .social-networks li')
 )
 if (socialIcons) {
   socialIcons.forEach(socialIcon => {
