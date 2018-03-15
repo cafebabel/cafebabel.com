@@ -1245,9 +1245,12 @@ select#author {
   text-align: center;
 }
 
-.profile-page main section:first-of-type h3 {
-  font-weight: 100;
-  font-size: 1.4rem;
+.profile-page main section .info-profile li {
+  margin: 3rem 0;
+}
+
+.profile-page main section .info-profile li .bio {
+  font-style: italic;
 }
 
 .profile-page main section:nth-of-type(2) article {

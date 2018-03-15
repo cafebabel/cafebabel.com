@@ -61,7 +61,7 @@ def test_profile_image_should_save_and_render(app, client, user):
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your profile was successfully saved.']
+    assert get_flashed_messages() == ['Your profile has been updated :-)']
     user.reload()
     assert user.profile.image_filename == '/users/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') /
