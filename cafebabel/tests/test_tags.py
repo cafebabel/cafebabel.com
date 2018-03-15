@@ -116,7 +116,7 @@ def test_tag_update_summary(app, client, tag, editor):
     response = client.post(f'/en/article/tag/{tag.slug}/edit/', data=data,
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your tag was successfully saved.']
+    assert get_flashed_messages() == ['Your tag has been updated']
     tag.reload()
     assert tag.summary == 'custom summary'
 
@@ -133,7 +133,7 @@ def test_tag_update_image(app, client, tag, editor):
                            content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your tag was successfully saved.']
+    assert get_flashed_messages() == ['Your tag has been updated']
     tag.reload()
     assert tag.summary == 'custom summary'
     assert tag.image_filename == '/tags/image-name.jpg'
