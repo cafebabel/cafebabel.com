@@ -52,9 +52,5 @@ make-dirs:
 	mkdir -p ./logs
 	mkdir -p ./cafebabel/uploads/{archives,articles,tags,users}
 
-reset-db:
-	make flask-command command=initdb
-	make flask-command command=load_fixtures
-
-flask-command:
+flask-command:  # command=whatever flask command
 	${remote} "${goto_src} && FLASK_APP=prod flask ${command}"
