@@ -3,9 +3,9 @@
 {% block body %}
 <h1>Pending drafts</h1>
 
-{% for article in articles %}
+{% for draft in drafts %}
 <article>
-  <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>
+  <h3><a href={{ draft.detail_url }}>{{ draft.title }}</a></h3>
 </article>
 {% endfor %}
 {% endblock %}

@@ -204,6 +204,17 @@ def test_editor_access_drafts_list(client, editor, article):
     assert article.title in response
 
 
+def test_editor_access_drafts_list_localized(client, editor, article):
+    login(client, editor.email, 'password')
+    response = client.get('/fr/article/draft/')
+    assert response.status_code == HTTPStatus.OK
+    assert article.title not in response
+    article.modify(language='fr')
+    response = client.get('/fr/article/draft/')
+    assert response.status_code == HTTPStatus.OK
+    assert article.title in response
+
+
 def test_author_cannot_access_drafts_list(client, user):
     login(client, user.email, 'password')
     response = client.get('/en/article/draft/')
@@ -218,6 +229,12 @@ def test_drafts_list_only_displays_drafts(client, editor, article,
     assert response.status_code == HTTPStatus.OK
     assert article.title in response
     assert published_article.title not in response
+
+
+def test_drafts_list_menu_link_localized_list(client, editor, article):
+    login(client, editor.email, 'password')
+    response = client.get('/en/article/draft/')
+    assert '<a href=/fr/article/draft/>FR</a>' in response
 
 
 def test_draft_detail_contains_tags_without_links(client, app, tag, article):
