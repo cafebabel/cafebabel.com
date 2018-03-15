@@ -7,7 +7,7 @@
 
   <form method=get action=.>
     <h1>
-      Articles to translate from
+      Translate from
       <div class=select>
         <label for=from>
           <select id=from name=from required>
@@ -44,10 +44,10 @@
 
             {% if article.is_translation %}
               {% if article.original_article.language != to_language_code %}
-                <a class=button href="{{ lang_url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}">Translate in {{ to_language_label }}</a>
+                <a class=button href="{{ lang_url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.original_article.id }}">Translate into {{ to_language_label }}</a>
               {% endif %}
             {% else %}
-              <a class=button href="{{ lang_url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}">Translate in {{ to_language_label }}</a>
+              <a class=button href="{{ lang_url_for('translations.create') }}?lang={{ to_language_code }}&original={{ article.id }}">Translate into {{ to_language_label }}</a>
             {% endif %}
 
         </article>
