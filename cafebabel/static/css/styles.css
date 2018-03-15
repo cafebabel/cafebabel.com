@@ -2104,10 +2104,6 @@ a.creative:before {
   grid-column: 2 / 6;
 }
 
-.home h2:first-of-type {
-  grid-column: 1 / 7;
-}
-
 .home a.section-link {
   position: relative;
   height: 38vw;
