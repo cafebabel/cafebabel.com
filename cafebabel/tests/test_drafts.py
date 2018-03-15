@@ -31,7 +31,7 @@ def test_create_draft_should_generate_article(client, user, editor):
         'authors': user.id
     }, follow_redirects=True)
     assert response.status_code == 200
-    assert '<span>fr</span>' in response
+    assert '<span class=original-language>fr</span>' in response
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
 
@@ -108,7 +108,7 @@ def test_create_published_draft_should_display_article(client, user, editor):
     }, follow_redirects=True)
     assert response.status_code == 200
     assert request.url_rule.endpoint == 'articles.detail'
-    assert '<span>en</span>' in response
+    assert '<span class=original-language>en</span>' in response
     assert '<h1>Test article</h1>' in response
     assert '<p>Article body</p>' in response
 

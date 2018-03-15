@@ -19,7 +19,7 @@ def create():
     article = Article()
     if request.method == 'POST':
         article = article.save_from_request(request)
-        flash('Your article was successfully saved.')
+        flash('Your article has been saved as a draft')
         return redirect(article.detail_url)
     return render_template('articles/drafts/create.html', article=article)
 
@@ -30,7 +30,7 @@ def edit(draft_id):
     article = Article.objects.get_or_404(id=draft_id)
     if request.method == 'POST':
         article.save_from_request(request)
-        flash('Your article was successfully saved.')
+        flash('Your article has been updated')
         return redirect(article.detail_url)
     return render_template('articles/drafts/edit.html', article=article)
 

@@ -27,7 +27,7 @@
       {% if security.registerable or security.recoverable or security.confirmable %}
         <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
         {% if security.registerable %}
-        <li><a href="{{ url_for_security('register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Register') }}</a><br/></li>
+        <li><a href="{{ url_for_security('register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Create a profile') }}</a><br/></li>
         {% endif %}
         {% if security.recoverable %}
         <li><a href="{{ url_for_security('forgot_password') }}">{{ _('Forgot password') }}</a><br/></li>
@@ -37,12 +37,12 @@
         {% endif %}
       {% endif %}
     {% endif %}
-    <li><a href={{ lang_url_for('proposals.create') }}>Suggest an article</a></li>
-    {% if current_user.has_role('editor') %}
-      <li><a href={{ lang_url_for('drafts.create') }}>Write an article</a></li>
-      <li><a href={{ lang_url_for('drafts.list') }}>View existing drafts</a></li>
-    {% endif %}
+    <li><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
     <li><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
+    {% if current_user.has_role('editor') %}
+      <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
+      <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+    {% endif %}
     <li>
       {{ social_networks() }}
     </li>
