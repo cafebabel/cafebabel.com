@@ -1722,7 +1722,7 @@ p.translation-language {
   width: 4rem;
   height: 4rem;
   transition: all 0.3s;
-  color: #d9d9d9;
+  color: #00283c;
   display: block;
 }
 
@@ -1734,24 +1734,27 @@ p.translation-language {
   width: 0;
 }
 
-.article-language-selector li span,
-.translation-language span {
+.article-language-selector li span.original-language,
+.translation-language span.original-language {
   background-color: #00283c;
   color: #fff;
 }
 
-.article-language-selector li.translated-language a {
+.article-language-selector li.translated-language a,
+.article-language-selector li span,
+.translation-language span {
+  background-color: #bde513;
   color: #00283c;
 }
 
 .article-language-selector li.original-language a {
-  background-color: #bde513;
-  color: #00283c;
+  background-color: #00283c;
+  color: #fff;
   position: static;
 }
 
 .article-language-selector li.original-language a:hover {
-  background-color: #b4db13;
+  background-color: #003c5a;
 }
 
 .article-language-selector li.original-language a:before {
@@ -1888,6 +1891,10 @@ p.translation-language {
   transform: translate(-50%, 0);
   transition: all 3s ease-out;
   z-index: 2;
+}
+
+.flashes li {
+  text-align: center;
 }
 
 .flashes.hidden {
