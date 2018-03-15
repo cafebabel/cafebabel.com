@@ -45,7 +45,8 @@ def test_published_article_should_display_content(client, published_article,
     assert (f'<time pubdate="{published_article.publication_date.date()}">'
             f'{published_article.publication_date.strftime("%B %-d, %Y")}'
             '</time>' in response)
-    assert f'<span>{published_article.language}</span>' in response
+    assert (('<span class=original-language>'
+             f'{published_article.language}</span>') in response)
     assert published_article.authors[0].profile.name in response
     assert ('href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
             f'en%2Farticle%2F{published_article.slug}-{published_article.id}'
@@ -136,7 +137,7 @@ def test_update_published_article_should_return_200(app, client, user, editor,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article has been updated']
+    assert get_flashed_messages() == ['Your article was successfully updated.']
     published_article.reload()
     assert published_article.title == 'updated'
     assert published_article.authors == [user]
@@ -152,7 +153,7 @@ def test_update_published_article_with_many_authors(app, client, user, user2,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article has been updated']
+    assert get_flashed_messages() == ['Your article was successfully updated.']
     published_article.reload()
     assert published_article.authors == [user, user2]
 
@@ -183,7 +184,7 @@ def test_update_published_article_with_tag(app, client, user, editor, tag,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article has been updated']
+    assert get_flashed_messages() == ['Your article was successfully updated.']
     published_article.reload()
     assert published_article.tags == [tag]
 
@@ -202,7 +203,7 @@ def test_update_published_article_with_unkown_tag(app, client, user, editor,
     response = client.post(f'/en/article/{published_article.id}/edit/',
                            data=data, follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article has been updated']
+    assert get_flashed_messages() == ['Your article was successfully updated.']
     published_article.reload()
     tag2 = Tag.objects.get(name='Sensational', language=language)
     assert published_article.tags == [tag, tag2]
@@ -222,7 +223,7 @@ def test_update_article_with_image_should_return_200(app, client, user, editor,
                            data=data, content_type='multipart/form-data',
                            follow_redirects=True)
     assert response.status_code == HTTPStatus.OK
-    assert get_flashed_messages() == ['Your article has been updated']
+    assert get_flashed_messages() == ['Your article was successfully updated.']
     published_article.reload()
     assert published_article.title == 'updated'
     assert published_article.authors == [user]
@@ -370,10 +371,10 @@ def test_article_to_translate_should_have_translation_links(
     article.modify(language=language)
     response = client.get(f'/en/article/to-translate/?from=fr&to=en')
     assert (f'href="/en/article/translation/new/'
-            f'?lang=en&original={article.id}">Translate into English</a>'
+            f'?original={article.id}">Translate into English</a>'
             in response)
-    assert (f'href="/en/article/translation/new/'
-            f'?lang=fr&original={article.id}">Translate into Français</a>'
+    assert (f'href="/{language}/article/translation/new/'
+            f'?original={article.id}">Translate into Français</a>'
             not in response)
 
 
@@ -383,10 +384,10 @@ def test_translation_to_translate_should_not_have_original_language(
     response = client.get(f'/en/article/to-translate/')
     assert (f'href=/en/article/translation/new/'
 
-            f'?lang=en&original={article.id}>Translate into English</a>'
+            f'?original={article.id}>Translate into English</a>'
             not in response)
-    assert (f'href=/en/article/translation/new/'
-            f'?lang=fr&original={article.id}>Translate into Français</a>'
+    assert (f'href=/fr/article/translation/new/'
+            f'?original={article.id}>Translate into Français</a>'
             not in response)
 
 
@@ -394,8 +395,8 @@ def test_translation_to_translate_should_have_original_language(
         app, client, article, translation):
     # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
-    assert (f'href="/en/article/translation/new/'
-            f'?lang=es&original={translation.original_article.id}">'
+    assert (f'href="/es/article/translation/new/'
+            f'?original={translation.original_article.id}">'
             f'Translate into Español</a>'
             in response)
 
