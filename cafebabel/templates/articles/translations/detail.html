@@ -15,11 +15,27 @@
     <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
   {% endif %}
 
+  {% block edit_button %}
+    {% if current_user.has_role('editor') or current_user in translation.translators %}
+      <a class=button href={{ lang_url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
+    {% endif %}
+  {% endblock %}
+
   <h1>{{ translation.title }}</h1>
 
   {{ macros.article_meta(translation) }}
 
   <p class="translation-language">Article in <span>{{ translation.language }}</span></p>
+
+  {% block tag_list %}
+    {% if translation.tags %}
+      <p class=tags-list>
+        {% for tag in translation.tags -%}
+          <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
+        {%- endfor %}
+      </p>
+    {% endif %}
+  {% endblock %}
 
   {% if translation.summary %}
     <div class=summary>{{ translation.summary|markdown }}</div>
@@ -34,10 +50,6 @@
     {%- endfor %}.
   </p>
 
-  {% if current_user.has_role('editor') or current_user in translation.translators %}
-    <p>
-      <a class=button href={{ translation.edit_url }}>Edit this translation</a>
-    </p>
-  {% endif %}
+  {{ self.edit_button() }}
 </article>
 {% endblock %}

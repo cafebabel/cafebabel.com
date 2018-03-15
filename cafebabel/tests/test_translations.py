@@ -5,6 +5,7 @@ import mongoengine
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
+from ..articles.tags.models import Tag
 from ..articles.translations.models import Translation
 from .utils import login
 
@@ -23,47 +24,40 @@ def test_translation_query_should_retrieve_all(app, article, translation):
     assert article.id not in [a.id for a in articles]
 
 
-def test_translation_creation_should_display_form(app, client, user, article):
+def test_translation_creation_should_display_form(client, user, article):
     login(client, user.email, 'password')
-    language = app.config['LANGUAGES'][1][0]
     response = client.get(
-        f'/en/article/translation/new/?lang={language}&original={article.id}')
+        f'/fr/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.OK
     assert '<textarea id=body name=body required></textarea>' in response
 
 
-def test_translation_creation_should_limit_languages(app, client, user,
+def test_translation_creation_should_limit_languages(client, user,
                                                      translation):
     login(client, user.email, 'password')
     response = client.get(
         f'/en/article/draft/{translation.original_article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert ('href="/en/article/translation/new/?lang='
-            f'{app.config["LANGUAGES"][2][0]}' in response)
-    assert (f'href="/en/article/translation/new/?lang={translation.language}'
+    assert 'href="/de/article/translation/new/' in response
+    assert (f'href="/{translation.language}/article/translation/new/'
             not in response)
     assert f'value={translation.original_article.language}' not in response
 
 
-def test_translation_creation_requires_login(app, client, article):
-    language = app.config['LANGUAGES'][1][0]
+def test_translation_creation_requires_login(client, article):
     response = client.get(
-        f'/en/article/translation/new/?lang={language}&original={article.id}')
+        f'/fr/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.FOUND
-    assert ('/en/login?next=%2Fen%2Farticle%2Ftranslation%2F'
+    assert ('/fr/login?next=%2Ffr%2Farticle%2Ftranslation%2F'
             in response.headers.get('Location'))
 
 
-def test_translation_creation_required_parameters(app, client, user, article):
+def test_translation_creation_required_parameters(client, user, article):
     login(client, user.email, 'password')
-    language = app.config['LANGUAGES'][1][0]
-    response = client.get(
-        f'/en/article/translation/new/?original={article.id}')
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-    response = client.get(f'/en/article/translation/new/?lang={language}')
+    response = client.get('/en/article/translation/new/')
     assert response.status_code == HTTPStatus.BAD_REQUEST
     response = client.get(
-        f'/en/article/translation/new/?lang={language}&original={article.id}$')
+        f'/en/article/translation/new/?original={article.id}$')
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
@@ -77,13 +71,60 @@ def test_translation_creation_should_redirect(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post(f'/en/article/translation/new/', data=data)
+    response = client.post(f'/{language}/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert (response.headers.get('Location') ==
-            f'http://localhost/fr/article/translation/{translation.id}/')
+            ('http://localhost'
+             f'/{language}/article/translation/{translation.id}/'))
     assert (get_flashed_messages() ==
             ['Your translation was successfully created.'])
+
+
+def test_translation_creation_with_existing_tag(app, client, user, article):
+    login(client, user.email, 'password')
+    language = app.config['LANGUAGES'][1][0]
+    tag = Tag.objects.create(name='Sensational', language=language)
+    data = {
+        'title': 'title',
+        'summary': 'summary',
+        'body': 'body',
+        'original': article.id,
+        'language': language,
+        'tag-1': tag.name
+    }
+    response = client.post(f'/{language}/article/translation/new/', data=data)
+    assert response.status_code == HTTPStatus.FOUND
+    translation = Translation.objects.first()
+    assert (response.headers.get('Location') ==
+            ('http://localhost'
+             f'/{language}/article/translation/{translation.id}/'))
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully created.'])
+    assert translation.tags == [tag]
+
+
+def test_translation_creation_with_unknown_tag(app, client, user, article):
+    login(client, user.email, 'password')
+    language = app.config['LANGUAGES'][1][0]
+    data = {
+        'title': 'title',
+        'summary': 'summary',
+        'body': 'body',
+        'original': article.id,
+        'language': language,
+        'tag-1': 'Sensational'
+    }
+    response = client.post(f'/{language}/article/translation/new/', data=data)
+    assert response.status_code == HTTPStatus.FOUND
+    translation = Translation.objects.first()
+    tag = Tag.objects.get(name='Sensational', language=language)
+    assert (response.headers.get('Location') ==
+            ('http://localhost'
+             f'/{language}/article/translation/{translation.id}/'))
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully created.'])
+    assert translation.tags == [tag]
 
 
 def test_translation_creation_should_keep_image(app, client, user, article):
@@ -97,7 +138,7 @@ def test_translation_creation_should_keep_image(app, client, user, article):
         'original': article.id,
         'language': language
     }
-    response = client.post('/en/article/translation/new/', data=data)
+    response = client.post(f'/{language}/article/translation/new/', data=data)
     assert response.status_code == HTTPStatus.FOUND
     translation = Translation.objects.first()
     assert translation.image_filename == '/articles/image-name.jpg'
@@ -221,12 +262,48 @@ def test_translation_update_values_should_redirect(client, user, translation):
     response = client.post(
         f'/fr/article/translation/{translation.id}/edit/', data=data)
     assert response.status_code == HTTPStatus.FOUND
-    translation = Translation.objects.first()
+    translation.reload()
     assert (response.headers.get('Location') ==
             f'http://localhost/fr/article/translation/{translation.id}/')
     assert translation.title == 'Modified title'
     assert (get_flashed_messages() ==
             ['Your translation was successfully updated.'])
+
+
+def test_update_translation_with_tag(client, user, editor, tag, translation):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'Modified title',
+        'tag-1': tag.name
+    }
+    response = client.post(f'/fr/article/translation/{translation.id}/edit/',
+                           data=data, follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully updated.'])
+    translation.reload()
+    assert translation.title == 'Modified title'
+    tag = Tag.objects.get(name=tag.name, language=translation.language)
+    assert translation.tags == [tag]
+
+
+def test_update_translation_with_unkown_tag(client, user, editor, tag,
+                                            translation):
+    login(client, editor.email, 'password')
+    data = {
+        'title': 'Modified title',
+        'tag-1': tag.name,
+        'tag-2': 'Sensational'
+    }
+    response = client.post(f'/fr/article/translation/{translation.id}/edit/',
+                           data=data, follow_redirects=True)
+    assert response.status_code == HTTPStatus.OK
+    assert (get_flashed_messages() ==
+            ['Your translation was successfully updated.'])
+    translation.reload()
+    tag = Tag.objects.get(name=tag.name, language=translation.language)
+    tag2 = Tag.objects.get(name='Sensational', language=translation.language)
+    assert translation.tags == [tag, tag2]
 
 
 def test_translation_published_should_return_200(
