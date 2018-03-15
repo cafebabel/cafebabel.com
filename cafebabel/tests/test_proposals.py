@@ -45,4 +45,5 @@ Format: Format
 Section: creative
 Addiction comment: Additional
 '''
-    assert get_flashed_messages() == ['Your proposal was successfully sent.']
+    assert (get_flashed_messages() ==
+            ['Thanks! We’ll be getting back to you asap'])
