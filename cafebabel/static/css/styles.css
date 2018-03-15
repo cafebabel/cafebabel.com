@@ -1780,20 +1780,24 @@ p.translation-language {
   text-align: center;
 }
 
-.share {
-  width: 16rem;
+article .share {
+  width: 23rem;
   margin: 0 auto;
   text-align: center;
-  font-weight: 100;
-  line-height: 2;
+  font-weight: 200;
+  line-height: 1.5;
 }
 
-.share a {
-  font-weight: 200;
+article .share p {
+  font-size: 1.3rem;
+}
+
+article .share a {
+  font-size: 1.9rem;
   margin: 2rem 0;
 }
 
-.share a:first-child {
+article .share a:first-child {
   margin-right: 1rem;
 }
 

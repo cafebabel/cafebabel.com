@@ -33,7 +33,7 @@
     {% endif %}
     {% block edit_button %}
       {% if current_user.has_role('editor') and article.is_published %}
-        <a class=button href={{ lang_url_for('articles.edit', article_id=article.id) }}>Edit this article</a>
+        <a class=button href={{ lang_url_for('articles.edit', article_id=article.id) }}>Edit article</a>
       {% endif %}
     {% endblock %}
     <h1>{{ article.title }}</h1>
@@ -104,9 +104,10 @@
 
   {% block share_nav %}
   <nav class=share>
-  Share this:
+  <p>Loved this story? Then tell your friends:
     <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
+  </p>
   </nav>
   {% endblock %}
 

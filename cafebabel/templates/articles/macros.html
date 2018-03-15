@@ -20,7 +20,7 @@
   </p>
   <div class=contributor-container>
     <div class=author-container>
-      <h4>Words by:</h4>
+      <h4>Story by</h4>
       {% for author in article.authors %}
           <a href="{{ url_for('users.detail', id=author.pk) }}" class=author-link>
             {{ profile_image(author) }}
