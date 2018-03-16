@@ -2000,6 +2000,7 @@ article .article-detail p span {
   font-family: serif;
 }
 
+.article-page article p.tags-list a,
 .tags-list a {
   position: relative;
   font-size: 1rem;
@@ -2008,9 +2009,12 @@ article .article-detail p span {
   display: inline-block;
   margin: 0 1rem 1rem 0;
   color: #696969;
+  box-shadow: none;
+  border-bottom: none;
 }
 
 @media screen and (min-width: 750px) {
+  .article-page article p.tags-list a,
   .tags-list a {
     font-size: 1.3rem;
     padding: 0.5rem 0.7rem;
