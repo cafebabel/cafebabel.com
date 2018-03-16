@@ -1552,6 +1552,10 @@ select#author {
   margin: 0 auto 5rem auto;
 }
 
+.article-page article > img {
+  margin: 0 auto;
+}
+
 .article-page h1:first-of-type {
   padding: 3rem 1.5rem 7rem;
 }
