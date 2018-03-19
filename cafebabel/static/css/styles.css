@@ -2004,6 +2004,7 @@ article .article-detail p span {
 .tags-list a {
   position: relative;
   font-size: 1rem;
+  font-weight: 200;
   padding: 0.3rem 0.5rem;
   background-color: #eeeeee;
   display: inline-block;
@@ -2029,17 +2030,25 @@ article .article-detail p span {
   content: '#';
 }
 
-.tags-list a.impact,
-.tags-list a.experience,
-.tags-list a.raw,
-.tags-list a.creative {
+.article-page article p.tags-list a.impact,
+a.impact,
+.article-page article p.tags-list a.experience,
+a.experience,
+.article-page article p.tags-list a.raw,
+a.raw,
+.article-page article p.tags-list a.creative,
+a.creative {
   color: #00283c;
 }
 
-.tags-list a.impact:before,
-.tags-list a.experience:before,
-.tags-list a.raw:before,
-.tags-list a.creative:before {
+.article-page article p.tags-list a.impact:before,
+a.impact:before,
+.article-page article p.tags-list a.experience:before,
+a.experience:before,
+.article-page article p.tags-list a.raw:before,
+a.raw:before,
+.article-page article p.tags-list a.creative:before,
+a.creative:before {
   font-family: 'icomoon';
   padding-right: 0.4rem;
 }
@@ -2064,6 +2073,7 @@ a.creative:before {
   content: '\e901';
 }
 
+.article-page article p.tags-list a:hover,
 .tags-list a:hover {
   background-color: #e2e2e2;
 }
