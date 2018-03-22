@@ -2371,7 +2371,7 @@ article .article-detail h3 a:hover:after {
 footer {
   width: 100%;
   height: 70rem;
-  font-size: 4rem;
+  font-size: 2rem;
   background: linear-gradient(
     to bottom right,
     #002f4b,
@@ -2384,9 +2384,28 @@ footer {
   z-index: -1;
 }
 
+footer h4 {
+  text-align: center;
+  margin-top: 13rem;
+  padding: 0 2rem;
+}
+
+footer iframe {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  padding: 0 2rem;
+  max-width: 75rem;
+}
+
+footer iframe input.w-preview-fields-content-cell-field-email:focus {
+  outline: none !important;
+}
+
 footer p {
   position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
+  transform: translateX(-50%);
   left: 50%;
+  bottom: 5rem;
 }
