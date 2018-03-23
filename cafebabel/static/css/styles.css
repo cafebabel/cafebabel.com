@@ -2389,7 +2389,7 @@ footer h4 {
   padding: 2rem;
   border: 0.2rem solid #bde513;
   max-width: 71rem;
-  margin: 9rem 2rem;
+  margin: 11rem 2rem;
   font-size: 1.7rem;
   font-weight: 200;
   color: #bde513;
@@ -2397,7 +2397,7 @@ footer h4 {
 
 footer iframe {
   position: absolute;
-  top: 50%;
+  top: 55%;
   right: 50%;
   transform: translate(50%, -50%);
   padding: 0 2rem;
@@ -2409,10 +2409,11 @@ footer p {
   transform: translateX(-50%);
   left: 50%;
   bottom: 5rem;
+  text-align: center;
 }
 
 @media screen and (min-width: 750px) {
   footer h4 {
-    margin: 12rem auto;
+    margin: 16rem auto;
   }
 }
