@@ -2404,10 +2404,6 @@ footer iframe {
   max-width: 75rem;
 }
 
-footer iframe input.w-preview-fields-content-cell-field-email:focus {
-  outline: none !important;
-}
-
 footer p {
   position: absolute;
   transform: translateX(-50%);
