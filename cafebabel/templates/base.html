@@ -29,19 +29,18 @@
     {% else %}
       {% if security.registerable or security.recoverable or security.confirmable %}
         <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
-        {% if security.registerable %}
-        <li><a href="{{ url_for_security('register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Create a profile') }}</a><br/></li>
-        {% endif %}
         {% if security.confirmable %}
         <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
         {% endif %}
       {% endif %}
     {% endif %}
     {% for category in categories %}
-      <li class={{ category.slug }}><a href={{ category.detail_url }}>{{ category.name }}</a></li>
+      <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
     {% endfor %}
     <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
     <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
+    {% set static_pages = static_pages_for(current_language) %}
+    <li><a href={{ static_pages.get('about-us', '#') }}>About us</a></li>
     {% if current_user.has_role('editor') %}
       <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
       <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
@@ -88,7 +87,6 @@
 {% block body %}{% endblock %}
   </div>
   <nav id=static-pages-links>
-    {% set static_pages = static_pages_for(current_language) %}
     <nav>
       <ul>
         <li><a href={{ static_pages.get('about-us', '#') }}>About us</a></li>

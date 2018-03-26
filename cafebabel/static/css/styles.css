@@ -492,6 +492,26 @@ button:hover,
   margin: 5rem 0;
 }
 
+.authentication-form a.button {
+  background-color: #bde513;
+  border: 0.1rem solid #bde513;
+}
+
+.authentication-form a.button:hover {
+  background-color: #fff;
+  border: 0.1rem solid #00283c;
+}
+
+.authentication-form p {
+  margin: 5rem 0 0;
+  text-align: center;
+}
+
+.authentication-form p a {
+  float: none;
+  margin: 0;
+}
+
 @media screen and (min-width: 750px) {
   .authentication-form {
     width: 50%;
@@ -799,6 +819,10 @@ button.menu + nav {
   button.menu + nav {
     font-size: 6vh;
   }
+}
+
+li.section a:before {
+  margin-right: 1rem;
 }
 
 button.menu + nav ul {
