@@ -487,6 +487,11 @@ button:hover,
   content: '\feff'; /* https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
 }
 
+.authentication-form a {
+  float: right;
+  margin: 5rem 0;
+}
+
 @media screen and (min-width: 750px) {
   .authentication-form {
     width: 50%;
