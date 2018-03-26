@@ -492,16 +492,6 @@ button:hover,
   margin: 5rem 0;
 }
 
-.authentication-form a.button {
-  background-color: #bde513;
-  border: 0.1rem solid #bde513;
-}
-
-.authentication-form a.button:hover {
-  background-color: #fff;
-  border: 0.1rem solid #00283c;
-}
-
 .authentication-form p {
   margin: 5rem 0 0;
   text-align: center;
