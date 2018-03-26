@@ -20,8 +20,12 @@
 <nav>
   <ul>
     {% if current_user.is_authenticated %}
-        <li><a href={{ current_user.detail_url }}>Profile</a></li>
-        <li><a href={{ url_for('security.logout') }}>Log out</a></li>
+        <li>
+          <ul>
+            <li><a href={{ current_user.detail_url }}>Profile</a> /</li>
+            <li><a href={{ url_for('security.logout') }}>Log out</a></li>
+          </ul>
+        </li>
     {% else %}
       {% if security.registerable or security.recoverable or security.confirmable %}
         <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
@@ -33,13 +37,16 @@
         {% endif %}
       {% endif %}
     {% endif %}
-    <li><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
-    <li><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
+    {% for category in categories %}
+      <li class={{ category.slug }}><a href={{ category.detail_url }}>{{ category.name }}</a></li>
+    {% endfor %}
+    <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
+    <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
     {% if current_user.has_role('editor') %}
       <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
       <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
     {% endif %}
-    <li>
+    <li class=social>
       {{ social_networks() }}
     </li>
   </ul>

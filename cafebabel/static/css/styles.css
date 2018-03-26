@@ -819,35 +819,38 @@ button.menu + nav ul ul {
 }
 
 @media screen and (min-width: 750px) {
-  button.menu + nav ul ul {
+  button.menu + nav ul li.social ul {
     display: none;
   }
 }
 
-button.menu + nav ul ul li {
+button.menu + nav ul li ul li {
   display: inline-block;
+}
+
+button.menu + nav ul li.social ul li {
   font-size: 2rem;
   padding: 0 0.3rem;
 }
 
-button.menu + nav ul ul li:nth-child(2) {
+button.menu + nav ul li.social ul li:nth-child(2) {
   font-size: 2.4rem;
   top: 0.1rem;
   padding-left: 0;
 }
 
-button.menu + nav ul ul li:nth-child(3) {
+button.menu + nav ul li.social ul li:nth-child(3) {
   font-size: 2.3rem;
   top: 0.1rem;
 }
 
-button.menu + nav ul ul li:nth-child(4) {
+button.menu + nav ul li.social ul li:nth-child(4) {
   font-size: 3.1rem;
   top: 0.4rem;
   padding-left: 0.5rem;
 }
 
-button.menu + nav ul ul li a:hover:after {
+button.menu + nav ul li.social ul li a:hover:after {
   width: 0;
 }
 
@@ -894,6 +897,11 @@ button.menu + nav a {
   display: none;
 }
 
+.participate,
+.translate {
+  display: block;
+}
+
 @media screen and (min-width: 750px) {
   #participate,
   #translate {
@@ -932,8 +940,13 @@ button.menu + nav a {
   #participate:before {
     content: '\e906';
   }
+
   #translate:before {
     content: '\e907';
+  }
+
+  .participate {
+    display: none;
   }
 }
 
@@ -941,6 +954,10 @@ button.menu + nav a {
   #translate {
     display: inline-block;
     left: 26.5rem;
+  }
+
+  .translate {
+    display: none;
   }
 }
 
