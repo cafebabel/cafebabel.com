@@ -32,11 +32,6 @@ def markdown(value):
     return Markup(markdownlib.markdown(value))
 
 
-def reading_time(text):
-    words = do_wordcount(text)
-    return ceil(words / 250)
-
-
 def editor_required(func=None, fresh=False):
     """Decorator which ensure that the current user's has an editor role.
 
