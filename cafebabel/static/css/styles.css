@@ -1011,10 +1011,8 @@ button.menu + nav a {
 }
 
 .file label[for='image']:before {
-  font-family: 'icomoon';
-  content: '\e927';
+  content: url('../img/file.svg');
   display: block;
-  font-size: 4rem;
 }
 
 .file figcaption {
