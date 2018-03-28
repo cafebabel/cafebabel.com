@@ -897,11 +897,9 @@ button.menu + nav a {
 
   #participate:before,
   #translate:before {
-    font-family: 'icomoon';
     display: block;
     text-align: center;
-    font-size: 4rem;
-    margin-bottom: -0.6rem;
+    margin-bottom: -0.3rem;
   }
 
   #participate:hover:after,
@@ -915,10 +913,10 @@ button.menu + nav a {
   }
 
   #participate:before {
-    content: '\e906';
+    content: url('../img/participate.svg');
   }
   #translate:before {
-    content: '\e907';
+    content: url('../img/translate.svg');
   }
 }
 
