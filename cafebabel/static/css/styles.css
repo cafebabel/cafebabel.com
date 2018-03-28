@@ -62,57 +62,57 @@ main {
 
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbook-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbook-webfont.woff') format('woff');
+  src: url(../fonts/vremenagroteskbook-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagroteskbook-webfont.woff) format('woff');
   font-weight: 100;
   font-style: normal;
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbookitalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbookitalic-webfont.woff') format('woff');
+  src: url(../fonts/vremenagroteskbookitalic-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagroteskbookitalic-webfont.woff) format('woff');
   font-weight: 100;
   font-style: italic;
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagrotesk-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagrotesk-webfont.woff') format('woff');
+  src: url(../fonts/vremenagrotesk-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagrotesk-webfont.woff) format('woff');
   font-weight: 200;
   font-style: normal;
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskitalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskitalic-webfont.woff') format('woff');
+  src: url(../fonts/vremenagroteskitalic-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagroteskitalic-webfont.woff) format('woff');
   font-weight: 200;
   font-style: italic;
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskmedium-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskmedium-webfont.woff') format('woff');
+  src: url(../fonts/vremenagroteskmedium-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagroteskmedium-webfont.woff) format('woff');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskmediumitalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskmediumitalic-webfont.woff') format('woff');
+  src: url(../fonts/vremenagroteskmediumitalic-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagroteskmediumitalic-webfont.woff) format('woff');
   font-weight: 400;
   font-style: italic;
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbold-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbold-webfont.woff') format('woff');
+  src: url(../fonts/vremenagroteskbold-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagroteskbold-webfont.woff) format('woff');
   font-weight: 800;
   font-style: normal;
 }
 @font-face {
   font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbolditalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbolditalic-webfont.woff') format('woff');
+  src: url(../fonts/vremenagroteskbolditalic-webfont.woff2) format('woff2'),
+    url(../fonts/vremenagroteskbolditalic-webfont.woff) format('woff');
   font-weight: 800;
   font-style: italic;
 }
@@ -121,15 +121,15 @@ main {
 
 @font-face {
   font-family: 'sporting_grotesque';
-  src: url('../fonts/sporting_grotesque_normal-webfont.woff2') format('woff2'),
-    url('../fonts/sporting_grotesque_normal-webfont.woff') format('woff');
+  src: url(../fonts/sporting_grotesque_normal-webfont.woff2) format('woff2'),
+    url(../fonts/sporting_grotesque_normal-webfont.woff) format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'sporting_grotesque';
-  src: url('../fonts/sporting_grotesque_gras-webfont.woff2') format('woff2'),
-    url('../fonts/sporting_grotesque_gras-webfont.woff') format('woff');
+  src: url(../fonts/sporting_grotesque_gras-webfont.woff2) format('woff2'),
+    url(../fonts/sporting_grotesque_gras-webfont.woff) format('woff');
   font-weight: bold;
   font-style: normal;
 }
@@ -138,9 +138,9 @@ main {
 
 @font-face {
   font-family: 'icomoon';
-  src: url('../fonts/icomoon.ttf?8rv96k') format('truetype'),
-    url('../fonts/icomoon.woff?8rv96k') format('woff'),
-    url('../fonts/icomoon.svg?8rv96k#icomoon') format('svg');
+  src: url(../fonts/icomoon.ttf?8rv96k) format('truetype'),
+    url(../fonts/icomoon.woff?8rv96k) format('woff'),
+    url(../fonts/icomoon.svg?8rv96k#icomoon) format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -913,10 +913,10 @@ button.menu + nav a {
   }
 
   #participate:before {
-    content: url('../img/participate.svg');
+    content: url(../img/participate.svg);
   }
   #translate:before {
-    content: url('../img/translate.svg');
+    content: url(../img/translate.svg);
   }
 }
 
@@ -1011,7 +1011,7 @@ button.menu + nav a {
 }
 
 .file label[for='image']:before {
-  content: url('../img/file.svg');
+  content: url(../img/file.svg);
   display: block;
 }
 
@@ -2184,11 +2184,11 @@ a.creative:before {
 }
 
 a.section-link.impact {
-  background: url('../img/bg-section-impact.jpg') center;
+  background: url(../img/bg-section-impact.jpg) center;
 }
 
 a.section-link.experience {
-  background: url('../img/bg-section-experience.jpg') center;
+  background: url(../img/bg-section-experience.jpg) center;
 }
 
 a.section-link.experience:before {
@@ -2196,11 +2196,11 @@ a.section-link.experience:before {
 }
 
 a.section-link.raw {
-  background: url('../img/bg-section-raw.jpg') center;
+  background: url(../img/bg-section-raw.jpg) center;
 }
 
 a.section-link.creative {
-  background: url('../img/bg-section-creative.jpg') center;
+  background: url(../img/bg-section-creative.jpg) center;
 }
 
 .home a.section-link:nth-of-type(odd) {
