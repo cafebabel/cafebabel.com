@@ -535,18 +535,9 @@ label[for='remember'] {
 }
 
 [type='checkbox']:after {
-  font-family: 'icomoon';
-  content: '\ea10';
-  text-transform: none;
-  line-height: 2.6rem;
-  font-size: 2.2rem;
-  width: 3.7rem;
-  height: 3.7rem;
-  text-align: center;
-  margin-left: -0.4rem;
+  content: url(../img/checkmark.svg);
+  margin: -0.35rem -0.2rem;
   display: inline-block;
-  overflow: hidden;
-  color: #bde513;
   transition: all 0.2s;
 }
 
@@ -557,7 +548,7 @@ label[for='remember'] {
 
 [type='checkbox']:checked:after {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(0.7);
 }
 
 [type='checkbox']:focus:before {
