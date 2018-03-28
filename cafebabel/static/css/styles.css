@@ -576,11 +576,10 @@ select {
 
 .select label:after {
   position: absolute;
-  font-family: 'icomoon';
-  font-size: 1.9rem;
-  content: '\ea3e';
+  content: url(../img/arrow-down.svg);
   right: 1.2rem;
-  top: 6.2rem;
+  top: 0.8rem;
+  transform: scale(0.6);
   z-index: -1;
 }
 
@@ -1179,10 +1178,6 @@ h1.edit input {
   margin: 0 0 2rem 0;
 }
 
-.select label:after {
-  top: 1.2rem;
-}
-
 select#author {
   min-width: 100%;
 }
@@ -1528,7 +1523,7 @@ select#author {
 }
 
 .pitch-page .select label:after {
-  top: 5rem;
+  top: 4.7rem;
 }
 
 /* Article page */
@@ -1861,7 +1856,7 @@ article .share a:first-child {
 }
 
 .translate-list-page .select label:after {
-  top: 4.5rem;
+  top: 5.7rem;
 }
 
 .translate-list-page input {
@@ -1886,6 +1881,12 @@ article .share a:first-child {
 .translate-list-page a.button {
   margin: 0 auto 12rem;
   width: 85%;
+}
+
+@media screen and (min-width: 750px) {
+  .translate-list-page .select label:after {
+    top: 4.5rem;
+  }
 }
 
 /* Flash infos */
