@@ -1110,10 +1110,12 @@ h1.edit input {
 }
 
 .article-page-edit .tags .tags-list li button:after {
-  font-family: 'icomoon';
-  content: '\ea0f';
-  font-size: 1.3rem;
-  margin-left: 1rem;
+  content: url(../img/cross.svg);
+  transform: scale(0.5);
+  display: block;
+  top: -0.4rem;
+  right: -1rem;
+  position: absolute;
 }
 
 .article-page-edit .tags .tag-container {
