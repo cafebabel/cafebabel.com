@@ -26,6 +26,50 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     a.setAttribute('target', '_blank')
 })
 
+/* smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
+function animate(elem, style, unit, from, to, time, prop) {
+  if (!elem) {
+    return
+  }
+  var start = new Date().getTime(),
+    timer = setInterval(() => {
+      var step = Math.min(1, (new Date().getTime() - start) / time)
+      if (prop) {
+        elem[style] = from + step * (to - from) + unit
+      } else {
+        elem.style[style] = from + step * (to - from) + unit
+      }
+      if (step === 1) {
+        clearInterval(timer)
+      }
+    }, 25)
+  if (prop) {
+    elem[style] = from + unit
+  } else {
+    elem.style[style] = from + unit
+  }
+}
+const subscribeLink = document.querySelector(
+  '#social-networks .icon-newsletter'
+)
+subscribeLink.addEventListener('click', () => {
+  const target = document.querySelector('#static-pages-links')
+  const scrollPosition =
+    window.pageYOffset !== undefined
+      ? window.pageYOffset
+      : (document.documentElement || document.body.parentNode || document.body)
+          .scrollTop
+  animate(
+    document.scrollingElement || document.documentElement,
+    'scrollTop',
+    '',
+    scrollPosition,
+    target.offsetTop,
+    300,
+    true
+  )
+})
+
 /* animation flash info */
 const flashes = document.querySelector('.flashes')
 if (flashes) {

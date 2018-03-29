@@ -156,6 +156,9 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-newsletter:before {
+  content: '\e908';
+}
 .icon-participate:before {
   content: '\e906';
 }
@@ -969,7 +972,6 @@ button.menu + nav a {
   #social-networks li:last-child {
     font-size: 2.4rem;
     top: 0.3rem;
-    margin-left: 0.2rem;
   }
 
   #social-networks li a {
