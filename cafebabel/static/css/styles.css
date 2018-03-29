@@ -1211,6 +1211,16 @@ select#author {
   font-weight: 100;
 }
 
+#markdown-helper {
+  font-size: 1.3rem;
+  margin-bottom: 5rem;
+}
+
+#markdown-helper pre {
+  display: inline-block;
+  margin: 0;
+}
+
 /* Profile page */
 
 .profile-page h1 {
