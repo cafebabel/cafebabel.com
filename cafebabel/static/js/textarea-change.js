@@ -1,7 +1,7 @@
 /* Auto-expand textarea when typing http://jsfiddle.net/hmelenok/WM6Gq/ */
 Array.from(document.querySelectorAll('textarea')).forEach(textArea => {
   function resize() {
-    textArea.style.height = 0 /* textarea is NOT resized when deleting or cut content, to hack it : 'auto' (but it jumps when editing and saving :-( */
+    textArea.style.height = 0 /* textarea is NOT resized when deleting or cut content, to hack it : 'auto' (but it jumps when editing and saving) :-( */
     textArea.style.height = `${textArea.scrollHeight}px`
   }
 
