@@ -1683,7 +1683,11 @@ select#author {
 }
 
 .article-page article p img {
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem;
+}
+
+.article-page article p.full {
+  max-width: 100%;
 }
 
 .article-page article p.video-wrapper {
