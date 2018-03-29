@@ -1554,6 +1554,7 @@ select#author {
 
 .article-page article > img {
   margin: 0 auto;
+  width: 100%; /* force archive images (1180px wide) to be 1200px */
 }
 
 .article-page h1:first-of-type {
