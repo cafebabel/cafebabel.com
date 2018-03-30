@@ -1226,7 +1226,7 @@ select#author {
 @media screen and (min-width: 750px) {
   #markdown-helper {
     display: block;
-    position: relative;
+    position: absolute;
     font-size: 1.2rem;
     width: 75rem;
     margin-bottom: 5rem;
@@ -1234,6 +1234,7 @@ select#author {
     background-color: #eeeeee;
     z-index: 2;
   }
+
   #markdown-helper button:after {
     position: absolute;
     right: 0.3rem;
@@ -1249,6 +1250,9 @@ select#author {
   #markdown-helper pre {
     display: inline-block;
     margin: 0;
+  }
+  .textarea.bodytext {
+    margin-bottom: 17rem;
   }
 }
 

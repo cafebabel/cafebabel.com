@@ -12,7 +12,7 @@ const editPageTextArea = document.querySelector('.textarea.bodytext'),
 function isElementInViewport(el) {
   const rect = el.getBoundingClientRect()
   return (
-    rect.bottom >= 700 /* 700px to exclude footer height */ &&
+    rect.bottom >= 960 /* 960px to exclude footer height */ &&
     rect.right >= 0 &&
     rect.top <=
       (window.innerHeight || document.documentElement.clientHeight) -
