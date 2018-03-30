@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block extra_js %}
-  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'choices/js/choices.min.js', 'js/articles-users.js']) }}
+  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'js/markdown-helper-position.js', 'choices/js/choices.min.js', 'js/articles-users.js']) }}
 {% endblock %}
 
 {% block body_class %}article-page-edit{% endblock %}
@@ -51,7 +51,7 @@
     <label for=summary>Lead paragraph</label>
     <textarea id=summary name=summary required>{{ article.summary or '' }}</textarea>
   </div>
-  <div class=textarea>
+  <div class="textarea bodytext">
     <label for=body>Body text</label>
     <textarea id=body name=body required>{{ article.body or '' }}</textarea>
     {% include "articles/markdown-helper.html" %}

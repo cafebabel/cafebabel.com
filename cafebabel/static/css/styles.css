@@ -298,10 +298,16 @@ p {
 
 blockquote {
   font-family: 'sporting_grotesque', sans-serif;
-  font-size: 2.8rem;
+  font-size: 2.2rem;
   margin: 5rem 0;
   padding: 0 0 0 6rem;
   font-style: normal;
+}
+
+@media screen and (min-width: 750px) {
+  blockquote {
+    font-size: 2.8rem;
+  }
 }
 
 figure {
@@ -700,7 +706,7 @@ a.logo:after {
   left: 0;
   background: white;
   transition: opacity 0.3s;
-  z-index: 2;
+  z-index: 5;
 }
 #preloader-layer img {
   position: absolute;
@@ -730,7 +736,7 @@ button.menu {
   padding: 0;
   margin: 0;
   cursor: pointer;
-  z-index: 3;
+  z-index: 4;
 }
 
 button.main-menu {
@@ -873,7 +879,7 @@ button.menu + nav ul li a:hover:after {
 button.menu.active + nav {
   display: block;
   opacity: 1;
-  z-index: 2;
+  z-index: 3;
 }
 
 button.menu.active + nav ul li {
@@ -896,7 +902,7 @@ button.menu + nav a {
     top: 1rem;
     font-size: 1.4rem;
     transition: all 0.3s;
-    z-index: 2;
+    z-index: 3;
   }
 
   #participate:hover,
@@ -948,7 +954,7 @@ button.menu + nav a {
     position: fixed;
     top: 2.5rem;
     right: 3rem;
-    z-index: 1;
+    z-index: 3;
   }
 
   #social-networks li {
@@ -1110,7 +1116,8 @@ h1.edit input {
   background-color: #ddd;
 }
 
-.article-page-edit .tags .tags-list li button {
+.article-page-edit .tags .tags-list li button,
+#markdown-helper button {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 1.7rem;
@@ -1123,7 +1130,8 @@ h1.edit input {
   z-index: 1;
 }
 
-.article-page-edit .tags .tags-list li button:after {
+.article-page-edit .tags .tags-list li button:after,
+#markdown-helper button:after {
   font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.3rem;
@@ -1212,13 +1220,36 @@ select#author {
 }
 
 #markdown-helper {
-  font-size: 1.3rem;
-  margin-bottom: 5rem;
+  display: none;
 }
 
-#markdown-helper pre {
-  display: inline-block;
-  margin: 0;
+@media screen and (min-width: 750px) {
+  #markdown-helper {
+    display: block;
+    position: relative;
+    font-size: 1.2rem;
+    width: 75rem;
+    margin-bottom: 5rem;
+    padding: 2rem;
+    background-color: #eeeeee;
+    z-index: 2;
+  }
+  #markdown-helper button:after {
+    position: absolute;
+    right: 0.3rem;
+    top: -3.2rem;
+  }
+
+  #markdown-helper.fixed {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 1rem;
+  }
+
+  #markdown-helper pre {
+    display: inline-block;
+    margin: 0;
+  }
 }
 
 /* Profile page */
