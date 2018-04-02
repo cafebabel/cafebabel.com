@@ -15,7 +15,7 @@
     <h1>{{ tag.name }}</h1>
     <div class=textarea>
       <label for=summary>Description</label>
-      <textarea id=summary name=summary>{{ tag.summary }}</textarea>
+      <textarea id=summary name=summary>{{ tag.summary or '' }}</textarea>
     </div>
     <input type=submit value=Save>
   </div>
