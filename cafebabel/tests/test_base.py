@@ -42,6 +42,15 @@ def test_homepage_contains_categories(app, client, published_article):
     assert impact.detail_url in response
 
 
+def test_homepage_contains_tag_articles(app, client, published_article):
+    language = app.config['LANGUAGES'][0][0]
+    society = Tag.objects.create(name='Society', language=language)
+    published_article.modify(tags=[society])
+    response = client.get('/en/')
+    assert society.name in response
+    assert response.contains_only_once(published_article.title)
+
+
 def test_homepage_contains_static_pages_if_present(client, published_article):
     response = client.get('/en/')
     assert '<a href=#>About us</a>' in response

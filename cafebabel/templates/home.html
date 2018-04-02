@@ -28,6 +28,12 @@
   {{ card(articles|first) }}
 {% endif %}
 
+  <h2>Society</h2>
+  {% set articles_society = articles_for_tag('society', limit=4, exclude=articles|first) %}
+  {% for article_society in articles_society %}
+    {{ card(article_society) }}
+  {% endfor %}
+
   <h2>Sections</h2>
 {% for category in categories %}
   <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
@@ -36,7 +42,9 @@
 {% if articles|length > 1 %}
   <h2>Recently published</h2>
   {% for article in articles[1:] %}
-    {{ card(article) }}
+    {% if article not in articles_society %}
+      {{ card(article) }}
+    {% endif %}
   {% endfor %}
 {% endif %}
 {% endblock %}
