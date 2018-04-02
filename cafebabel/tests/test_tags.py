@@ -91,6 +91,10 @@ def test_tag_detail(app, client, tag, published_article):
     assert tag.summary in response
     assert (f'<a href={published_article.detail_url }>'
             f'{published_article.title}' in response)
+    tag.modify(summary='foo\n\n* bar\n* baz\n')
+    response = client.get('/en/article/tag/wonderful/')
+    assert 'content="foo * bar * baz"' in response
+    assert '<p class=summary><p>foo</p>\n<ul>\n<li>bar' in response
 
 
 def test_tag_detail_draft(client, tag, article):
