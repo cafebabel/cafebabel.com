@@ -38,8 +38,7 @@ def test_tag_suggest_basics(client, tag):
     assert response.json == [{
         'language': 'en',
         'name': 'Wonderful',
-        'slug': 'wonderful',
-        'summary': 'summary text'
+        'slug': 'wonderful'
     }]
 
 
@@ -51,13 +50,11 @@ def test_tag_suggest_many(client, app, tag):
     assert response.json == [{
         'language': 'en',
         'name': 'Wonderful',
-        'slug': 'wonderful',
-        'summary': 'summary text'
+        'slug': 'wonderful'
     }, {
         'language': 'en',
         'name': 'Wondering',
-        'slug': 'wondering',
-        'summary': ''
+        'slug': 'wondering'
     }]
 
 
@@ -69,8 +66,7 @@ def test_tag_only_language(client, app, tag):
     assert response.json == [{
         'language': 'fr',
         'name': 'Wondering',
-        'slug': 'wondering',
-        'summary': ''
+        'slug': 'wondering'
     }]
 
 
