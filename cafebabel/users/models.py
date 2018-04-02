@@ -22,7 +22,7 @@ class UserProfile(db.EmbeddedDocument, UploadableImageMixin):
     old_pk = db.IntField()  # In use for migrations (references in articles).
 
     def __str__(self):
-        return self.name or 'Anonymous'
+        return self.name
 
     def get_id(self):
         return self._instance.id
@@ -65,7 +65,7 @@ class User(db.Document, UserMixin):
     def post_save(cls, sender, document, **kwargs):
         if kwargs.get('created', False):
             # Create the profile only on creation (vs. update).
-            document.profile = UserProfile(name=document.email)
+            document.profile = UserProfile(name='Anonymous')
             document.save()
 
     @classmethod
