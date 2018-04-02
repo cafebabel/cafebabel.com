@@ -2,7 +2,6 @@ from http import HTTPStatus
 from io import BytesIO
 from pathlib import Path
 
-from flask import url_for
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
@@ -391,14 +390,14 @@ def test_translation_to_translate_should_not_have_original_language(
             not in response)
 
 
-def test_translation_to_translate_should_have_original_language(
+def test_translation_to_translate_should_not_contain_translations(
         app, client, article, translation):
     # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
     assert (f'href="/es/article/translation/new/'
             f'?original={translation.original_article.id}">'
             f'Translate into Español</a>'
-            in response)
+            not in response)
 
 
 def test_article_to_translate_should_have_only_other_links(
