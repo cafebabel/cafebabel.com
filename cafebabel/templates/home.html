@@ -24,26 +24,35 @@
 
 {% block body_class %}home{% endblock %}
 {% block body %}
-{% if articles %}
-  {{ card(articles|first) }}
-{% endif %}
-
-  <h2>Society</h2>
-  {% set articles_society = articles_for_tag('society', limit=4, exclude=articles|first) %}
-  {% for article_society in articles_society %}
-    {{ card(article_society) }}
-  {% endfor %}
+  <h2>Editor's pick</h2>
+{% set articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
+{% for article_editors_pick in articles_editors_pick %}
+  {{ card(article_editors_pick) }}
+{% endfor %}
 
   <h2>Sections</h2>
 {% for category in categories %}
   <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
 {% endfor %}
 
-{% if articles|length > 1 %}
+  <h2>Meet My Hood</h2>
+  {% set articles_meet_my_hood = articles_for_tag('meet-my-hood', limit=2) %}
+  {% for article_meet_my_hood in articles_meet_my_hood %}
+    {{ card(article_meet_my_hood) }}
+  {% endfor %}
+
+{% if articles %}
   <h2>Recently published</h2>
-  {% for article in articles[1:] %}
-    {% if article not in articles_society %}
+  {% for article in articles %}
+    {% if article not in articles_editors_pick and article not in articles_meet_my_hood and article not in articles_network %}
       {{ card(article) }}
+      {% if loop.index == 3 %}
+        <h2>Network</h2>
+        {% set articles_network = articles_for_tag('network', limit=1) %}
+        {% for article_network in articles_network %}
+          {{ card(article_network) }}
+        {% endfor %}
+      {% endif %}
     {% endif %}
   {% endfor %}
 {% endif %}
