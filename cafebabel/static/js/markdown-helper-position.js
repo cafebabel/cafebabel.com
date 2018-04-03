@@ -1,7 +1,7 @@
 /* Add fixed position to markdown helper */
 const markdownHelper = document.querySelector('#markdown-helper')
 
-const editPageTextArea = document.querySelector('.textarea.bodytext'),
+const editPageTextArea = document.querySelector('.textarea.markdowntext'),
   editPageTextAreaHeight = editPageTextArea.offsetHeight,
   viewportHeight = Math.max(
     document.documentElement.clientHeight,

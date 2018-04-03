@@ -1251,7 +1251,7 @@ select#author {
     display: inline-block;
     margin: 0;
   }
-  .textarea.bodytext {
+  .textarea.markdowntext {
     margin-bottom: 17rem;
   }
 }

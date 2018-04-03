@@ -51,7 +51,7 @@
     <label for=summary>Lead paragraph</label>
     <textarea id=summary name=summary required>{{ article.summary or '' }}</textarea>
   </div>
-  <div class="textarea bodytext">
+  <div class="textarea markdowntext">
     <label for=body>Body text</label>
     <textarea id=body name=body required>{{ article.body or '' }}</textarea>
     {% include "articles/markdown-helper.html" %}
