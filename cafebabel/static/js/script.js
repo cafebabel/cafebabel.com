@@ -27,27 +27,19 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
 })
 
 /* smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
-function animate(elem, style, unit, from, to, time, prop) {
+function animate(elem, style, from, to, time) {
   if (!elem) {
     return
   }
   var start = new Date().getTime(),
     timer = setInterval(() => {
       var step = Math.min(1, (new Date().getTime() - start) / time)
-      if (prop) {
-        elem[style] = from + step * (to - from) + unit
-      } else {
-        elem.style[style] = from + step * (to - from) + unit
-      }
+      elem[style] = from + step * (to - from)
       if (step === 1) {
         clearInterval(timer)
       }
     }, 25)
-  if (prop) {
-    elem[style] = from + unit
-  } else {
-    elem.style[style] = from + unit
-  }
+  elem[style] = from
 }
 const subscribeLink = document.querySelector(
   '#social-networks .icon-newsletter'
@@ -62,11 +54,9 @@ subscribeLink.addEventListener('click', () => {
   animate(
     document.scrollingElement || document.documentElement,
     'scrollTop',
-    '',
     scrollPosition,
     target.offsetTop,
-    300,
-    true
+    300
   )
 })
 
