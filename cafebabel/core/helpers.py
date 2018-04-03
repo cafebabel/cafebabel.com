@@ -112,6 +112,8 @@ def articles_for_tag(tag_slug, limit=5, exclude=None, only_published=True):
         articles = articles.filter(id__ne=exclude.id)
     if only_published:
         articles = articles.published(language=language)
+    if limit == 1:
+        return articles.first()
     return articles.limit(limit)
 
 

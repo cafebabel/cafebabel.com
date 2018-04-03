@@ -28,4 +28,5 @@ def test_articles_for_tag_limit(app, published_article, article):
     society = Tag.objects.create(name='Society', language=language)
     published_article.modify(tags=[society])
     article.modify(tags=[society])
-    assert len(articles_for_tag('society', limit=1, only_published=False)) == 1
+    assert (articles_for_tag('society', limit=1, only_published=False).id ==
+            published_article.id)
