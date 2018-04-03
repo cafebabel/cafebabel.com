@@ -11,7 +11,7 @@ def test_confirm_user_creates_default_profile(app):
                                password='password')
     with app.app_context():
         confirm_user(user)
-    assert user.profile.name == user.email
+    assert user.profile.name == 'Anonymous'
 
 
 def test_user_profile_has_list_of_published_articles_no_draft(client, article):
