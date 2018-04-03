@@ -29,7 +29,28 @@ def test_authenticated_user_can_access_login_required_page(client, user):
     login(client, user.email, 'password')
     response = client.get(f'/en/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.OK
-    assert b"<h1>user@example.com's profile</h1>" in response.data
+    assert "<h1>Anonymous's profile</h1>" in response
+
+
+def test_authenticated_user_can_access_his_email(client, user):
+    login(client, user.email, 'password')
+    response = client.get(f'/en/profile/{user.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert user.email in response
+
+
+def test_authenticated_user_cannot_access_others_email(client, user, user2):
+    login(client, user2.email, 'password')
+    response = client.get(f'/en/profile/{user.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert user.email not in response
+
+
+def test_editor_can_access_user_email(client, user, editor):
+    login(client, editor.email, 'password')
+    response = client.get(f'/en/profile/{user.id}/')
+    assert response.status_code == HTTPStatus.OK
+    assert user.email in response
 
 
 def test_visitor_cannot_edit_user_profile(client, user):
@@ -117,23 +138,27 @@ def test_login_complete_redirects_if_not_logged_in(client, user):
 
 
 def test_user_suggest_basics(client, user):
-    response = client.get('/en/profile/suggest/?terms=user@')
+    user.modify(profile__name='John Doe')
+    response = client.get('/en/profile/suggest/?terms=john')
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
-        'name': 'user@example.com',
+        'name': 'John Doe',
         'id': str(user.id)
     }]
 
 
-def test_user_suggest_many(client, user, user2):
-    response = client.get('/en/profile/suggest/?terms=user')
+def test_user_suggest_many(client, editor, user, user2):
+    response = client.get('/en/profile/suggest/?terms=anon')
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
-        'name': 'user@example.com',
-        'id': str(user.id)
+        'id': str(editor.id),
+        'name': 'Anonymous'
     }, {
-        'name': 'user2@example.com',
-        'id': str(user2.id)
+        'id': str(user.id),
+        'name': 'Anonymous'
+    }, {
+        'id': str(user2.id),
+        'name': 'Anonymous'
     }]
 
 

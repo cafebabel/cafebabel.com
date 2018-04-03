@@ -4,7 +4,7 @@
 
 {% block body_class %}profile-page{% endblock %}
 {% block body %}
-<h1>{{ user }}</h1>
+<h1>{{ user.profile.name or '' }}</h1>
 
 <section>
   <h2>About</h2>
@@ -22,7 +22,14 @@
   {% endif %}
 
   <ul class=info-profile>
-    <li><span>{{ user.profile.name or '' }}</span></li>
+    <li>
+      <span>{{ user.profile.name or '' }}</span>
+    </li>
+    {% if user.is_me() or current_user.has_role('editor') %}
+    <li>
+      <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+    </li>
+    {% endif %}
     <li><span><a href="{{ user.profile.website or '' }}" target=_blank>{{ user.profile.website or '' }}</a></span></li>
     <li>
       <p class=bio>
