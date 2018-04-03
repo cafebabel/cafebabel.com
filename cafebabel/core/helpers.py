@@ -8,7 +8,6 @@ from math import ceil
 import markdown as markdownlib
 from flask import Markup, abort, current_app, g, request, url_for
 from flask_login import current_user, fresh_login_required, login_required
-from jinja2.filters import do_wordcount
 from unidecode import unidecode
 
 
@@ -30,11 +29,6 @@ def to_json_filter(value):
 
 def markdown(value):
     return Markup(markdownlib.markdown(value))
-
-
-def reading_time(text):
-    words = do_wordcount(text)
-    return ceil(words / 250)
 
 
 def editor_required(func=None, fresh=False):

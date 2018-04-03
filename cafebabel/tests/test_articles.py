@@ -55,7 +55,6 @@ def test_published_article_should_display_content(client, published_article,
     assert ('href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
             f'localhost%2Fen%2Farticle%2F{published_article.slug}-'
             f'{published_article.id}%2F"' in response)
-    assert '1 min' in response
     assert ('<meta property=og:url content="http://localhost/en/article/'
             f'{published_article.slug}-{published_article.id}/">' in response)
     assert '<meta property=og:locale content="en">' in response
