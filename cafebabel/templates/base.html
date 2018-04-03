@@ -34,6 +34,7 @@
         {% endif %}
       {% endif %}
     {% endif %}
+    {% set categories = get_categories() %}
     {% for category in categories %}
       <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
     {% endfor %}
