@@ -42,7 +42,7 @@
   <header>
     <h1>{{ tag.name }}</h1>
     {% if tag.summary %}
-      {{ tag.summary|markdown }}
+      <div class=summary>{{ tag.summary|markdown }}</div>
     {% endif %}
   </header>
   {% if current_user.has_role('editor') %}
