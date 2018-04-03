@@ -30,7 +30,7 @@
   {{ meta('name=twitter:url', request.url) }}
 {% endblock %}
 
-{% block body_class %}tag-page {{ tag.slug }}{% endblock %}
+{% block body_class %}tag-page tag-{{ tag.slug }}{% endblock %}
 {% block body %}
   {% if tag.has_image %}
     <div class="tag-header image">
