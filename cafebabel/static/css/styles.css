@@ -1229,16 +1229,16 @@ select#author {
 }
 
 .profile-page main section:first-of-type img,
-.profile-page main section h2 + div,
-.profile-page main section output .image {
+.profile-page main section:first-of-type h2 + div,
+.profile-page main section:first-of-type output .image {
   display: block;
   border-radius: 50%;
   max-width: 20rem;
   margin: 0.2rem auto;
 }
 
-.profile-page main section h2 + div,
-.profile-page main section output .image {
+.profile-page main section:first-of-type h2 + div,
+.profile-page main section:first-of-type output .image {
   width: 20rem;
   height: 20rem;
   background-size: cover;
@@ -1490,7 +1490,7 @@ select#author {
     grid-template-areas:
       'title title'
       'content sidebar';
-    padding-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin - maybe ask Éric*/
+    padding-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
   }
 
   .profile-page [class^='icon-']:hover:before,
@@ -1504,6 +1504,29 @@ select#author {
 
   .profile-page main section:nth-of-type(2) {
     grid-area: sidebar;
+  }
+
+  .profile-page main section:nth-of-type(2) div:nth-of-type(2) {
+    display: none;
+  }
+
+  .profile-page main section:nth-of-type(2) h2 {
+    display: inline-block;
+    width: 50%;
+    padding: 2rem;
+    margin-top: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .profile-page main section:nth-of-type(2) h2:hover {
+    color: #fff;
+    background-color: #002f4b;
+    border: 0.2rem solid #002f4b;
+  }
+
+  .profile-page main section:nth-of-type(2) h2.active {
+    border: 0.2rem solid #002f4b;
   }
 }
 

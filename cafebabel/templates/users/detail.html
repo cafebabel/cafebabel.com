@@ -40,24 +40,23 @@
   {% if user.is_me() or current_user.has_role('editor') %}
   <a class=button href={{ lang_url_for('users.edit', id=user.id) }}>Edit profile</a>
   {% endif %}
-
-  <h2>Translations</h2>
-  {% for translation in translations %}
-    {{ card(translation) }}
-  {% endfor %}
 </section>
 
 <section>
-  <h2>Articles</h2>
-  {% for article in articles %}
-    {{ card(article) }}
-  {% endfor %}
-</section>
-
-{% if not is_full %}
-  <section>
+  <h2 class=active>Articles</h2><h2>Translations</h2>
+  <div>
+    {% for article in articles %}
+      {{ card(article) }}
+    {% endfor %}
+  </div>
+  <div>
+    {% for translation in translations %}
+      {{ card(translation) }}
+    {% endfor %}
+  </div>
+  {% if not is_full %}
     <a class=button href="?full">See all articles and translations</a>
-  </section>
-{% endif %}
+  {% endif %}
+</section>
 
 {% endblock %}
