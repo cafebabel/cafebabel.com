@@ -41,10 +41,15 @@
     <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
     <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
     {% set static_pages = static_pages_for(current_language) %}
-    <li><a href={{ static_pages.get('about-us', '#') }}>About us</a></li>
+    <li><a href=http://localhost:5000/fr/article/tag/network/>Network</a></li>
+    <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
     {% if current_user.has_role('editor') %}
-      <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
-      <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+      <li class="editors-panel">
+        <ul>
+          <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
+          <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+        </ul>
+      </li>
     {% endif %}
     <li class=social>
       {{ social_networks() }}

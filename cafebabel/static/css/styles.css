@@ -805,9 +805,16 @@ button.menu + nav {
   transition: all 0.3s;
 }
 
+.editors-panel li {
+  font-size: 1.3rem;
+}
+
 @media screen and (min-width: 750px) {
   button.menu + nav {
     font-size: 6vh;
+  }
+  .editors-panel li {
+    font-size: 2vw;
   }
 }
 
