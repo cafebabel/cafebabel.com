@@ -26,7 +26,7 @@
     <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
     <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
     {% set static_pages = static_pages_for(current_language) %}
-    <li><a href=http://localhost:5000/fr/article/tag/network/>Network</a></li>
+    <li><a href={{ url_for('tags.detail', slug='network') }}>Network</a></li>
     <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
     {% if current_user.has_role('editor') %}
       <li class="editors-panel">
@@ -66,8 +66,11 @@
 
 <button class="menu profile">
   {% if current_user.is_authenticated %}
-    {#{{ profile_image(user) }}#}
-    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
+    {% if current_user.profile.has_image %}
+      <div style="background-image:url({{ current_user.profile.image_url }})" class=image></div><!-- preserve image ratio centered in a round shape -->
+    {% else %}
+      <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
+    {% endif %}
   {% else %}
     <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
   {% endif %}
