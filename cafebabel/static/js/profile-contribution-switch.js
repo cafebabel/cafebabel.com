@@ -22,7 +22,7 @@ articleSwitcher.addEventListener('click', () => {
 function fadeIn(element) {
   element.style.opacity = 0
   var last = +new Date()
-  var tick = function() {
+  const tick = function() {
     element.style.opacity =
       +element.style.opacity + (new Date() - last) / 400 /* fadein duration */
     last = +new Date()
@@ -35,7 +35,7 @@ function fadeIn(element) {
 function fadeOut(element) {
   element.style.opacity = 1
   var last = +new Date()
-  var tick = function() {
+  const tick = function() {
     element.style.opacity =
       +element.style.opacity - (new Date() - last) / 400 /* fadeout duration */
     last = +new Date()
