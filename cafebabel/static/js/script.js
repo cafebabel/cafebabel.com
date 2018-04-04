@@ -31,14 +31,14 @@ function animate(elem, style, from, to, time) {
   if (!elem) {
     return
   }
-  var start = new Date().getTime(),
-    timer = setInterval(() => {
-      var step = Math.min(1, (new Date().getTime() - start) / time)
-      elem[style] = from + step * (to - from)
-      if (step === 1) {
-        clearInterval(timer)
-      }
-    }, 25)
+  const start = new Date().getTime()
+  const timer = setInterval(() => {
+    const step = Math.min(1, (new Date().getTime() - start) / time)
+    elem[style] = from + step * (to - from)
+    if (step === 1) {
+      clearInterval(timer)
+    }
+  })
   elem[style] = from
 }
 const subscribeLink = document.querySelector(
@@ -56,7 +56,7 @@ subscribeLink.addEventListener('click', () => {
     'scrollTop',
     scrollPosition,
     target.offsetTop,
-    300
+    300 /* Total duration of the animation in ms */
   )
 })
 
