@@ -1516,22 +1516,22 @@ select#author {
     padding: 2rem;
     margin-top: 0;
     cursor: pointer;
-    border: 0.3rem solid #fff;
+    border: 0.1rem solid #fff;
     transition: all 0.3s;
   }
 
   .profile-page main section:nth-of-type(2) h2:hover {
     color: #fff;
     background-color: #002f4b;
-    border: 0.3rem solid #002f4b;
+    border: 0.1rem solid #002f4b;
   }
 
   .profile-page main section:nth-of-type(2) h2.active {
-    border: 0.3rem solid #002f4b;
+    border: 0.1rem solid #002f4b;
   }
 
   .profile-page main section:nth-of-type(2) h2.active:hover {
-    border: 0.3rem solid #002f4b;
+    border: 0.1rem solid #002f4b;
     color: #002f4b;
     background-color: #fff;
   }

@@ -1,7 +1,7 @@
-const translationSwitcher = document.querySelector('.translation-switcher'),
-  articleSwitcher = document.querySelector('.article-switcher'),
-  articleList = document.querySelector('.article-list'),
-  translationList = document.querySelector('.translation-list')
+const translationSwitcher = document.querySelector('.translation-switcher')
+const articleSwitcher = document.querySelector('.article-switcher')
+const articleList = document.querySelector('.article-list')
+const translationList = document.querySelector('.translation-list')
 
 translationSwitcher.addEventListener('click', () => {
   translationSwitcher.classList.add('active')
@@ -23,11 +23,11 @@ function fadeIn(element) {
   element.style.opacity = 0
   var last = +new Date()
   var tick = function() {
-    element.style.opacity = +element.style.opacity + (new Date() - last) / 400
+    element.style.opacity =
+      +element.style.opacity + (new Date() - last) / 400 /* fadein duration */
     last = +new Date()
     if (+element.style.opacity < 1) {
-      ;(window.requestAnimationFrame && requestAnimationFrame(tick)) ||
-        setTimeout(tick, 16)
+      ;(window.requestAnimationFrame && requestAnimationFrame(tick)) || tick()
     }
   }
   tick()
@@ -36,11 +36,11 @@ function fadeOut(element) {
   element.style.opacity = 1
   var last = +new Date()
   var tick = function() {
-    element.style.opacity = +element.style.opacity - (new Date() - last) / 400
+    element.style.opacity =
+      +element.style.opacity - (new Date() - last) / 400 /* fadeout duration */
     last = +new Date()
     if (+element.style.opacity > 0) {
-      ;(window.requestAnimationFrame && requestAnimationFrame(tick)) ||
-        setTimeout(tick, 16)
+      ;(window.requestAnimationFrame && requestAnimationFrame(tick)) || tick()
     }
   }
   tick()
