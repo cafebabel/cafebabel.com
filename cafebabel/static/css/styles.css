@@ -1584,6 +1584,7 @@ select#author {
 
 .article-page article > img {
   margin: 0 auto;
+  width: 100%; /* force archive images (1180px wide) to be 1200px */
 }
 
 .article-page h1:first-of-type {
@@ -1712,7 +1713,11 @@ select#author {
 }
 
 .article-page article p img {
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem;
+}
+
+.article-page article p.full {
+  max-width: 100%;
 }
 
 .article-page article p.video-wrapper {
