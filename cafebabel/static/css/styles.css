@@ -833,8 +833,36 @@ button.menu.profile.active {
   right: 1.5rem;
 }
 
-button.menu.profile img {
+button.menu.profile img,
+button.menu.profile .image {
+  margin: 0 auto;
   width: 4.5rem;
+  height: 4.5rem;
+}
+
+button.menu.profile .image,
+button.menu.profile + nav .image {
+  display: block;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+button.menu.profile + nav .image {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-block;
+}
+
+button.menu.profile + nav li.icon-cross:before {
+  font-size: 4.5vw;
+  margin-right: 1rem;
+}
+
+button.menu.profile + nav li.icon-cross a {
+  font-family: 'vremena_grotesk', sans-serif;
+  font-weight: 200;
+  line-height: 1.5;
 }
 
 button.menu + nav ul {
@@ -861,6 +889,17 @@ button.menu + nav ul ul {
 
   button.menu + nav ul li.social ul {
     display: none;
+  }
+
+  button.menu.profile + nav .image {
+    width: 5.5rem;
+    height: 5.5rem;
+    display: inline-block;
+  }
+
+  button.menu.profile + nav li.icon-cross:before {
+    font-size: 4.5vh;
+    margin-right: 2rem;
   }
 }
 
@@ -949,7 +988,7 @@ button.menu + nav a {
     top: 1rem;
     font-size: 1.4rem;
     transition: all 0.3s;
-    z-index: 3;
+    z-index: 4;
   }
 
   #participate:hover,
@@ -1010,7 +1049,7 @@ button.menu + nav a {
     position: fixed;
     top: 2.5rem;
     right: 3rem;
-    z-index: 3;
+    z-index: 2;
   }
 
   #social-networks li {

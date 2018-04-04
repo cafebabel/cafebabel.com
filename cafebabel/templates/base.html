@@ -66,24 +66,16 @@
 
 <button class="menu profile">
   {% if current_user.is_authenticated %}
-    {% if current_user.profile.has_image %}
-      <div style="background-image:url({{ current_user.profile.image_url }})" class=image></div><!-- preserve image ratio centered in a round shape -->
-    {% else %}
-      <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
-    {% endif %}
+    {{ profile_image(current_user) }}
   {% else %}
-    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
   {% endif %}
 </button>
 <nav>
   {% if current_user.is_authenticated %}
     <ul>
-      <li>
-        <ul>
-          <li><a href={{ current_user.detail_url }}>Profile</a> /</li>
-          <li><a href={{ url_for('security.logout') }}>Log out</a></li>
-        </ul>
-      </li>
+      <li>{{ profile_image(current_user) }}<a href={{ current_user.detail_url }}>Profile</a></li>
+      <li class=icon-cross><a href={{ url_for('security.logout') }} >Log out</a></li>
     </ul>
     {% else %}
     <ul>
