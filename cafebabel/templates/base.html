@@ -5,6 +5,7 @@
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
 
 {% from "_social-networks-macro.html" import social_networks with context %}
+{% from "articles/macros.html" import profile_image %}
 
 {% block metas %}{% endblock %}
 
@@ -16,24 +17,8 @@
 <body class="{% block body_class %}{% endblock %}">
 
 <button class="menu main-menu"></button>
-
 <nav>
   <ul>
-    {% if current_user.is_authenticated %}
-        <li>
-          <ul>
-            <li><a href={{ current_user.detail_url }}>Profile</a> /</li>
-            <li><a href={{ url_for('security.logout') }}>Log out</a></li>
-          </ul>
-        </li>
-    {% else %}
-      {% if security.registerable or security.recoverable or security.confirmable %}
-        <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
-        {% if security.confirmable %}
-        <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
-        {% endif %}
-      {% endif %}
-    {% endif %}
     {% set categories = get_categories() %}
     {% for category in categories %}
       <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
@@ -58,7 +43,6 @@
 </nav>
 
 <button class="menu language">{{ current_language }}</button>
-
 <nav>
   <ul>
     {% for lang_code, lang_label in get_languages() %}
@@ -79,6 +63,36 @@
 
 <a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
 <a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
+
+<button class="menu profile">
+  {% if current_user.is_authenticated %}
+    {#{{ profile_image(user) }}#}
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
+  {% else %}
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
+  {% endif %}
+</button>
+<nav>
+  {% if current_user.is_authenticated %}
+    <ul>
+      <li>
+        <ul>
+          <li><a href={{ current_user.detail_url }}>Profile</a> /</li>
+          <li><a href={{ url_for('security.logout') }}>Log out</a></li>
+        </ul>
+      </li>
+    </ul>
+    {% else %}
+    <ul>
+      {% if security.registerable or security.recoverable or security.confirmable %}
+        <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
+        {% if security.confirmable %}
+          <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+        {% endif %}
+      {% endif %}
+    </ul>
+  {% endif %}
+</nav>
 
 <nav id=social-networks>
   {{ social_networks(with_linkedin=False) }}
