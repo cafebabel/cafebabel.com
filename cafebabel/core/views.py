@@ -36,11 +36,9 @@ def profile_redirect():
 
 @cores.route('/<lang:lang>/')
 def home_lang():
-    articles = Article.objects.published(language=current_language())
-    # PERF: force the execution of the limit by turning the queryset
-    #       into a list, otherwise new boundaries in template will
-    #       cancel this one and lead to a memory error.
-    articles = list(articles.hard_limit().select_related(max_depth=1))
+    # PERF: `select_related` drastically reduces the number of queries.
+    articles = (Article.objects.published(language=current_language())
+                               .hard_limit().select_related(max_depth=1))
     return render_template('home.html', articles=articles)
 
 
