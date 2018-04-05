@@ -496,6 +496,21 @@ button:hover,
   content: '\feff'; /* https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
 }
 
+.authentication-form a {
+  float: right;
+  margin: 5rem 0;
+}
+
+.authentication-form p {
+  margin: 5rem 0 0;
+  text-align: center;
+}
+
+.authentication-form p a {
+  float: none;
+  margin: 0;
+}
+
 @media screen and (min-width: 750px) {
   .authentication-form {
     width: 50%;
@@ -799,10 +814,58 @@ button.menu + nav {
   transition: all 0.3s;
 }
 
+.editors-panel li {
+  font-size: 1.3rem;
+}
+
 @media screen and (min-width: 750px) {
   button.menu + nav {
     font-size: 6vh;
   }
+  .editors-panel li {
+    font-size: 2vw;
+  }
+}
+
+li.section a:before {
+  margin-right: 1rem;
+}
+
+button.menu.profile,
+button.menu.profile.active {
+  right: 1.5rem;
+}
+
+button.menu.profile img,
+button.menu.profile .image {
+  margin: 0 auto;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+button.menu.profile .image,
+button.menu.profile + nav .image {
+  display: block;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+button.menu.profile + nav .image {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-block;
+}
+
+button.menu.profile + nav li.icon-cross:before {
+  font-size: 4.5vw;
+  margin-right: 1rem;
+}
+
+button.menu.profile + nav li.icon-cross a {
+  font-family: 'vremena_grotesk', sans-serif;
+  font-weight: 200;
+  line-height: 1.5;
 }
 
 button.menu + nav ul {
@@ -823,35 +886,53 @@ button.menu + nav ul ul {
 }
 
 @media screen and (min-width: 750px) {
-  button.menu + nav ul ul {
+  button.menu.profile {
+    right: 14.5rem;
+  }
+
+  button.menu + nav ul li.social ul {
     display: none;
+  }
+
+  button.menu.profile + nav .image {
+    width: 5.5rem;
+    height: 5.5rem;
+    display: inline-block;
+  }
+
+  button.menu.profile + nav li.icon-cross:before {
+    font-size: 4.5vh;
+    margin-right: 2rem;
   }
 }
 
-button.menu + nav ul ul li {
+button.menu + nav ul li ul li {
   display: inline-block;
+}
+
+button.menu + nav ul li.social ul li {
   font-size: 2rem;
   padding: 0 0.3rem;
 }
 
-button.menu + nav ul ul li:nth-child(2) {
+button.menu + nav ul li.social ul li:nth-child(2) {
   font-size: 2.4rem;
   top: 0.1rem;
   padding-left: 0;
 }
 
-button.menu + nav ul ul li:nth-child(3) {
+button.menu + nav ul li.social ul li:nth-child(3) {
   font-size: 2.3rem;
   top: 0.1rem;
 }
 
-button.menu + nav ul ul li:nth-child(4) {
+button.menu + nav ul li.social ul li:nth-child(4) {
   font-size: 3.1rem;
   top: 0.4rem;
   padding-left: 0.5rem;
 }
 
-button.menu + nav ul ul li a:hover:after {
+button.menu + nav ul li.social ul li a:hover:after {
   width: 0;
 }
 
@@ -898,6 +979,11 @@ button.menu + nav a {
   display: none;
 }
 
+.participate,
+.translate {
+  display: block;
+}
+
 @media screen and (min-width: 750px) {
   #participate,
   #translate {
@@ -905,7 +991,7 @@ button.menu + nav a {
     top: 1rem;
     font-size: 1.4rem;
     transition: all 0.3s;
-    z-index: 3;
+    z-index: 4;
   }
 
   #participate:hover,
@@ -936,8 +1022,13 @@ button.menu + nav a {
   #participate:before {
     content: '\e906';
   }
+
   #translate:before {
     content: '\e907';
+  }
+
+  .participate {
+    display: none;
   }
 }
 
@@ -945,6 +1036,10 @@ button.menu + nav a {
   #translate {
     display: inline-block;
     left: 26.5rem;
+  }
+
+  .translate {
+    display: none;
   }
 }
 
@@ -958,7 +1053,7 @@ button.menu + nav a {
     position: fixed;
     top: 2.5rem;
     right: 3rem;
-    z-index: 3;
+    z-index: 2;
   }
 
   #social-networks li {
