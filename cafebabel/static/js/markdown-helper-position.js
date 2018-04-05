@@ -9,8 +9,8 @@ const editPageTextArea = document.querySelector('.textarea.markdowntext'),
   ),
   markdownHelperCross = markdownHelper.querySelector('button')
 
-function isElementInViewport(el) {
-  const rect = el.getBoundingClientRect()
+function isElementInViewport(element) {
+  const rect = element.getBoundingClientRect()
   return (
     rect.bottom >= 960 /* 960px to exclude footer height */ &&
     rect.right >= 0 &&
