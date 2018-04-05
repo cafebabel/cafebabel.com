@@ -707,7 +707,7 @@ a.logo:after {
   height: 100%;
   box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.1);
   background: white;
-  transition: opacity 0.3s;
+  transition: all 0.3s ease-in-out;
   z-index: 5;
 }
 #preloader-layer img {
