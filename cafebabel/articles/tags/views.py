@@ -26,8 +26,7 @@ def suggest():
     cleaned_tag = [{
         'name': tag.name,
         'slug': tag.slug,
-        'language': tag.language,
-        'summary': tag.summary or ''
+        'language': tag.language
     } for tag in tags]
     return jsonify(cleaned_tag)
 
