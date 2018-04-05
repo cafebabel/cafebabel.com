@@ -1527,6 +1527,10 @@ select#author {
   font-weight: bold;
 }
 
+.profile-page main section:nth-of-type(2) {
+  position: relative;
+}
+
 .profile-page main section:nth-of-type(2) h2 {
   display: inline-block;
   width: 50%;
@@ -1536,6 +1540,12 @@ select#author {
   cursor: pointer;
   border: 0.1rem solid #fff;
   transition: all 0.3s;
+}
+
+.profile-page main section:nth-of-type(2) h2:nth-of-type(2) {
+  position: absolute;
+  top: 1.5rem;
+  right: 0;
 }
 
 .profile-page main section:nth-of-type(2) h2.active {

@@ -48,12 +48,13 @@
 </section>
 
 <section>
-  <h2 class="contribution-switcher article-switcher active">Articles</h2><h2 class="contribution-switcher translation-switcher">Translations</h2>
+  <h2 class="contribution-switcher article-switcher active">Articles</h2>
   <div class=article-list>
     {% for article in articles %}
       {{ card(article) }}
     {% endfor %}
   </div>
+  <h2 class="contribution-switcher translation-switcher">Translations</h2>
   <div class=translation-list>
     {% for translation in translations %}
       {{ card(translation) }}
