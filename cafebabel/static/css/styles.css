@@ -1743,7 +1743,7 @@ select#author {
   max-width: 100%;
 }
 
-.article-page article p.video-wrapper {
+p.video-wrapper {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
@@ -1751,7 +1751,7 @@ select#author {
   max-width: none;
 }
 
-article p.video-wrapper iframe {
+p.video-wrapper iframe {
   position: absolute;
   top: 0;
   left: 0;
