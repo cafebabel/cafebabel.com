@@ -1,9 +1,9 @@
 import json
+import random
 import re
 import unicodedata
 from functools import partial, wraps
 from http import HTTPStatus
-from math import ceil
 
 import markdown as markdownlib
 from flask import Markup, abort, current_app, g, request, url_for
@@ -121,3 +121,14 @@ def social_network_url_for(kind):
     social_networks = current_app.config.get('SOCIAL_NETWORKS')
     return social_networks[kind].get(current_language(),
                                      social_networks[kind]['en'])
+
+
+def get_categories():
+    from ..articles.tags.models import Tag  # Circular imports.
+    return Tag.objects.categories(language=current_language())
+
+
+def shuffle(sequence):
+    sequence = list(sequence)
+    random.shuffle(sequence)
+    return sequence

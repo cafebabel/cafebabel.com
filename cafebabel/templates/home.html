@@ -31,7 +31,7 @@
   {% endif %}
 
   <h2>Sections</h2>
-{% for category in categories %}
+{% for category in categories|shuffle %}
   <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
 {% endfor %}
 
