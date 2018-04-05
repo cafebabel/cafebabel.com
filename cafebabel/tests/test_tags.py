@@ -38,8 +38,7 @@ def test_tag_suggest_basics(client, tag):
     assert response.json == [{
         'language': 'en',
         'name': 'Wonderful',
-        'slug': 'wonderful',
-        'summary': 'summary text'
+        'slug': 'wonderful'
     }]
 
 
@@ -51,13 +50,11 @@ def test_tag_suggest_many(client, app, tag):
     assert response.json == [{
         'language': 'en',
         'name': 'Wonderful',
-        'slug': 'wonderful',
-        'summary': 'summary text'
+        'slug': 'wonderful'
     }, {
         'language': 'en',
         'name': 'Wondering',
-        'slug': 'wondering',
-        'summary': ''
+        'slug': 'wondering'
     }]
 
 
@@ -69,8 +66,7 @@ def test_tag_only_language(client, app, tag):
     assert response.json == [{
         'language': 'fr',
         'name': 'Wondering',
-        'slug': 'wondering',
-        'summary': ''
+        'slug': 'wondering'
     }]
 
 
@@ -95,6 +91,10 @@ def test_tag_detail(app, client, tag, published_article):
     assert tag.summary in response
     assert (f'<a href={published_article.detail_url }>'
             f'{published_article.title}' in response)
+    tag.modify(summary='foo\n\n* bar\n* baz\n')
+    response = client.get('/en/article/tag/wonderful/')
+    assert 'content="foo * bar * baz"' in response
+    assert '<div class=summary><p>foo</p>\n<ul>\n<li>bar' in response
 
 
 def test_tag_detail_draft(client, tag, article):
