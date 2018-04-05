@@ -25,10 +25,10 @@
 {% block body_class %}home{% endblock %}
 {% block body %}
   <h2>Editor's pick</h2>
-  {% set article_editors_pick = articles_for_tag('editors-pick', limit=1) %}
-  {% if article_editors_pick %}
+  {% set articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
+  {% for article_editors_pick in articles_editors_pick %}
     {{ card(article_editors_pick) }}
-  {% endif %}
+  {% endfor %}
 
   <h2>Sections</h2>
 {% for category in categories|shuffle %}
@@ -43,16 +43,9 @@
 
 {% if articles %}
   <h2>Recently published</h2>
-  {% set article_network = articles_for_tag('network', limit=1) %}
   {% for article in articles %}
-    {% if article not in (article_editors_pick, article_network) and article not in articles_meet_my_hood %}
+    {% if article not in articles_editors_pick and article not in articles_meet_my_hood %}
       {{ card(article) }}
-      {% if loop.index == 3 %}
-        <h2>Network</h2>
-        {% if article_network %}
-          {{ card(article_network) }}
-        {% endif %}
-      {% endif %}
     {% endif %}
   {% endfor %}
 {% endif %}
