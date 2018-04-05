@@ -2132,6 +2132,55 @@ a.creative:before {
   width: 0;
 }
 
+/* Tag page Network */
+
+.tag-page.tag-network main {
+  background-color: #ffefef;
+}
+
+.tag-page.tag-network #content {
+  display: grid;
+  grid-gap: 3rem 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+}
+
+.tag-page.tag-network header,
+.tag-page.tag-network header + p {
+  grid-column: span 3;
+}
+
+.tag-page.tag-network header + p {
+  margin: -4rem 0 -2rem;
+}
+
+.tag-page.tag-network article {
+  margin: 0;
+}
+
+.tag-page.tag-network article .article-detail {
+  width: 100%;
+  padding: 1rem;
+  min-height: 30rem;
+}
+
+.tag-page.tag-network article > a {
+  display: block;
+  overflow: hidden;
+  height: 30rem;
+  width: 40rem;
+}
+
+.tag-page.tag-network article > a:hover:after {
+  width: 0;
+}
+
+.tag-page.tag-network article > a > img {
+  height: 30rem;
+  transform: translateX(-25%);
+  max-width: none;
+}
+
 /* Tag page edit */
 
 .tag-page-edit .file {
