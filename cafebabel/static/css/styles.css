@@ -951,6 +951,7 @@ button.menu + nav a {
 #social-networks {
   display: none;
 }
+
 @media screen and (min-width: 750px) {
   #social-networks {
     display: block;
