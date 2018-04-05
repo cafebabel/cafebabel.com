@@ -887,7 +887,7 @@ button.menu + nav ul ul {
 
 @media screen and (min-width: 750px) {
   button.menu.profile {
-    right: 14.5rem;
+    right: 16.5rem;
   }
 
   button.menu + nav ul li.social ul {
