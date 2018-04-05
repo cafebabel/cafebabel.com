@@ -21,7 +21,7 @@ articleSwitcher.addEventListener('click', () => {
 /* http://youmightnotneedjquery.com/ */
 function fadeIn(element) {
   element.style.opacity = 0
-  var last = +new Date()
+  let last = +new Date()
   const tick = function() {
     element.style.opacity =
       +element.style.opacity + (new Date() - last) / 400 /* fadein duration */
@@ -34,7 +34,7 @@ function fadeIn(element) {
 }
 function fadeOut(element) {
   element.style.opacity = 1
-  var last = +new Date()
+  let last = +new Date()
   const tick = function() {
     element.style.opacity =
       +element.style.opacity - (new Date() - last) / 400 /* fadeout duration */
