@@ -1,13 +1,13 @@
 /* Add fixed position to markdown helper */
 const markdownHelper = document.querySelector('#markdown-helper')
 
-const editPageTextArea = document.querySelector('.textarea.markdowntext'),
-  editPageTextAreaHeight = editPageTextArea.offsetHeight,
-  viewportHeight = Math.max(
-    document.documentElement.clientHeight,
-    window.innerHeight || 0
-  ),
-  markdownHelperCross = markdownHelper.querySelector('button')
+const editPageTextArea = document.querySelector('.textarea.markdowntext')
+const editPageTextAreaHeight = editPageTextArea.offsetHeight
+const viewportHeight = Math.max(
+  document.documentElement.clientHeight,
+  window.innerHeight || 0
+)
+const markdownHelperCross = markdownHelper.querySelector('button')
 
 function isElementInViewport(element) {
   const rect = element.getBoundingClientRect()
