@@ -162,9 +162,9 @@ def register_template_filters(app):
     app.add_template_filter(helpers.slugify, 'slugify')
     app.add_template_filter(helpers.to_json_filter, 'to_json')
     app.add_template_filter(helpers.markdown, 'markdown')
-    app.add_template_filter(helpers.reading_time, 'reading_time')
     app.add_template_filter(helpers.obfuscate_email, 'obfuscate_email')
     app.add_template_filter(helpers.rewrite_img_src, 'rewrite_img_src')
+    app.add_template_filter(helpers.shuffle, 'shuffle')
 
 
 def register_context_processors(app):
@@ -176,6 +176,7 @@ def register_context_processors(app):
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories_slugs=(
                 lambda: app.config.get('CATEGORIES_SLUGS', tuple())),
+            get_categories=helpers.get_categories,
             get_year=lambda: datetime.now().year,
             current_language=helpers.current_language(),
             lang_url_for=helpers.lang_url_for,

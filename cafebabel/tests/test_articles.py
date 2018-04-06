@@ -2,7 +2,6 @@ from http import HTTPStatus
 from io import BytesIO
 from pathlib import Path
 
-from flask import url_for
 from flask.helpers import get_flashed_messages
 
 from ..articles.models import Article
@@ -55,7 +54,6 @@ def test_published_article_should_display_content(client, published_article,
     assert ('href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
             f'localhost%2Fen%2Farticle%2F{published_article.slug}-'
             f'{published_article.id}%2F"' in response)
-    assert '1 min' in response
     assert ('<meta property=og:url content="http://localhost/en/article/'
             f'{published_article.slug}-{published_article.id}/">' in response)
     assert '<meta property=og:locale content="en">' in response
@@ -391,14 +389,14 @@ def test_translation_to_translate_should_not_have_original_language(
             not in response)
 
 
-def test_translation_to_translate_should_have_original_language(
+def test_translation_to_translate_should_not_contain_translations(
         app, client, article, translation):
     # Keep the `article` and `translation` fixtures, even if not refered to.
     response = client.get(f'/en/article/to-translate/?from=fr&to=es')
     assert (f'href="/es/article/translation/new/'
             f'?original={translation.original_article.id}">'
             f'Translate into Español</a>'
-            in response)
+            not in response)
 
 
 def test_article_to_translate_should_have_only_other_links(

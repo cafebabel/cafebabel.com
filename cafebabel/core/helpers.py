@@ -1,14 +1,13 @@
 import json
+import random
 import re
 import unicodedata
 from functools import partial, wraps
 from http import HTTPStatus
-from math import ceil
 
 import markdown as markdownlib
 from flask import Markup, abort, current_app, g, request, url_for
 from flask_login import current_user, fresh_login_required, login_required
-from jinja2.filters import do_wordcount
 from unidecode import unidecode
 
 
@@ -30,11 +29,6 @@ def to_json_filter(value):
 
 def markdown(value):
     return Markup(markdownlib.markdown(value))
-
-
-def reading_time(text):
-    words = do_wordcount(text)
-    return ceil(words / 250)
 
 
 def editor_required(func=None, fresh=False):
@@ -112,3 +106,14 @@ def social_network_url_for(kind):
     social_networks = current_app.config.get('SOCIAL_NETWORKS')
     return social_networks[kind].get(current_language(),
                                      social_networks[kind]['en'])
+
+
+def get_categories():
+    from ..articles.tags.models import Tag  # Circular imports.
+    return Tag.objects.categories(language=current_language())
+
+
+def shuffle(sequence):
+    sequence = list(sequence)
+    random.shuffle(sequence)
+    return sequence
