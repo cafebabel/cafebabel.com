@@ -55,6 +55,7 @@
       <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor') %}checked{% endif %}>
     </div>
     {% endif %}
+    <a href={{ url_for('security.change_password') }} class=button>Change password</a>
     <input type=submit value="Save profile">
   </form>
 </section>

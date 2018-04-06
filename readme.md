@@ -76,9 +76,15 @@ to the server.
 Your server must have python3.6 installed, MongoDB running and the
 _settings.py_ (or _settings.local.py_) file properly setup.
 
-Installation can be processed with `make install`.
-Deploying will run through `make deploy`.
+> In the commands below, `preprod` should be replaced by "`prod`" for
+publishing to the _prod_ instance.
 
+- Installation can be processed with `make install env=preprod`.
+- Deploying will run through `make deploy env=preprod`.
+- Error logs can be accessed by `make logs env=preprod type=access`.
+Replace `access` by `error` for the error logs.
+
+> View the _Makefile_ for further comprehension or more commands.
 
 ## Documentation
 
