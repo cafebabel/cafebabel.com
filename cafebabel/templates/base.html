@@ -5,6 +5,7 @@
 <title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
 
 {% from "_social-networks-macro.html" import social_networks with context %}
+{% from "articles/macros.html" import profile_image %}
 
 {% block metas %}{% endblock %}
 
@@ -16,41 +17,32 @@
 <body class="{% block body_class %}{% endblock %}">
 
 <button class="menu main-menu"></button>
-
 <nav>
   <ul>
-    {% if current_user.is_authenticated %}
-        <li><a href={{ current_user.detail_url }}>Profile</a></li>
-        <li><a href={{ url_for('security.logout') }}>Log out</a></li>
-        <li><a href={{ url_for('security.change_password') }}>Change password</a></li>
-    {% else %}
-      {% if security.registerable or security.recoverable or security.confirmable %}
-        <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
-        {% if security.registerable %}
-        <li><a href="{{ url_for_security('register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Create a profile') }}</a><br/></li>
-        {% endif %}
-        {% if security.recoverable %}
-        <li><a href="{{ url_for_security('forgot_password') }}">{{ _('Forgot password') }}</a><br/></li>
-        {% endif %}
-        {% if security.confirmable %}
-        <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
-        {% endif %}
-      {% endif %}
-    {% endif %}
-    <li><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
-    <li><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
+    {% set categories = get_categories() %}
+    {% for category in categories %}
+      <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
+    {% endfor %}
+    <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
+    <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
+    {% set static_pages = static_pages_for(current_language) %}
+    <li><a href={{ url_for('tags.detail', slug='network') }}>Network</a></li>
+    <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
     {% if current_user.has_role('editor') %}
-      <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
-      <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+      <li class="editors-panel">
+        <ul>
+          <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
+          <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+        </ul>
+      </li>
     {% endif %}
-    <li>
+    <li class=social>
       {{ social_networks() }}
     </li>
   </ul>
 </nav>
 
 <button class="menu language">{{ current_language }}</button>
-
 <nav>
   <ul>
     {% for lang_code, lang_label in get_languages() %}
@@ -72,6 +64,31 @@
 <a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
 <a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
 
+<button class="menu profile">
+  {% if current_user.is_authenticated %}
+    {{ profile_image(current_user) }}
+  {% else %}
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
+  {% endif %}
+</button>
+<nav>
+  {% if current_user.is_authenticated %}
+    <ul>
+      <li>{{ profile_image(current_user) }}<a href={{ current_user.detail_url }}>Profile</a></li>
+      <li class=icon-cross><a href={{ url_for('security.logout') }} >Log out</a></li>
+    </ul>
+    {% else %}
+    <ul>
+      {% if security.registerable or security.recoverable or security.confirmable %}
+        <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
+        {% if security.confirmable %}
+          <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+        {% endif %}
+      {% endif %}
+    </ul>
+  {% endif %}
+</nav>
+
 <nav id=social-networks>
   {{ social_networks(with_linkedin=False) }}
 </nav>
@@ -85,7 +102,6 @@
 {% block body %}{% endblock %}
   </div>
   <nav id=static-pages-links>
-    {% set static_pages = static_pages_for(current_language) %}
     <nav>
       <ul>
         <li><a href={{ static_pages.get('about-us', '#') }}>About us</a></li>
@@ -106,6 +122,8 @@
 </main>
 
 <footer>
+  <h4>Want our bi-monthly newsletter in your inbox? Then type in your email address here:</h4>
+  <iframe frameborder=0 scrolling=no src="https://app.mailjet.com/widget/iframe/2iD4/4zE" width=100% height=270></iframe>
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
 <div id=preloader-layer>

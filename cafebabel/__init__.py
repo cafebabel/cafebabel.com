@@ -8,10 +8,12 @@ from flask import Flask, g, render_template
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
+from raven.contrib.flask import Sentry
 
 mail = Mail()
 db = MongoEngine()
 security = Security()
+sentry = Sentry()
 
 
 def create_app(config_object):
@@ -29,10 +31,13 @@ def create_app(config_object):
     # register_cli is only called when necessary
     return app
 
-
 def register_extensions(app):
     db.init_app(app)
     mail.init_app(app)
+
+    sentry_dsn = app.config.get('SENTRY_DSN')
+    if sentry_dsn:
+        sentry.init_app(app, dsn=sentry_dsn)
 
     from .users.models import Role, User
 
@@ -159,6 +164,7 @@ def register_template_filters(app):
     app.add_template_filter(helpers.markdown, 'markdown')
     app.add_template_filter(helpers.obfuscate_email, 'obfuscate_email')
     app.add_template_filter(helpers.rewrite_img_src, 'rewrite_img_src')
+    app.add_template_filter(helpers.shuffle, 'shuffle')
 
 
 def register_context_processors(app):
@@ -170,6 +176,7 @@ def register_context_processors(app):
             get_languages=lambda: app.config.get('LANGUAGES', tuple()),
             get_categories_slugs=(
                 lambda: app.config.get('CATEGORIES_SLUGS', tuple())),
+            get_categories=helpers.get_categories,
             get_year=lambda: datetime.now().year,
             current_language=helpers.current_language(),
             lang_url_for=helpers.lang_url_for,
