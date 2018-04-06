@@ -1394,6 +1394,7 @@ select#author {
 
 .profile-page main section .info-profile li {
   margin: 3rem 0;
+  text-align: center;
 }
 
 .profile-page main section .info-profile li .bio {
@@ -2377,6 +2378,11 @@ a.section-link.creative {
 
 article .article-detail h3 {
   font-size: 2.2rem;
+}
+
+article a:hover + .article-detail h3 a,
+article .article-detail h3 a:hover {
+  color: #bde513;
 }
 
 article .article-detail h3 a:hover:after {
