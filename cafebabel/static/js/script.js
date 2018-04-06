@@ -40,8 +40,8 @@ function animate(elem, style, from, to, time) {
 const subscribeLink = document.querySelector(
   '#social-networks .icon-newsletter'
 )
-subscribeLink.addEventListener('click', () => {
-  const target = document.querySelector('#static-pages-links')
+subscribeLink.addEventListener('click', event => {
+  const target = document.querySelector(event.target.getAttribute('href'))
   const scrollPosition =
     window.pageYOffset !== undefined
       ? window.pageYOffset
