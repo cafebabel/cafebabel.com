@@ -8,10 +8,12 @@ from flask import Flask, g, render_template
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, Security
+from raven.contrib.flask import Sentry
 
 mail = Mail()
 db = MongoEngine()
 security = Security()
+sentry = Sentry()
 
 
 def create_app(config_object):
@@ -29,10 +31,13 @@ def create_app(config_object):
     # register_cli is only called when necessary
     return app
 
-
 def register_extensions(app):
     db.init_app(app)
     mail.init_app(app)
+
+    sentry_dsn = app.config.get('SENTRY_DSN')
+    if sentry_dsn:
+        sentry.init_app(app, dsn=sentry_dsn)
 
     from .users.models import Role, User
 
