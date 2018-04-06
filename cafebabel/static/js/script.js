@@ -33,8 +33,10 @@ function animate(elem, style, from, to, time) {
   const timer = setInterval(() => {
     const step = Math.min(1, (new Date().getTime() - start) / time)
     elem[style] = from + step * (to - from)
-    if (step === 1) clearInterval(timer)
-  })
+    if (step === 1) {
+      clearInterval(timer)
+    }
+  }, 25) /* allow smooth scroll on firefox */
   elem[style] = from
 }
 const subscribeLink = document.querySelector(
