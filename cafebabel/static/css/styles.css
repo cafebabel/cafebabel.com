@@ -1682,16 +1682,8 @@ select#author {
   z-index: 0;
 }
 
-.profile-page main section:nth-of-type(2) span:nth-of-type(2) label {
+.profile-page main section:nth-of-type(2) label[for='translation-list'] {
   right: 1.5rem;
-}
-
-.profile-page main section:nth-of-type(2) span {
-  float: left;
-}
-
-.profile-page main section:nth-of-type(2) .article-detail span {
-  float: none;
 }
 
 .profile-page main section:nth-of-type(2) .contributions {

@@ -43,24 +43,20 @@
 </section>
 
 <section>
-  <span>
-    <input type=radio name=contribution-type-switch id=articles-list checked>
-    <label for=articles-list>Articles</label>
-    <div class=contributions>
-    {% for article in articles %}
-      {{ card(article) }}
+  <input type=radio name=contribution-type-switch id=articles-list checked>
+  <label for=articles-list>Articles</label>
+  <div class=contributions>
+  {% for article in articles %}
+    {{ card(article) }}
+  {% endfor %}
+  </div>
+  <input type=radio name=contribution-type-switch id=translation-list>
+  <label for=translation-list>Translations</label>
+  <div class=contributions>
+    {% for translation in translations %}
+      {{ card(translation) }}
     {% endfor %}
-    </div>
-  </span>
-  <span>
-    <input type=radio name=contribution-type-switch id=translation-list>
-    <label for=translation-list>Translations</label>
-    <div class=contributions>
-      {% for translation in translations %}
-        {{ card(translation) }}
-      {% endfor %}
-    </div>
-  </span>
+  </div>
   {% if not is_full %}
     <a class=button href="?full">See all articles and translations</a>
   {% endif %}
