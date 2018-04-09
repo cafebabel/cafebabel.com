@@ -14,10 +14,15 @@ def test_confirm_user_creates_default_profile(app):
     assert user.profile.name == 'Anonymous'
 
 
-def test_user_profile_has_button_to_full_list(client, article):
-    response = client.get(f'/en/profile/{article.authors[0].id}/')
+def test_user_profile_has_button_to_full_list_if_pertinent(
+        app, client, published_translation):
+    initial_hard_limit = app.config['HARD_LIMIT_PER_PAGE']
+    app.config['HARD_LIMIT_PER_PAGE'] = 1
+    response = client.get(
+        f'/en/profile/{published_translation.authors[0].id}/')
     assert response.status_code == HTTPStatus.OK
     assert 'See all articles and translations' in response
+    app.config['HARD_LIMIT_PER_PAGE'] = initial_hard_limit
 
 
 def test_user_profile_full_has_no_button_to_list(client, article):

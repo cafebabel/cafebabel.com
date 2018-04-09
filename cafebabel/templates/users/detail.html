@@ -61,8 +61,8 @@
       {% endfor %}
     </div>
   {% endif %}
-  {% if articles|length >= 20 or translations|length >= 20 %}
-    {% if not is_full %}
+  {% if not is_full %}
+    {% if articles|length == config.HARD_LIMIT_PER_PAGE or translations|length == config.HARD_LIMIT_PER_PAGE %}
       <a class=button href="?full">See all articles and translations</a>
     {% endif %}
   {% endif %}
