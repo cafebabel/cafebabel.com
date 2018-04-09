@@ -1690,6 +1690,12 @@ select#author {
   z-index: 0;
 }
 
+.profile-page main section:nth-of-type(2) label:hover {
+  color: #fff;
+  background-color: #00283c;
+  border: 0.1rem solid #00283c;
+}
+
 .profile-page main section:nth-of-type(2) label[for='translation-list'] {
   grid-area: translation-switcher;
 }
