@@ -60,7 +60,7 @@ def test_author_profile_has_list_of_published_translations_and_drafts(
     assert published_translation.detail_url in response
 
 
-def test_author_profile_has_list_of_its_translations_only(
+def test_author_profile_has_list_of_his_translations_only(
         client, user, user2, published_translation):
     login(client, user.email, 'password')
     assert published_translation.authors == [user]
