@@ -1663,34 +1663,42 @@ select#author {
 
 /* profile contributions radio tabs */
 
+.profile-page main section:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    'article-switcher translation-switcher'
+    'contributions contributions'
+    'see-all-button see-all-button';
+}
+
 .profile-page main section:nth-of-type(2) input {
   display: none;
 }
 
 .profile-page main section:nth-of-type(2) label {
-  position: absolute;
+  grid-area: article-switcher;
   text-align: center;
-  width: 46%;
+  width: 100%;
   font-size: 2.4rem;
   font-weight: 700;
   border: 0.1rem solid #fff;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
   cursor: pointer;
-  top: 0;
-  padding: 1rem 0;
+  padding: 2rem 0;
   transition: all 0.3s;
   z-index: 0;
 }
 
 .profile-page main section:nth-of-type(2) label[for='translation-list'] {
-  right: 1.5rem;
+  grid-area: translation-switcher;
 }
 
 .profile-page main section:nth-of-type(2) .contributions {
-  position: relative;
-  top: 11rem;
-  display: none;
+  grid-area: contributions;
+  opacity: 0;
   z-index: 0;
+  transition: opacity 0.3s;
 }
 
 .profile-page main section:nth-of-type(2) input:checked + label {
@@ -1705,21 +1713,17 @@ select#author {
   + label
   + .contributions {
   z-index: 1;
-  display: block;
+  opacity: 1;
 }
 
 .profile-page main section:nth-of-type(2) a.button {
-  clear: both;
-}
-
-.profile-page main section:nth-of-type(2) article:last-of-type {
-  margin-bottom: 16rem;
+  grid-area: see-all-button;
 }
 
 @media screen and (min-width: 750px) {
   .profile-page main section:nth-of-type(2) label {
-    width: 47.46%;
     font-size: 3.2rem;
+    line-height: 4rem;
   }
 }
 
