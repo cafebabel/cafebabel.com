@@ -1700,6 +1700,18 @@ select#author {
   grid-area: translation-switcher;
 }
 
+.profile-page main section:nth-of-type(2) label.single {
+  grid-area: article-switcher;
+  width: 200%; /* spread on two grid columns */
+}
+
+.profile-page main section:nth-of-type(2) label.single:hover {
+  color: #00283c;
+  background-color: transparent;
+  border: 0.1rem solid #00283c;
+  cursor: auto;
+}
+
 .profile-page main section:nth-of-type(2) .contributions {
   grid-area: contributions;
   opacity: 0;

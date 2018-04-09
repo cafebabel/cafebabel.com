@@ -45,7 +45,7 @@
 <section>
   {% if articles %}
     <input type=radio name=contribution-type-switch id=articles-list checked>
-    <label for=articles-list>Articles</label>
+    <label for=articles-list {% if not translations %}class=single{% endif %}>Articles</label>
     <div class=contributions>
     {% for article in articles %}
       {{ card(article) }}
@@ -54,7 +54,7 @@
   {% endif %}
   {% if translations %}
     <input type=radio name=contribution-type-switch id=translation-list {% if not articles %}checked{% endif %}>
-    <label for=translation-list>Translations</label>
+    <label for=translation-list {% if not articles %}class=single{% endif %}>Translations</label>
     <div class=contributions>
       {% for translation in translations %}
         {{ card(translation) }}
