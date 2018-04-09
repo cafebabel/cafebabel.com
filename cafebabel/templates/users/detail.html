@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% from "users/macros.html" import social_field with context %}
 {% from "articles/macros.html" import card, profile_image %}
-{% from "_extrajs-macros.html" import extra_js %}
-
-{% block extra_js %}
-  {{ extra_js(['js/profile-contribution-switch.js']) }}
-{% endblock %}
 
 {% block body_class %}profile-page{% endblock %}
 {% block body %}
@@ -48,18 +43,24 @@
 </section>
 
 <section>
-  <h2 class="contribution-switcher article-switcher active">Articles</h2>
-  <div class=article-list>
+  <span>
+    <input type=radio name=contribution-type-switch id=articles-list checked>
+    <label for=articles-list>Articles</label>
+    <div class=contributions>
     {% for article in articles %}
       {{ card(article) }}
     {% endfor %}
-  </div>
-  <h2 class="contribution-switcher translation-switcher">Translations</h2>
-  <div class=translation-list>
-    {% for translation in translations %}
-      {{ card(translation) }}
-    {% endfor %}
-  </div>
+    </div>
+  </span>
+  <span>
+    <input type=radio name=contribution-type-switch id=translation-list>
+    <label for=translation-list>Translations</label>
+    <div class=contributions>
+      {% for translation in translations %}
+        {{ card(translation) }}
+      {% endfor %}
+    </div>
+  </span>
   {% if not is_full %}
     <a class=button href="?full">See all articles and translations</a>
   {% endif %}
