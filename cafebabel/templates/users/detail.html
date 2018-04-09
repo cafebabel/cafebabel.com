@@ -43,22 +43,28 @@
 </section>
 
 <section>
-  <input type=radio name=contribution-type-switch id=articles-list checked>
-  <label for=articles-list>Articles</label>
-  <div class=contributions>
-  {% for article in articles %}
-    {{ card(article) }}
-  {% endfor %}
-  </div>
-  <input type=radio name=contribution-type-switch id=translation-list>
-  <label for=translation-list>Translations</label>
-  <div class=contributions>
-    {% for translation in translations %}
-      {{ card(translation) }}
+  {% if articles %}
+    <input type=radio name=contribution-type-switch id=articles-list checked>
+    <label for=articles-list>Articles</label>
+    <div class=contributions>
+    {% for article in articles %}
+      {{ card(article) }}
     {% endfor %}
-  </div>
-  {% if not is_full %}
-    <a class=button href="?full">See all articles and translations</a>
+    </div>
+  {% endif %}
+  {% if translations %}
+    <input type=radio name=contribution-type-switch id=translation-list {% if not articles %}checked{% endif %}>
+    <label for=translation-list>Translations</label>
+    <div class=contributions>
+      {% for translation in translations %}
+        {{ card(translation) }}
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% if articles|length >= 25 or translations|length >= 25 %}
+    {% if not is_full %}
+      <a class=button href="?full">See all articles and translations</a>
+    {% endif %}
   {% endif %}
 </section>
 
