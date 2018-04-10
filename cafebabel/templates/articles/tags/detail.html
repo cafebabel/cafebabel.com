@@ -2,7 +2,11 @@
 {% from "_meta-macro.html" import meta %}
 {% from "articles/macros.html" import card %}
 
-{% block extra_js %}<script src={{ url_for('static', filename='js/tag-detail.js') }}></script>{% endblock %}
+{% block extra_js %}
+  {% assets filters='jsmin', output='build/tag-detail.js', 'js/tag-detail.js' %}
+      <script src={{ ASSET_URL }}></script>
+  {% endassets %}
+{% endblock %}
 
 {% block meta_title %}{{ tag.name }}{% endblock %}
 {% block metas %}

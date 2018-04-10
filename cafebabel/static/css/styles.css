@@ -156,6 +156,9 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-newsletter:before {
+  content: '\e908';
+}
 .icon-participate:before {
   content: '\e906';
 }
@@ -884,7 +887,7 @@ button.menu + nav ul ul {
 
 @media screen and (min-width: 750px) {
   button.menu.profile {
-    right: 14.5rem;
+    right: 16.5rem;
   }
 
   button.menu + nav ul li.social ul {
@@ -1043,6 +1046,7 @@ button.menu + nav a {
 #social-networks {
   display: none;
 }
+
 @media screen and (min-width: 750px) {
   #social-networks {
     display: block;
@@ -1070,7 +1074,6 @@ button.menu + nav a {
   #social-networks li:last-child {
     font-size: 2.4rem;
     top: 0.3rem;
-    margin-left: 0.2rem;
   }
 
   #social-networks li a {
@@ -1369,16 +1372,16 @@ select#author {
 }
 
 .profile-page main section:first-of-type img,
-.profile-page main section h2 + div,
-.profile-page main section output .image {
+.profile-page main section:first-of-type h2 + div,
+.profile-page main section:first-of-type output .image {
   display: block;
   border-radius: 50%;
   max-width: 20rem;
   margin: 0.2rem auto;
 }
 
-.profile-page main section h2 + div,
-.profile-page main section output .image {
+.profile-page main section:first-of-type h2 + div,
+.profile-page main section:first-of-type output .image {
   width: 20rem;
   height: 20rem;
   background-size: cover;
@@ -1391,6 +1394,7 @@ select#author {
 
 .profile-page main section .info-profile li {
   margin: 3rem 0;
+  text-align: center;
 }
 
 .profile-page main section .info-profile li .bio {
@@ -1622,6 +1626,10 @@ select#author {
   font-weight: bold;
 }
 
+.profile-page main section:nth-of-type(2) {
+  position: relative;
+}
+
 @media screen and (min-width: 750px) {
   .profile-page main #content {
     display: grid;
@@ -1630,7 +1638,7 @@ select#author {
     grid-template-areas:
       'title title'
       'content sidebar';
-    padding-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin - maybe ask Éric*/
+    padding-right: 4rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
   }
 
   .profile-page [class^='icon-']:hover:before,
@@ -1644,6 +1652,96 @@ select#author {
 
   .profile-page main section:nth-of-type(2) {
     grid-area: sidebar;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .profile-page main #content {
+    padding-right: 2rem; /* don't understand why I need that. Otherwise h1 doesn't have a right margin */
+  }
+}
+
+/* profile contributions radio tabs */
+
+.profile-page main section:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    'article-switcher translation-switcher'
+    'contributions contributions'
+    'see-all-button see-all-button';
+}
+
+.profile-page main section:nth-of-type(2) input {
+  display: none;
+}
+
+.profile-page main section:nth-of-type(2) label {
+  grid-area: article-switcher;
+  text-align: center;
+  width: 100%;
+  font-size: 2.4rem;
+  font-weight: 700;
+  border: 0.1rem solid #fff;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  padding: 2rem 0;
+  transition: all 0.3s;
+  z-index: 0;
+}
+
+.profile-page main section:nth-of-type(2) label:hover {
+  color: #fff;
+  background-color: #00283c;
+  border: 0.1rem solid #00283c;
+}
+
+.profile-page main section:nth-of-type(2) label[for='translation-list'] {
+  grid-area: translation-switcher;
+}
+
+.profile-page main section:nth-of-type(2) label.single {
+  grid-area: article-switcher;
+  width: 200%; /* spread on two grid columns */
+}
+
+.profile-page main section:nth-of-type(2) label.single:hover {
+  color: #00283c;
+  background-color: transparent;
+  border: 0.1rem solid #00283c;
+  cursor: auto;
+}
+
+.profile-page main section:nth-of-type(2) .contributions {
+  grid-area: contributions;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 0.3s;
+}
+
+.profile-page main section:nth-of-type(2) input:checked + label {
+  border: 0.1rem solid #00283c;
+  z-index: 1;
+}
+
+.profile-page
+  main
+  section:nth-of-type(2)
+  input:checked
+  + label
+  + .contributions {
+  z-index: 1;
+  opacity: 1;
+}
+
+.profile-page main section:nth-of-type(2) a.button {
+  grid-area: see-all-button;
+}
+
+@media screen and (min-width: 750px) {
+  .profile-page main section:nth-of-type(2) label {
+    font-size: 3.2rem;
+    line-height: 4rem;
   }
 }
 
@@ -2376,6 +2474,11 @@ article .article-detail h3 {
   font-size: 2.2rem;
 }
 
+article a:hover + .article-detail h3 a,
+article .article-detail h3 a:hover {
+  color: #bde513;
+}
+
 article .article-detail h3 a:hover:after {
   width: 0;
 }
@@ -2460,7 +2563,6 @@ article .article-detail h3 a:hover:after {
 #static-pages-links {
   margin-bottom: 70rem;
   background-color: #00283c;
-  height: 9rem;
   padding: 1.7rem;
 }
 
@@ -2516,7 +2618,7 @@ article .article-detail h3 a:hover:after {
 footer {
   width: 100%;
   height: 70rem;
-  font-size: 4rem;
+  font-size: 2rem;
   background: linear-gradient(
     to bottom right,
     #002f4b,
@@ -2529,9 +2631,36 @@ footer {
   z-index: -1;
 }
 
+footer h4 {
+  text-align: center;
+  padding: 2rem;
+  border: 0.2rem solid #bde513;
+  max-width: 71rem;
+  margin: 11rem 2rem;
+  font-size: 1.7rem;
+  font-weight: 200;
+  color: #bde513;
+}
+
+footer iframe {
+  position: absolute;
+  top: 55%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  padding: 0 2rem;
+  max-width: 75rem;
+}
+
 footer p {
   position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
+  transform: translateX(-50%);
   left: 50%;
+  bottom: 5rem;
+  text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+  footer h4 {
+    margin: 16rem auto;
+  }
 }

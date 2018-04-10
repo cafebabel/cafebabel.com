@@ -11,7 +11,9 @@
 
 {% block metas_social %}{% endblock %}
 
-<link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
+{% assets filters='cssmin', output='build/style.css', 'css/styles.css' %}
+    <link rel=stylesheet href={{ ASSET_URL }}>
+{% endassets %}
 {% block extra_head %}{% endblock %}
 
 <body class="{% block body_class %}{% endblock %}">
@@ -122,13 +124,15 @@
 </main>
 
 <footer>
+  <h4>Want our bi-monthly newsletter in your inbox? Then type in your email address here:</h4>
+  <iframe frameborder=0 scrolling=no src="https://app.mailjet.com/widget/iframe/2iD4/4zE" width=100% height=270></iframe>
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
 <div id=preloader-layer>
     <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="preloader coffee grinder">
 </div>
-
-<script src={{ url_for('static', filename='js/utils.js') }}></script>
-<script src={{ url_for('static', filename='js/script.js') }}></script>
+{% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js' %}
+    <script src={{ ASSET_URL }}></script>
+{% endassets %}
 {% block extra_js %}{% endblock %}
 </html>
