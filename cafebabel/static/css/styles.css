@@ -2335,15 +2335,11 @@ a.creative:before {
 }
 
 .tag-page.tag-network #content {
-  display: grid;
-  grid-gap: 3rem 2rem;
-  grid-template-columns: repeat(3, 1fr);
-  justify-content: center;
+  display: block;
 }
 
-.tag-page.tag-network header,
-.tag-page.tag-network header + p {
-  grid-column: span 3;
+.tag-page.tag-network header {
+  max-width: none;
 }
 
 .tag-page.tag-network header + p {
@@ -2356,6 +2352,7 @@ a.creative:before {
   transform: translate(-50%, -50%);
   top: -35vh;
   font-size: 5rem;
+  color: #fff;
 }
 
 .tag-page.tag-network header h1:before {
@@ -2365,21 +2362,17 @@ a.creative:before {
   font-size: 4.5rem;
 }
 
-.tag-page.tag-network article {
-  margin: 0;
-}
-
 .tag-page.tag-network article .article-detail {
-  width: 100%;
   padding: 1rem;
-  min-height: 26rem;
+  width: 100%;
 }
 
 .tag-page.tag-network article > a {
   display: block;
   overflow: hidden;
   height: 30rem;
-  width: 40rem;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .tag-page.tag-network article > a:hover:after {
@@ -2388,8 +2381,66 @@ a.creative:before {
 
 .tag-page.tag-network article > a > img {
   height: 30rem;
-  transform: translateX(-25%);
+  margin-left: 50%;
+  transform: translateX(-50%);
   max-width: none;
+}
+
+@media screen and (min-width: 750px) {
+  .tag-page.tag-network #content {
+    display: grid;
+    grid-gap: 3rem 2rem;
+    grid-template-columns: 50% 50%;
+    justify-content: center;
+  }
+
+  .tag-page.tag-network header,
+  .tag-page.tag-network header + p {
+    grid-column: span 2;
+  }
+
+  .tag-page.tag-network header {
+    margin: 60vh 1rem 0;
+  }
+
+  .tag-page.tag-network article {
+    margin: 0;
+    padding: 0 0 0 1rem;
+  }
+
+  .tag-page.tag-network article:nth-child(even) {
+    padding: 0 1rem 0 0;
+  }
+
+  .tag-page.tag-network article .article-detail {
+    min-height: 26rem;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  /* 1200px + grid-gaps */
+  .tag-page.tag-network #content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tag-page.tag-network article .article-detail,
+  .tag-page.tag-network article > a {
+    width: 40rem;
+  }
+
+  .tag-page.tag-network article,
+  .tag-page.tag-network article:nth-child(even) {
+    padding: 0;
+  }
+
+  .tag-page.tag-network header,
+  .tag-page.tag-network header + p {
+    grid-column: span 3;
+  }
+
+  .tag-page.tag-network header {
+    margin: 60vh 0 0;
+  }
 }
 
 /* Tag page edit */
