@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% import "articles/macros.html" as macros %}
-{% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_head %}
-  <link rel=stylesheet href={{ url_for('static', filename='choices/css/choices.min.css') }}>
-  <link rel=stylesheet href={{ url_for('static', filename='css/choices.css') }}>
+  {% assets filters='cssmin', output='build/articles-edit.css', 'choices/css/choices.min.css', 'css/choices.css' %}
+      <link rel=stylesheet href={{ ASSET_URL }}>
+  {% endassets %}
 {% endblock %}
 
 {% block extra_js %}
-  {{ extra_js(['js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'js/markdown-helper-position.js', 'choices/js/choices.min.js', 'js/articles-users.js']) }}
+  {% assets filters='jsmin', output='build/articles-edit.js', 'js/noise.js', 'js/articles-tags.js', 'js/image-preview.js', 'js/textarea-change.js', 'js/markdown-helper-position.js', 'choices/js/choices.min.js', 'js/articles-users.js' %}
+      <script src={{ ASSET_URL }}></script>
+  {% endassets %}
 {% endblock %}
 
 {% block body_class %}article-page-edit{% endblock %}

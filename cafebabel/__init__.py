@@ -5,6 +5,7 @@ from urllib.parse import quote_plus
 
 import click
 from flask import Flask, g, render_template
+from flask_assets import Environment
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
 from flask_resize import Resize
@@ -16,6 +17,7 @@ db = MongoEngine()
 security = Security()
 sentry = Sentry()
 resize = Resize()
+assets = Environment()
 
 
 def create_app(config_object):
@@ -38,6 +40,7 @@ def register_extensions(app):
     db.init_app(app)
     mail.init_app(app)
     resize.init_app(app)
+    assets.init_app(app)
 
     sentry_dsn = app.config.get('SENTRY_DSN')
     if sentry_dsn:
