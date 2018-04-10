@@ -1,9 +1,11 @@
 {% extends "base.html" %}
-{% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(['js/textarea-change.js']) }}
+  {% assets filters='jsmin', output='build/proposals-create.js', 'js/textarea-change.js' %}
+      <script src={{ ASSET_URL }}></script>
+  {% endassets %}
 {% endblock %}
+
 {% block body_class %}pitch-page{% endblock %}
 {% block body %}
 

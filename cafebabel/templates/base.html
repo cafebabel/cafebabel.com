@@ -129,8 +129,8 @@
 <div id=preloader-layer>
     <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="preloader coffee grinder">
 </div>
-
-<script src={{ url_for('static', filename='js/utils.js') }}></script>
-<script src={{ url_for('static', filename='js/script.js') }}></script>
+{% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js' %}
+    <script src={{ ASSET_URL }}></script>
+{% endassets %}
 {% block extra_js %}{% endblock %}
 </html>
