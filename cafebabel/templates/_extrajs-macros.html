@@ -1,5 +1,0 @@
-{% macro extra_js(file_paths) %}
-  {% for path in file_paths %}
-    <script src={{ url_for('static', filename=path) }}></script>
-  {% endfor %}
-{% endmacro %}
