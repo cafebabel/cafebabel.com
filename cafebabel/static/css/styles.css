@@ -2386,7 +2386,7 @@ a.creative:before {
 @media screen and (min-width: 750px) {
   .tag-page.tag-network #content {
     display: grid;
-    grid-gap: 3rem 2rem;
+    grid-gap: 3rem 0;
     grid-template-columns: 50% 50%;
     justify-content: center;
   }
@@ -2396,11 +2396,8 @@ a.creative:before {
     grid-column: span 2;
   }
 
-  .tag-page.tag-network header {
-    margin: 60vh 1rem 0;
-  }
-
   .tag-page.tag-network article {
+    width: 100%;
     margin: 0;
     padding: 0 0 0 1rem;
   }
@@ -2428,6 +2425,7 @@ a.creative:before {
 @media screen and (min-width: 1300px) {
   /* 1200px + grid-gaps */
   .tag-page.tag-network #content {
+    grid-gap: 3rem 2rem;
     grid-template-columns: repeat(3, 1fr);
   }
 
