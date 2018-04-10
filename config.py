@@ -23,6 +23,8 @@ class BaseConfig:
         ('de', 'Deutsch'),
         ('pl', 'Polszczyzna'),
     )
+    DEFAULT_LANGUAGE = LANGUAGES[0][0]
+
     CATEGORIES_SLUGS = ['impact', 'experience', 'raw', 'creative']
     STATIC_PAGES_SLUGS = [
         'about-us',
@@ -102,9 +104,6 @@ class BaseConfig:
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
     RESIZE_ROOT = str(UPLOADS_FOLDER)
-    RESIZE_TARGET_DIRECTORY = 'resized-images'
-
-    DEFAULT_LANGUAGE = LANGUAGES[0][0]
     HARD_LIMIT_PER_PAGE = 20
 
 
@@ -146,3 +145,5 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
     UPLOADS_FOLDER = Path(mkdtemp()) / 'cafebabel' / 'uploads'
     DEBUG_TB_ENABLED = False
+    MEDIA_URL = ''
+    RESIZE_URL = MEDIA_URL + '/'
