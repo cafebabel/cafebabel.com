@@ -100,10 +100,10 @@ class BaseConfig:
     }
 
     UPLOADS_FOLDER = Path(__file__).parent / 'cafebabel' / 'uploads'
+    RESIZE_ROOT = str(UPLOADS_FOLDER)
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
-    RESIZE_ROOT = str(UPLOADS_FOLDER)
     HARD_LIMIT_PER_PAGE = 20
 
 
@@ -143,7 +143,8 @@ class TestingConfig(BaseConfig):
         'db': 'cafebabel_test'
     }
     WTF_CSRF_ENABLED = False
-    UPLOADS_FOLDER = Path(mkdtemp()) / 'cafebabel' / 'uploads'
+    UPLOADS_FOLDER = Path(mkdtemp())
+    RESIZE_ROOT = str(UPLOADS_FOLDER)
     DEBUG_TB_ENABLED = False
     MEDIA_URL = ''
     RESIZE_URL = MEDIA_URL + '/'
