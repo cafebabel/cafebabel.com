@@ -156,6 +156,9 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-network:before {
+  content: '\e909';
+}
 .icon-newsletter:before {
   content: '\e908';
 }
@@ -2357,6 +2360,9 @@ a.creative:before {
 
 .tag-page.tag-network header h1:before {
   font-family: icomoon;
+  content: '\e909';
+  padding-right: 1rem;
+  font-size: 4.5rem;
 }
 
 .tag-page.tag-network article {
