@@ -2355,6 +2355,10 @@ a.creative:before {
   font-size: 5rem;
 }
 
+.tag-page.tag-network header h1:before {
+  font-family: icomoon;
+}
+
 .tag-page.tag-network article {
   margin: 0;
 }
