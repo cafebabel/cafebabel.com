@@ -2375,23 +2375,8 @@ a.creative:before {
   display: none;
 }
 
-.tag-page.tag-network article > a {
-  display: block;
-  overflow: hidden;
-  height: 30rem;
-  width: 100%;
-  margin: 0 auto;
-}
-
 .tag-page.tag-network article > a:hover:after {
   width: 0;
-}
-
-.tag-page.tag-network article > a > img {
-  height: 30rem;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  max-width: none;
 }
 
 .tag-page.tag-network a.button {
@@ -2418,6 +2403,21 @@ a.creative:before {
   .tag-page.tag-network article {
     margin: 0;
     padding: 0 0 0 1rem;
+  }
+
+  .tag-page.tag-network article > a {
+    display: block;
+    overflow: hidden;
+    height: 30rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .tag-page.tag-network article > a > img {
+    height: 30rem;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    max-width: none;
   }
 
   .tag-page.tag-network article:nth-child(even) {
