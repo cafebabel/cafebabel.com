@@ -101,14 +101,23 @@ class BaseConfig:
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
+    RESIZE_ROOT = str(UPLOADS_FOLDER)
+    RESIZE_TARGET_DIRECTORY = 'resized-images'
 
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
     HARD_LIMIT_PER_PAGE = 20
 
 
+class ProdConfig(BaseConfig):
+    DEBUG = False
+    MEDIA_URL = 'https://media.cafebabel.com'
+    RESIZE_URL = MEDIA_URL + '/'
+
+
 class PreprodConfig(BaseConfig):
     DEBUG = True
     MEDIA_URL = 'https://media.preprod.cafebabel.com'
+    RESIZE_URL = MEDIA_URL + '/'
 
 
 class DevelopmentConfig(BaseConfig):
@@ -125,7 +134,8 @@ class DevelopmentConfig(BaseConfig):
         'flask_mongoengine.panels.MongoDebugPanel'
     ]
     EXPLAIN_TEMPLATE_LOADING = False
-    MEDIA_URL = 'https://media.preprod.cafebabel.com'
+    MEDIA_URL = ''
+    RESIZE_URL = MEDIA_URL + '/'
 
 
 class TestingConfig(BaseConfig):
