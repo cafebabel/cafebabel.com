@@ -2394,6 +2394,10 @@ a.creative:before {
   max-width: none;
 }
 
+.tag-page.tag-network a.button {
+  max-width: 100%;
+}
+
 @media screen and (min-width: 750px) {
   .tag-page.tag-network #content {
     display: grid;
