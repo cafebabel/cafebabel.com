@@ -71,18 +71,12 @@
     </section>
 
     <section class=series>
-      {% set tag_network, articles_network = articles_for_tag('network', limit=0) %}
       <a href="{{ tag_network.detail_url }}" class=banner style="background-image:url({{ tag_network.image_url or '' }});">
         <div class=series-infos>
           <h2>Network</h2>
           <p>Network description lalala</p>
         </div>
       </a>
-      <div class=tag-articles>
-        {% for article_network in articles_network %}
-          {{ card(article_network) }}
-        {% endfor %}
-      </div>
     </section>
 
     <section class=latest>

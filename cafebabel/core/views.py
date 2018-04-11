@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 
 from .helpers import current_language
 from ..articles.models import Article
+from ..articles.tags.models import Tag
 
 cores = Blueprint('cores', __name__)
 
@@ -39,7 +40,9 @@ def home_lang():
     # PERF: `select_related` drastically reduces the number of queries.
     articles = (Article.objects.published(language=current_language())
                                .hard_limit().select_related(max_depth=1))
-    return render_template('home.html', articles=articles)
+    network = Tag.objects.get_or_create(name='Network',
+                                        language=current_language())
+    return render_template('home.html', articles=articles, tag_network=network)
 
 
 @cores.route('/<path:filename>')
