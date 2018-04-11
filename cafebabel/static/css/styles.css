@@ -2544,19 +2544,34 @@ a.creative:before {
   background-color: #eeeeee;
   background-attachment: fixed;
   background-size: cover;
+  position: relative;
+  display: block;
+}
+
+.home section.series .banner .series-infos {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.home section.series h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.home section.series .banner .series-infos p {
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
 }
 
 .home section.series .tag-articles {
   max-width: 120rem;
   margin: -5rem auto 0;
   display: block;
-}
-
-.home section.series h2 {
-  padding-top: 40%;
-  transform: translateY(-50%);
-  font-size: 3rem;
-  color: #fff;
 }
 
 .home section.series .tag-articles article:last-of-type {
@@ -2696,7 +2711,7 @@ article .article-detail h3 a:hover:after {
   }
 
   .home section.series h2 {
-    font-size: 6rem;
+    font-size: 7rem;
   }
 
   article .article-detail h3 {
@@ -2719,10 +2734,6 @@ article .article-detail h3 a:hover:after {
 
   .home .editors-pick article .article-detail h3 {
     font-size: 4.2rem;
-  }
-
-  .home h2 {
-    margin: 0;
   }
 
   .home .editors-pick article .article-detail p:first-of-type {
