@@ -37,8 +37,9 @@
 
     <section class=latest>
       {% set articles_latest1 = articles_for_tag('latest1', limit=3) %}
+      <h2>Latest1</h2>
       {% for article_latest1 in articles_latest1 %}
-        {{ card(articles_latest1) }}
+        {{ card(article_latest1) }}
       {% endfor %}
     </section>
 
@@ -52,13 +53,14 @@
 
     <section class=latest>
       {% set articles_latest2 = articles_for_tag('latest2', limit=3) %}
+      <h2>Latest2</h2>
       {% for article_latest2 in articles_latest2 %}
-        {{ card(articles_latest2) }}
+        {{ card(article_latest2) }}
       {% endfor %}
     </section>
 
     <section class=series>
-      {% set articles_network = articles_for_tag('network', limit=0) %}
+      {% set articles_network = articles_for_tag('network', limit=1) %}
       <h2>Network</h2>
       {% for article_network in articles_network %}
         {{ card(article_network) }}
@@ -67,8 +69,9 @@
 
     <section class=latest>
       {% set articles_latest3 = articles_for_tag('latest3', limit=3) %}
+      <h2>Latest3</h2>
       {% for article_latest3 in articles_latest3 %}
-        {{ card(articles_latest3) }}
+        {{ card(article_latest3) }}
       {% endfor %}
     </section>
 
@@ -82,13 +85,10 @@
 
     <section class=latest>
       {% set articles_latest4 = articles_for_tag('latest4', limit=3) %}
+      <h2>Latest4</h2>
       {% for article_latest4 in articles_latest4 %}
-        {{ card(articles_latest4) }}
+        {{ card(article_latest4) }}
       {% endfor %}
-    </section>
-
-    <section class=ad>
-      <h2>Partnership advertising for instance</h2>
     </section>
   {% endif %}
 
