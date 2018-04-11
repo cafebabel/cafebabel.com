@@ -12,7 +12,7 @@
 <article>
 
   {% if translation.has_image %}
-    <img src="{{ translation.image_url|resize('1200x467') }}" alt="Image for {{ translation.title }}">
+    <img src="{{ translation.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) }}" alt="Image for {{ translation.title }}">
   {% endif %}
 
   {% block edit_button %}
