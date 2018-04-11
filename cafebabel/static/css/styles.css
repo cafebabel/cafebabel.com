@@ -156,6 +156,9 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-network:before {
+  content: '\e909';
+}
 .icon-newsletter:before {
   content: '\e908';
 }
@@ -2177,6 +2180,12 @@ article .share a:first-child {
   overflow: hidden;
 }
 
+@media screen and (min-width: 2000px) {
+  .tag-page .tag-header.image {
+    background-size: cover; /* stretch background image when viewport is bigger than image */
+  }
+}
+
 .tag-page .tag-header img.hidden {
   display: none;
 }
@@ -2323,6 +2332,127 @@ a.creative:before {
 
 .tags-list a:hover:after {
   width: 0;
+}
+
+/* Tag page Network */
+
+.tag-page.tag-network main {
+  background: linear-gradient(to bottom, #ffefef, #ffefef) no-repeat 0 10rem; /* add a 10rem margin top (header's height) to main bg-color */
+}
+
+.tag-page.tag-network #content {
+  display: block;
+}
+
+.tag-page.tag-network header {
+  max-width: none;
+}
+
+.tag-page.tag-network header + p {
+  margin: -4rem 0 -2rem;
+}
+
+.tag-page.tag-network header h1 {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: -35vh;
+  font-size: 5rem;
+  color: #fff;
+}
+
+.tag-page.tag-network header h1:before {
+  font-family: icomoon;
+  content: '\e909';
+  padding-right: 1rem;
+  font-size: 4.5rem;
+}
+
+.tag-page.tag-network article .article-detail {
+  padding: 1rem;
+  width: 100%;
+  min-height: unset;
+  margin-top: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.tag-page.tag-network article .tags-list {
+  display: none;
+}
+
+.tag-page.tag-network article > a:hover:after {
+  width: 0;
+}
+
+.tag-page.tag-network a.button {
+  max-width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .tag-page.tag-network #content {
+    display: grid;
+    grid-gap: 3rem 0;
+    grid-template-columns: 50% 50%;
+    justify-content: center;
+  }
+
+  .tag-page.tag-network header,
+  .tag-page.tag-network header + p {
+    grid-column: span 2;
+  }
+
+  .tag-page.tag-network article {
+    width: 100%;
+    margin: 0;
+    padding: 0 0 0 1rem;
+  }
+
+  .tag-page.tag-network article > a {
+    display: block;
+    overflow: hidden;
+    height: 30rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .tag-page.tag-network article > a > img {
+    height: 30rem;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    max-width: none;
+  }
+
+  .tag-page.tag-network article:nth-child(even) {
+    padding: 0 1rem 0 0;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  /* 1200px + grid-gaps */
+  .tag-page.tag-network #content {
+    grid-gap: 3rem 2rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tag-page.tag-network article .article-detail,
+  .tag-page.tag-network article > a {
+    width: 40rem;
+  }
+
+  .tag-page.tag-network article,
+  .tag-page.tag-network article:nth-child(even) {
+    padding: 0;
+  }
+
+  .tag-page.tag-network header,
+  .tag-page.tag-network header + p {
+    grid-column: span 3;
+  }
+
+  .tag-page.tag-network header {
+    margin: 60vh 0 0;
+  }
 }
 
 /* Tag page edit */
