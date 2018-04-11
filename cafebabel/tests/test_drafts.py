@@ -168,7 +168,7 @@ def test_draft_image_should_save_and_render(app, client, user, editor):
     assert article.image_filename == '/articles/image-name.jpg'
     assert Path(app.config.get('UPLOADS_FOLDER') /
                 'articles' / 'image-name.jpg').exists()
-    assert f'<img src="{article.image_url}"' in response
+    assert '<img src="/resized-images/"' in response
 
 
 def test_draft_should_not_offer_social_sharing(client, article):
