@@ -11,7 +11,9 @@
 
 {% block metas_social %}{% endblock %}
 
-<link rel=stylesheet href={{ url_for('static', filename='css/styles.css') }}>
+{% assets filters='cssmin', output='build/style.css', 'css/styles.css' %}
+    <link rel=stylesheet href={{ ASSET_URL }}>
+{% endassets %}
 {% block extra_head %}{% endblock %}
 
 <body class="{% block body_class %}{% endblock %}">
@@ -129,8 +131,8 @@
 <div id=preloader-layer>
     <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="loading...">
 </div>
-
-<script src={{ url_for('static', filename='js/utils.js') }}></script>
-<script src={{ url_for('static', filename='js/script.js') }}></script>
+{% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js' %}
+    <script src={{ ASSET_URL }}></script>
+{% endassets %}
 {% block extra_js %}{% endblock %}
 </html>
