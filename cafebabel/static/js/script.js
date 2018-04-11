@@ -54,7 +54,7 @@ subscribeLink.addEventListener('click', event => {
     'scrollTop',
     scrollPosition,
     target.offsetTop,
-    2000 /* Total duration of the animation in ms */
+    300 /* Total duration of the animation in ms */
   )
 })
 
