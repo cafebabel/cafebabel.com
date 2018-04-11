@@ -54,7 +54,7 @@ subscribeLink.addEventListener('click', event => {
     'scrollTop',
     scrollPosition,
     target.offsetTop,
-    2000 /* Total duration of the animation in ms */
+    300 /* Total duration of the animation in ms */
   )
 })
 
@@ -104,7 +104,7 @@ function deactivateInput(input) {
 }
 
 /* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860  */
-const autofillContent = `"${String.fromCharCode(0xfeff)}"`
+const autofillContent = `"${String.fromCharCode(0xfeff)}"`;
 function checkAutofill(input) {
   if (input && !input.value) {
     const style = window.getComputedStyle(input)

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% import "articles/macros.html" as macros %}
-{% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(['js/noise.js', 'js/image-preview.js', 'js/textarea-change.js']) }}
+  {% assets filters='jsmin', output='build/tags-edit.js', 'js/noise.js', 'js/image-preview.js', 'js/textarea-change.js' %}
+      <script src={{ ASSET_URL }}></script>
+  {% endassets %}
 {% endblock %}
 
 {% block body_class %}tag-page-edit{% endblock %}
