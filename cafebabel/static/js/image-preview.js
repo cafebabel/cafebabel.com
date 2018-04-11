@@ -14,6 +14,7 @@ fileInput &&
       const maxSize = Math.round(reader.result.length / 1024) > 500
       if (!maxSize) {
         if (canvasField) canvasField.classList.add('hidden')
+        // Keep quotes around img.src for jsmin.
         outputImage.innerHTML = `
     <figure>
       <img src="${reader.result}" alt="Picture preview">
