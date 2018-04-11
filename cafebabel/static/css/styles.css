@@ -2548,6 +2548,10 @@ a.creative:before {
   display: block;
 }
 
+.home section.series .banner:hover:after {
+  width: 0;
+}
+
 .home section.series .banner .series-infos {
   position: absolute;
   left: 50%;
