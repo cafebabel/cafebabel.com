@@ -24,22 +24,73 @@
 
 {% block body_class %}home{% endblock %}
 {% block body %}
-  <h2>Editor's pick</h2>
-  {% set articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
-  {% for article_editors_pick in articles_editors_pick %}
-    {{ card(article_editors_pick) }}
-  {% endfor %}
+  {% if articles %}
+    {% set articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
+    {% for article_editors_pick in articles_editors_pick %}
+      {{ card(article_editors_pick) }}
+    {% endfor %}
 
-  <h2>Sections</h2>
-{% for category in categories|shuffle %}
-  <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
-{% endfor %}
+    <h2>Sections</h2>
+    {% for category in categories|shuffle %}
+      <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
+    {% endfor %}
 
-  <h2>Meet My Hood</h2>
-  {% set articles_meet_my_hood = articles_for_tag('meet-my-hood', limit=2) %}
-  {% for article_meet_my_hood in articles_meet_my_hood %}
-    {{ card(article_meet_my_hood) }}
-  {% endfor %}
+    <section class=latest>
+      {% set articles_latest1 = articles_for_tag('latest1', limit=3) %}
+      {% for article_latest1 in articles_latest1 %}
+        {{ card(articles_latest1) }}
+      {% endfor %}
+    </section>
+
+    <section class=series>
+      {% set articles_meet_my_hood = articles_for_tag('meet-my-hood', limit=2) %}
+      <h2>Meet My Hood</h2>
+      {% for article_meet_my_hood in articles_meet_my_hood %}
+        {{ card(article_meet_my_hood) }}
+      {% endfor %}
+    </section>
+
+    <section class=latest>
+      {% set articles_latest2 = articles_for_tag('latest2', limit=3) %}
+      {% for article_latest2 in articles_latest2 %}
+        {{ card(articles_latest2) }}
+      {% endfor %}
+    </section>
+
+    <section class=series>
+      {% set articles_network = articles_for_tag('network', limit=0) %}
+      <h2>Network</h2>
+      {% for article_network in articles_network %}
+        {{ card(article_network) }}
+      {% endfor %}
+    </section>
+
+    <section class=latest>
+      {% set articles_latest3 = articles_for_tag('latest3', limit=3) %}
+      {% for article_latest3 in articles_latest3 %}
+        {{ card(articles_latest3) }}
+      {% endfor %}
+    </section>
+
+    <section class=series>
+      {% set articles_voglio_mangiare_cosi = articles_for_tag('voglio-mangiare-cosi', limit=2) %}
+      <h2>Voglio Mangiare Così</h2>
+      {% for article_voglio_mangiare_cosi in articles_voglio_mangiare_cosi %}
+        {{ card(article_voglio_mangiare_cosi) }}
+      {% endfor %}
+    </section>
+
+    <section class=latest>
+      {% set articles_latest4 = articles_for_tag('latest4', limit=3) %}
+      {% for article_latest4 in articles_latest4 %}
+        {{ card(articles_latest4) }}
+      {% endfor %}
+    </section>
+
+    <section class=ad>
+      <h2>Partnership advertising for instance</h2>
+    </section>
+  {% endif %}
 
 {% if articles %}
   <h2>Recently published</h2>
