@@ -102,14 +102,12 @@ def static_pages_for(language):
     return static_pages
 
 
-def articles_for_tag(tag_slug, limit=5, exclude=None, only_published=True):
+def articles_for_tag(tag_slug, limit=5, only_published=True):
     from ..articles.models import Article  # Circular imports.
     from ..articles.tags.models import Tag  # Circular imports.
     tag = Tag.objects.filter(slug=tag_slug)
     language = current_language()
     articles = Article.objects.filter(tags__in=tag, language=language)
-    if exclude:
-        articles = articles.filter(id__ne=exclude.id)
     if only_published:
         articles = articles.published(language=language)
     # PERF: `select_related` drastically reduces the number of queries.

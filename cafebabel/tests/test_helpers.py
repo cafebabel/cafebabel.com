@@ -11,7 +11,6 @@ def test_articles_for_tag_published(app, published_article):
     society = Tag.objects.create(name='Society', language=language)
     published_article.modify(tags=[society])
     assert articles_for_tag('society')[0].id == published_article.id
-    assert not articles_for_tag('society', exclude=published_article)
 
 
 def test_articles_for_tag_not_only_published(app, published_article, article):
