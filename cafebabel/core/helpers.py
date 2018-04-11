@@ -124,5 +124,5 @@ def resize(image_url, dimensions, **kwargs):
     """Proxy to deal with unhandled exceptions from Flask-Resize."""
     try:
         return current_app.resize(image_url, dimensions, **kwargs)
-    except exc.UnsupportedImageFormatError:
+    except (exc.UnsupportedImageFormatError, IOError):
         return image_url

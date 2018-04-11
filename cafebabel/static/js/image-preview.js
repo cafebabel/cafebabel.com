@@ -16,7 +16,7 @@ fileInput &&
         if (canvasField) canvasField.classList.add('hidden')
         outputImage.innerHTML = `
     <figure>
-      <img src=${reader.result} alt="Picture preview">
+      <img src="${reader.result}" alt="Picture preview">
       <figcaption>${fileName}</figcaption>
     </figure>
   `

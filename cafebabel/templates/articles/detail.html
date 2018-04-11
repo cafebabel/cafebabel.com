@@ -29,7 +29,7 @@
 {% block body %}
 <article>
     {% if article.has_image %}
-    <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
+    <img src="{{ article.image_url|resize('1200x467', placeholder=True) }}" alt="Image for {{ article.title }}">
     {% endif %}
     {% block edit_button %}
       {% if current_user.has_role('editor') and article.is_published %}

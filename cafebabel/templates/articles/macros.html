@@ -6,9 +6,9 @@
   {% endif %}
 {% endmacro %}
 
-{% macro profile_image(author, dimensions='200x200') %}
+{% macro profile_image(author, image_dimensions='200x200') %}
   {% if author.profile.has_image %}
-    <div style="background-image:url({{ author.profile.image_url|resize(dimensions, placeholder=True) }})" class=image></div><!-- preserve image ratio centered in a round shape -->
+    <div style="background-image:url({{ author.profile.image_url|resize(image_dimensions) }})" class=image></div><!-- preserve image ratio centered in a round shape -->
   {% else %}
     <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
   {% endif %}
@@ -85,7 +85,7 @@
 {% macro card(article, image_dimensions='800x550') %}
 <article>
   {% if article.has_image %}
-    <a href={{ article.detail_url }}><img src={{ article.image_url|resize(image_dimensions, placeholder=True) }} alt="Image for {{ article.title }}"></a>
+    <a href={{ article.detail_url }}><img src={{ article.image_url|resize(image_dimensions) }} alt="Image for {{ article.title }}"></a>
   {% else %}
     <a href={{ article.detail_url }}>
       {{ default_article_picture() }}
