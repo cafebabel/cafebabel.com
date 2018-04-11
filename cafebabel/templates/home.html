@@ -25,7 +25,7 @@
 {% block body_class %}home{% endblock %}
 {% block body %}
 {% if articles %}
-  {{ card(articles|first, image_dimensions='1200x467') }}
+  {{ card(articles|first, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
 {% endif %}
 
   <h2>Sections</h2>

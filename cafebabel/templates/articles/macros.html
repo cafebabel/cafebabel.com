@@ -6,7 +6,7 @@
   {% endif %}
 {% endmacro %}
 
-{% macro profile_image(author, image_dimensions='200x200') %}
+{% macro profile_image(author, image_dimensions=config.RESIZE_SIZE_PROFILE_THUMBNAIL) %}
   {% if author.profile.has_image %}
     <div style="background-image:url({{ author.profile.image_url|resize(image_dimensions) }})" class=image></div><!-- preserve image ratio centered in a round shape -->
   {% else %}
@@ -82,7 +82,7 @@
   <img src={{ url_for('static', filename='img/article-thumbnail-default.jpg') }} alt="Default thumbnail picture">
 {% endmacro %}
 
-{% macro card(article, image_dimensions='800x550') %}
+{% macro card(article, image_dimensions=config.RESIZE_SIZE_ARTICLE_LIST) %}
 <article>
   {% if article.has_image %}
     <a href={{ article.detail_url }}><img src={{ article.image_url|resize(image_dimensions) }} alt="Image for {{ article.title }}"></a>

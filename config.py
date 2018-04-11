@@ -101,6 +101,11 @@ class BaseConfig:
 
     UPLOADS_FOLDER = Path(__file__).parent / 'cafebabel' / 'uploads'
     RESIZE_ROOT = str(UPLOADS_FOLDER)
+    RESIZE_SIZE_ARTICLE_COVER = '1200x467'
+    RESIZE_SIZE_ARTICLE_LIST = '750x293'
+    RESIZE_SIZE_ARTICLE_SERIES = '600x381'
+    RESIZE_SIZE_PROFILE = '200x200'
+    RESIZE_SIZE_PROFILE_THUMBNAIL = '45x45'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
