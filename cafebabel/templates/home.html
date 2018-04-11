@@ -26,7 +26,7 @@
 {% block body %}
   {% if articles %}
     <section class=editors-pick>
-      {% set articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
+      {% set tag_editors_pick, articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
       {% for article_editors_pick in articles_editors_pick %}
         {{ card(article_editors_pick) }}
       {% endfor %}
@@ -40,7 +40,7 @@
     </section>
 
     <section class=latest>
-      {% set articles_latest1 = articles_for_tag('latest1', limit=3) %}
+      {% set tag_latest1, articles_latest1 = articles_for_tag('latest1', limit=3) %}
       <h2>Latest1</h2>
       {% for article_latest1 in articles_latest1 %}
         {{ card(article_latest1) }}
@@ -48,7 +48,7 @@
     </section>
 
     <section class=series>
-      {% set articles_meet_my_hood = articles_for_tag('meet-my-hood', limit=2) %}
+      {% set tag_meet_my_hood, articles_meet_my_hood = articles_for_tag('meet-my-hood', limit=2) %}
       <div class=banner>
         <h2>Meet My Hood</h2>
       </div>
@@ -60,7 +60,7 @@
     </section>
 
     <section class=latest>
-      {% set articles_latest2 = articles_for_tag('latest2', limit=3) %}
+      {% set tag_latest2, articles_latest2 = articles_for_tag('latest2', limit=3) %}
       <h2>Latest2</h2>
       {% for article_latest2 in articles_latest2 %}
         {{ card(article_latest2) }}
@@ -68,7 +68,7 @@
     </section>
 
     <section class=series>
-      {% set articles_network = articles_for_tag('network', limit=1) %}
+      {% set tag_network, articles_network = articles_for_tag('network', limit=1) %}
       <div class=banner>
         <h2>Network</h2>
       </div>
@@ -80,7 +80,7 @@
     </section>
 
     <section class=latest>
-      {% set articles_latest3 = articles_for_tag('latest3', limit=3) %}
+      {% set tag_latest3, articles_latest3 = articles_for_tag('latest3', limit=3) %}
       <h2>Latest3</h2>
       {% for article_latest3 in articles_latest3 %}
         {{ card(article_latest3) }}
@@ -88,7 +88,7 @@
     </section>
 
     <section class=series>
-      {% set articles_voglio_mangiare_cosi = articles_for_tag('voglio-mangiare-cosi', limit=2) %}
+      {% set tag_voglio_mangiare_cosi, articles_voglio_mangiare_cosi = articles_for_tag('voglio-mangiare-cosi', limit=2) %}
       <div class=banner>
         <h2>Voglio Mangiare Così</h2>
       </div>
@@ -100,7 +100,7 @@
     </section>
 
     <section class=latest>
-      {% set articles_latest4 = articles_for_tag('latest4', limit=3) %}
+      {% set tag_latest4, articles_latest4 = articles_for_tag('latest4', limit=3) %}
       <h2>Latest4</h2>
       {% for article_latest4 in articles_latest4 %}
         {{ card(article_latest4) }}

@@ -111,7 +111,7 @@ def articles_for_tag(tag_slug, limit=5, only_published=True):
     if only_published:
         articles = articles.published(language=language)
     # PERF: `select_related` drastically reduces the number of queries.
-    return articles.limit(limit).select_related(max_depth=1)
+    return tag, articles.limit(limit).select_related(max_depth=1)
 
 
 def social_network_url_for(kind):
