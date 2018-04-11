@@ -2549,7 +2549,8 @@ a.creative:before {
 }
 
 .home section.series .banner:hover:after,
-.home section.series .tag-articles article > a:hover:after {
+.home section.series .tag-articles article > a:hover:after,
+.home a.section-link:hover:after {
   width: 0;
 }
 
@@ -2611,10 +2612,6 @@ a.creative:before {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 5rem;
-}
-
-.home a.section-link:hover:after {
-  width: 0;
 }
 
 a.section-link.impact {
