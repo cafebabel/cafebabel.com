@@ -2541,7 +2541,9 @@ a.creative:before {
   height: 40rem;
   margin: 0 -2rem;
   max-height: 70rem;
-  background: #eeeeee;
+  background-color: #eeeeee;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .home section.series .tag-articles {
@@ -2554,6 +2556,11 @@ a.creative:before {
   padding-top: 40%;
   transform: translateY(-50%);
   font-size: 3rem;
+  color: #fff;
+}
+
+.home section.series .tag-articles article:last-of-type {
+  display: none;
 }
 
 .home img {
@@ -2665,6 +2672,7 @@ article .article-detail h3 a:hover:after {
   .home section.series .banner {
     height: 45vw;
     max-height: 70rem;
+    background-size: cover;
   }
 
   .home section.series .tag-articles {
@@ -2683,6 +2691,7 @@ article .article-detail h3 a:hover:after {
   }
 
   .home section.series .tag-articles article:last-of-type {
+    display: block;
     padding-right: 2rem;
   }
 
