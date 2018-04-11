@@ -49,7 +49,7 @@
 
     <section class=series>
       {% set tag_meet_my_hood, articles_meet_my_hood = articles_for_tag('meet-my-hood', limit=2) %}
-      <div class=banner style="background-image:url({{ tag_meet_my_hood[0].image_url or '' }});">
+      <div class=banner style="background-image:url({{ tag_meet_my_hood.image_url or '' }});">
         <h2>Meet My Hood</h2>
       </div>
       <div class=tag-articles>
@@ -69,7 +69,7 @@
 
     <section class=series>
       {% set tag_network, articles_network = articles_for_tag('network', limit=1) %}
-      <div class=banner style="background-image:url({{ tag_network[0].image_url or '' }});">
+      <div class=banner style="background-image:url({{ tag_network.image_url or '' }});">
         <h2>Network</h2>
       </div>
       <div class=tag-articles>
@@ -89,7 +89,7 @@
 
     <section class=series>
       {% set tag_voglio_mangiare_cosi, articles_voglio_mangiare_cosi = articles_for_tag('voglio-mangiare-cosi', limit=2) %}
-      <div class=banner style="background-image:url({{ tag_network[0].image_url or '' }})">
+      <div class=banner style="background-image:url({{ tag_voglio_mangiare_cosi.image_url or '' }})">
         <h2>Voglio Mangiare Così</h2>
       </div>
       <div class=tag-articles>
