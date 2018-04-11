@@ -26,6 +26,38 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     a.setAttribute('target', '_blank')
 })
 
+/* smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
+function animate(elem, style, from, to, time) {
+  if (!elem) return
+  const start = new Date().getTime()
+  const timer = setInterval(() => {
+    const step = Math.min(1, (new Date().getTime() - start) / time)
+    elem[style] = from + step * (to - from)
+    if (step === 1) {
+      clearInterval(timer)
+    }
+  }, 25) /* allow smooth scroll on firefox */
+  elem[style] = from
+}
+const subscribeLink = document.querySelector(
+  '#social-networks .icon-newsletter'
+)
+subscribeLink.addEventListener('click', event => {
+  const target = document.querySelector(event.target.getAttribute('href'))
+  const scrollPosition =
+    window.pageYOffset !== undefined
+      ? window.pageYOffset
+      : (document.documentElement || document.body.parentNode || document.body)
+          .scrollTop
+  animate(
+    document.scrollingElement || document.documentElement,
+    'scrollTop',
+    scrollPosition,
+    target.offsetTop,
+    300 /* Total duration of the animation in ms */
+  )
+})
+
 /* animation flash info */
 const flashes = document.querySelector('.flashes')
 if (flashes) {
@@ -72,7 +104,7 @@ function deactivateInput(input) {
 }
 
 /* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860  */
-const autofillContent = `"${String.fromCharCode(0xfeff)}"`
+const autofillContent = `"${String.fromCharCode(0xfeff)}"`;
 function checkAutofill(input) {
   if (input && !input.value) {
     const style = window.getComputedStyle(input)

@@ -151,9 +151,11 @@ def sanitize_title(title):
 
 def sanitize_media_paths(content):
     target = 'src="/archives'
+    # The http to https replacement must be kept at the end.
     return (content.replace('src="http://m.cbabel.eu/cache', target)
                    .replace('src="http://m.cafebabel.com/cache', target)
-                   .replace('src="/medias/cache', target))
+                   .replace('src="/medias/cache', target)
+                   .replace('src="http://', 'src="https://'))
 
 
 def create_article(old_article):

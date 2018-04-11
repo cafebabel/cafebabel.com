@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% from "users/macros.html" import social_field with context %}
 {% from "articles/macros.html" import card, profile_image %}
-{% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(['js/image-preview.js', 'js/textarea-change.js']) }}
+  {% assets filters='jsmin', output='build/users-edit.js', 'js/image-preview.js', 'js/textarea-change.js' %}
+      <script src={{ ASSET_URL }}></script>
+  {% endassets %}
 {% endblock %}
+
 {% block body_class %}profile-page{% endblock %}
 {% block body %}
 <h1>{{ user }}'s profile</h1>
@@ -55,6 +57,7 @@
       <input type=checkbox id=editor name=editor value=1 {% if user.has_role('editor') %}checked{% endif %}>
     </div>
     {% endif %}
+    <a href={{ url_for('security.change_password') }} class=button>Change password</a>
     <input type=submit value="Save profile">
   </form>
 </section>
