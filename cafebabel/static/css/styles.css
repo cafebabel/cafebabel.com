@@ -2180,6 +2180,12 @@ article .share a:first-child {
   overflow: hidden;
 }
 
+@media screen and (min-width: 2000px) {
+  .tag-page .tag-header.image {
+    background-size: cover; /* stretch background image when viewport is bigger than image */
+  }
+}
+
 .tag-page .tag-header img.hidden {
   display: none;
 }
