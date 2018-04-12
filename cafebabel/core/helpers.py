@@ -110,6 +110,8 @@ def articles_for_tag(tag_slug, limit=5, only_published=True):
         tag = Tag.objects.get(slug=tag_slug, language=language)
     except Tag.DoesNotExist:
         return None, []
+    if not limit:
+        return tag, []
     articles = Article.objects.filter(tags__in=[tag], language=language)
     if only_published:
         articles = articles.published(language=language)

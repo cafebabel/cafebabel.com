@@ -53,21 +53,6 @@ def test_homepage_contains_tag_editors_pick(app, client, published_article):
     )
 
 
-def test_homepage_contains_tag_meet_my_hood(app, client, article,
-                                            published_article):
-    language = app.config['LANGUAGES'][0][0]
-    meet_my_hood = Tag.objects.create(name='Meet my Hood', language=language)
-    article.modify(status='published', tags=[meet_my_hood])
-    published_article.modify(tags=[meet_my_hood])
-    response = client.get('/en/')
-    assert meet_my_hood.name in response
-    assert response.contains_only_once(
-        f'<a href={published_article.detail_url}>{published_article.title}</a>'
-    )
-    assert response.contains_only_once(
-        f'<a href={article.detail_url}>{article.title}</a>')
-
-
 def test_homepage_contains_static_pages_if_present(client, published_article):
     response = client.get('/en/')
     assert '<a href=#>About us</a>' in response

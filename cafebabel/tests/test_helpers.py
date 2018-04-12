@@ -38,3 +38,6 @@ def test_articles_for_tag_limit(app, published_article, article):
     tag, articles = articles_for_tag('society', limit=1, only_published=False)
     assert tag == society
     assert articles == [published_article]
+    tag, articles = articles_for_tag('society', limit=0)
+    assert tag == society
+    assert articles == []
