@@ -25,7 +25,7 @@
     <input id=title name=title value="{{ article.title or '' }}" required>
   </h1>
   <div class=article-settings>
-    {% if current_user.has_role('editor') %}
+  {% if current_user.has_role('editor') -%}
     <div class=select>
       <label for=status>
         <select id=status name=status required>
@@ -49,7 +49,7 @@
       </label>
     </div>
     {% endif %}
-    {% endif %}
+  {% endif %}
   </div>
   <div class=textarea>
     <label for=summary>Lead paragraph</label>
