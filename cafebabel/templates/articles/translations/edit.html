@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% import "articles/macros.html" as macros %}
-{% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(['js/articles-tags.js', 'js/textarea-change.js']) }}
+  {% assets filters='jsmin', output='build/translations-edit.js', 'js/articles-tags.js', 'js/textarea-change.js' %}
+      <script src={{ ASSET_URL }}></script>
+  {% endassets %}
 {% endblock %}
 
 {% block body_class %}article-page-edit{% endblock %}
@@ -11,7 +12,7 @@
 
 <form method=post action=.>
   {% if translation.has_image %}
-    <img src="{{ translation.image_url }}" alt="Image for {{ translation.title }}">
+    <img src="{{ translation.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) }}" alt="Image for {{ translation.title }}">
   {% endif %}
   <h1 class="edit active">
     <label for=title>Title</label>

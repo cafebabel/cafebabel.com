@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% from "users/macros.html" import social_field with context %}
 {% from "articles/macros.html" import card, profile_image %}
-{% from "_extrajs-macros.html" import extra_js %}
 
 {% block extra_js %}
-  {{ extra_js(['js/image-preview.js', 'js/textarea-change.js']) }}
+  {% assets filters='jsmin', output='build/users-edit.js', 'js/image-preview.js', 'js/textarea-change.js' %}
+      <script src={{ ASSET_URL }}></script>
+  {% endassets %}
 {% endblock %}
+
 {% block body_class %}profile-page{% endblock %}
 {% block body %}
 <h1>{{ user }}'s profile</h1>
@@ -15,7 +17,7 @@
   <form method=post action=. enctype=multipart/form-data>
     <div class=file>
       <output>
-        {{ profile_image(user) }}
+        {{ profile_image(user, image_dimensions=config.RESIZE_SIZE_PROFILE) }}
       </output>
       <input id=image type=file name=image>
       <label for=image><strong>Upload profile photo</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->

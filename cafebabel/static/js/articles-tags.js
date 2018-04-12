@@ -66,7 +66,7 @@ class Tags {
     this._activeSuggestionsList()
     const ul = this.suggestions.cloneNode(false)
     tagsApi.forEach(tag => {
-      const li = `<li>${tag.name}</li>`
+      const li = `<li>${tag.name}</li>`; // Keep semicolon for jsmin.
       ul.insertAdjacentHTML('afterbegin', li)
     })
     this._renderSuggestion(ul)

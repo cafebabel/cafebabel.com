@@ -6,6 +6,7 @@ from flask_login import current_user, login_required
 from werkzeug import exceptions
 
 from ..articles.models import Article
+from ..articles.translations.models import Translation
 from ..core.helpers import allowed_file, lang_url_for, file_exceeds
 from .models import User
 
@@ -76,8 +77,22 @@ def edit(id):
 @users.route('/<id>/')
 def detail(id):
     user = User.objects.get_or_404(id=id)
-    filters = {'authors__in': [user]}
+    is_full = 'full' in request.args
+    filters = {}
     if not user.is_me():
         filters['status'] = 'published'
-    articles = Article.objects(**filters).hard_limit()
-    return render_template('users/detail.html', user=user, articles=articles)
+    articles = Article.objects(original_article=None, authors__in=[user],
+                               **filters)
+    # PERF: we exclude the `original_article` to avoid an extra query
+    #       during the following `select_related`.
+    translations = (Translation.objects(translators__in=[user], **filters)
+                    .exclude('original_article'))
+    if not is_full:
+        articles = articles.hard_limit()
+        translations = translations.hard_limit()
+    # PREF: `select_related` calls must be performed at the end given
+    #       they turn querysets into lists.
+    return render_template(
+        'users/detail.html', user=user, is_full=is_full,
+        articles=articles.select_related(max_depth=1),
+        translations=translations.select_related(max_depth=1))

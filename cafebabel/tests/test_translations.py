@@ -143,8 +143,7 @@ def test_translation_creation_should_keep_image(app, client, user, article):
     translation = Translation.objects.first()
     assert translation.image_filename == '/articles/image-name.jpg'
     assert translation.image_url == '/articles/image-name.jpg'
-    assert str(translation.image_path).endswith(
-        '/cafebabel/uploads/articles/image-name.jpg')
+    assert str(translation.image_path).endswith('/articles/image-name.jpg')
 
 
 def test_translation_creation_already_existing(app, client, user, article):
