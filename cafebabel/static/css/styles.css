@@ -2805,6 +2805,7 @@ footer p {
   top: 0;
   left: 0;
   z-index: 10;
+  display: none;
 }
 
 #under-construction .modal {
@@ -2820,8 +2821,8 @@ footer p {
   z-index: 10;
 }
 
-#under-construction.hidden {
-  display: none;
+#under-construction.show {
+  display: block;
 }
 
 #under-construction h2 {

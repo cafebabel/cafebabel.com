@@ -55,10 +55,14 @@
     </div>
   </div>
   <script>
-    const underConstructionPopUp = document.querySelector('#under-construction')
-    underConstructionPopUp.querySelector('button').addEventListener('click', event => {
-      event.preventDefault()
-      underConstructionPopUp.classList.add('hidden')
-    })
+    if (sessionStorage.getItem('popup') !== 'true') {
+      const underConstructionPopUp = document.querySelector('#under-construction')
+      underConstructionPopUp.classList.add('show')
+      underConstructionPopUp.querySelector('button').addEventListener('click', event => {
+        event.preventDefault()
+        underConstructionPopUp.classList.remove('show')
+      })
+      sessionStorage.setItem('popup', 'true');
+    }
   </script>
 {% endblock %}
