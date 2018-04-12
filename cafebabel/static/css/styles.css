@@ -2776,6 +2776,12 @@ article .article-detail h3 a:hover:after {
   }
 }
 
+@media screen and (min-width: 1200px) {
+  .home section.series .banner {
+    margin: 0;
+  }
+}
+
 /* Footer */
 
 #static-pages-links {
