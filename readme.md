@@ -15,8 +15,8 @@
 ```
 python3 -m venv ./venv
 source ./venv/bin/activate
-mkdir -p static/uploads/articles
-export FLASK_APP=cafebabel
+mkdir -p static/uploads/{archives,articles,tags,users,resized-images}
+export FLASK_APP=dev.py
 export FLASK_DEBUG=1
 ```
 
