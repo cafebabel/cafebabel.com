@@ -50,7 +50,7 @@ install:  # env=prod|preprod
 
 make-dirs:
 	mkdir -p ./logs
-	mkdir -p ./cafebabel/uploads/{archives,articles,tags,users}
+	mkdir -p ./cafebabel/uploads/{archives,articles,tags,users,resized-images}
 
 reset-db:
        make flask-command command=initdb
