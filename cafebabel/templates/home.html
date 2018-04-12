@@ -32,30 +32,18 @@
         {{ card(article_editors_pick) }}
       {% endfor %}
     </section>
-
     <section class=categories>
       <h2>Sections</h2>
       {% for category in categories|shuffle %}
         <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
       {% endfor %}
     </section>
-
     {{ latest("latest1", 3) }}
     {{ series("meet-my-hood", 2, "description lalala") }}
     {{ latest("latest2", 3) }}
-    <section class=series>
-      <a href="{{ tag_network.detail_url }}" class=banner style="background-image:url({{ tag_network.image_url or '' }});">
-        <div class=series-infos>
-          <h2>Network</h2>
-          <p>Network description lalala</p>
-        </div>
-      </a>
-    </section>
-
+    {{ series("network", 0, "description lalala") }}
     {{ latest("latest3", 3) }}
-
     {{ series("voglio-mangiare-cosi", 2, "description lalala") }}
-
     {{ latest("latest4", 3) }}
   {% endif %}
 

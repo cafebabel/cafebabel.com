@@ -1,5 +1,5 @@
 {% macro series(tag_slug, number_of_articles, description) %}
-  <section class=series>
+  <section class="series {{ tag_slug }}">
     {% set tag_chosen, articles_chosen = articles_for_tag(tag_slug, limit=number_of_articles) %}
     <a href="{{ tag_chosen.detail_url }}" class=banner style="background-image:url({{ tag_chosen.image_url or '' }});">
       <div class=series-infos>
