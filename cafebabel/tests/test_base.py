@@ -21,12 +21,6 @@ def test_homepage_is_displaying(client):
     assert '<meta name=twitter:card content="summary">' in response
 
 
-def test_homepage_contains_published_articles(client, published_article):
-    response = client.get('/en/')
-    assert published_article.title in response
-    assert published_article.detail_url in response
-
-
 def test_homepage_does_not_contain_draft_articles(client, article):
     response = client.get('/en/')
     assert article.title not in response
@@ -42,6 +36,17 @@ def test_homepage_contains_categories(app, client, published_article):
     assert impact.detail_url in response
 
 
+def test_homepage_contains_tag_editors_pick(app, client, published_article):
+    language = app.config['LANGUAGES'][0][0]
+    editors_pick = Tag.objects.create(name='Editors pick', language=language)
+    published_article.modify(tags=[editors_pick])
+    response = client.get('/en/')
+    assert editors_pick.name in response
+    assert response.contains_only_once(
+        f'<a href={published_article.detail_url}>{published_article.title}</a>'
+    )
+
+
 def test_homepage_contains_static_pages_if_present(client, published_article):
     response = client.get('/en/')
     assert '<a href=#>About us</a>' in response
@@ -52,11 +57,6 @@ def test_homepage_contains_static_pages_if_present(client, published_article):
         in response
     )
 
-
-def test_homepage_contains_authors_links(client, published_article):
-    response = client.get('/en/')
-    assert (f'<a href=/en/profile/{published_article.authors[0].id}/>'
-            f'{published_article.authors[0].profile.name}</a>' in response)
 
 
 def test_logo_from_home_is_redirecting_to_localized_homepage(client):
