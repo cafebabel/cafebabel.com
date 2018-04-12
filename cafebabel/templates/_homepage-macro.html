@@ -11,7 +11,7 @@
     {% if articles_series %}
       <div class=tag-articles>
         {% for article_series in articles_series %}
-          {{ card(article_series) }}
+          {{ card(article_series, image_dimensions=config.RESIZE_SIZE_ARTICLE_SERIES) }}
         {% endfor %}
       </div>
     {% endif %}
