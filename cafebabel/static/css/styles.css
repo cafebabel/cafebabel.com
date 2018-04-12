@@ -2682,8 +2682,16 @@ article .article-detail h3 a:hover:after {
     grid-gap: 2rem;
   }
 
+  .home section.series {
+    margin-bottom: 10rem;
+  }
+
   .home article {
     margin-bottom: 5rem;
+  }
+
+  .home section.series article {
+    margin-bottom: 0;
   }
 
   .home section.series .banner {

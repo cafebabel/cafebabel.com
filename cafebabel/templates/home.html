@@ -41,7 +41,6 @@
 
     <section class=latest>
       {% set tag_latest1, articles_latest1 = articles_for_tag('latest1', limit=3) %}
-      <h2>Latest1</h2>
       {% for article_latest1 in articles_latest1 %}
         {{ card(article_latest1) }}
       {% endfor %}
@@ -64,7 +63,6 @@
 
     <section class=latest>
       {% set tag_latest2, articles_latest2 = articles_for_tag('latest2', limit=3) %}
-      <h2>Latest2</h2>
       {% for article_latest2 in articles_latest2 %}
         {{ card(article_latest2) }}
       {% endfor %}
@@ -81,7 +79,6 @@
 
     <section class=latest>
       {% set tag_latest3, articles_latest3 = articles_for_tag('latest3', limit=3) %}
-      <h2>Latest3</h2>
       {% for article_latest3 in articles_latest3 %}
         {{ card(article_latest3) }}
       {% endfor %}
@@ -104,7 +101,6 @@
 
     <section class=latest>
       {% set tag_latest4, articles_latest4 = articles_for_tag('latest4', limit=3) %}
-      <h2>Latest4</h2>
       {% for article_latest4 in articles_latest4 %}
         {{ card(article_latest4) }}
       {% endfor %}
