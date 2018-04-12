@@ -327,7 +327,7 @@ def test_translation_published_should_have_translator(
              f'article title') in response)
     assert (f'<a href="/fr/profile/{translator.id}/" class=translator-link>'
             in response)
-    assert translator in response
+    assert str(translator) in response
 
 
 def test_translation_published_should_have_reference(
@@ -336,7 +336,7 @@ def test_translation_published_should_have_reference(
     response = client.get(
         f'/en/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert ((f'<li class=translated-language><a href='
+    assert (('<li class=translated-language><a href='
              f'/fr/article/title-{published_translation.id}/>') in response)
 
 
