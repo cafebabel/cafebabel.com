@@ -25,25 +25,23 @@
 
 {% block body_class %}home{% endblock %}
 {% block body %}
-  {% if articles %}
-    <section class=editors-pick>
-      {% set tag_editors_pick, articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
-      {% for article_editors_pick in articles_editors_pick %}
-        {{ card(article_editors_pick) }}
-      {% endfor %}
-    </section>
-    <section class=categories>
-      <h2>Sections</h2>
-      {% for category in categories|shuffle %}
-        <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
-      {% endfor %}
-    </section>
-    {{ latest("latest1", 3) }}
-    {{ series("meet-my-hood", 2, "description lalala") }}
-    {{ latest("latest2", 3) }}
-    {{ series("network", 0, "description lalala") }}
-    {{ latest("latest3", 3) }}
-    {{ series("voglio-mangiare-cosi", 2, "description lalala") }}
-    {{ latest("latest4", 3) }}
-  {% endif %}
+  <section class=editors-pick>
+    {% set tag_editors_pick, articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
+    {% for article_editors_pick in articles_editors_pick %}
+      {{ card(article_editors_pick) }}
+    {% endfor %}
+  </section>
+  <section class=categories>
+    <h2>Sections</h2>
+    {% for category in categories|shuffle %}
+      <a href={{ category.detail_url }} class="section-link {{ category.slug }}">{{ category.name }}</a>
+    {% endfor %}
+  </section>
+  {{ latest("latest1", 3) }}
+  {{ series("meet-my-hood", 2, "description lalala") }}
+  {{ latest("latest2", 3) }}
+  {{ series("network", 0, "description lalala") }}
+  {{ latest("latest3", 3) }}
+  {{ series("voglio-mangiare-cosi", 2, "description lalala") }}
+  {{ latest("latest4", 3) }}
 {% endblock %}

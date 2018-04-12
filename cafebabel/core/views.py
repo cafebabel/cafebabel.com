@@ -36,10 +36,7 @@ def profile_redirect():
 
 @cores.route('/<lang:lang>/')
 def home_lang():
-    # PERF: `select_related` drastically reduces the number of queries.
-    articles = (Article.objects.published(language=current_language())
-                               .hard_limit().select_related(max_depth=1))
-    return render_template('home.html', articles=articles)
+    return render_template('home.html')
 
 
 @cores.route('/<path:filename>')
