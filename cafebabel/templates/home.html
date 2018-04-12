@@ -28,7 +28,7 @@
   <section class=editors-pick>
     {% set tag_editors_pick, articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
     {% for article_editors_pick in articles_editors_pick %}
-      {{ card(article_editors_pick) }}
+      {{ card(article_editors_pick, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
     {% endfor %}
   </section>
   <section class=categories>

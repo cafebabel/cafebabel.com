@@ -8,6 +8,7 @@ from http import HTTPStatus
 import markdown as markdownlib
 from flask import Markup, abort, current_app, g, request, url_for
 from flask_login import current_user, fresh_login_required, login_required
+from flask_resize import exc
 from unidecode import unidecode
 
 
@@ -134,3 +135,11 @@ def shuffle(sequence):
     sequence = list(sequence)
     random.shuffle(sequence)
     return sequence
+
+
+def resize(image_url, dimensions, **kwargs):
+    """Proxy to deal with unhandled exceptions from Flask-Resize."""
+    try:
+        return current_app.resize(image_url, dimensions, **kwargs)
+    except (exc.UnsupportedImageFormatError, IOError):
+        return image_url

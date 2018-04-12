@@ -13,7 +13,7 @@
   <form method=post action=.>
     <input type=hidden name=original value="{{ article.id }}">
     {% if article.has_image %}
-      <img src="{{ article.image_url }}" alt="Image for {{ article.title }}">
+      <img src="{{ article.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) }}" alt="Image for {{ article.title }}">
     {% endif %}
     <h1 class="edit active">
       <label for=title>Title</label>
