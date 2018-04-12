@@ -46,13 +46,4 @@
     {{ series("voglio-mangiare-cosi", 2, "description lalala") }}
     {{ latest("latest4", 3) }}
   {% endif %}
-
-{% if articles %}
-  <h2>Recently published</h2>
-  {% for article in articles %}
-    {% if article not in articles_editors_pick and article not in articles_meet_my_hood %}
-      {{ card(article) }}
-    {% endif %}
-  {% endfor %}
-{% endif %}
 {% endblock %}
