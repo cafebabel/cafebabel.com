@@ -8,6 +8,7 @@ from flask import Flask, g, render_template
 from flask_assets import Environment
 from flask_mail import Mail
 from flask_mongoengine import MongoEngine
+from flask_resize import Resize
 from flask_security import MongoEngineUserDatastore, Security
 from raven.contrib.flask import Sentry
 
@@ -15,6 +16,7 @@ mail = Mail()
 db = MongoEngine()
 security = Security()
 sentry = Sentry()
+resize = Resize()
 assets = Environment()
 
 
@@ -37,6 +39,7 @@ def create_app(config_object):
 def register_extensions(app):
     db.init_app(app)
     mail.init_app(app)
+    resize.init_app(app)
     assets.init_app(app)
 
     sentry_dsn = app.config.get('SENTRY_DSN')
@@ -169,6 +172,7 @@ def register_template_filters(app):
     app.add_template_filter(helpers.obfuscate_email, 'obfuscate_email')
     app.add_template_filter(helpers.rewrite_img_src, 'rewrite_img_src')
     app.add_template_filter(helpers.shuffle, 'shuffle')
+    app.add_template_filter(helpers.resize, 'resize')
 
 
 def register_context_processors(app):

@@ -17,7 +17,7 @@
   <form method=post action=. enctype=multipart/form-data>
     <div class=file>
       <output>
-        {{ profile_image(user) }}
+        {{ profile_image(user, image_dimensions=config.RESIZE_SIZE_PROFILE) }}
       </output>
       <input id=image type=file name=image>
       <label for=image><strong>Upload profile photo</strong></label> <!-- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ -->
