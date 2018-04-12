@@ -135,13 +135,14 @@
     <script src={{ ASSET_URL }}></script>
 {% endassets %}
 {% block extra_js %}{% endblock %}
+{% if google_analytics_id %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126606-5"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'UA-126606-5');
+  gtag('config', '{{ google_analytics_id }}');
 </script>
+{% endif %}
 </html>

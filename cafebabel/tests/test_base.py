@@ -98,3 +98,8 @@ def test_error_internal_server_error(app, client):
     response = client.get('/foobar/')
     assert response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR
     assert '500 error' in response
+
+
+def test_analytics_in_layout(client):
+    response = client.get('/', follow_redirects=True)
+    assert '/gtag/js?id=testing-analytics">' in response
