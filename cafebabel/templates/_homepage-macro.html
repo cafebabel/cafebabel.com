@@ -10,8 +10,8 @@
     {% endif %}
     {% if articles_series %}
       <div class=tag-articles>
-        {% for article in articles_series %}
-          {{ card(article) }}
+        {% for article_series in articles_series %}
+          {{ card(article_series) }}
         {% endfor %}
       </div>
     {% endif %}
