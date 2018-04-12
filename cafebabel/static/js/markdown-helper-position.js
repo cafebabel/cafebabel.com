@@ -15,8 +15,8 @@ function isElementInViewport(element) {
     rect.bottom >= 960 /* 960px to exclude footer height */ &&
     rect.right >= 0 &&
     rect.top <=
-      (window.innerHeight || document.documentElement.clientHeight) -
-        500 /* 500px after textarea enter viewport */ &&
+    (window.innerHeight || document.documentElement.clientHeight) -
+    500 /* 500px after textarea enter viewport */ &&
     rect.left <= (window.innerWidth || document.documentElement.clientWidth)
   )
 }

@@ -2,7 +2,7 @@
 {% import "articles/macros.html" as macros %}
 
 {% block extra_js %}
-  {% assets filters='jsmin', output='build/translations-create.js', 'js/articles-tags.js', 'js/textarea-change.js' %}
+  {% assets filters='jsmin', output='build/translations-create.js', 'js/articles-tags.js', 'js/textarea-change.js', 'js/markdown-helper-position.js' %}
       <script src={{ ASSET_URL }}></script>
   {% endassets %}
 {% endblock %}
