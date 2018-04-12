@@ -1,0 +1,25 @@
+{% macro series(tag_slug, number_of_articles, description) %}
+  <section class=series>
+    {% set tag_chosen, articles_chosen = articles_for_tag(tag_slug, limit=number_of_articles) %}
+    <a href="{{ tag_chosen.detail_url }}" class=banner style="background-image:url({{ tag_chosen.image_url or '' }});">
+      <div class=series-infos>
+        <h2>{{ tag_chosen.name }}</h2>
+        {% if description %}<p>{{ description }}</p>{% endif %}
+      </div>
+    </a>
+    <div class=tag-articles>
+      {% for article in articles_chosen %}
+        {{ card(article) }}
+      {% endfor %}
+    </div>
+  </section>
+{% endmacro %}
+
+{% macro latest(latest_tag_name, number_of_latest_articles) %}
+  <section class=latest>
+    {% set tag_latest, articles_latest = articles_for_tag(latest_tag_name, limit=number_of_latest_articles) %}
+    {% for article_latest in articles_latest %}
+      {{ card(article_latest) }}
+    {% endfor %}
+  </section>
+{% endmacro %}

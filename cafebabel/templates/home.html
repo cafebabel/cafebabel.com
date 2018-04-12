@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% from "_meta-macro.html" import meta %}
 {% from "articles/macros.html" import card %}
+{% from "_homepage-macro.html" import series, latest with context %}
 
 {% block metas %}
   {{ meta('name=description', 'Cafébabel is the first European participatory magazine made for young Europeans across borders.') }}
@@ -39,35 +40,9 @@
       {% endfor %}
     </section>
 
-    <section class=latest>
-      {% set tag_latest1, articles_latest1 = articles_for_tag('latest1', limit=3) %}
-      {% for article_latest1 in articles_latest1 %}
-        {{ card(article_latest1) }}
-      {% endfor %}
-    </section>
-
-    <section class=series>
-      {% set tag_meet_my_hood, articles_meet_my_hood = articles_for_tag('meet-my-hood', limit=2) %}
-      <a href="{{ tag_meet_my_hood.detail_url }}" class=banner style="background-image:url({{ tag_meet_my_hood.image_url or '' }});">
-        <div class=series-infos>
-          <h2>Meet My Hood</h2>
-          <p>Meet My Hood description lalala</p>
-        </div>
-      </a>
-      <div class=tag-articles>
-        {% for article_meet_my_hood in articles_meet_my_hood %}
-          {{ card(article_meet_my_hood) }}
-        {% endfor %}
-      </div>
-    </section>
-
-    <section class=latest>
-      {% set tag_latest2, articles_latest2 = articles_for_tag('latest2', limit=3) %}
-      {% for article_latest2 in articles_latest2 %}
-        {{ card(article_latest2) }}
-      {% endfor %}
-    </section>
-
+    {{ latest("latest1", 3) }}
+    {{ series("meet-my-hood", 2, "description lalala") }}
+    {{ latest("latest2", 3) }}
     <section class=series>
       <a href="{{ tag_network.detail_url }}" class=banner style="background-image:url({{ tag_network.image_url or '' }});">
         <div class=series-infos>
@@ -77,34 +52,11 @@
       </a>
     </section>
 
-    <section class=latest>
-      {% set tag_latest3, articles_latest3 = articles_for_tag('latest3', limit=3) %}
-      {% for article_latest3 in articles_latest3 %}
-        {{ card(article_latest3) }}
-      {% endfor %}
-    </section>
+    {{ latest("latest3", 3) }}
 
-    <section class=series>
-      {% set tag_voglio_mangiare_cosi, articles_voglio_mangiare_cosi = articles_for_tag('voglio-mangiare-cosi', limit=2) %}
-      <a href="{{ tag_voglio_mangiare_cosi.detail_url }}" class=banner style="background-image:url({{ tag_voglio_mangiare_cosi.image_url or '' }})">
-        <div class=series-infos>
-          <h2>Voglio Mangiare Così</h2>
-          <p>Voglio Mangiare Così description lalala</p>
-        </div>
-      </a>
-      <div class=tag-articles>
-        {% for article_voglio_mangiare_cosi in articles_voglio_mangiare_cosi %}
-          {{ card(article_voglio_mangiare_cosi) }}
-        {% endfor %}
-      </div>
-    </section>
+    {{ series("voglio-mangiare-cosi", 2, "description lalala") }}
 
-    <section class=latest>
-      {% set tag_latest4, articles_latest4 = articles_for_tag('latest4', limit=3) %}
-      {% for article_latest4 in articles_latest4 %}
-        {{ card(article_latest4) }}
-      {% endfor %}
-    </section>
+    {{ latest("latest4", 3) }}
   {% endif %}
 
 {% if articles %}
