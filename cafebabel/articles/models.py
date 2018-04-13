@@ -65,7 +65,7 @@ class Article(db.Document, UploadableImageMixin):
     def __eq__(self, other):
         # We need to compare strings of primary keys because of mongo
         # duality of ObjectIDs vs. raw strings.
-        return str(self.id) == str(other.id)
+        return hasattr(other, 'id') and str(self.id) == str(other.id) or False
 
     @property
     def upload_subpath(self):
