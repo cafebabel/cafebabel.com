@@ -103,6 +103,23 @@ def static_pages_for(language):
     return static_pages
 
 
+def articles_for_tag(tag_slug, limit=5, only_published=True):
+    from ..articles.models import Article  # Circular imports.
+    from ..articles.tags.models import Tag  # Circular imports.
+    language = current_language()
+    try:
+        tag = Tag.objects.get(slug=tag_slug, language=language)
+    except Tag.DoesNotExist:
+        return None, []
+    if not limit:
+        return tag, []
+    articles = Article.objects.filter(tags__in=[tag], language=language)
+    if only_published:
+        articles = articles.published(language=language)
+    # PERF: `select_related` drastically reduces the number of queries.
+    return tag, articles.limit(limit).select_related(max_depth=1)
+
+
 def social_network_url_for(kind):
     social_networks = current_app.config.get('SOCIAL_NETWORKS')
     return social_networks[kind].get(current_language(),
