@@ -1,7 +1,6 @@
 from http import HTTPStatus
 
-from flask import (Blueprint, abort, current_app, flash, redirect,
-                   render_template, request)
+from flask import Blueprint, abort, flash, redirect, render_template, request
 from flask_login import login_required
 from mongoengine import errors
 
