@@ -58,8 +58,7 @@
     if (sessionStorage.getItem('popup')) {
       const underConstructionPopUp = document.querySelector('#under-construction')
       underConstructionPopUp.classList.add('show')
-      underConstructionPopUp.querySelector('button').addEventListener('click', event => {
-        event.preventDefault()
+      underConstructionPopUp.querySelector('button').addEventListener('click', () => {
         underConstructionPopUp.classList.remove('show')
       })
       sessionStorage.setItem('popup', 'true');
