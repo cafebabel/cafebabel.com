@@ -60,7 +60,7 @@
     </div>
   </div>
   <script>
-    if (sessionStorage.getItem('popup')) {
+    if (!sessionStorage.getItem('popup')) {
       const underConstructionPopUp = document.querySelector('#under-construction')
       underConstructionPopUp.classList.add('show')
       underConstructionPopUp.querySelector('button').addEventListener('click', () => {
