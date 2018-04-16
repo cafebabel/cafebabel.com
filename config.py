@@ -101,6 +101,7 @@ class BaseConfig:
 
     UPLOADS_FOLDER = Path(__file__).parent / 'cafebabel' / 'uploads'
     RESIZE_ROOT = str(UPLOADS_FOLDER)
+    RESIZE_SIZE_TAG_COVER = (2000, 1333)
     RESIZE_SIZE_ARTICLE_COVER = (1200, 467)
     RESIZE_SIZE_ARTICLE_LIST = (750, 293)
     RESIZE_SIZE_ARTICLE_SERIES = (600, 381)
