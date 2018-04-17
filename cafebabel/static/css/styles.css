@@ -2897,6 +2897,58 @@ footer p {
   }
 }
 
+/* Static pages */
+/* About us */
+
+.article-page article .row {
+  width: 100%;
+  max-width: 120rem;
+}
+
+.article-page article .row .background-color {
+  background: url('../img/bg-static-pages.jpg') fixed center / cover;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+
+.article-page article .row,
+.article-page article .background-color {
+  height: 52rem;
+  margin: 0 auto;
+}
+
+.article-page article figure {
+  position: relative;
+  float: left;
+  width: 50%;
+  height: 24rem;
+  margin-top: 2rem;
+}
+
+.article-page article figure img {
+  margin: 0 auto;
+}
+
+.article-page article figure figcaption {
+  text-align: center;
+  padding: 1rem 2rem 0;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row,
+  .article-page article .background-color {
+    height: 50rem;
+  }
+
+  .article-page article figure {
+    width: 25%;
+    margin-top: 16rem;
+  }
+}
+
 /* Under construction pop-up */
 
 #under-construction {
