@@ -2905,7 +2905,7 @@ footer p {
   max-width: 120rem;
 }
 
-.article-page article .row .background-color {
+.article-page article .row .fixed-background {
   background: url('../img/bg-static-pages.jpg') fixed center / cover;
   position: absolute;
   left: 0;
@@ -2914,7 +2914,7 @@ footer p {
 }
 
 .article-page article .row,
-.article-page article .background-color {
+.article-page article .fixed-background {
   height: 52rem;
   margin: 0 auto;
 }
@@ -2939,13 +2939,31 @@ footer p {
 
 @media screen and (min-width: 750px) {
   .article-page article .row,
-  .article-page article .background-color {
+  .article-page article .fixed-background {
     height: 50rem;
   }
 
   .article-page article figure {
     width: 25%;
     margin-top: 16rem;
+  }
+}
+
+/* Contact */
+
+.article-page article h2 {
+  margin: 5rem auto;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row,
+  .article-page article .fixed-background {
+    height: 145rem;
+    margin: 0 auto;
+  }
+
+  .article-page article figure img {
+    border-radius: 50%;
   }
 }
 
