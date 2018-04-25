@@ -111,11 +111,14 @@ class BaseConfig:
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
     HARD_LIMIT_PER_PAGE = 20
 
+    GOOGLE_ANALYTICS_ID = ''
+
 
 class ProdConfig(BaseConfig):
     DEBUG = False
     MEDIA_URL = 'https://media.cafebabel.com'
     RESIZE_URL = MEDIA_URL + '/'
+    GOOGLE_ANALYTICS_ID = 'UA-126606-5'
 
 
 class PreprodConfig(BaseConfig):
@@ -153,3 +156,5 @@ class TestingConfig(BaseConfig):
     DEBUG_TB_ENABLED = False
     MEDIA_URL = ''
     RESIZE_URL = MEDIA_URL + '/'
+
+    GOOGLE_ANALYTICS_ID = 'testing-analytics'
