@@ -48,13 +48,14 @@ main {
 
 #content {
   max-width: 120rem;
-  margin: 12.1rem auto 7rem auto;
-  padding: 2rem 2rem 7rem 2rem;
+  margin: 12rem auto 7rem auto;
+  padding: 0 2rem 7rem 2rem;
 }
 
 @media screen and (min-width: 1200px) {
   #content {
     padding: 0 0 7rem 0;
+    margin: 12.1rem auto 7rem auto;
   }
 }
 
