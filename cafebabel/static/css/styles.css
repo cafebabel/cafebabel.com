@@ -48,7 +48,7 @@ main {
 
 #content {
   max-width: 120rem;
-  margin: 10rem auto 7rem auto;
+  margin: 12.1rem auto 7rem auto;
   padding: 2rem 2rem 7rem 2rem;
 }
 
@@ -701,12 +701,14 @@ a.button {
 /* Logo */
 
 .logo {
+  position: fixed;
   width: 10rem;
   display: block;
   transition: all 0.2s;
   top: 3.7rem;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 2;
 }
 
 a.logo:after {
