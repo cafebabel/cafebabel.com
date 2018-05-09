@@ -836,9 +836,9 @@ button.menu.active:after {
 
 button.menu + nav {
   background: white;
-  top: 0;
+  top: -100vh;
   right: 0;
-  bottom: 0;
+  bottom: 100vh;
   left: 0;
   position: fixed;
   font-size: 5vw;
@@ -933,7 +933,7 @@ button.menu + nav ul ul {
     right: 16.5rem;
   }
 
-  button.menu + nav ul li:first-of-type {
+  button.menu + nav ul .mobile-language-selector {
     /* language selector hidden on desktop */
     display: none;
   }
@@ -1010,6 +1010,8 @@ button.menu + nav ul li a:hover:after {
 
 button.menu.active + nav {
   display: block;
+  top: 0;
+  bottom: 0;
   opacity: 1;
   z-index: 3;
 }
