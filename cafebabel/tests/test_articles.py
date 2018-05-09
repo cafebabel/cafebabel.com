@@ -423,8 +423,8 @@ def test_article_detail_contains_tags(client, app, tag, published_article):
     response = client.get(
         f'/en/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
-    assert '<a href=/en/article/tag/wonderful/>Wonderful</a>' in response
-    assert '<a href=/en/article/tag/sensational/>Sensational</a>' in response
+    assert '<a href=/en/article/tag/wonderful/ class=tag-wonderful>Wonderful</a>' in response
+    assert '<a href=/en/article/tag/sensational/ class=tag-sensational>Sensational</a>' in response
 
 
 def test_article_published_translation_links_default(app, published_article):
