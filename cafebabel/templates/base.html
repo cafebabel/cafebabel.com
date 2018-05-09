@@ -18,88 +18,108 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-<button class="menu main-menu"></button>
-<nav>
-  <ul>
-    {% set categories = get_categories() %}
-    {% for category in categories %}
-      <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
-    {% endfor %}
-    <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
-    <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
-    {% set static_pages = static_pages_for(current_language) %}
-    <li><a href={{ url_for('tags.detail', slug='network') }}>Network</a></li>
-    <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
-    {% if current_user.has_role('editor') %}
-      <li class="editors-panel">
+<header>
+  <button class="menu main-menu"></button>
+  <nav>
+    <ul>
+      <li>
         <ul>
-          <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
-          <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+          {% for lang_code, lang_label in get_languages() %}
+            {% if lang_code != current_language %}
+              {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
+              {% if article and article.id %}
+                {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
+              {% elif tag and tag.slug in get_categories_slugs() %}
+                {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
+              {% elif drafts %}
+                {% set lang_url = url_for('drafts.list', lang=lang_code) %}
+              {% endif %}
+              <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
+            {% endif %}
+          {% endfor %}
         </ul>
       </li>
-    {% endif %}
-    <li class=social>
-      {{ social_networks() }}
-    </li>
-  </ul>
-</nav>
-
-<button class="menu language">{{ current_language }}</button>
-<nav>
-  <ul>
-    {% for lang_code, lang_label in get_languages() %}
-      {% if lang_code != current_language %}
-        {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
-        {% if article and article.id %}
-          {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
-        {% elif tag and tag.slug in get_categories_slugs() %}
-          {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
-        {% elif drafts %}
-          {% set lang_url = url_for('drafts.list', lang=lang_code) %}
-        {% endif %}
-        <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
+      {% set categories = get_categories() %}
+      {% for category in categories %}
+        <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
+      {% endfor %}
+      <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
+      <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
+      {% set static_pages = static_pages_for(current_language) %}
+      <li><a href={{ url_for('tags.detail', slug='network') }}>Network</a></li>
+      <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
+      {% if current_user.has_role('editor') %}
+        <li class="editors-panel">
+          <ul>
+            <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
+            <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+          </ul>
+        </li>
       {% endif %}
-    {% endfor %}
-  </ul>
-</nav>
-
-<a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
-<a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
-
-<button class="menu profile">
-  {% if current_user.is_authenticated %}
-    {{ profile_image(current_user) }}
-  {% else %}
-    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
-  {% endif %}
-</button>
-<nav>
-  {% if current_user.is_authenticated %}
-    <ul>
-      <li>{{ profile_image(current_user) }}<a href={{ current_user.detail_url }}>Profile</a></li>
-      <li class=icon-cross><a href={{ url_for('security.logout') }} >Log out</a></li>
+      <li class=social>
+        {{ social_networks() }}
+      </li>
     </ul>
-    {% else %}
+  </nav>
+
+  <button class="menu language">{{ current_language }}</button>
+  <nav>
     <ul>
-      {% if security.registerable or security.recoverable or security.confirmable %}
-        <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
-        {% if security.confirmable %}
-          <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+      {% for lang_code, lang_label in get_languages() %}
+        {% if lang_code != current_language %}
+          {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
+          {% if article and article.id %}
+            {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
+          {% elif tag and tag.slug in get_categories_slugs() %}
+            {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
+          {% elif drafts %}
+            {% set lang_url = url_for('drafts.list', lang=lang_code) %}
+          {% endif %}
+          <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
         {% endif %}
-      {% endif %}
+      {% endfor %}
     </ul>
-  {% endif %}
-</nav>
+  </nav>
 
-<nav id=social-networks>
-  {{ social_networks(with_linkedin=False) }}
-</nav>
-{% include "security/_messages.html" %}
+  <a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
+  <a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
 
-<main>
   <a href={{ lang_url_for('cores.home_lang') }} class=logo>
     <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
   </a>
+
+  <button class="menu profile">
+    {% if current_user.is_authenticated %}
+      {{ profile_image(current_user) }}
+    {% else %}
+      <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
+    {% endif %}
+  </button>
+  <nav>
+    {% if current_user.is_authenticated %}
+      <ul>
+        <li>{{ profile_image(current_user) }}<a href={{ current_user.detail_url }}>Profile</a></li>
+        <li class=icon-cross><a href={{ url_for('security.logout') }} >Log out</a></li>
+      </ul>
+      {% else %}
+      <ul>
+        {% if security.registerable or security.recoverable or security.confirmable %}
+          <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
+          {% if security.confirmable %}
+            <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+          {% endif %}
+        {% endif %}
+      </ul>
+    {% endif %}
+  </nav>
+
+  <nav id=social-networks>
+    {{ social_networks(with_linkedin=False) }}
+  </nav>
+  {% include "security/_messages.html" %}
+</header>
+
+<main>
   <div id=content>
 {% block body %}{% endblock %}
   </div>

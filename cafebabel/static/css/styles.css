@@ -698,6 +698,24 @@ a.button {
   width: 0;
 }
 
+/* Header */
+
+body > header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 7.9rem;
+  background-color: #fff;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.05);
+  z-index: 2;
+}
+
+@media screen and (min-width: 750px) {
+  body > header {
+    height: 10rem;
+  }
+}
+
 /* Logo */
 
 .logo {
@@ -705,10 +723,10 @@ a.button {
   width: 10rem;
   display: block;
   transition: all 0.2s;
-  top: 3.7rem;
+  top: 2.7rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 4;
 }
 
 a.logo:after {
@@ -716,7 +734,17 @@ a.logo:after {
 }
 
 .logo:hover {
-  top: 3.5rem;
+  top: 2.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .logo {
+    width: 11rem;
+    top: 3.7rem;
+  }
+  .logo:hover {
+    top: 3.5rem;
+  }
 }
 
 /* Preloader */
@@ -751,7 +779,7 @@ a.logo:after {
 button.menu {
   position: fixed;
   display: block;
-  top: 1rem;
+  top: 0;
   width: 7.5rem;
   height: 7.5rem;
   border: none;
@@ -767,7 +795,7 @@ button.main-menu {
 }
 
 button.language {
-  left: 8.5rem;
+  display: none;
   color: #00283c;
   text-transform: uppercase;
 }
@@ -824,9 +852,19 @@ button.menu + nav {
 }
 
 @media screen and (min-width: 750px) {
+  button.menu {
+    top: 1rem;
+  }
+
+  button.language {
+    display: block;
+    left: 7.5rem;
+  }
+
   button.menu + nav {
     font-size: 6vh;
   }
+
   .editors-panel li {
     font-size: 2vw;
   }
@@ -893,6 +931,11 @@ button.menu + nav ul ul {
 @media screen and (min-width: 750px) {
   button.menu.profile {
     right: 16.5rem;
+  }
+
+  button.menu + nav ul li:first-of-type {
+    /* language selector hidden on desktop */
+    display: none;
   }
 
   button.menu + nav ul li.social ul {
@@ -993,15 +1036,15 @@ button.menu + nav a {
   #participate,
   #translate {
     position: fixed;
-    top: 1rem;
-    font-size: 1.4rem;
+    top: 2rem;
+    font-size: 1.1rem;
     transition: all 0.3s;
     z-index: 4;
   }
 
   #participate:hover,
   #translate:hover {
-    top: 0.8rem;
+    top: 1.8rem;
     color: #bde513;
   }
 
@@ -1010,7 +1053,7 @@ button.menu + nav a {
     font-family: 'icomoon';
     display: block;
     text-align: center;
-    font-size: 4rem;
+    font-size: 2.8rem;
     margin-bottom: -0.6rem;
   }
 
@@ -1020,7 +1063,7 @@ button.menu + nav a {
   }
 
   #participate {
-    left: 17rem;
+    left: 16rem;
     display: inline-block;
   }
 
@@ -1037,10 +1080,10 @@ button.menu + nav a {
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 900px) {
   #translate {
     display: inline-block;
-    left: 26.5rem;
+    left: 22.5rem;
   }
 
   .translate {
