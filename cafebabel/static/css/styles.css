@@ -933,11 +933,7 @@ button.menu + nav ul ul {
     right: 16.5rem;
   }
 
-  button.menu + nav ul .mobile-language-selector {
-    /* language selector hidden on desktop */
-    display: none;
-  }
-
+  button.menu + nav ul .mobile-language-selector,
   button.menu + nav ul li.social ul {
     display: none;
   }
