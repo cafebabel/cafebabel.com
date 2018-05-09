@@ -8,7 +8,7 @@
   {% endassets %}
 {% endblock %}
 
-{% block meta_title %}{{ tag.name }}{% endblock %}
+{% block meta_title %}{{ tag.name }} – Cafébabel{% endblock %}
 {% block metas %}
   {% if tag.summary %}
     {{ meta('name=description', tag.summary|striptags) }}

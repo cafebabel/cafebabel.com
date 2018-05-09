@@ -2,7 +2,7 @@
 {% import "articles/macros.html" as macros %}
 {% from "_meta-macro.html" import meta %}
 
-{% block meta_title %}{{ article.title }}{% endblock %}
+{% block meta_title %}{{ article.title }} – Cafébabel{% endblock %}
 {% block metas %}
   {{ meta('name=description', article.summary|striptags) }}
   {{ meta('name=author', article.authors|join(', ')) }}
