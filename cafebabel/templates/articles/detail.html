@@ -44,7 +44,7 @@
     {% if article.tags %}
       <p class=tags-list>
         {% for tag in article.tags -%}
-          <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
+          <a href={{ tag.detail_url }} class=tag-{{ tag.slug }}>{{ tag.name }}</a>
         {%- endfor %}
       </p>
     {% endif %}
