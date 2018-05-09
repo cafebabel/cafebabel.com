@@ -38,7 +38,7 @@
 {% block body %}
   {% if tag.has_image %}
     <div class="tag-header image">
-      <img src={{ tag.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) or '' }} alt="Cover picture for #{{ tag.name }}">
+      <img src={{ tag.image_url|resize(config.RESIZE_SIZE_TAG_COVER) or '' }} alt="Cover picture for #{{ tag.name }}">
     </div>
   {% else %}
     <div class="tag-header default"></div>
