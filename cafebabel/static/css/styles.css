@@ -882,8 +882,8 @@ button.menu.profile.active {
 button.menu.profile img,
 button.menu.profile .image {
   margin: 0 auto;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
 button.menu.profile .image,
