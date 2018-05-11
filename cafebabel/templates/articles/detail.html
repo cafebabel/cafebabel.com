@@ -78,10 +78,12 @@
               {% endif %}
             {% endif %}
           {% endfor %}
-        {% if translations_drafts %}
-          {% for translation in translations_drafts %}
-            <li class=translation-draft><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
-          {% endfor %}
+        {% if current_user.has_role('editor') %}
+          {% if translations_drafts %}
+            {% for translation in translations_drafts %}
+              <li class=translation-draft><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
+            {% endfor %}
+          {% endif %}
         {% endif %}
       </ul>
     </div>
