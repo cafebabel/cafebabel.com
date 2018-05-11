@@ -3137,6 +3137,14 @@ footer p {
   }
 }
 
+/* FAQ */
+
+@media screen and (min-width: 750px) {
+  .article-page article .editorial-line-resources.faq {
+    width: 49.6%;
+  }
+}
+
 /* Under construction pop-up */
 
 #under-construction {
