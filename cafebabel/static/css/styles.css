@@ -2941,6 +2941,7 @@ footer p {
   margin: 0 auto;
 }
 
+.article-page article .row h3,
 .article-page article .row p {
   position: relative;
 }
@@ -3027,6 +3028,112 @@ footer p {
 @media screen and (min-width: 750px) {
   .article-page article .fixed-background.contact.questions + p {
     padding-top: 15rem;
+  }
+}
+
+/* Editorial Vision */
+
+.article-page article .row.editorial-line,
+.article-page article .fixed-background.editorial-line {
+  height: 37rem;
+  margin-bottom: 5rem;
+}
+
+.article-page article .row.editorial-line.creative .fixed-background {
+  background-image: url('../img/bg-page-creative.jpg');
+}
+
+.article-page article .row.editorial-line.impact .fixed-background {
+  background-image: url('../img/bg-page-impact.jpg');
+}
+
+.article-page article .row.editorial-line.experience .fixed-background {
+  background-image: url('../img/bg-page-experience.jpg');
+}
+
+.article-page article .row.editorial-line.raw .fixed-background {
+  background-image: url('../img/bg-page-raw.jpg');
+}
+
+.article-page article .row.editorial-line h3 {
+  font-family: 'sporting_grotesque', sans-serif;
+  font-weight: normal;
+  font-size: 3rem;
+  padding: 5rem 0;
+  margin: 0 auto;
+}
+
+.article-page article .editorial-line-resources {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 5rem;
+}
+
+.article-page article .editorial-line-resources a {
+  border: 0.2rem solid;
+  background-color: #fff;
+  height: 25rem;
+  width: 25rem;
+  margin: auto;
+  border-radius: 50%;
+  display: block;
+  transition: all 0.3s;
+}
+
+.article-page article .editorial-line-resources a:hover {
+  border: 0.2rem solid #00283c;
+  background-color: #bde513;
+}
+
+.article-page article .editorial-line-resources a:hover:after {
+  width: 0;
+}
+
+.article-page article .editorial-line-resources a strong {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.article-page article .editorial-line-resources:last-of-type {
+  margin-bottom: 5rem;
+}
+
+.article-page article .editorial-line-resources a span:before {
+  display: block;
+  font-size: 4rem;
+  padding: 7rem 0 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row.editorial-line,
+  .article-page article .fixed-background.editorial-line {
+    height: 30rem;
+  }
+
+  .article-page article .editorial-line-resources {
+    width: 32.7%;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .article-page article .editorial-line-resources {
+    width: 33%;
+  }
+
+  .article-page article .editorial-line-resources a {
+    height: 30rem;
+    width: 30rem;
+  }
+
+  .article-page article .editorial-line-resources a strong {
+    top: 57%;
+  }
+
+  .article-page article .editorial-line-resources a span:before {
+    padding: 8rem 0 1rem;
   }
 }
 
