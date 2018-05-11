@@ -2929,10 +2929,20 @@ footer p {
   z-index: 0;
 }
 
+@media screen and (max-width: 750px) {
+  .article-page article .row .fixed-background {
+    background-attachment: inherit;
+  }
+}
+
 .article-page article .row,
 .article-page article .fixed-background {
   height: 52rem;
   margin: 0 auto;
+}
+
+.article-page article .row p {
+  position: relative;
 }
 
 .article-page article figure {
@@ -2945,12 +2955,14 @@ footer p {
 
 .article-page article figure img {
   margin: 0 auto;
+  padding: 0.5rem;
 }
 
 .article-page article figure figcaption {
   text-align: center;
-  padding: 1rem 2rem 0;
+  padding: 1rem 0.8rem 0;
   font-weight: 400;
+  font-size: 1.5rem;
 }
 
 @media screen and (min-width: 750px) {
@@ -2963,6 +2975,15 @@ footer p {
     width: 25%;
     margin-top: 16rem;
   }
+
+  .article-page article figure img {
+    padding: 0;
+  }
+
+  .article-page article figure figcaption {
+    padding: 1rem 2rem 0;
+    font-size: 1.8rem;
+  }
 }
 
 /* Contact */
@@ -2971,15 +2992,41 @@ footer p {
   margin: 5rem auto;
 }
 
-@media screen and (min-width: 750px) {
-  .article-page article .row,
-  .article-page article .fixed-background {
-    height: 145rem;
-    margin: 0 auto;
-  }
+.article-page article .row.contact,
+.article-page article .fixed-background.contact {
+  height: 145rem;
+}
 
-  .article-page article figure img {
-    border-radius: 50%;
+.article-page article figure img {
+  border-radius: 50%;
+}
+
+.article-page article .fixed-background.contact.questions + p {
+  padding-top: 7rem;
+}
+
+.article-page article .fixed-background.contact.local-team + p {
+  padding-top: 20rem;
+}
+
+.article-page article .row.contact.questions,
+.article-page article .fixed-background.contact.questions,
+.article-page article .row.contact.board,
+.article-page article .fixed-background.contact.board,
+.article-page article .row.contact.local-team,
+.article-page article .fixed-background.contact.local-team {
+  height: 60rem;
+}
+
+.article-page article .row.contact.local-team,
+.article-page article .row.contact.questions {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .fixed-background.contact.questions + p {
+    padding-top: 15rem;
   }
 }
 
