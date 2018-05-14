@@ -1940,7 +1940,7 @@ select#author {
   max-width: 100%;
 }
 
-p.video-wrapper {
+article p.video-wrapper {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
@@ -1948,7 +1948,7 @@ p.video-wrapper {
   max-width: none;
 }
 
-p.video-wrapper iframe {
+article p.video-wrapper iframe {
   position: absolute;
   top: 0;
   left: 0;
