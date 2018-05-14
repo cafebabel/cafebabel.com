@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% from "users/macros.html" import social_field with context %}
 {% from "articles/macros.html" import card, profile_image %}
+{% from "users/macros.html" import social_field, contribution_list with context %}
 
 {% block extra_js %}
   {% assets filters='jsmin', output='build/users-edit.js', 'js/image-preview.js', 'js/textarea-change.js' %}
@@ -63,9 +63,6 @@
 </section>
 
 <section>
-  <h2>Contributions</h2>
-  {% for article in articles %}
-    {{ card(article) }}
-  {% endfor %}
+  {{ contribution_list() }}
 </section>
 {% endblock %}
