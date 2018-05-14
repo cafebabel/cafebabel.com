@@ -1860,10 +1860,18 @@ select#author {
   display: block;
 }
 
-.article-page .contributor-container h4 {
+.article-page article h4 {
+  font-family: 'sporting_grotesque', sans-serif;
+  color: #696969;
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+
+.article-page article .contributor-container h4 {
+  font-family: 'vremena_grotesk', sans-serif;
+  color: #00283c;
   text-align: center;
   font-size: 1.3rem;
-  font-weight: 200;
   margin-bottom: 1.3rem;
 }
 
