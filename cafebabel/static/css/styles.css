@@ -1799,6 +1799,7 @@ select#author {
 }
 
 .article-page h1:first-of-type {
+  font-family: 'sporting_grotesque', sans-serif;
   padding: 3rem 1.5rem 7rem;
 }
 
@@ -2650,6 +2651,7 @@ a.section-link.tag-creative {
 }
 
 article .article-detail h3 {
+  font-family: 'sporting_grotesque', sans-serif;
   font-size: 2.2rem;
 }
 
