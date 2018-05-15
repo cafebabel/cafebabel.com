@@ -2323,7 +2323,7 @@ a.tag-experience:before {
   content: '\e903';
 }
 
-.tags-list a.experience:before {
+.tags-list a.tag-experience:before {
   font-size: 1rem;
 }
 
@@ -2761,7 +2761,7 @@ article .article-detail h3 a:hover:after {
     font-size: 8rem;
   }
 
-  a.section-link.experience:before {
+  a.section-link.tag-experience:before {
     font-size: 7rem;
   }
 

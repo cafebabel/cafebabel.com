@@ -32,7 +32,7 @@
   <ul>
     {% set categories = get_categories() %}
     {% for category in categories %}
-      <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
+      <li class="section tag-{{ category.slug }}"><a href={{ category.detail_url }} class=tag-{{ category.slug }}>{{ category.name }}</a></li>
     {% endfor %}
     <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
     <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
