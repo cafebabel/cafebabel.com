@@ -906,10 +906,12 @@ button.menu.profile .image {
   height: 3.5rem;
 }
 
-button.menu.main-menu:hover,
-button.menu.language:hover,
-button.menu.profile:hover {
-  top: 0.8rem;
+@media screen and (min-width: 750px) {
+  button.menu.main-menu:hover,
+  button.menu.language:hover,
+  button.menu.profile:hover {
+    top: 0.8rem;
+  }
 }
 
 button.menu.profile .image,
