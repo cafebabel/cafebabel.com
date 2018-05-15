@@ -2,8 +2,16 @@
 <!doctype html>
 <meta charset=utf-8>
 <title>404 error</title>
-<!-- Lightest blank gif, avoids an extra query to the server. -->
-<link rel=icon href="data:;base64,iVBORw0KGgo=">
+<meta name="robots" content="noindex">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/static/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/static/img/favicon/safari-pinned-tab.svg" color="#bde513">
+<link rel="shortcut icon" href="/static/img/favicon/favicon.ico">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="/static/img/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 <style>
   html {
     font-size: 62.5%;
@@ -60,22 +68,34 @@
     margin: 0 0 1rem;
     text-align: center;
   }
-  #content a {
-    margin-top: 5rem;
-    text-decoration: none;
+  nav {
+    display: block;
   }
   .button {
-    display: block;
-    padding: 2rem 4rem;
+    font-size: 1.6rem;
+    display: inline-block;
+    margin: 2rem auto;
+    text-decoration: none;
     background-color: #00283c;
     border: 0.1rem solid #00283c;
     color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    padding: 2rem;
     transition: all 0.3s;
   }
   .button:hover {
     background-color: #fff;
     color: #00283c;
     border: 0.1rem solid #00283c;
+  }
+  @media screen and (min-width: 1200px) {
+    nav {
+      display: inline-block;
+    }
+    .button {
+      margin: 2rem 0.5rem 0.5rem;
+    }
   }
 </style>
 
@@ -86,6 +106,13 @@
 <div id=content>
   <img src=/static/img/preloader-A.gif alt="coffee grinder gif">
   <h1>404 — Not found</h1>
-  <p>We can’t find that page.
-    <a href=/ class=button>Back to home?</a></p>
+  <p>We can’t find that page.</p>
+  <nav>
+    <a href=/en class="button">Back to home?</a>
+    <a href=/fr class="button">Retour à l'accueil?</a>
+    <a href=/de class="button">Zurück zur Homepage?</a>
+    <a href=/it class="button">Torniamo alla homepage?</a>
+    <a href=/es class="button">Vamos a comere?</a>
+    <a href=/pl class="button">wrócić do domu</a>
+  </nav>
 </div>
