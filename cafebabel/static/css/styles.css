@@ -3137,9 +3137,23 @@ footer p {
 .article-page article .row.editorial-line h3 {
   font-family: 'sporting_grotesque', sans-serif;
   font-weight: normal;
-  font-size: 3rem;
-  padding: 5rem 0;
+  font-size: 4rem;
+  padding: 5rem 0 2.5rem;
   margin: 0 auto;
+}
+
+.article-page article .row.editorial-line p {
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row.editorial-line h3 {
+    font-size: 5rem;
+  }
+  .article-page article .row.editorial-line p {
+    font-size: 2.2rem;
+  }
 }
 
 .article-page article .editorial-line-resources {
