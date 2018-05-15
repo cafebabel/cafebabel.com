@@ -1799,7 +1799,6 @@ select#author {
 }
 
 .article-page h1:first-of-type {
-  font-family: 'sporting_grotesque', sans-serif;
   padding: 3rem 1.5rem 7rem;
 }
 
@@ -1861,18 +1860,10 @@ select#author {
   display: block;
 }
 
-.article-page article h4 {
-  font-family: 'sporting_grotesque', sans-serif;
-  color: #696969;
-  font-size: 1.6rem;
-  font-weight: 200;
-}
-
-.article-page article .contributor-container h4 {
-  font-family: 'vremena_grotesk', sans-serif;
-  color: #00283c;
+.article-page .contributor-container h4 {
   text-align: center;
   font-size: 1.3rem;
+  font-weight: 200;
   margin-bottom: 1.3rem;
 }
 
@@ -2924,6 +2915,7 @@ footer p {
 
   footer iframe {
     top: 60%;
+  }
 }
 
 /* Under construction pop-up */
