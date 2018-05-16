@@ -31,7 +31,7 @@ def test_article_with_non_ascii_title(published_article):
 
 
 def test_published_article_should_display_content(client, published_article,
-                                                  user):
+                                                  user, twitter_nickname):
     published_article.authors = [user]
     response = client.get(f'/en/article/{published_article.slug}-'
                           f'{published_article.id}/')
@@ -49,7 +49,7 @@ def test_published_article_should_display_content(client, published_article,
     assert published_article.authors[0].profile.name in response
     assert ('href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%2F'
             f'en%2Farticle%2F{published_article.slug}-{published_article.id}'
-            f'%2F&text={published_article.title}&via=cafebabel_eng"'
+            f'%2F&text={published_article.title}&via={twitter_nickname}"'
             in response)
     assert ('href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F'
             f'localhost%2Fen%2Farticle%2F{published_article.slug}-'
