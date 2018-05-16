@@ -2811,6 +2811,11 @@ article .article-detail h3 a:hover:after {
 #static-pages-links {
   background-color: #00283c;
   padding: 1.7rem;
+  margin-bottom: 70rem;
+}
+
+#static-pages-links.partners {
+  margin-bottom: 0;
 }
 
 #static-pages-links a {
