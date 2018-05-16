@@ -1,9 +1,18 @@
 <!-- {# Beware of not adding any external dependencies here! #} -->
 <!doctype html>
 <meta charset=utf-8>
+<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
 <title>500 error</title>
-<!-- Lightest blank gif, avoids an extra query to the server. -->
-<link rel=icon href="data:;base64,iVBORw0KGgo=">
+<meta name="robots" content="noindex">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/static/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/static/img/favicon/safari-pinned-tab.svg" color="#bde513">
+<link rel="shortcut icon" href="/static/img/favicon/favicon.ico">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="/static/img/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 <style>
   html {
     font-size: 62.5%;
@@ -51,31 +60,65 @@
     transform: translate(-50%, -50%);
     top: 45%;
     left: 50%;
+    width: 100%;
   }
   #content img {
     margin: 0 auto;
+    width: 18rem;
+  }
+  h1 {
+    font-size: 2.2rem;
+  }
+  p,
+  a {
+    font-size: 1.7rem;
   }
   h1,
   p {
-    margin: 0 0 1rem;
+    margin: 0 0 0.5rem;
     text-align: center;
   }
-  #content a {
-    margin-top: 5rem;
-    text-decoration: none;
+  @media screen and (min-width: 750px) {
+    #content img {
+      width: 20rem;
+    }
+    h1 {
+      font-size: 4rem;
+    }
+    p,
+    a {
+      font-size: 1.9rem;
+      margin: 0;
+    }
+    p {
+      margin: 0 0 1rem;
+    }
   }
-  .button {
+  nav {
     display: block;
-    padding: 2rem 4rem;
-    background-color: #00283c;
-    border: 0.1rem solid #00283c;
-    color: #fff;
+    text-align: center;
+  }
+  nav a {
+    display: inline-block;
+    color: #00283c;
+    text-decoration: none;
+    margin-top: 1rem;
+    padding: 0.2rem;
+    transform: rotate(0deg);
     transition: all 0.3s;
   }
-  .button:hover {
-    background-color: #fff;
-    color: #00283c;
-    border: 0.1rem solid #00283c;
+  nav a:hover {
+    transform: rotate(180deg);
+  }
+  nav a:first-child {
+    background-color: transparent;
+    border-bottom: 0.2rem solid #bde513;
+    box-shadow: inset 0 -1.1rem 0 #bde513;
+    margin: 0 1rem 0 0;
+  }
+  nav a:first-child:hover {
+    box-shadow: inset 0 -2.4rem 0 #bde513;
+    transform: rotate(0deg);
   }
 </style>
 
@@ -85,6 +128,14 @@
 <div id=content>
   <img src=/static/img/preloader-A.gif alt="coffee grinder gif">
   <h1>500 — Internal server error</h1>
-  <p>Sorry, something went wrong.
-    <a href=/ class=button>Back to home?</a></p>
+  <p>Sorry, something went wrong.</p>
+    <nav>
+      <a href=/>Back to home?</a><br>
+      <a href=/en title="Back to home?">🇬🇧</a>
+      <a href=/fr title="Retour à l'accueil?">🇫🇷</a>
+      <a href=/de title="Zurück zur Homepage?">🇩🇪</a>
+      <a href=/it title="Torniamo alla homepage?">🇮🇹</a>
+      <a href=/es title="Vamos a comere?">🇪🇸</a>
+      <a href=/pl title="wrócić do domu">🇵🇱</a>
+    </nav>
 </div>
