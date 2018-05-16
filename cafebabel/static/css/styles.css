@@ -2795,7 +2795,7 @@ article .article-detail h3 a:hover:after {
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1240px) {
   .home section.series .banner {
     margin: 0;
   }
