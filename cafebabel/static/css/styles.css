@@ -2820,9 +2820,13 @@ article .article-detail h3 a:hover:after {
 /* Footer */
 
 #static-pages-links {
-  margin-bottom: 70rem;
   background-color: #00283c;
   padding: 1.7rem;
+  margin-bottom: 70rem;
+}
+
+#static-pages-links.partners {
+  margin-bottom: 0;
 }
 
 #static-pages-links a {
@@ -2872,6 +2876,95 @@ article .article-detail h3 a:hover:after {
 
 #static-pages-links nav ul ul li a:hover {
   color: #bde513;
+}
+
+#partners {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 70rem;
+}
+
+#partners ul {
+  display: inline-block;
+  padding: 0 2rem;
+}
+
+#partners li {
+  display: inline-block;
+}
+
+#partners li a {
+  background: no-repeat center / contain;
+  text-indent: -99999px;
+  height: 8.5rem;
+  margin: 0.5rem 1rem;
+  filter: grayscale(1);
+  transition: all 0.3s;
+}
+
+#partners li a:hover {
+  filter: grayscale(0);
+}
+
+#partners li a:hover:after {
+  width: 0;
+}
+
+#partners li:first-of-type a {
+  background-image: url(../img/partners/european-commission.svg);
+  width: 15rem;
+}
+
+#partners li:nth-of-type(2) a {
+  background-image: url(../img/partners/european-union.svg);
+  width: 6.3rem;
+}
+
+#partners li:nth-of-type(3) a {
+  background-image: url(../img/partners/ministere-jeunesse-sports-vie-associative.png);
+  width: 4.3rem;
+}
+
+#partners li:nth-of-type(4) a {
+  background-image: url(../img/partners/ministere-affaires-atrangeres-europeennes.png);
+  width: 4.6rem;
+}
+
+#partners li:nth-of-type(5) a {
+  background-image: url(../img/partners/ministere-culture-communication.svg);
+  width: 4.3rem;
+}
+
+#partners li:nth-of-type(6) a {
+  background-image: url(../img/partners/hippocrene.png);
+  width: 5.3rem;
+}
+
+#partners li:nth-of-type(7) a {
+  background-image: url(../img/partners/ofaj.svg);
+  width: 6rem;
+}
+
+#partners li:nth-of-type(8) a {
+  background-image: url(../img/partners/goethe-institut.png);
+  width: 9.5rem;
+}
+
+#partners li:nth-of-type(9) a {
+  background-image: url(../img/partners/bundeszentrale-fuer-politische-bildung.png);
+  width: 12rem;
+}
+
+@media screen and (min-width: 900px) {
+  #partners {
+    height: 9.2rem;
+  }
+
+  #partners ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 footer {
@@ -2925,6 +3018,263 @@ footer p {
 
   footer iframe {
     top: 60%;
+  }
+}
+
+/* Static pages */
+/* About us */
+
+.article-page article .row {
+  width: 100%;
+  max-width: 120rem;
+}
+
+.article-page article .row .fixed-background {
+  background: url('../img/bg-static-pages.jpg') fixed center / cover;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+
+@media screen and (max-width: 750px) {
+  .article-page article .row .fixed-background {
+    background-attachment: inherit;
+  }
+}
+
+.article-page article .row,
+.article-page article .fixed-background {
+  height: 52rem;
+  margin: 0 auto;
+}
+
+.article-page article .row h3,
+.article-page article .row p {
+  position: relative;
+}
+
+.article-page article figure {
+  position: relative;
+  float: left;
+  width: 50%;
+  height: 24rem;
+  margin-top: 2rem;
+}
+
+.article-page article figure img {
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+.article-page article figure figcaption {
+  text-align: center;
+  padding: 1rem 0.8rem 0;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row,
+  .article-page article .fixed-background {
+    height: 50rem;
+  }
+
+  .article-page article figure {
+    width: 25%;
+    margin-top: 16rem;
+  }
+
+  .article-page article figure img {
+    padding: 0;
+  }
+
+  .article-page article figure figcaption {
+    padding: 1rem 2rem 0;
+    font-size: 1.8rem;
+  }
+}
+
+/* Contact */
+
+.article-page article h2 {
+  margin: 5rem auto;
+}
+
+.article-page article .row.contact,
+.article-page article .fixed-background.contact {
+  height: 145rem;
+}
+
+.article-page article figure img {
+  border-radius: 50%;
+}
+
+.article-page article .fixed-background.contact.questions + p {
+  padding-top: 7rem;
+}
+
+.article-page article .fixed-background.contact.local-team + p {
+  padding-top: 20rem;
+}
+
+.article-page article .row.contact.questions,
+.article-page article .fixed-background.contact.questions,
+.article-page article .row.contact.board,
+.article-page article .fixed-background.contact.board,
+.article-page article .row.contact.local-team,
+.article-page article .fixed-background.contact.local-team {
+  height: 60rem;
+}
+
+.article-page article .row.contact.local-team,
+.article-page article .row.contact.questions {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.article-page article .row.contact.local-team p,
+.article-page article .row.contact.questions p {
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .fixed-background.contact.questions + p {
+    padding-top: 15rem;
+  }
+
+  .article-page article .row.contact.local-team p,
+  .article-page article .row.contact.questions p {
+    font-size: 2rem;
+  }
+}
+
+/* Editorial Vision */
+
+.article-page article .row.editorial-line,
+.article-page article .fixed-background.editorial-line {
+  height: 37rem;
+  margin-bottom: 5rem;
+}
+
+.article-page article .row.editorial-line.creative .fixed-background {
+  background-image: url('../img/bg-page-creative.jpg');
+}
+
+.article-page article .row.editorial-line.impact .fixed-background {
+  background-image: url('../img/bg-page-impact.jpg');
+}
+
+.article-page article .row.editorial-line.experience .fixed-background {
+  background-image: url('../img/bg-page-experience.jpg');
+}
+
+.article-page article .row.editorial-line.raw .fixed-background {
+  background-image: url('../img/bg-page-raw.jpg');
+}
+
+.article-page article .row.editorial-line h3 {
+  font-family: 'sporting_grotesque', sans-serif;
+  font-weight: normal;
+  font-size: 4rem;
+  padding: 5rem 0 2.5rem;
+  margin: 0 auto;
+}
+
+.article-page article .row.editorial-line p {
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row.editorial-line h3 {
+    font-size: 5rem;
+  }
+  .article-page article .row.editorial-line p {
+    font-size: 2.2rem;
+  }
+}
+
+.article-page article .editorial-line-resources {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 5rem;
+}
+
+.article-page article .editorial-line-resources a {
+  border: 0.2rem solid;
+  background-color: #fff;
+  height: 25rem;
+  width: 25rem;
+  margin: auto;
+  border-radius: 50%;
+  display: block;
+  transition: all 0.3s;
+}
+
+.article-page article .editorial-line-resources a:hover {
+  border: 0.2rem solid #00283c;
+  background-color: #bde513;
+}
+
+.article-page article .editorial-line-resources a:hover:after {
+  width: 0;
+}
+
+.article-page article .editorial-line-resources a strong {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.article-page article .editorial-line-resources:last-of-type {
+  margin-bottom: 5rem;
+}
+
+.article-page article .editorial-line-resources a span:before {
+  display: block;
+  font-size: 4rem;
+  padding: 7rem 0 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row.editorial-line,
+  .article-page article .fixed-background.editorial-line {
+    height: 30rem;
+  }
+
+  .article-page article .editorial-line-resources {
+    width: 32.7%;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .article-page article .editorial-line-resources {
+    width: 33%;
+  }
+
+  .article-page article .editorial-line-resources a {
+    height: 30rem;
+    width: 30rem;
+  }
+
+  .article-page article .editorial-line-resources a strong {
+    top: 57%;
+  }
+
+  .article-page article .editorial-line-resources a span:before {
+    padding: 8rem 0 1rem;
+  }
+}
+
+/* FAQ */
+
+@media screen and (min-width: 750px) {
+  .article-page article .editorial-line-resources.faq {
+    width: 49.6%;
   }
 }
 
