@@ -35,11 +35,11 @@
     </div>
   {% endif %}
   <div class=textarea>
-    <label for=summary>Teaser</label>
-    <textarea id=summary name=summary required>{{ translation.summary }}</textarea>
+    <label for=summary>Lead paragraph</label>
+    <textarea id=summary name=summary>{{ translation.summary }}</textarea>
   </div>
   <div class=textarea>
-    <label for=body>Body</label>
+    <label for=body>Body text</label>
     <textarea id=body name=body required>{{ translation.body }}</textarea>
     {% include "articles/markdown-helper.html" %}
   </div>
