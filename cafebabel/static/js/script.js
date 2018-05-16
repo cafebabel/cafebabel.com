@@ -40,7 +40,7 @@ function animate(elem, style, from, to, time) {
   elem[style] = from
 }
 const subscribeLink = document.querySelector(
-  '#social-networks .icon-newsletter'
+  '#social-networks .icon-newsletter2'
 )
 subscribeLink.addEventListener('click', event => {
   const target = document.querySelector(event.target.getAttribute('href'))
