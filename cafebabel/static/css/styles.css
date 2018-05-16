@@ -1955,9 +1955,10 @@ select#author {
 }
 
 .article-page .tags-list {
-  display: inline-block;
-  transform: translateX(-50%);
-  margin: 0 0 3rem 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto 3rem;
 }
 
 .article-page article h3 {
