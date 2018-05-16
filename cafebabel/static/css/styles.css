@@ -3104,9 +3104,20 @@ footer p {
   margin-bottom: 5rem;
 }
 
+.article-page article .row.contact.local-team p,
+.article-page article .row.contact.questions p {
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+
 @media screen and (min-width: 750px) {
   .article-page article .fixed-background.contact.questions + p {
     padding-top: 15rem;
+  }
+
+  .article-page article .row.contact.local-team p,
+  .article-page article .row.contact.questions p {
+    font-size: 2rem;
   }
 }
 
