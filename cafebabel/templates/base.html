@@ -132,7 +132,7 @@
   <div id=content>
 {% block body %}{% endblock %}
   </div>
-  <nav id=static-pages-links>
+  <nav id=static-pages-links {% block class_partners %}{% endblock %}>
     <nav>
       <ul>
         <li><a href={{ static_pages.get('about-us', '#') }}>About us</a></li>
@@ -150,6 +150,7 @@
       </ul>
     </nav>
   </nav>
+  {% block partners %}{% endblock %}
 </main>
 
 <footer>
