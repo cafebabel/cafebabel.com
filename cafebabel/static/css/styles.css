@@ -2743,6 +2743,24 @@ article .article-detail h3 a:hover:after {
     bottom: 2rem;
   }
 
+  .home .latest {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 2rem;
+    max-width: 120rem;
+    margin: 0 auto;
+  }
+
+  .home .latest article {
+    grid-column: 4 / 6;
+  }
+
+  .home .latest article:first-of-type,
+  .home .latest article:nth-of-type(3),
+  .home .latest article:nth-of-type(5) {
+    grid-column: 1 / 4;
+  }
+
   .home section.series article {
     margin-bottom: 0;
   }

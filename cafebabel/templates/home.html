@@ -31,19 +31,19 @@
       {{ card(article_editors_pick, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
     {% endfor %}
   </section>
+  {{ latest("latest1", 8) }}
+  {#{{ series("meet-my-hood", 2) }}
+  {{ latest("latest2", 3) }}
+  {{ series("network", 0) }}
+  {{ latest("latest3", 3) }}
+  {{ series("voglio-mangiare-cosi", 2) }}
+  {{ latest("latest4", 3) }}#}
   <section class=categories>
     <h2>Sections</h2>
     {% for category in categories|shuffle %}
       <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>
     {% endfor %}
   </section>
-  {{ latest("latest1", 3) }}
-  {{ series("meet-my-hood", 2) }}
-  {{ latest("latest2", 3) }}
-  {{ series("network", 0) }}
-  {{ latest("latest3", 3) }}
-  {{ series("voglio-mangiare-cosi", 2) }}
-  {{ latest("latest4", 3) }}
   <div id=under-construction>
     <div class=modal>
     <button title="close this window"></button>
