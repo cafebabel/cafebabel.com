@@ -2690,6 +2690,59 @@ article .article-detail h3 a:hover:after {
     margin-bottom: 5rem;
   }
 
+  .home .editors-pick article {
+    position: relative;
+  }
+
+  .home .editors-pick article .article-detail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    padding: 4rem;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.4) 10%, transparent 70%);
+  }
+
+  .home .editors-pick article .article-detail h3,
+  .home .editors-pick article .article-detail h3 a,
+  .home .editors-pick article .article-detail p,
+  .home .editors-pick article .article-detail p:first-of-type a {
+    color: #fff;
+    vertical-align: bottom;
+  }
+
+  .home .editors-pick article .article-detail p a:after {
+    background-color: #fff;
+  }
+
+  .home .editors-pick article .article-detail h3 {
+    line-height: 1.1;
+    font-weight: 800;
+    width: 45%;
+  }
+
+  .home .editors-pick article .article-detail h3,
+  .home .editors-pick article .article-detail p {
+    position: absolute;
+    text-align: left;
+  }
+
+  .home .editors-pick article .article-detail h3 {
+    bottom: 10rem;
+    font-size: 3vw;
+  }
+
+  .home .editors-pick article .article-detail p {
+    bottom: 6rem;
+  }
+
+  .home .editors-pick article .article-detail p:last-of-type {
+    bottom: 2rem;
+  }
+
   .home section.series article {
     margin-bottom: 0;
   }
@@ -2754,10 +2807,6 @@ article .article-detail h3 a:hover:after {
     font-size: 7rem;
   }
 
-  .home .editors-pick article .article-detail h3 {
-    font-size: 4.2rem;
-  }
-
   .home .editors-pick article .article-detail p:first-of-type {
     display: block;
   }
@@ -2784,9 +2833,19 @@ article .article-detail h3 a:hover:after {
   }
 }
 
+@media screen and (min-width: 1000px) {
+  .home .editors-pick article .article-detail h3 {
+    font-size: 4vw;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .home section.series .banner {
     margin: 0;
+  }
+
+  .home .editors-pick article .article-detail h3 {
+    font-size: 4.9rem;
   }
 }
 
