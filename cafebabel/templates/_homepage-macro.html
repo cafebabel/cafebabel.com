@@ -1,10 +1,13 @@
-{% macro series(tag_slug, limit) %}
+{% macro series(tag_slug, limit, description) %}
   <section class="series tag-{{ tag_slug }}">
     {% set tag_series, articles_series = articles_for_tag(tag_slug, limit=limit) %}
     {% if articles_series or not limit %}
       <a href="{{ tag_series.detail_url }}" class=banner style="background-image:url({{ tag_series.image_url or '' }});">
         <div class=series-infos>
           <h2>{{ tag_series.name }}</h2>
+          {% if description %}
+            <p>{{ description }}</p>
+          {% endif %}
         </div>
       </a>
     {% endif %}
