@@ -377,3 +377,29 @@ def test_translation_cant_update_author(client, published_translation, editor):
         f'/{published_translation.id}/edit/')
     assert response.status_code == HTTPStatus.OK
     assert '<select name=authors' not in response
+
+
+def test_translation_can_update_translator(client, published_translation,
+                                           editor, user2):
+    login(client, editor.email, 'password')
+    article = published_translation.original_article
+    response = client.get(
+        f'/{published_translation.language}/article'
+        f'/{published_translation.id}/edit/')
+    assert response.status_code == HTTPStatus.OK
+    assert '<select name=translators' in response
+
+
+def test_translation_can_edit_translators(client, translation, editor, user2):
+    assert translation.translators[0] != user2
+    login(client, editor.email, 'password')
+    data = {
+        'title': translation.title,
+        'summary': translation.summary,
+        'body': translation.body,
+        'translators': [user2.id],
+    }
+    response = client.post(
+        f'/fr/article/translation/{translation.id}/edit/', data=data)
+    translation.reload()
+    assert translation.translators[0].id == user2.id
