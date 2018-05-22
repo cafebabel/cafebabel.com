@@ -19,10 +19,17 @@
 {% endmacro %}
 
 {% macro latest(tag_slug, limit) %}
-  <section class=latest>
-    {% set tag_latest, articles_latest = articles_for_tag(tag_slug, limit=limit) %}
-    {% for article_latest in articles_latest %}
-      {{ card(article_latest) }}
-    {% endfor %}
-  </section>
+  {% set tag_latest, articles_latest = articles_for_tag(tag_slug, limit=limit) %}
+  {% if articles_latest %}
+    <section class=latest>
+      <div class=latest-column>
+        {% for article_latest in articles_latest %}
+          {% if loop.index == 4 %}
+            </div><div class=latest-column>
+          {% endif %}
+          {{ card(article_latest) }}
+        {% endfor %}
+        </div>
+    </section>
+  {% endif %}
 {% endmacro %}
