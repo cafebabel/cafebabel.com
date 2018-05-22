@@ -18,15 +18,15 @@
     {% endif %}
     <h1 class="edit active">
       <label for=title>Title</label>
-      <input id=title name=title required placeholder="{{ article.title }}">
+      <input id=title name=title required placeholder="{{ article.title }}" value="{{ article.title }}">
     </h1>
     <div class=textarea>
       <label for=summary>Lead paragraph</label>
-      <textarea id=summary name=summary></textarea>
+      <textarea id=summary name=summary>{{ article.summary or '' }}</textarea>
     </div>
     <div class=textarea>
       <label for=body>Body text</label>
-      <textarea id=body name=body required></textarea>
+      <textarea id=body name=body required>{{ article.body }}</textarea>
       {% include "articles/markdown-helper.html" %}
     </div>
     {{ macros.tags_fields(translation) }}
