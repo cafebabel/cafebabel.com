@@ -2570,6 +2570,10 @@ a.tag-creative:before {
   display: none;
 }
 
+.home section.series a.button {
+  max-width: calc(120rem - 4rem);
+}
+
 .home img {
   margin: 0 auto;
 }

@@ -1,4 +1,4 @@
-{% macro series(tag_slug, limit, description) %}
+{% macro series(tag_slug, limit, description, button_text) %}
   <section class="series tag-{{ tag_slug }}">
     {% set tag_series, articles_series = articles_for_tag(tag_slug, limit=limit) %}
     {% if articles_series or not limit %}
@@ -17,6 +17,9 @@
           {{ card(article_series, image_dimensions=config.RESIZE_SIZE_ARTICLE_LIST) }}
         {% endfor %}
       </div>
+    {% endif %}
+    {% if description %}
+      <a class=button>{{ button_text }}</a>
     {% endif %}
   </section>
 {% endmacro %}

@@ -32,7 +32,7 @@
     {% endfor %}
   </section>
   {{ latest("latest1", 8) }}
-  {{ series("meet-my-hood", 2, 'small description here') }}
+  {{ series("meet-my-hood", 2, 'small description here', 'See all MMH bitches') }}
   <section class=categories>
     <h2>Sections</h2>
     {% for category in categories|shuffle %}
@@ -50,10 +50,9 @@
       {% endif %}
     {% endfor %}
   </section>
-  {#{{ latest("latest2", 3) }}
-  {{ series("network", 0) }}
+  {{ series("voglio-mangiare-cosi", 2, 'I like to eat', 'See more VMC') }}
+  {#{{ series("network", 0) }}
   {{ latest("latest3", 3) }}
-  {{ series("voglio-mangiare-cosi", 2) }}
   {{ latest("latest4", 3) }}#}
   <div id=under-construction>
     <div class=modal>
