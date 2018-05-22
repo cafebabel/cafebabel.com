@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "_meta-macro.html" import meta %}
 {% from "articles/macros.html" import card %}
-{% from "_homepage-macro.html" import series, latest with context %}
+{% from "_homepage-macro.html" import series, latest, participation with context %}
 
 {% block metas %}
   {{ meta('name=description', 'Cafébabel is the first European participatory magazine made for young Europeans across borders.') }}
@@ -51,6 +51,7 @@
     {% endfor %}
   </section>
   {{ series("voglio-mangiare-cosi", 2, 'I like to eat', 'See more VMC') }}
+  {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', 'http://localhost:5000/en/article/proposal/new/', 'Come come come!') }}
   {#{{ series("network", 0) }}
   {{ latest("latest3", 3) }}
   {{ latest("latest4", 3) }}#}

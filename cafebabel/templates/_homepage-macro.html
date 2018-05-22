@@ -39,3 +39,11 @@
     </section>
   {% endif %}
 {% endmacro %}
+
+{% macro participation(class, title, description, button_link, button_text) %}
+  <section class=participation-{{ class }}>
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>
+    <a class=button href={{ button_link }}>{{ button_text }}</a>
+  </section>
+{% endmacro %}

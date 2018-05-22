@@ -2657,6 +2657,21 @@ article .article-detail h3 a:hover:after {
   padding: 0.3rem 0.5rem;
 }
 
+.home section[class^='participation-'],
+.home section[class*=' participation-'] {
+  max-width: 120rem;
+  margin: 5rem auto;
+  border: 0.1rem solid;
+  text-align: center;
+  padding: 13rem 2rem;
+}
+
+.home section[class^='participation-'] a.button,
+.home section[class*=' participation-'] a.button {
+  display: inline-block;
+  width: auto;
+}
+
 @media screen and (min-width: 750px) {
   .home #content {
     grid-gap: 2rem;
