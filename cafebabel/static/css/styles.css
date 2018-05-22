@@ -157,6 +157,9 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-donate:before {
+  content: '\e910';
+}
 .icon-facebook2:before {
   content: '\e90a';
 }
@@ -1038,7 +1041,8 @@ button.menu + nav a {
 }
 
 #participate,
-#translate {
+#translate,
+#donate {
   display: none;
 }
 
@@ -1049,7 +1053,8 @@ button.menu + nav a {
 
 @media screen and (min-width: 750px) {
   #participate,
-  #translate {
+  #translate,
+  #donate {
     position: fixed;
     top: 2rem;
     font-size: 1.1rem;
@@ -1058,13 +1063,15 @@ button.menu + nav a {
   }
 
   #participate:hover,
-  #translate:hover {
+  #translate:hover,
+  #donate:hover {
     top: 1.8rem;
     color: #bde513;
   }
 
   #participate:before,
-  #translate:before {
+  #translate:before,
+  #donate:before {
     font-family: 'icomoon';
     display: block;
     text-align: center;
@@ -1073,7 +1080,8 @@ button.menu + nav a {
   }
 
   #participate:hover:after,
-  #translate:hover:after {
+  #translate:hover:after,
+  #donate:hover:after {
     width: 0;
   }
 
@@ -1090,12 +1098,17 @@ button.menu + nav a {
     content: '\e907';
   }
 
+  #donate:before {
+    font-size: 2.9rem;
+    content: '\e910';
+  }
+
   .participate {
     display: none;
   }
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 850px) {
   #translate {
     display: inline-block;
     left: 22.5rem;
@@ -1103,6 +1116,11 @@ button.menu + nav a {
 
   .translate {
     display: none;
+  }
+
+  #donate {
+    display: inline-block;
+    left: 29.5rem;
   }
 }
 
