@@ -107,7 +107,14 @@
   {% block share_nav %}
   <nav class=share>
   <p>Loved this story? Then tell your friends:
-    <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via=cafebabel_eng">Twitter</a>
+    {% set lang = current_language %}
+    {% if lang == 'en' %}{% set twitter_nickname = 'cafebabel_eng' %}{% endif %}
+    {% if lang == 'fr' %}{% set twitter_nickname = 'cafebabel_fr' %}{% endif %}
+    {% if lang == 'de' %}{% set twitter_nickname = 'cafebabel_de' %}{% endif %}
+    {% if lang == 'it' %}{% set twitter_nickname = 'cafebabel_it' %}{% endif %}
+    {% if lang == 'es' %}{% set twitter_nickname = 'cafebabel_es' %}{% endif %}
+    {% if lang == 'pl' %}{% set twitter_nickname = 'cafebabel_pol' %}{% endif %}
+    <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via={{ twitter_nickname }}">Twitter</a>
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
   </p>
   </nav>
