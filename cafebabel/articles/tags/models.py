@@ -76,6 +76,12 @@ class Tag(db.Document, UploadableImageMixin):
         return self.save()
 
 
+    @classmethod
+    def clean_name(cls, sender, document, **kwargs):
+        document.name = document.name.strip()
+
+
+signals.pre_save.connect(Tag.clean_name, sender=Tag)
 signals.pre_save.connect(Tag.update_slug, sender=Tag)
 signals.post_save.connect(Tag.store_image, sender=Tag)
 signals.pre_delete.connect(Tag.delete_image_file, sender=Tag)
