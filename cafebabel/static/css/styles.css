@@ -2572,6 +2572,14 @@ a.tag-creative:before {
 
 .home section.series a.button {
   max-width: calc(120rem - 4rem);
+  background-color: #fff;
+  color: #00283c;
+}
+
+.home section.series a.button:hover {
+  max-width: calc(120rem - 4rem);
+  background-color: #00283c;
+  color: #fff;
 }
 
 .home img {
