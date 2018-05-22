@@ -2747,7 +2747,7 @@ article .article-detail h3 a:hover:after {
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 2rem;
     max-width: 120rem;
-    margin: 0 auto;
+    margin: 0 auto 5rem;
   }
 
   .home .latest .latest-column:first-of-type {
