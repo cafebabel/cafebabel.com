@@ -2590,15 +2590,9 @@ a.tag-creative:before {
 }
 
 .home section.series a.button {
-  max-width: calc(120rem - 4rem);
+  max-width: 120rem;
   background-color: #fff;
   color: #00283c;
-}
-
-.home section.series a.button:hover {
-  max-width: calc(120rem - 4rem);
-  background-color: #00283c;
-  color: #fff;
 }
 
 .home img {
@@ -2607,7 +2601,7 @@ a.tag-creative:before {
 
 .home a.section-link {
   position: relative;
-  height: 5rem;
+  height: 14rem;
   width: 120%;
   margin: 5rem -10%;
   display: block;
@@ -2622,6 +2616,8 @@ a.tag-creative:before {
 
 .home a.section-link:before {
   font-family: 'icomoon';
+  display: block;
+  font-size: 6rem;
 }
 
 a.section-link.tag-impact {
@@ -2888,7 +2884,8 @@ article .article-detail h3 a:hover:after {
 
   .home a.section-link {
     width: 100%;
-    margin: 5rem 0;
+    max-width: 120rem;
+    margin: 5rem auto;
   }
 }
 
