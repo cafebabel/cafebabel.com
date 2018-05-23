@@ -31,8 +31,7 @@
       {{ card(article_editors_pick, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
     {% endfor %}
   </section>
-  {{ latest("latest1", 8) }}
-  {{ series("meet-my-hood", 2, 'small description here', 'See all MMH bitches') }}
+  {{ latest("latest", 8) }}
   <section class=categories>
     <h2>Sections</h2>
     {% for category in categories|shuffle %}
@@ -50,11 +49,12 @@
       {% endif %}
     {% endfor %}
   </section>
-  {{ series("voglio-mangiare-cosi", 2, 'I like to eat', 'See more VMC') }}
-  {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', 'http://localhost:5000/en/article/proposal/new/', 'Come come come!') }}
-  {{ series("borderline", 1) }}
-  {{ participation('donate', 'Wanna help us Cafébabel?', '', 'https://www.okpal.com/europe-in-real-life-by-cafebabel', 'Money money') }}
+  {{ series("meet-my-hood", 2, 'small description here', 'See all MMH articles') }}
+  {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', '/article/proposal/new/', 'Come come come!') }}
+  {{ series("who-cares", 0, 'small description here', 'See all Who cares? articles') }}
+  {{ participation('donate', 'Wanna help us?', '', 'https://www.okpal.com/europe-in-real-life-by-cafebabel', 'Money money') }}
   {{ series("network", 0) }}
+  {{ participation('newseletter-form', 'Wanna here from us once every two weekd ? Subscribe', '', '#static-pages-links', 'This way') }}
   <div id=under-construction>
     <div class=modal>
     <button title="close this window"></button>
