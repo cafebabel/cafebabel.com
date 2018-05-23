@@ -49,13 +49,18 @@ main {
 #content {
   max-width: 120rem;
   padding: 2rem 2rem 7rem;
-  margin: 7.9rem auto 7rem auto;
+  margin: 5.9rem auto 7rem auto;
+}
+
+@media screen and (min-width: 750px) {
+  #content {
+    margin: 7rem auto;
+  }
 }
 
 @media screen and (min-width: 1200px) {
   #content {
     padding: 2rem 0 7rem 0;
-    margin: 10.1rem auto 7rem auto;
   }
 }
 
@@ -734,7 +739,7 @@ body > header {
 
 @media screen and (min-width: 750px) {
   body > header {
-    height: 10rem;
+    height: 9rem;
   }
 }
 
@@ -762,10 +767,10 @@ a.logo:after {
 @media screen and (min-width: 750px) {
   .logo {
     width: 11rem;
-    top: 3.7rem;
+    top: 3.2rem;
   }
   .logo:hover {
-    top: 3.5rem;
+    top: 3rem;
   }
 }
 
@@ -879,7 +884,7 @@ button.menu + nav {
 @media screen and (min-width: 750px) {
   button.menu,
   .login-link {
-    top: 1rem;
+    top: 0.5rem;
   }
 
   button.language {
@@ -922,7 +927,7 @@ button.menu.profile .image,
   button.menu.main-menu:hover,
   button.menu.language:hover,
   button.menu.profile:hover {
-    top: 0.8rem;
+    top: 0.3rem;
   }
 }
 
@@ -1085,7 +1090,7 @@ button.menu + nav a {
   #translate,
   #donate {
     position: fixed;
-    top: 2rem;
+    top: 1.5rem;
     font-size: 1.1rem;
     transition: all 0.2s;
     z-index: 4;
@@ -1094,7 +1099,7 @@ button.menu + nav a {
   #participate:hover,
   #translate:hover,
   #donate:hover {
-    top: 1.8rem;
+    top: 1.3rem;
     color: #bde513;
   }
 
@@ -1161,7 +1166,7 @@ button.menu + nav a {
   #social-networks {
     display: block;
     position: fixed;
-    top: 3.5rem;
+    top: 3rem;
     right: 3rem;
     z-index: 2;
   }
