@@ -31,6 +31,7 @@
       {{ card(article_editors_pick, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
     {% endfor %}
   </section>
+  <h2>Latest</h2>
   {{ latest("latest", 8) }}
   <section class=categories>
     <h2>Sections</h2>
@@ -49,8 +50,10 @@
       {% endif %}
     {% endfor %}
   </section>
+  <h2>Serie</h2>
   {{ series("meet-my-hood", 2, 'small description here', 'See all MMH articles') }}
   {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', '/article/proposal/new/', 'Come come come!') }}
+  <h2>Serie</h2>
   {{ series("who-cares", 0, 'small description here', 'See all Who cares? articles') }}
   {{ participation('donate', 'Wanna help us?', '', 'https://www.okpal.com/europe-in-real-life-by-cafebabel', 'Money money') }}
   {{ series("network", 0) }}

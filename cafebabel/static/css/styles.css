@@ -2531,6 +2531,9 @@ a.tag-creative:before {
 .home h2 {
   text-align: center;
   display: block;
+  font-size: 1.7rem;
+  font-weight: 200;
+  font-style: italic;
 }
 
 .home .editors-pick article {
