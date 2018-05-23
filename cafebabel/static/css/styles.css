@@ -798,7 +798,8 @@ a.logo:after {
 
 /* Menu */
 
-button.menu {
+button.menu,
+.login-link {
   position: fixed;
   display: block;
   top: 0;
@@ -898,12 +899,18 @@ li.section a:before {
 }
 
 button.menu.profile,
-button.menu.profile.active {
+button.menu.profile.active,
+.login-link {
   right: 1.5rem;
 }
 
+.login-link:hover:after {
+  width: 0;
+}
+
 button.menu.profile img,
-button.menu.profile .image {
+button.menu.profile .image,
+.login-link img {
   margin: 0 auto;
   width: 3.5rem;
   height: 3.5rem;
@@ -915,6 +922,12 @@ button.menu.profile .image {
   button.menu.profile:hover {
     top: 0.8rem;
   }
+}
+
+.login-link img,
+.home .login-link img {
+  margin-top: 50%;
+  transform: translateY(-50%);
 }
 
 button.menu.profile .image,
@@ -962,7 +975,8 @@ button.menu + nav ul ul {
 }
 
 @media screen and (min-width: 750px) {
-  button.menu.profile {
+  button.menu.profile,
+  .login-link {
     right: 17.5rem;
   }
 
