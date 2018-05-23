@@ -2569,6 +2569,8 @@ a.tag-creative:before {
   font-size: 3rem;
   margin-bottom: 2rem;
   color: #fff;
+  font-style: normal;
+  font-weight: 600;
 }
 
 .home section.series .banner .series-infos p {
