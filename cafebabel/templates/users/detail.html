@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% from "users/macros.html" import social_field with context %}
 {% from "articles/macros.html" import card, profile_image %}
+{% from "users/macros.html" import social_field, contribution_list with context %}
 
 {% block body_class %}profile-page{% endblock %}
 {% block body %}
@@ -42,30 +42,6 @@
   {% endif %}
 </section>
 
-<section>
-  {% if articles %}
-    <input type=radio name=contribution-type-switch id=articles-list checked>
-    <label for=articles-list {% if not translations %}class=single{% endif %}>Articles</label>
-    <div class=contributions>
-    {% for article in articles %}
-      {{ card(article) }}
-    {% endfor %}
-    </div>
-  {% endif %}
-  {% if translations %}
-    <input type=radio name=contribution-type-switch id=translation-list {% if not articles %}checked{% endif %}>
-    <label for=translation-list {% if not articles %}class=single{% endif %}>Translations</label>
-    <div class=contributions>
-      {% for translation in translations %}
-        {{ card(translation) }}
-      {% endfor %}
-    </div>
-  {% endif %}
-  {% if not is_full %}
-    {% if articles|length == config.HARD_LIMIT_PER_PAGE or translations|length == config.HARD_LIMIT_PER_PAGE %}
-      <a class=button href="?full">See all articles and translations</a>
-    {% endif %}
-  {% endif %}
-</section>
+{{ contribution_list() }}
 
 {% endblock %}
