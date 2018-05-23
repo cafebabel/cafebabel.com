@@ -2,7 +2,7 @@
 <html lang={{ current_language }}>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
-<title>{% block meta_title %}pan-European news, features and opinions{% endblock %} – Cafebabel</title>
+<title>{% block meta_title %}Cafébabel - Europe in real life{% endblock %}</title>
 <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
@@ -27,53 +27,77 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-<button class="menu main-menu"></button>
-<nav>
-  <ul>
-    {% set categories = get_categories() %}
-    {% for category in categories %}
-      <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
-    {% endfor %}
-    <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
-    <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
-    {% set static_pages = static_pages_for(current_language) %}
-    <li><a href={{ url_for('tags.detail', slug='network') }}>Network</a></li>
-    <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
-    {% if current_user.has_role('editor') %}
-      <li class="editors-panel">
+<header>
+  <button class="menu main-menu"></button>
+  <nav>
+    <ul>
+      <li class=mobile-language-selector>
         <ul>
-          <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
-          <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+          {% for lang_code, lang_label in get_languages() %}
+            {% if lang_code != current_language %}
+              {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
+              {% if article and article.id %}
+                {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
+              {% elif tag and tag.slug in get_categories_slugs() %}
+                {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
+              {% elif drafts %}
+                {% set lang_url = url_for('drafts.list', lang=lang_code) %}
+              {% endif %}
+              <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
+            {% endif %}
+          {% endfor %}
         </ul>
       </li>
-    {% endif %}
-    <li class=social>
-      {{ social_networks() }}
-    </li>
-  </ul>
-</nav>
-
-<button class="menu language">{{ current_language }}</button>
-<nav>
-  <ul>
-    {% for lang_code, lang_label in get_languages() %}
-      {% if lang_code != current_language %}
-        {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
-        {% if article and article.id %}
-          {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
-        {% elif tag and tag.slug in get_categories_slugs() %}
-          {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
-        {% elif drafts %}
-          {% set lang_url = url_for('drafts.list', lang=lang_code) %}
-        {% endif %}
-        <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
+      {% set categories = get_categories() %}
+      {% for category in categories %}
+        <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
+      {% endfor %}
+      <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
+      <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
+      {% set static_pages = static_pages_for(current_language) %}
+      <li><a href={{ url_for('tags.detail', slug='network') }}>Network</a></li>
+      <li class=donate><a href=https://www.okpal.com/europe-in-real-life-by-cafebabel>Donate</a></li>
+      <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
+      {% if current_user.has_role('editor') %}
+        <li class="editors-panel">
+          <ul>
+            <li><a href={{ lang_url_for('drafts.create') }}>New article</a></li>
+            <li><a href={{ lang_url_for('drafts.list') }}>Pending drafts</a></li>
+          </ul>
+        </li>
       {% endif %}
-    {% endfor %}
-  </ul>
-</nav>
+      <li class=social>
+        {{ social_networks() }}
+      </li>
+    </ul>
+  </nav>
+  
+  <a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
+  <a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
+  <a href=https://www.okpal.com/europe-in-real-life-by-cafebabel id=donate>Donate</a>
 
-<a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
-<a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
+  <a href={{ lang_url_for('cores.home_lang') }} class=logo>
+    <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
+  </a>
+
+  <button class="menu language">{{ current_language }}</button>
+  <nav>
+    <ul>
+      {% for lang_code, lang_label in get_languages() %}
+        {% if lang_code != current_language %}
+          {% set lang_url = url_for('cores.home_lang', lang=lang_code) %}
+          {% if article and article.id %}
+            {% set lang_url = article.get_published_translation_url(lang_code) or lang_url %}
+          {% elif tag and tag.slug in get_categories_slugs() %}
+            {% set lang_url = url_for('tags.detail', slug=tag.slug, lang=lang_code) %}
+          {% elif drafts %}
+            {% set lang_url = url_for('drafts.list', lang=lang_code) %}
+          {% endif %}
+          <li><a href={{ lang_url }}>{{ lang_code|upper }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
 
 {% if current_user.is_authenticated or security.confirmable %}
   <button class="menu profile">
@@ -106,15 +130,13 @@
   </a>
 {% endif %}
 
-<nav id=social-networks>
-  {{ social_networks(with_linkedin=False) }}
-</nav>
-{% include "security/_messages.html" %}
+  <nav id=social-networks>
+    {{ social_networks(with_linkedin=False) }}
+  </nav>
+  {% include "security/_messages.html" %}
+</header>
 
 <main>
-  <a href={{ lang_url_for('cores.home_lang') }} class=logo>
-    <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
-  </a>
   <div id=content>
 {% block body %}{% endblock %}
   </div>

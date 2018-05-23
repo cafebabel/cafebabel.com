@@ -2,7 +2,7 @@
 {% import "articles/macros.html" as macros %}
 {% from "_meta-macro.html" import meta %}
 
-{% block meta_title %}{{ article.title }}{% endblock %}
+{% block meta_title %}{{ article.title }} – Cafébabel{% endblock %}
 {% block metas %}
   {{ meta('name=description', article.summary|striptags) }}
   {{ meta('name=author', article.authors|join(', ')) }}
@@ -23,6 +23,8 @@
   {{ meta('name=twitter:description', article.summary|striptags) }}
   {{ meta('name=twitter:url', request.url) }}
 {% endblock %}
+
+{% block extra_head %}<link rel="alternate" hreflang={{ article.language }} href={{ article.detail_url }}"/>{% endblock %}
 
 {% block body_class %}article-page{% endblock %}
 
