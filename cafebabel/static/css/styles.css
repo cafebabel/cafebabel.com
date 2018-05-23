@@ -853,6 +853,7 @@ button.menu.active:before {
   top: 3.6rem;
   transform: rotate(45deg);
 }
+
 button.menu.active:after {
   bottom: 3.6rem;
   transform: rotate(-45deg);
@@ -876,7 +877,8 @@ button.menu + nav {
 }
 
 @media screen and (min-width: 750px) {
-  button.menu {
+  button.menu,
+  .login-link {
     top: 1rem;
   }
 
@@ -926,8 +928,15 @@ button.menu.profile .image,
 
 .login-link img,
 .home .login-link img {
-  margin-top: 50%;
-  transform: translateY(-50%);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s;
+}
+
+.login-link:hover img {
+  top: calc(50% - 0.2rem);
 }
 
 button.menu.profile .image,
