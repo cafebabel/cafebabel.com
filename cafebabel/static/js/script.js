@@ -104,7 +104,7 @@ function deactivateInput(input) {
 }
 
 /* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860  */
-const autofillContent = `"${String.fromCharCode(0xfeff)}"` // Keep semicolon for jsmin.
+const autofillContent = `"${String.fromCharCode(0xfeff)}"`; // Keep semicolon for jsmin.
 function checkAutofill(input) {
   if (input && !input.value) {
     const style = window.getComputedStyle(input)
