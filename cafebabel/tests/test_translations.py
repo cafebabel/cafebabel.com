@@ -29,7 +29,9 @@ def test_translation_creation_should_display_form(client, user, article):
     response = client.get(
         f'/fr/article/translation/new/?original={article.id}')
     assert response.status_code == HTTPStatus.OK
-    assert '<textarea id=body name=body required></textarea>' in response
+    assert f'value="{article.title}"'in response
+    assert f'>{article.summary}</textarea>' in response
+    assert f'required>{article.body}</textarea>' in response
 
 
 def test_translation_creation_should_limit_languages(client, user,

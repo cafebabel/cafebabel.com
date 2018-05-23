@@ -14,6 +14,12 @@ def test_tag_basics(tag):
     assert str(tag) == 'Wonderful (en)'
 
 
+def test_tag_clean_name_on_save(tag):
+    tag.name = ' Wonderbar  '
+    tag.save()
+    assert tag.name == 'Wonderbar'
+
+
 def test_tag_non_ascii_name(app):
     language = app.config['LANGUAGES'][0][0]
     tag = Tag.objects.create(name='\u4e2d\u56fd\u4e0e\u4e16\u754c',
