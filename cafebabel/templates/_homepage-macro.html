@@ -1,10 +1,13 @@
-{% macro series(tag_slug, limit) %}
+{% macro series(tag_slug, limit, description, button_text) %}
   <section class="series tag-{{ tag_slug }}">
     {% set tag_series, articles_series = articles_for_tag(tag_slug, limit=limit) %}
     {% if articles_series or not limit %}
       <a href="{{ tag_series.detail_url }}" class=banner style="background-image:url({{ tag_series.image_url or '' }});">
         <div class=series-infos>
           <h2>{{ tag_series.name }}</h2>
+          {% if description %}
+            <p>{{ description }}</p>
+          {% endif %}
         </div>
       </a>
     {% endif %}
@@ -15,14 +18,32 @@
         {% endfor %}
       </div>
     {% endif %}
+    {% if description %}
+      <a class=button>{{ button_text }}</a>
+    {% endif %}
   </section>
 {% endmacro %}
 
 {% macro latest(tag_slug, limit) %}
-  <section class=latest>
-    {% set tag_latest, articles_latest = articles_for_tag(tag_slug, limit=limit) %}
-    {% for article_latest in articles_latest %}
-      {{ card(article_latest) }}
-    {% endfor %}
+  {% set tag_latest, articles_latest = articles_for_tag(tag_slug, limit=limit) %}
+  {% if articles_latest %}
+    <section class=latest>
+      <div class=latest-column>
+        {% for article_latest in articles_latest %}
+          {% if loop.index == 4 %}
+            </div><div class=latest-column>
+          {% endif %}
+          {{ card(article_latest) }}
+        {% endfor %}
+        </div>
+    </section>
+  {% endif %}
+{% endmacro %}
+
+{% macro participation(class, title, description, button_link, button_text) %}
+  <section class=participation-{{ class }}>
+    <h3>{{ title }}</h3>
+    <p>{{ description }}</p>
+    <a class=button href={{ button_link }}>{{ button_text }}</a>
   </section>
 {% endmacro %}
