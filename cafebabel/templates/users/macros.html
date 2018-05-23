@@ -7,3 +7,33 @@
   </label>
 </li>
 {% endmacro %}
+
+{% macro contribution_list() %}
+  {% if articles or translations %}
+    <section>
+      {% if articles %}
+        <input type=radio name=contribution-type-switch id=articles-list checked>
+        <label for=articles-list {% if not translations %}class=single{% endif %}>Articles</label>
+        <div class=contributions>
+          {% for article in articles %}
+            {{ card(article) }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if translations %}
+        <input type=radio name=contribution-type-switch id=translation-list {% if not articles %}checked{% endif %}>
+        <label for=translation-list {% if not articles %}class=single{% endif %}>Translations</label>
+        <div class=contributions>
+          {% for translation in translations %}
+            {{ card(translation) }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if not is_full %}
+        {% if articles|length == config.HARD_LIMIT_PER_PAGE or translations|length == config.HARD_LIMIT_PER_PAGE %}
+          <a class=button href="?full">See all articles and translations</a>
+        {% endif %}
+      {% endif %}
+    </section>
+  {% endif %}
+{% endmacro %}
