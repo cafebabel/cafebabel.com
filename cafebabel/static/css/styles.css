@@ -944,10 +944,11 @@ button.menu.profile + nav li.icon-cross a {
 
 button.menu + nav ul {
   position: absolute;
-  top: 50%;
+  top: 53%;
   left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
+  line-height: 1.3;
 }
 
 button.menu + nav ul ul {
@@ -963,6 +964,10 @@ button.menu + nav ul ul {
 @media screen and (min-width: 750px) {
   button.menu.profile {
     right: 17.5rem;
+  }
+
+  button.menu + nav ul {
+    line-height: 1.5;
   }
 
   button.menu + nav ul .mobile-language-selector,
@@ -1047,7 +1052,8 @@ button.menu + nav a {
 }
 
 .participate,
-.translate {
+.translate,
+.donate {
   display: block;
 }
 
@@ -1113,7 +1119,8 @@ button.menu + nav a {
     left: 22.5rem;
   }
 
-  .translate {
+  .translate,
+  .donate {
     display: none;
   }
 
