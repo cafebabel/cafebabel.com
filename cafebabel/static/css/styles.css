@@ -2908,16 +2908,7 @@ article .article-detail h3 a:hover:after {
 /* Hide layout tags */
 
 .tags-list a.tag-editors-pick,
-.tags-list a.tag-latest1,
-.tags-list a.tag-latest2,
-.tags-list a.tag-latest3,
-.tags-list a.tag-latest4,
-.tags-list a.tag-latest5,
-.tags-list a.tag-latest6,
-.tags-list a.tag-latest7,
-.tags-list a.tag-latest8,
-.tags-list a.tag-latest9,
-.tags-list a.tag-latest10 {
+.tags-list a.tag-latest {
   display: none;
 }
 
