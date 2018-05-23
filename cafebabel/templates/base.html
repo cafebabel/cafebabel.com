@@ -101,7 +101,7 @@
     {% endif %}
   </nav>
 {% elif not current_user.is_authenticated %}
-  <a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">
+  <a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}" class=login-link>
     <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
   </a>
 {% endif %}
