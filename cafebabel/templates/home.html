@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "_meta-macro.html" import meta %}
 {% from "articles/macros.html" import card %}
-{% from "_homepage-macro.html" import series, latest with context %}
+{% from "_homepage-macro.html" import series, latest, participation with context %}
 
 {% block metas %}
   {{ meta('name=description', 'Cafébabel is the first European participatory magazine made for young Europeans across borders.') }}
@@ -112,10 +112,34 @@
   {{ latest("latest1", 3) }}
   {{ series("meet-my-hood", 2) }}
   {{ latest("latest2", 3) }}
+  </section>
+  <h2>Latest</h2>
+  {{ latest("latest", 8) }}
+  <section class=categories>
+    <h2>Sections</h2>
+    {% for category in categories|shuffle %}
+      <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>
+      {% set tag_category, articles_category = articles_for_tag(category.slug, 3) %}
+      {% if articles_category %}
+        <div class=category-article><div class=category-article-column>
+        {% for article_category in articles_category %}
+          {% if loop.index == 2 %}
+            </div><div class=category-article-column>
+          {% endif %}
+          {{ card(article_category) }}
+        {% endfor %}
+          </div></div>
+      {% endif %}
+    {% endfor %}
+  </section>
+  <h2>Serie</h2>
+  {{ series("meet-my-hood", 2, 'small description here', 'See all MMH articles') }}
+  {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', '/article/proposal/new/', 'Come come come!') }}
+  <h2>Serie</h2>
+  {{ series("who-cares", 0, 'small description here', 'See all Who cares? articles') }}
+  {{ participation('donate', 'Wanna help us?', '', 'https://www.okpal.com/europe-in-real-life-by-cafebabel', 'Money money') }}
   {{ series("network", 0) }}
-  {{ latest("latest3", 3) }}
-  {{ series("voglio-mangiare-cosi", 2) }}
-  {{ latest("latest4", 3) }}
+  {{ participation('newseletter-form', 'Wanna here from us once every two weeks ? Subscribe', '', '#static-pages-links', 'This way') }}
   <div id=under-construction>
     <div class=modal>
     <button title="close this window"></button>
