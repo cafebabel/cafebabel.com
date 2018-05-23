@@ -75,30 +75,36 @@
 <a href={{ lang_url_for('proposals.create') }} id=participate>Participate</a>
 <a href={{ lang_url_for('articles.to_translate') }} id=translate>Translate</a>
 
-<button class="menu profile">
-  {% if current_user.is_authenticated %}
-    {{ profile_image(current_user) }}
-  {% else %}
-    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
-  {% endif %}
-</button>
-<nav>
-  {% if current_user.is_authenticated %}
-    <ul>
-      <li>{{ profile_image(current_user) }}<a href={{ current_user.detail_url }}>Profile</a></li>
-      <li class=icon-cross><a href={{ url_for('security.logout') }} >Log out</a></li>
-    </ul>
+{% if current_user.is_authenticated or security.confirmable %}
+  <button class="menu profile">
+    {% if current_user.is_authenticated %}
+      {{ profile_image(current_user) }}
     {% else %}
-    <ul>
-      {% if security.registerable or security.recoverable or security.confirmable %}
-        <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
-        {% if security.confirmable %}
-          <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+      <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
+    {% endif %}
+  </button>
+  <nav>
+    {% if current_user.is_authenticated %}
+      <ul>
+        <li>{{ profile_image(current_user) }}<a href={{ current_user.detail_url }}>Profile</a></li>
+        <li class=icon-cross><a href={{ url_for('security.logout') }} >Log out</a></li>
+      </ul>
+    {% else %}
+      <ul>
+        {% if security.registerable or security.recoverable or security.confirmable %}
+          <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
+          {% if security.confirmable %}
+            <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+          {% endif %}
         {% endif %}
-      {% endif %}
-    </ul>
-  {% endif %}
-</nav>
+      </ul>
+    {% endif %}
+  </nav>
+{% elif not current_user.is_authenticated %}
+  <a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Blank profile picture">
+  </a>
+{% endif %}
 
 <nav id=social-networks>
   {{ social_networks(with_linkedin=False) }}
