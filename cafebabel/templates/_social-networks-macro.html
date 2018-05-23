@@ -1,12 +1,12 @@
 {% macro social_networks(with_linkedin=False) %}
   <ul>
-    <li><a href={{ social_network_url_for('facebook') }} class=icon-facebook title="Facebook"></a></li>
-    <li><a href={{ social_network_url_for('twitter') }} class=icon-twitter title="Twitter"></a></li>
-    <li><a href={{ social_network_url_for('instagram') }} class=icon-instagram title="Instagram"></a></li>
-    <li><a href=#static-pages-links class=icon-newsletter title="Newsletter"></a></li>
-    <li><a href={{ social_network_url_for('youtube') }} class=icon-youtube title="Youtube"></a></li>
+    <li><a href={{ social_network_url_for('facebook') }} class=icon-facebook2 title="Facebook"></a></li>
+    <li><a href={{ social_network_url_for('twitter') }} class=icon-twitter2 title="Twitter"></a></li>
+    <li><a href={{ social_network_url_for('instagram') }} class=icon-instagram2 title="Instagram"></a></li>
+    <li><a href={{ social_network_url_for('youtube') }} class=icon-youtube2 title="Youtube"></a></li>
+    <li><a href=#static-pages-links class=icon-newsletter2 title="Newsletter"></a></li>
     {% if with_linkedin %}
-        <li><a href={{ social_network_url_for('linkedin') }} class=icon-linkedin title="LinkedIn"></a></li>
+        <li><a href={{ social_network_url_for('linkedin') }} class=icon-linkedin2 title="LinkedIn"></a></li>
     {% endif %}
   </ul>
 {% endmacro %}
