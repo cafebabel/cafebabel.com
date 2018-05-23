@@ -392,9 +392,11 @@ textarea:focus {
   outline: none;
 }
 
-input[type='checkbox'],
-input[type='submit'] {
-  -webkit-appearance: none; /* prevent iOS bad interpretation */
+@media screen and (max-width: 750px) {
+  input[type='checkbox'],
+  input[type='submit'] {
+    -webkit-appearance: none; /* prevent iOS bad interpretation */
+  }
 }
 
 input[type='submit'],
