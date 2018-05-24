@@ -2684,6 +2684,8 @@ button.menu.main-menu + nav a.tag-network:before {
 
 .home .editors-pick article {
   max-width: 120rem;
+  width: 120%;
+  margin: 0 -10% 1rem;
 }
 
 .home section.series .banner {
@@ -2854,6 +2856,8 @@ article .article-detail h3 a:hover:after {
 
   .home .editors-pick article {
     position: relative;
+    width: auto;
+    margin: 0 auto 5rem;
   }
 
   .home .editors-pick article .article-detail {
