@@ -2688,14 +2688,19 @@ a.tag-creative:before {
   display: block;
 }
 
-.home section.series .tag-articles article:last-of-type {
-  display: none;
-}
-
 .home section.series a.button {
   max-width: 120rem;
   background-color: #fff;
   color: #00283c;
+  margin: -2.5rem auto 2rem;
+}
+
+.home section.series .tag-articles + a.button {
+  margin: 2rem auto;
+}
+
+.home section.series .tag-articles article:last-of-type {
+  display: none;
 }
 
 .home img {
@@ -2959,6 +2964,11 @@ article .article-detail h3 a:hover:after {
     height: 30rem;
     display: block;
     overflow: hidden;
+  }
+
+  .home section.series a.button:hover {
+    background-color: #00283c;
+    color: #fff;
   }
 
   .home section.series .tag-articles article > a img {
