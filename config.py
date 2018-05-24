@@ -143,6 +143,7 @@ class DevelopmentConfig(BaseConfig):
     EXPLAIN_TEMPLATE_LOADING = False
     MEDIA_URL = ''
     RESIZE_URL = MEDIA_URL + '/'
+    ASSETS_DEBUG = True
 
 
 class TestingConfig(BaseConfig):
