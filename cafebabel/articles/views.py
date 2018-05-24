@@ -57,7 +57,7 @@ def edit(article_id):
 
 
 @articles.route('/<regex("\w{24}"):article_id>/delete/', methods=['post'])
-@editor_required(fresh=True)
+@editor_required()
 def delete(article_id):
     article = Article.objects.get_or_404(id=article_id)
     article.delete()

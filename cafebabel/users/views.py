@@ -71,7 +71,14 @@ def edit(id):
         flash('Your profile has been updated :-)')
         return redirect(user.detail_url)
     articles = Article.objects.filter(authors=user).hard_limit()
-    return render_template('users/edit.html', user=user, articles=articles)
+
+    translations = (Translation.objects(translators__in=[user])
+                    .exclude('original_article'))
+
+    return render_template(
+        'users/edit.html', user=user, is_full=False,
+        articles=articles.select_related(max_depth=1),
+        translations=translations.select_related(max_depth=1))
 
 
 @users.route('/<slug>-<regex("\w{24}"):id>/')
