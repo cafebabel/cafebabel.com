@@ -7,6 +7,7 @@ from cafebabel.users.models import Role, User, UserProfile
 from cafebabel.articles.models import Article
 from cafebabel.articles.tags.models import Tag
 from cafebabel.articles.translations.models import Translation
+from cafebabel.core.helpers import slugify
 
 
 def drop_collections():
@@ -80,3 +81,10 @@ def static_pages_fixtures(app):
                     creation_date=article.creation_date,
                     publication_date=article.publication_date)
     click.echo('Static pages intialized.')
+
+
+def migrate_users_slugs():
+    for user in User.objects.all():
+        if not user.profile.slug:
+            user.profile.slug = slugify(user.profile.name)
+            user.save()
