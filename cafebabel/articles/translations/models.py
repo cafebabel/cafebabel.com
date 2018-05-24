@@ -51,11 +51,12 @@ class Translation(Article):
                    Article.objects.get_or_404(id=data.pop('original')))
         self.editor = self.editor or article.editor
         self.authors = self.authors or article.authors
+        self.translators = self.translators or [current_user.id]
         self.original_article = article
         self.status = self.status or 'draft'
         self.image_filename = self.image_filename or article.image_filename
-        self.translators = self.translators or [current_user.id]
         self.tags = []
+
         data['language'] = self.language or current_language()
         for field, value in data.items():
             if field.startswith('tag-') and value:
@@ -65,6 +66,13 @@ class Translation(Article):
                     self.tags.append(tag)
             else:
                 setattr(self, field, value)
+
+        if current_user.has_role('editor'):
+            self.translators = [
+                User.objects.get(id=id_)
+                for id_ in request.form.getlist('translators')
+            ]
+
         return self.save()
 
 

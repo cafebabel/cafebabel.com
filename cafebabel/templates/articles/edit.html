@@ -38,17 +38,27 @@
         </select>
       </label>
     </div>
-    {% if not article.is_translation %}
-    <div class=select-multi>
-      <label for=authors>Contributor(s)
-        <select name=authors id=authors multiple>
-          {% for author in article.authors %}
-            <option value={{ author.id }} selected>{{ author }}</option>
-          {% endfor %}
-        </select>
-      </label>
-    </div>
-    {% endif %}
+    {% if article.is_translation -%}
+      <div class=select-multi>
+        <label for=translators>Translator(s)
+          <select name=translators id=translators multiple>
+            {% for translator in article.translators %}
+              <option value={{ translator.id }} selected>{{ translator }}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+    {% else %}
+      <div class=select-multi>
+        <label for=authors>Contributor(s)
+          <select name=authors id=authors multiple>
+            {% for author in article.authors %}
+              <option value={{ author.id }} selected>{{ author }}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+    {%- endif %}
   {% endif %}
   </div>
   <div class=textarea>
