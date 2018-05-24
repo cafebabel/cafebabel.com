@@ -2797,15 +2797,6 @@ article .article-detail h3 {
   font-size: 1.8rem;
 }
 
-article a:hover + .article-detail h3 a,
-article .article-detail h3 a:hover {
-  color: #bde513;
-}
-
-article .article-detail h3 a:hover:after {
-  width: 0;
-}
-
 .home article .article-detail p {
   margin: 0 0 2rem;
   font-size: 1.6rem;
@@ -2852,6 +2843,15 @@ article .article-detail h3 a:hover:after {
 
   .home .article-detail h3 {
     margin: 2rem 0;
+  }
+
+  article a:hover + .article-detail h3 a,
+  article .article-detail h3 a:hover {
+    color: #bde513;
+  }
+
+  article .article-detail h3 a:hover:after {
+    width: 0;
   }
 
   .home section.series {
