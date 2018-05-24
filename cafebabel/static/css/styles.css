@@ -280,11 +280,11 @@ textarea {
 
 h1,
 article h1:first-of-type {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin: 4rem 0;
   border: 0.3rem solid #00283c;
   padding: 5rem;
-  line-height: 3.5rem;
+  line-height: 3.2rem;
   text-align: center;
 }
 
@@ -1896,6 +1896,10 @@ select#author {
 
 /* Article page */
 
+.article-page #content {
+  overflow: hidden;
+}
+
 .article-page article h2,
 .article-page article h3,
 .article-page article h4,
@@ -1913,6 +1917,10 @@ select#author {
 }
 
 @media screen and (min-width: 750px) {
+  .article-page #content {
+    overflow: unset;
+  }
+
   .article-page article > img {
     margin: 0 auto;
     width: 100%; /* force archive images (1180px wide) to be 1200px */
@@ -1954,8 +1962,8 @@ select#author {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: -10rem;
-  font-size: 1.5rem;
+  margin-top: -9rem;
+  font-size: 1.3rem;
 }
 
 .article-page article h1 + p span {
