@@ -329,10 +329,10 @@ def test_access_published_article_should_link_translations(
         f'/en/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
     assert ((f'<li class=translated-language><a href=/fr/article/'
-             f'title-{published_translation.id}/>fr</a></li>') in response)
+             f'title-{published_translation.id}/ title="See this article in fr">fr</a></li>') in response)
     assert ((f'<li class=to-translate-languages>'
              f'<a href="/es/article/translation/new/'
-             f'?original={published_article.id}">es</a></li>')
+             f'?original={published_article.id}" title="Translate this article in es>es</a></li>')
             in response)
 
 
