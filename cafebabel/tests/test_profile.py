@@ -6,6 +6,10 @@ from .utils import login
 from ..users.models import User
 
 
+def url_for_profile(user):
+    return f'/en/profile/{user.profile.slug}-{user.id}/'
+
+
 def test_confirm_user_creates_default_profile(app):
     user = User.objects.create(email='test_user@example.com',
                                password='password')
@@ -14,26 +18,35 @@ def test_confirm_user_creates_default_profile(app):
     assert user.profile.name == 'Anonymous'
 
 
+def test_create_user_generates_slug(app, user):
+    assert user.profile.slug == 'testy-tester'
+
+
+def test_user_access_profile_page(client, user):
+    response = client.get(url_for_profile(user))
+    assert response.status_code == HTTPStatus.OK
+
+
+
 def test_user_profile_has_button_to_full_list_if_pertinent(
         app, client, published_translation):
     initial_hard_limit = app.config['HARD_LIMIT_PER_PAGE']
     app.config['HARD_LIMIT_PER_PAGE'] = 1
-    response = client.get(
-        f'/en/profile/{published_translation.authors[0].id}/')
+    response = client.get(url_for_profile(published_translation.authors[0]))
     assert response.status_code == HTTPStatus.OK
     assert 'See all articles and translations' in response
     app.config['HARD_LIMIT_PER_PAGE'] = initial_hard_limit
 
 
 def test_user_profile_full_has_no_button_to_list(client, article):
-    response = client.get(f'/en/profile/{article.authors[0].id}/?full')
+    response = client.get(url_for_profile(article.authors[0]) + '?full')
     assert response.status_code == HTTPStatus.OK
     assert 'See all articles and translations' not in response
 
 
 def test_user_profile_has_list_of_published_articles_no_draft(
         client, article, published_article):
-    response = client.get(f'/en/profile/{article.authors[0].id}/')
+    response = client.get(url_for_profile(article.authors[0]))
     assert response.status_code == HTTPStatus.OK
     assert article.detail_url not in response
     assert published_article.detail_url in response
@@ -41,7 +54,7 @@ def test_user_profile_has_list_of_published_articles_no_draft(
 
 def test_user_profile_has_list_of_published_translations_no_draft(
         client, translation, published_translation):
-    response = client.get(f'/en/profile/{translation.authors[0].id}/')
+    response = client.get(url_for_profile(published_translation.authors[0]))
     assert response.status_code == HTTPStatus.OK
     assert translation.detail_url not in response
     assert published_translation.detail_url in response
@@ -50,7 +63,7 @@ def test_user_profile_has_list_of_published_translations_no_draft(
 def test_author_profile_has_list_of_published_articles_and_drafts(
         client, user, article, published_article):
     login(client, user.email, 'password')
-    response = client.get(f'/en/profile/{article.authors[0].id}/')
+    response = client.get(url_for_profile(article.authors[0]))
     assert response.status_code == HTTPStatus.OK
     assert article.detail_url in response
     assert published_article.detail_url in response
@@ -59,7 +72,7 @@ def test_author_profile_has_list_of_published_articles_and_drafts(
 def test_author_profile_has_list_of_published_translations_and_drafts(
         client, user, translation, published_translation):
     login(client, user.email, 'password')
-    response = client.get(f'/en/profile/{translation.authors[0].id}/')
+    response = client.get(url_for_profile(published_translation.authors[0]))
     assert response.status_code == HTTPStatus.OK
     assert translation.detail_url in response
     assert published_translation.detail_url in response
@@ -70,10 +83,10 @@ def test_author_profile_has_list_of_his_translations_only(
     login(client, user.email, 'password')
     assert published_translation.authors == [user]
     published_translation.modify(translators=[user2])
-    response = client.get(f'/en/profile/{user.id}/')
+    response = client.get(url_for_profile(user))
     assert response.status_code == HTTPStatus.OK
     assert published_translation.detail_url not in response
-    response = client.get(f'/en/profile/{user2.id}/')
+    response = client.get(url_for_profile(user2))
     assert response.status_code == HTTPStatus.OK
     assert published_translation.detail_url in response
 

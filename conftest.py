@@ -7,7 +7,7 @@ from cafebabel.commands import auth_fixtures, drop_collections
 from cafebabel.articles.models import Article
 from cafebabel.articles.tags.models import Tag
 from cafebabel.articles.translations.models import Translation
-from cafebabel.users.models import User
+from cafebabel.users.models import User, UserProfile
 
 test_app = create_app('config.TestingConfig')
 
@@ -17,6 +17,7 @@ def pytest_runtest_setup():
     ds = test_app.user_datastore
     with test_app.app_context():
         user = ds.create_user(email='user@example.com',
+                              profile=UserProfile(name='Testy Tester'),
                               password=hash_password('password'))
         ds.activate_user(user)
         user2 = ds.create_user(email='user2@example.com',
