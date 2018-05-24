@@ -81,8 +81,8 @@ def edit(id):
         translations=translations.select_related(max_depth=1))
 
 
-@users.route('/<id>/')
-def detail(id):
+@users.route('/<slug>-<regex("\w{24}"):id>/')
+def detail(slug, id):
     user = User.objects.get_or_404(id=id)
     is_full = 'full' in request.args
     filters = {}

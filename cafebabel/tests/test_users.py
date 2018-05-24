@@ -29,26 +29,26 @@ def test_authenticated_user_can_access_login_required_page(client, user):
     login(client, user.email, 'password')
     response = client.get(f'/en/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.OK
-    assert "<h1>Anonymous's profile</h1>" in response
+    assert "<h1>Testy Tester's profile</h1>" in response
 
 
 def test_authenticated_user_can_access_his_email(client, user):
     login(client, user.email, 'password')
-    response = client.get(f'/en/profile/{user.id}/')
+    response = client.get(f'/en/profile/testy-tester-{user.id}/')
     assert response.status_code == HTTPStatus.OK
     assert user.email in response
 
 
 def test_authenticated_user_cannot_access_others_email(client, user, user2):
     login(client, user2.email, 'password')
-    response = client.get(f'/en/profile/{user.id}/')
+    response = client.get(f'/en/profile/anonymous-{user.id}/')
     assert response.status_code == HTTPStatus.OK
     assert user.email not in response
 
 
 def test_editor_can_access_user_email(client, user, editor):
     login(client, editor.email, 'password')
-    response = client.get(f'/en/profile/{user.id}/')
+    response = client.get(f'/en/profile/testy-tester-{user.id}/')
     assert response.status_code == HTTPStatus.OK
     assert user.email in response
 
@@ -126,7 +126,7 @@ def test_login_complete_is_redirecting_to_appropriate_language(client, user):
     response = client.get('/login_complete/')
     assert response.status_code == HTTPStatus.FOUND
     assert (response.headers.get('Location') ==
-            f'http://localhost/en/profile/{user.id}/')
+            f'http://localhost/en/profile/testy-tester-{user.id}/')
 
 
 def test_login_complete_redirects_if_not_logged_in(client, user):
@@ -142,7 +142,7 @@ def test_user_suggest_basics(client, user):
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
         'name': 'John Doe',
-        'id': str(user.id)
+        'id': str(user.id),
     }]
 
 
@@ -151,9 +151,6 @@ def test_user_suggest_many(client, editor, user, user2):
     assert response.status_code == HTTPStatus.OK
     assert response.json == [{
         'id': str(editor.id),
-        'name': 'Anonymous'
-    }, {
-        'id': str(user.id),
         'name': 'Anonymous'
     }, {
         'id': str(user2.id),
