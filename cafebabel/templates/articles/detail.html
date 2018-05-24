@@ -64,26 +64,26 @@
           {% endif %}
           {% if translations_publisheds %}
             {% for translation in translations_publisheds %}
-                <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
+                <li class=translated-language><a href={{ translation.detail_url }} title="See this article in {{ lang_code }}">{{ translation.language }}</a></li>
             {% endfor %}
           {% endif %}
           {% for lang_code, lang_label in get_languages() %}
             {% if article.language != lang_code and lang_code not in translations_langs %}
               {% if article.is_translation %}
                 {% if lang_code != article.original_article.language %}
-                  <li class=to-translate-languages><a href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.original_article.id }}">{{ lang_code }}</a></li>
+                  <li class=to-translate-languages><a href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.original_article.id }}" title="Translate this article in {{ lang_code }}">{{ lang_code }}</a></li>
                 {% endif %}
               {% elif article.is_translated_in(lang_code) %}
-                <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_code }}</a></li>
+                <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }} title="See this article in {{ lang_code }}">{{ lang_code }}</a></li>
               {% else %}
-                <li class=to-translate-languages><a href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.id }}">{{ lang_code }}</a></li>
+                <li class=to-translate-languages><a href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.id }}" title="Translate this article in {{ lang_code }}">{{ lang_code }}</a></li>
               {% endif %}
             {% endif %}
           {% endfor %}
         {% if current_user.has_role('editor') %}
           {% if translations_drafts %}
             {% for translation in translations_drafts %}
-              <li class=translation-draft><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
+              <li class=translation-draft><a href={{ translation.detail_url }} title="Translation draft">{{ translation.language }}</a></li>
             {% endfor %}
           {% endif %}
         {% endif %}
