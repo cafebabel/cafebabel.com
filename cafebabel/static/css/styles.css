@@ -690,6 +690,7 @@ img {
 
 article a img {
   background-color: #eee; /* display image background before image is fully loaded */
+  margin: 0 auto;
 }
 
 /* Links */
