@@ -2659,9 +2659,10 @@ a.tag-creative:before {
 .home h2 {
   text-align: center;
   display: block;
-  font-size: 1.7rem;
-  font-weight: 200;
+  font-size: 1.5rem;
+  font-weight: 100;
   font-style: italic;
+  margin-bottom: 1rem;
 }
 
 .home .editors-pick article {
