@@ -30,8 +30,7 @@ def profile_redirect():
     """
     # Do not use `current_user.detail_url` here as we do not have
     # a current language yet, hence guessing it from browser.
-    return redirect(
-        url_for('users.detail', lang=get_language(), id=current_user.id))
+    return redirect(current_user.detail_url)
 
 
 @cores.route('/<lang:lang>/')

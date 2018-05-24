@@ -126,6 +126,7 @@ def register_cli(app):
     from .users.models import User
     from .articles.models import Article
     from .articles.tags.models import Tag
+    from .core.helpers import slugify
 
     @app.cli.command(short_help='Initialize the database')
     def initdb():
@@ -160,6 +161,17 @@ def register_cli(app):
     @app.cli.command(short_help='Display list of URLs')
     def urls():
         print(app.url_map)
+
+    @app.cli.command(short_help='Generate a slug to previous users')
+    def migrate_users_slugs():
+        count = 0
+        for user in User.objects.all():
+            if not user.profile.slug:
+                user.profile.slug = slugify(user.profile.name)
+                user.save()
+                count += 1
+        print(f'{count} users slugified.')
+
 
 
 def register_template_filters(app):
