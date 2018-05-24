@@ -2364,7 +2364,7 @@ article .article-detail {
   position: relative;
   background: #fff;
   width: 85%;
-  margin: -4rem auto 0;
+  margin: -2rem auto 0;
   box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.02);
   padding: 1rem;
   text-align: center;
@@ -2374,6 +2374,7 @@ article .article-detail {
 @media screen and (min-width: 750px) {
   article .article-detail {
     padding: 1.5rem;
+    margin: -4rem auto 0;
   }
 }
 
@@ -2673,6 +2674,10 @@ button.menu.main-menu + nav a.tag-network:before {
   margin-bottom: 1rem;
 }
 
+.home .article-detail h3 {
+  margin: 0.5rem 0;
+}
+
 .home .editors-pick article {
   max-width: 120rem;
 }
@@ -2775,7 +2780,7 @@ a.section-link.tag-creative {
 
 article .article-detail h3 {
   font-family: 'sporting_grotesque', sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
 }
 
 article a:hover + .article-detail h3 a,
@@ -2828,6 +2833,10 @@ article .article-detail h3 a:hover:after {
 @media screen and (min-width: 750px) {
   .home #content {
     grid-gap: 2rem;
+  }
+
+  .home .article-detail h3 {
+    margin: 2rem 0;
   }
 
   .home section.series {
