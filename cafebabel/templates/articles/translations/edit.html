@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% import "articles/macros.html" as macros %}
 
+{% block extra_head %}
+  {% assets filters='cssmin', output='build/articles-edit.css', 'choices/css/choices.min.css', 'css/choices.css' %}
+      <link rel=stylesheet href={{ ASSET_URL }}>
+  {% endassets %}
+{% endblock %}
+
 {% block extra_js %}
-  {% assets filters='jsmin', output='build/translations-edit.js', 'js/articles-tags.js', 'js/textarea-change.js' %}
+  {% assets filters='jsmin', output='build/translations-edit.js', 'js/articles-tags.js', 'js/textarea-change.js', 'choices/js/choices.min.js', 'js/articles-users.js' %}
       <script src={{ ASSET_URL }}></script>
   {% endassets %}
 {% endblock %}
@@ -32,6 +38,15 @@
           </select>
         </label>
       </div>
+    </div>
+    <div class=select-multi>
+      <label for=translators>Translator(s)
+        <select name=translators id=translators multiple>
+          {% for translator in translation.translators %}
+            <option value={{ translator.id }} selected>{{ translator }}</option>
+          {% endfor %}
+        </select>
+      </label>
     </div>
   {% endif %}
   <div class=textarea>

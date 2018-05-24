@@ -3,7 +3,7 @@ from datetime import datetime
 import click
 from flask_security.utils import hash_password
 
-from cafebabel.users.models import Role, User
+from cafebabel.users.models import Role, User, UserProfile
 from cafebabel.articles.models import Article
 from cafebabel.articles.tags.models import Tag
 from cafebabel.articles.translations.models import Translation
