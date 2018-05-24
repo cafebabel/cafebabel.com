@@ -908,10 +908,6 @@ button.menu + nav {
   }
 }
 
-li.section a:before {
-  margin-right: 1rem;
-}
-
 button.menu.profile,
 button.menu.profile.active,
 .login-link {
@@ -935,6 +931,11 @@ button.menu.profile .image,
   button.menu.language:hover,
   button.menu.profile:hover {
     top: 0.3rem;
+  }
+
+  li.section a:before,
+  button.menu.main-menu + nav a.tag-network:before {
+    margin-right: 1rem;
   }
 }
 
@@ -2442,7 +2443,8 @@ a.tag-experience:before,
 .article-page article p.tags-list a.tag-raw:before,
 a.tag-raw:before,
 .article-page article p.tags-list a.tag-creative:before,
-a.tag-creative:before {
+a.tag-creative:before,
+button.menu.main-menu + nav a.tag-network:before {
   font-family: 'icomoon';
   padding-right: 0.4rem;
 }
@@ -2465,6 +2467,10 @@ a.tag-raw:before {
 
 a.tag-creative:before {
   content: '\e901';
+}
+
+button.menu.main-menu + nav a.tag-network:before {
+  content: '\e909';
 }
 
 .article-page article p.tags-list a:hover,
