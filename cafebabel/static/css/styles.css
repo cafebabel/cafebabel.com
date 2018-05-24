@@ -399,6 +399,10 @@ textarea:focus {
   }
 }
 
+input[type='checkbox'] {
+  border: 0;
+}
+
 input[type='submit'],
 button,
 .button {
@@ -534,8 +538,8 @@ button:hover,
 }
 
 .authentication-form a {
-  float: right;
-  margin: 5rem 0;
+  display: block;
+  margin: -5rem 0 5rem;
 }
 
 .authentication-form p {
@@ -551,6 +555,11 @@ button:hover,
 @media screen and (min-width: 750px) {
   .authentication-form {
     width: 50%;
+  }
+
+  .authentication-form a {
+    float: right;
+    margin: 5rem 0;
   }
 }
 
@@ -601,14 +610,23 @@ label[for='remember'] {
   text-transform: none;
   line-height: 2.6rem;
   font-size: 2.2rem;
-  width: 3.7rem;
+  width: 3rem;
   height: 3.7rem;
   text-align: center;
-  margin-left: -0.4rem;
+  margin-left: -2.1rem;
   display: inline-block;
+  position: absolute;
+  top: 0.1rem;
   overflow: hidden;
   color: #bde513;
   transition: all 0.2s;
+}
+
+@media screen and (min-width: 750px) {
+  [type='checkbox']:after {
+    margin-left: -0.1rem;
+    top: 0;
+  }
 }
 
 [type='checkbox']:not(:checked):after {
