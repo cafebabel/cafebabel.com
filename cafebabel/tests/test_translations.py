@@ -222,8 +222,8 @@ def test_translation_can_have_html_summary(client, translation):
 def test_translation_access_have_translator(client, translation):
     response = client.get(f'/fr/article/translation/{translation.id}/')
     translator = translation.translators[0]
-    assert (f'by <a href="/fr/profile/{translator.id}/">{translator}</a>.'
-            in response)
+    assert (f'by <a href="/fr/profile/testy-tester-{translator.id}/">'
+            f'{translator}</a>' in response)
 
 
 def test_translation_access_published_should_return_404(
@@ -326,8 +326,8 @@ def test_translation_published_should_have_translator(
     assert ((f'Translated from <a href="/en/article/'
              f'{published_article.slug}-{published_article.id}/">'
              f'article title') in response)
-    assert (f'<a href="/fr/profile/{translator.id}/" class=translator-link>'
-            in response)
+    assert (f'<a href="/fr/profile/testy-tester-{translator.id}/" '
+            'class=translator-link>' in response)
     assert str(translator) in response
 
 

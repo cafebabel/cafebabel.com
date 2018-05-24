@@ -22,7 +22,7 @@
     <div class=author-container>
       <h4>Story by</h4>
       {% for author in article.authors %}
-          <a href="{{ url_for('users.detail', id=author.pk) }}" class=author-link>
+          <a href="{{ author.detail_url }}" class=author-link>
             {{ profile_image(author) }}
             {{ author }}
           </a>
@@ -32,7 +32,7 @@
       <div class=translator-container>
         <h4>Translation by:</h4>
           {% for translator in article.translators -%}
-              <a href="{{ url_for('users.detail', id=translator.pk) }}" class=translator-link>
+              <a href="{{ translator.detail_url }}" class=translator-link>
                 {{ profile_image(translator) }}
                 {{ translator }}
               </a>
