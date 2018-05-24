@@ -2488,6 +2488,7 @@ a.tag-creative:before {
 
 .tag-page.tag-network main header {
   max-width: none;
+  width: 100%;
 }
 
 .tag-page.tag-network main header + p {
@@ -2534,7 +2535,7 @@ a.tag-creative:before {
 @media screen and (min-width: 750px) {
   .tag-page.tag-network #content {
     display: grid;
-    grid-gap: 3rem 0;
+    grid-gap: 2rem;
     grid-template-columns: 50% 50%;
     justify-content: center;
   }
@@ -2547,7 +2548,8 @@ a.tag-creative:before {
   .tag-page.tag-network article {
     width: 100%;
     margin: 0;
-    padding: 0 0 0 1rem;
+    padding: 1.5rem;
+    background-color: #fff;
   }
 
   .tag-page.tag-network article > a {
@@ -2566,11 +2568,11 @@ a.tag-creative:before {
   }
 
   .tag-page.tag-network article:nth-child(even) {
-    padding: 0 1rem 0 0;
+    /*padding: 0 1rem 0 0;*/
   }
 }
 
-@media screen and (min-width: 1300px) {
+@media screen and (min-width: 1350px) {
   /* 1200px + grid-gaps */
   .tag-page.tag-network #content {
     grid-gap: 3rem 2rem;
@@ -2584,7 +2586,7 @@ a.tag-creative:before {
 
   .tag-page.tag-network article,
   .tag-page.tag-network article:nth-child(even) {
-    padding: 0;
+    /*padding: 0;*/
   }
 
   .tag-page.tag-network main header,
