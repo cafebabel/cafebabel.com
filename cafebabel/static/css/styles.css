@@ -878,7 +878,7 @@ button.menu + nav {
   bottom: 100vh;
   left: 0;
   position: fixed;
-  font-size: 7.5vw;
+  font-size: 7vw;
   opacity: 0;
   z-index: -1;
   transition: all 0.3s;
@@ -2659,6 +2659,7 @@ button.menu.main-menu + nav a.tag-network:before {
 
 .home #content {
   max-width: none;
+  overflow: hidden;
 }
 
 .home article {
@@ -2744,7 +2745,7 @@ button.menu.main-menu + nav a.tag-network:before {
 .home a.section-link {
   position: relative;
   height: 14rem;
-  width: 120%;
+  width: 100%;
   margin: 5rem -10%;
   display: block;
   text-align: center;
@@ -2753,7 +2754,7 @@ button.menu.main-menu + nav a.tag-network:before {
   transition: all 0.3s;
   background-color: #696969;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: auto;
 }
 
 .home a.section-link:before {
@@ -2833,6 +2834,7 @@ article .article-detail h3 a:hover:after {
 @media screen and (min-width: 750px) {
   .home #content {
     grid-gap: 2rem;
+    overflow: unset;
   }
 
   .home .article-detail h3 {
@@ -3033,6 +3035,7 @@ article .article-detail h3 a:hover:after {
     width: 100%;
     max-width: 120rem;
     margin: 5rem auto;
+    background-size: cover;
   }
 }
 
