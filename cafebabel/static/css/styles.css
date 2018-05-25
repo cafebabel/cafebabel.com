@@ -2777,7 +2777,7 @@ button.menu.main-menu + nav a.tag-network:before {
 .home a.section-link {
   position: relative;
   height: 14rem;
-  width: 100%;
+  width: 120%;
   margin: 5rem -10%;
   display: block;
   text-align: center;
