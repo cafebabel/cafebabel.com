@@ -39,14 +39,18 @@
       <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>
       {% set tag_category, articles_category = articles_for_tag(category.slug, 3) %}
       {% if articles_category %}
-        <div class=category-article><div class=category-article-column>
-        {% for article_category in articles_category %}
-          {% if loop.index == 2 %}
-            </div><div class=category-article-column>
-          {% endif %}
-          {{ card(article_category) }}
-        {% endfor %}
-          </div></div>
+        {% if category.slug == 'creative' %}
+          {{ latest("creative-home", 3) }}
+        {% endif %}
+        {% if category.slug == 'experience' %}
+          {{ latest("experience-home", 3) }}
+        {% endif %}
+        {% if category.slug == 'impact' %}
+          {{ latest("impact-home", 3) }}
+        {% endif %}
+        {% if category.slug == 'raw' %}
+          {{ latest("raw-home", 3) }}
+        {% endif %}
       {% endif %}
     {% endfor %}
   </section>
