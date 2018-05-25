@@ -1465,7 +1465,7 @@ select#author {
     margin-bottom: 5rem;
     padding: 2rem;
     background-color: #eeeeee;
-    z-index: 2;
+    z-index: 1;
   }
 
   #markdown-helper button:after {
