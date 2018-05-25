@@ -3100,11 +3100,17 @@ article .article-detail h3 {
 /* Hide layout tags */
 
 .tags-list a.tag-editors-pick,
+.article-page article p.tags-list a.tag-editors-pick,
 .tags-list a.tag-latest,
+.article-page article p.tags-list a.tag-latest,
 .tags-list a.tag-creative-home,
+.article-page article p.tags-list a.tag-creative-home,
 .tags-list a.tag-experience-home,
+.article-page article p.tags-list a.tag-experience-home,
 .tags-list a.tag-impact-home,
-.tags-list a.tag-raw-home {
+.article-page article p.tags-list a.tag-impact-home,
+.tags-list a.tag-raw-home,
+.article-page article p.tags-list a.tag-raw-home {
   display: none;
 }
 
