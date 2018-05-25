@@ -3251,7 +3251,7 @@ footer {
   height: 70rem;
   font-size: 1.7rem;
   background: url(../img/texture-footer.svg),
-    linear-gradient(to bottom right, #002f4b, #30799b); /* https://codepen.io/alexcarpenter/pen/LveDx?q=gradient&limit=all&type=type-pens */
+    linear-gradient(to bottom right, #001e2f, #20556d);
   color: #fff;
   position: fixed;
   bottom: 0;
