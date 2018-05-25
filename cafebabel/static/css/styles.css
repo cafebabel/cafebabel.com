@@ -2760,14 +2760,19 @@ button.menu.main-menu + nav a.tag-network:before {
   display: block;
 }
 
-.home section.series .tag-articles article:last-of-type {
-  display: none;
-}
-
 .home section.series a.button {
   max-width: 120rem;
   background-color: #fff;
   color: #00283c;
+  margin: -2.5rem auto 2rem;
+}
+
+.home section.series .tag-articles + a.button {
+  margin: 2rem auto;
+}
+
+.home section.series .tag-articles article:last-of-type {
+  display: none;
 }
 
 .home img {
@@ -2950,13 +2955,11 @@ article .article-detail h3 {
     grid-column: 1 / 5;
   }
 
-  .home .latest .latest-column:nth-of-type(2),
-  .home .category-article .category-article-column:nth-of-type(2) {
+  .home .latest .latest-column:nth-of-type(2) {
     grid-column: 5 / 7;
   }
 
-  .home .latest .latest-column:nth-of-type(2) article,
-  .home .category-article .category-article-column:nth-of-type(2) article {
+  .home .latest .latest-column:nth-of-type(2) article {
     margin-bottom: 0;
   }
 
@@ -3041,6 +3044,11 @@ article .article-detail h3 {
     overflow: hidden;
   }
 
+  .home section.series a.button:hover {
+    background-color: #00283c;
+    color: #fff;
+  }
+
   .home section.series .tag-articles article > a img {
     height: 100%;
     max-width: none;
@@ -3092,7 +3100,17 @@ article .article-detail h3 {
 /* Hide layout tags */
 
 .tags-list a.tag-editors-pick,
-.tags-list a.tag-latest {
+.article-page article p.tags-list a.tag-editors-pick,
+.tags-list a.tag-latest,
+.article-page article p.tags-list a.tag-latest,
+.tags-list a.tag-creative-home,
+.article-page article p.tags-list a.tag-creative-home,
+.tags-list a.tag-experience-home,
+.article-page article p.tags-list a.tag-experience-home,
+.tags-list a.tag-impact-home,
+.article-page article p.tags-list a.tag-impact-home,
+.tags-list a.tag-raw-home,
+.article-page article p.tags-list a.tag-raw-home {
   display: none;
 }
 
