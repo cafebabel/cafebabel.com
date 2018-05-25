@@ -6,7 +6,7 @@ const imagesArray = [
 ]
 const preloader = document.querySelector('#preloader-layer')
 
-const num = Math.floor(Math.random() * (imagesArray.length + 1))
+const num = Math.floor(Math.random() * imagesArray.length)
 const preloaderImg = preloader.querySelector('img')
 preloaderImg.src = imagesArray[num]
 setTimeout(() => {
