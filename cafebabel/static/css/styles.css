@@ -2942,8 +2942,7 @@ article .article-detail h3 {
   }
 
   .home .latest,
-  .home .category-article,
-  .home .categories .latest .latest-column {
+  .home .category-article {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 2rem;
@@ -2952,39 +2951,15 @@ article .article-detail h3 {
   }
 
   .home .latest .latest-column:first-of-type,
-  .home .category-article .category-article-column:first-of-type,
-  .home .categories .latest .latest-column article:first-of-type {
+  .home .category-article .category-article-column:first-of-type {
     grid-column: 1 / 5;
   }
 
-  .home .categories .latest .latest-column article:first-of-type {
-    grid-row: 1 / 6;
-  }
-
-  .home .categories .latest .latest-column {
-    grid-column: 1 / 7;
-    grid-template-rows: repeat(4, 1fr);
-  }
-
-  .home .latest .latest-column:nth-of-type(2),
-  .home .category-article .category-article-column:nth-of-type(2),
-  .home .categories .latest .latest-column article:nth-of-type(2),
-  .home .categories .latest .latest-column article:nth-of-type(3) {
+  .home .latest .latest-column:nth-of-type(2) {
     grid-column: 5 / 7;
   }
 
-  .home .categories .latest .latest-column article:nth-of-type(2) {
-    grid-row: 1 / 4;
-  }
-
-  .home .categories .latest .latest-column article:nth-of-type(3) {
-    grid-row: 3 / 5;
-  }
-
-  .home .latest .latest-column:nth-of-type(2) article,
-  .home .category-article .category-article-column:nth-of-type(2) article,
-  .home .categories .latest .latest-column article:nth-of-type(2),
-  .home .categories .latest .latest-column article:nth-of-type(3) {
+  .home .latest .latest-column:nth-of-type(2) article {
     margin-bottom: 0;
   }
 
@@ -2993,18 +2968,6 @@ article .article-detail h3 {
     .category-article
     .category-article-column:nth-of-type(2)
     article
-    .article-detail,
-  .home
-    .categories
-    .latest
-    .latest-column
-    article:nth-of-type(2)
-    .article-detail,
-  .home
-    .categories
-    .latest
-    .latest-column
-    article:nth-of-type(3)
     .article-detail {
     margin: 0 auto;
     padding: 1rem 0 2.5rem;
@@ -3018,20 +2981,6 @@ article .article-detail h3 {
     .category-article-column:nth-of-type(2)
     article
     .article-detail
-    h3,
-  .home
-    .categories
-    .latest
-    .latest-column
-    article:nth-of-type(2)
-    .article-detail
-    h3,
-  .home
-    .categories
-    .latest
-    .latest-column
-    article:nth-of-type(3)
-    .article-detail
     h3 {
     font-size: 1.8rem;
     margin: 0.5rem 0 0.7rem;
@@ -3043,9 +2992,7 @@ article .article-detail h3 {
     .category-article
     .category-article-column:nth-of-type(2)
     article
-    .tags-list,
-  .home .categories .latest .latest-column article:nth-of-type(2) .tags-list,
-  .home .categories .latest .latest-column article:nth-of-type(3) .tags-list {
+    .tags-list {
     text-align: left;
     left: 0;
   }
@@ -3056,9 +3003,7 @@ article .article-detail h3 {
     .category-article-column:nth-of-type(2)
     article
     .tags-list
-    a,
-  .home .categories .latest .latest-column article:nth-of-type(2) .tags-list a,
-  .home .categories .latest .latest-column article:nth-of-type(3) .tags-list a {
+    a {
     font-size: 1rem;
     padding: 0.3rem 0.5rem;
     margin-bottom: 0.5rem;
