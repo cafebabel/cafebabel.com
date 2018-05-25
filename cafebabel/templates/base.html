@@ -50,12 +50,12 @@
       </li>
       {% set categories = get_categories() %}
       {% for category in categories %}
-        <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class={{ category.slug }}>{{ category.name }}</a></li>
+        <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class=tag-{{ category.slug }}>{{ category.name }}</a></li>
       {% endfor %}
       <li class=participate><a href={{ lang_url_for('proposals.create') }}>Pitch an article</a></li>
       <li class=translate><a href={{ lang_url_for('articles.to_translate') }}>Translate an article</a></li>
       {% set static_pages = static_pages_for(current_language) %}
-      <li><a href={{ url_for('tags.detail', slug='network') }}>Network</a></li>
+      <li><a href={{ url_for('tags.detail', slug='network') }} class=tag-network>Network</a></li>
       <li class=donate><a href=https://www.okpal.com/europe-in-real-life-by-cafebabel>Donate</a></li>
       <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
       {% if current_user.has_role('editor') %}
