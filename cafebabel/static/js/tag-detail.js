@@ -9,7 +9,7 @@ function parallax() {
   if (!container) return
   window.addEventListener('scroll', () => {
     const scrolledHeight = window.pageYOffset
-    container.style.backgroundPositionY = `${50 + 0.2 * scrolledHeight}%`
+    container.style.backgroundPositionY = `${50 + 0.05 * scrolledHeight}%`
   })
 }
 
