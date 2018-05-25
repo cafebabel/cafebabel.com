@@ -10,7 +10,7 @@
   {% if author.profile.has_image %}
     <div style="background-image:url({{ author.profile.image_url|resize(image_dimensions) }})" class=image></div><!-- preserve image ratio centered in a round shape -->
   {% else %}
-    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture">
+    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture" class=image>
   {% endif %}
 {% endmacro %}
 
