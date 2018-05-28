@@ -914,6 +914,10 @@ button.menu + nav {
   transition: all 0.3s;
 }
 
+button.menu + nav .tag-experience:before {
+  font-size: 5vw;
+}
+
 .editors-panel li {
   font-size: 1.3rem;
 }
@@ -931,6 +935,10 @@ button.menu + nav {
 
   button.menu + nav {
     font-size: 6vh;
+  }
+
+  button.menu + nav .tag-experience:before {
+    font-size: 4vh;
   }
 
   .editors-panel li {
@@ -2816,20 +2824,9 @@ button.menu.main-menu + nav a.tag-network:before {
   position: relative;
 }
 
-a.section-link.tag-impact:after {
-  background-image: url('../img/bg-page-impact.jpg');
-}
+.home a.section-link.tag-experience:before {
+  font-size: 4rem;
 
-a.section-link.tag-experience:after {
-  background-image: url('../img/bg-page-experience.jpg');
-}
-
-a.section-link.tag-raw:after {
-  background-image: url('../img/bg-page-raw.jpg');
-}
-
-a.section-link.tag-creative:after {
-  background-image: url('../img/bg-page-creative.jpg');
 }
 
 article .article-detail h3 {
