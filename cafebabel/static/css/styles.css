@@ -1126,15 +1126,17 @@ button.menu + nav a {
 }
 
 .participate,
-.translate,
-.donate {
+.translate {
   display: block;
+}
+
+.donate {
+  display: none;
 }
 
 @media screen and (min-width: 750px) {
   #participate,
-  #translate,
-  #donate {
+  #translate {
     position: fixed;
     top: 1.5rem;
     font-size: 1.1rem;
@@ -1143,15 +1145,13 @@ button.menu + nav a {
   }
 
   #participate:hover,
-  #translate:hover,
-  #donate:hover {
+  #translate:hover {
     top: 1.3rem;
     color: #bde513;
   }
 
   #participate:before,
-  #translate:before,
-  #donate:before {
+  #translate:before {
     font-family: 'icomoon';
     display: block;
     text-align: center;
@@ -1160,8 +1160,7 @@ button.menu + nav a {
   }
 
   #participate:hover:after,
-  #translate:hover:after,
-  #donate:hover:after {
+  #translate:hover:after {
     width: 0;
   }
 
@@ -1178,9 +1177,9 @@ button.menu + nav a {
     content: '\e907';
   }
 
-  #donate:before {
+  /*#donate:before {
     content: '\e910';
-  }
+  }*/
 
   .participate {
     display: none;
@@ -1199,7 +1198,7 @@ button.menu + nav a {
   }
 
   #donate {
-    display: inline-block;
+    display: none;
     left: 29.5rem;
   }
 }
@@ -2826,7 +2825,6 @@ button.menu.main-menu + nav a.tag-network:before {
 
 .home a.section-link.tag-experience:before {
   font-size: 4rem;
-
 }
 
 article .article-detail h3 {
