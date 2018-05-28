@@ -18,7 +18,7 @@
         {% endfor %}
       </div>
     {% endif %}
-    {% if description %}
+    {% if button_text %}
       <a class=button>{{ button_text }}</a>
     {% endif %}
   </section>
@@ -31,6 +31,22 @@
       <div class=latest-column>
         {% for article_latest in articles_latest %}
           {% if loop.index == 4 %}
+            </div><div class=latest-column>
+          {% endif %}
+          {{ card(article_latest) }}
+        {% endfor %}
+        </div>
+    </section>
+  {% endif %}
+{% endmacro %}
+
+{% macro latest_section(tag_slug, limit) %}
+  {% set tag_latest, articles_latest = articles_for_tag(tag_slug, limit=limit) %}
+  {% if articles_latest %}
+    <section class=latest>
+      <div class=latest-column>
+        {% for article_latest in articles_latest %}
+          {% if loop.index == 2 %}
             </div><div class=latest-column>
           {% endif %}
           {{ card(article_latest) }}
