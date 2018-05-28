@@ -2799,38 +2799,18 @@ button.menu.main-menu + nav a.tag-network:before {
 .home a.section-link {
   position: relative;
   height: 14rem;
-  width: 100%;
   margin: 5rem -10%;
   display: block;
   text-align: center;
   font-family: 'sporting_grotesque', sans-serif;
   font-size: 3rem;
   transition: all 0.3s;
-  background-color: #696969;
-  background-attachment: fixed;
-  background-size: 100%;
 }
 
 .home a.section-link:before {
   font-family: 'icomoon';
   display: block;
   font-size: 6rem;
-}
-
-a.section-link.tag-impact {
-  background-image: url('../img/bg-page-impact.jpg');
-}
-
-a.section-link.tag-experience {
-  background-image: url('../img/bg-page-experience.jpg');
-}
-
-a.section-link.tag-raw {
-  background-image: url('../img/bg-page-raw.jpg');
-}
-
-a.section-link.tag-creative {
-  background-image: url('../img/bg-page-creative.jpg');
 }
 
 article .article-detail h3 {
@@ -3091,10 +3071,8 @@ article .article-detail h3 {
   }
 
   .home a.section-link {
-    width: 100%;
     max-width: 120rem;
-    margin: 5rem auto;
-    background-size: cover;
+    margin: 2rem auto;
   }
 }
 
@@ -3417,8 +3395,27 @@ footer p {
   height: 145rem;
 }
 
-.article-page article figure img {
+.article-page article .row.contact figure .portrait {
+  background-position-x: 13rem;
+  background-size: 200%;
+  width: 13rem;
+  height: 13rem;
+  margin: 0 auto;
+  padding: 0.5rem;
   border-radius: 50%;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row.contact figure .portrait {
+    background-position-x: 25rem;
+    padding: 0;
+    width: 25rem;
+    height: 25rem;
+  }
+
+  .article-page article .row.contact figure:hover .portrait {
+    background-position-x: 0;
+  }
 }
 
 .article-page article .fixed-background.contact.questions + p {
