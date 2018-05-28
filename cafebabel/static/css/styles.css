@@ -1126,15 +1126,17 @@ button.menu + nav a {
 }
 
 .participate,
-.translate,
-.donate {
+.translate {
   display: block;
+}
+
+.donate {
+  display: none;
 }
 
 @media screen and (min-width: 750px) {
   #participate,
-  #translate,
-  #donate {
+  #translate {
     position: fixed;
     top: 1.5rem;
     font-size: 1.1rem;
@@ -1143,15 +1145,13 @@ button.menu + nav a {
   }
 
   #participate:hover,
-  #translate:hover,
-  #donate:hover {
+  #translate:hover {
     top: 1.3rem;
     color: #bde513;
   }
 
   #participate:before,
-  #translate:before,
-  #donate:before {
+  #translate:before {
     font-family: 'icomoon';
     display: block;
     text-align: center;
@@ -1160,8 +1160,7 @@ button.menu + nav a {
   }
 
   #participate:hover:after,
-  #translate:hover:after,
-  #donate:hover:after {
+  #translate:hover:after {
     width: 0;
   }
 
@@ -1178,9 +1177,9 @@ button.menu + nav a {
     content: '\e907';
   }
 
-  #donate:before {
+  /*#donate:before {
     content: '\e910';
-  }
+  }*/
 
   .participate {
     display: none;
@@ -1199,7 +1198,7 @@ button.menu + nav a {
   }
 
   #donate {
-    display: inline-block;
+    display: none;
     left: 29.5rem;
   }
 }
@@ -2743,8 +2742,7 @@ button.menu.main-menu + nav a.tag-network:before {
 }
 
 .home section.series .banner:hover:after,
-.home section.series .tag-articles article > a:hover:after,
-.home a.section-link:hover:after {
+.home section.series .tag-articles article > a:hover:after {
   width: 0;
 }
 
@@ -2798,11 +2796,12 @@ button.menu.main-menu + nav a.tag-network:before {
 .home a.section-link {
   position: relative;
   height: 14rem;
-  margin: 5rem -10%;
+  margin: 5rem auto 3rem;
   display: block;
   text-align: center;
   font-family: 'sporting_grotesque', sans-serif;
   font-size: 3rem;
+  line-height: 1.3;
   transition: all 0.3s;
 }
 
@@ -2810,6 +2809,34 @@ button.menu.main-menu + nav a.tag-network:before {
   font-family: 'icomoon';
   display: block;
   font-size: 6rem;
+}
+
+.home a.section-link:after {
+  content: '';
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  background-size: 100%;
+  height: 1.5rem;
+  left: 0;
+  bottom: auto;
+  position: relative;
+}
+
+a.section-link.tag-impact:after {
+  background-image: url('../img/bg-page-impact.jpg');
+}
+
+a.section-link.tag-experience:after {
+  background-image: url('../img/bg-page-experience.jpg');
+}
+
+a.section-link.tag-raw:after {
+  background-image: url('../img/bg-page-raw.jpg');
+}
+
+a.section-link.tag-creative:after {
+  background-image: url('../img/bg-page-creative.jpg');
 }
 
 .home a.section-link.tag-experience:before {
@@ -3079,7 +3106,7 @@ article .article-detail h3 {
 
   .home a.section-link {
     max-width: 120rem;
-    margin: 2rem auto;
+    margin: 2rem auto 5rem;
   }
 }
 
