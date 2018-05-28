@@ -3408,8 +3408,27 @@ footer p {
   height: 145rem;
 }
 
-.article-page article figure img {
+.article-page article .row.contact figure .portrait {
+  background-position-x: 13rem;
+  background-size: 200%;
+  width: 13rem;
+  height: 13rem;
+  margin: 0 auto;
+  padding: 0.5rem;
   border-radius: 50%;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page article .row.contact figure .portrait {
+    background-position-x: 25rem;
+    padding: 0;
+    width: 25rem;
+    height: 25rem;
+  }
+
+  .article-page article .row.contact figure:hover .portrait {
+    background-position-x: 0;
+  }
 }
 
 .article-page article .fixed-background.contact.questions + p {
