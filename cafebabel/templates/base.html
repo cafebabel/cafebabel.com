@@ -167,7 +167,7 @@
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
 <div id=preloader-layer>
-    <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="preloader coffee grinder">
+    <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="loading...">
 </div>
 {% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js' %}
     <script src={{ ASSET_URL }}></script>
