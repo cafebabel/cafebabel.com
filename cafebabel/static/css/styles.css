@@ -914,6 +914,10 @@ button.menu + nav {
   transition: all 0.3s;
 }
 
+button.menu + nav .tag-experience:before {
+  font-size: 5vw;
+}
+
 .editors-panel li {
   font-size: 1.3rem;
 }
@@ -931,6 +935,10 @@ button.menu + nav {
 
   button.menu + nav {
     font-size: 6vh;
+  }
+
+  button.menu + nav .tag-experience:before {
+    font-size: 4vh;
   }
 
   .editors-panel li {
@@ -2801,6 +2809,10 @@ button.menu.main-menu + nav a.tag-network:before {
   font-family: 'icomoon';
   display: block;
   font-size: 6rem;
+}
+
+.home a.section-link.tag-experience:before {
+  font-size: 4rem;
 }
 
 article .article-detail h3 {
