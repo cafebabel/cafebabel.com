@@ -806,7 +806,7 @@ a.logo:after {
 /* Preloader */
 
 #preloader-layer {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -822,6 +822,10 @@ a.logo:after {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.tag-page-edit #preloader-layer img {
+  margin-left: 0;
 }
 
 #preloader-layer.slideup {
