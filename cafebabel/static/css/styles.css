@@ -2903,6 +2903,11 @@ article .article-detail h3 {
     color: #bde513;
   }
 
+  .home article.thumbnail-hover img {
+    opacity: 0.8;
+    transition: all 0.3s;
+  }
+
   article .article-detail h3 a:hover:after {
     width: 0;
   }
