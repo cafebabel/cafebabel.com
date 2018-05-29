@@ -71,19 +71,8 @@ const subscribeLink = document.querySelector(
   '#social-networks .icon-newsletter2'
 )
 subscribeLink.addEventListener('click', event => {
-  const target = document.querySelector(event.target.getAttribute('href'))
-  const scrollPosition =
-    window.pageYOffset !== undefined
-      ? window.pageYOffset
-      : (document.documentElement || document.body.parentNode || document.body)
-          .scrollTop
-  animate(
-    document.scrollingElement || document.documentElement,
-    'scrollTop',
-    scrollPosition,
-    target.offsetTop,
-    300 /* Total duration of the animation in ms */
-  )
+  event.preventDefault()
+  window.scrollTo(0, document.querySelector('#content').scrollHeight)
 })
 
 /* Hover effect article image */
