@@ -103,15 +103,19 @@
     {{ series("who-cares", 0, 'Our take on (g)local debates gaining ground in Europe.', 'See all Who cares articles') }}
     {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
   {% endif %}
+  <div id=cookie-disclaimer>
+    <button title="close this window"></button>
+    <p>This website uses cookies to improve its functioning and your interaction with it. Using cookies, we collect and temporarily store some of your personal data. You can change the cookie settings in your browser.</p>
+  </div>
   <script>
-    if (!sessionStorage.getItem('popup')) {
-      const underConstructionPopUp = document.querySelector('#under-construction')
+    //if (!sessionStorage.getItem('popup')) {
+      const underConstructionPopUp = document.querySelector('#cookie-disclaimer')
       underConstructionPopUp.classList.add('show')
       underConstructionPopUp.querySelector('button').addEventListener('click', () => {
         underConstructionPopUp.classList.remove('show')
       })
-      sessionStorage.setItem('popup', 'true');
-    }
+      //sessionStorage.setItem('popup', 'true');
+    //}
   </script>
 {% endblock %}
 {% block class_partners %}class=partners{% endblock %}
