@@ -2741,7 +2741,7 @@ article.article-video:before {
   border: 0.2rem solid;
   border-radius: 50%;
   padding: 0.6rem 0.5rem 0.8rem 0.9rem;
-  left: 1rem;
+  right: 1rem;
   top: 1rem;
   color: #fff;
   opacity: 0.9;
@@ -2754,8 +2754,17 @@ article.article-video:before {
     font-size: 7rem;
     border: 0.5rem solid;
     padding: 1.3rem 1rem 1.3rem 2rem;
-    left: 2rem;
+    right: 2rem;
     top: 2rem;
+  }
+
+  .home .latest .latest-column:nth-of-type(2) article.article-video:before {
+    font-size: 2.1rem;
+    line-height: 1;
+    border: 0.2rem solid;
+    padding: 0.6rem 0.5rem 0.8rem 0.9rem;
+    right: 1rem;
+    top: 1rem;
   }
 
   article.article-video.thumbnail-hover:before {
