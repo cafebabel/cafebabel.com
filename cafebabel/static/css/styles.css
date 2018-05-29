@@ -162,6 +162,9 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-play:before {
+  content: '\ea1c';
+}
 .icon-donate:before {
   content: '\e910';
 }
@@ -2722,6 +2725,43 @@ button.menu.main-menu + nav a.tag-network:before {
   margin: 0 auto 1rem;
 }
 
+.home article,
+.profile-page article,
+.tag-page article {
+  position: relative;
+}
+
+article.article-video:before {
+  font-family: 'icomoon';
+  content: '\ea1c';
+  position: absolute;
+  z-index: 1;
+  font-size: 2.1rem;
+  border: 0.2rem solid;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1;
+  padding: 0.6rem 0.5rem 0.8rem 0.9rem;
+  left: 1rem;
+  top: 1rem;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+@media screen and (min-width: 900px) {
+  article.article-video:before {
+    font-size: 7rem;
+    border: 0.5rem solid;
+    padding: 1.3rem 1rem 1.3rem 2rem;
+    left: 2rem;
+    top: 2rem;
+  }
+
+  article.article-video.thumbnail-hover:before {
+    color: #bde513;
+  }
+}
+
 .home h2 {
   text-align: center;
   display: block;
@@ -3708,18 +3748,4 @@ footer p {
   #cookie-disclaimer.show {
     display: none;
   }
-  /*#cookie-disclaimer {
-    height: 5rem;
-  }
-
-  #cookie-disclaimer p {
-    text-align: center;
-    font-size: 1.3rem;
-    line-height: 2.5;
-  }
-
-  #cookie-disclaimer button {
-    top: 1.2rem;
-    right: 2.2rem;
-  }*/
 }
