@@ -1080,6 +1080,10 @@ button.menu + nav ul li.social ul li:nth-of-type(4) {
   padding-right: 0;
 }
 
+Button.menu + nav ul li.social ul li .icon-newsletter2 {
+  display: none;
+}
+
 button.menu + nav ul li.social ul li a:hover:after {
   width: 0;
 }

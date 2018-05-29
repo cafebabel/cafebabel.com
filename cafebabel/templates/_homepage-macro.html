@@ -63,6 +63,6 @@
     {% endif %}
     <h3>{{ title }}</h3>
     <p>{{ description }}</p>
-    <a class=button href={{ button_link }}>{{ button_text }}</a>
+    <a class=button {% if button_link %}href={{ button_link }}{% endif %}>{{ button_text }}</a>
   </section>
 {% endmacro %}
