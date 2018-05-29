@@ -80,7 +80,7 @@ def test_translation_creation_should_redirect(app, client, user, article):
             ('http://localhost'
              f'/{language}/article/translation/{translation.id}/'))
     assert (get_flashed_messages() ==
-            ['Thanks! Your translation has been sent to your editor'])
+            ['Thanks! Your translation has been saved'])
 
 
 def test_translation_creation_with_existing_tag(app, client, user, article):
@@ -102,7 +102,7 @@ def test_translation_creation_with_existing_tag(app, client, user, article):
             ('http://localhost'
              f'/{language}/article/translation/{translation.id}/'))
     assert (get_flashed_messages() ==
-            ['Thanks! Your translation has been sent to your editor'])
+            ['Thanks! Your translation has been saved'])
     assert translation.tags == [tag]
 
 
@@ -125,7 +125,7 @@ def test_translation_creation_with_unknown_tag(app, client, user, article):
             ('http://localhost'
              f'/{language}/article/translation/{translation.id}/'))
     assert (get_flashed_messages() ==
-            ['Thanks! Your translation has been sent to your editor'])
+            ['Thanks! Your translation has been saved'])
     assert translation.tags == [tag]
 
 

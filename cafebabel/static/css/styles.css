@@ -1088,19 +1088,21 @@ button.menu + nav ul li a {
   display: inline-block;
 }
 
-button.menu + nav ul li a:after {
-  content: '';
-  position: absolute;
-  height: 0.2rem;
-  background-color: #00283c;
-  left: 0;
-  bottom: 0.5rem;
-  width: 0;
-  transition: all 0.3s;
-}
+@media screen and (min-width: 750px) {
+  button.menu + nav ul li a:after {
+    content: '';
+    position: absolute;
+    height: 0.2rem;
+    background-color: #00283c;
+    left: 0;
+    bottom: 0.5rem;
+    width: 0;
+    transition: all 0.3s;
+  }
 
-button.menu + nav ul li a:hover:after {
-  width: 100%;
+  button.menu + nav ul li a:hover:after {
+    width: 100%;
+  }
 }
 
 button.menu.active + nav {
@@ -1480,7 +1482,7 @@ select#author {
     margin-bottom: 5rem;
     padding: 2rem;
     background-color: #eeeeee;
-    z-index: 2;
+    z-index: 1;
   }
 
   #markdown-helper button:after {
@@ -2809,7 +2811,7 @@ button.menu.main-menu + nav a.tag-network:before {
   display: block;
   text-align: center;
   font-family: 'sporting_grotesque', sans-serif;
-  font-size: 3rem;
+  font-size: 2.2rem;
   line-height: 1.3;
   transition: all 0.3s;
 }
@@ -2817,7 +2819,7 @@ button.menu.main-menu + nav a.tag-network:before {
 .home a.section-link:before {
   font-family: 'icomoon';
   display: block;
-  font-size: 6rem;
+  font-size: 5rem;
 }
 
 .home a.section-link:after {
@@ -3112,6 +3114,15 @@ article .article-detail h3 {
   .home a.section-link {
     max-width: 120rem;
     margin: 2rem auto 5rem;
+    font-size: 3rem;
+  }
+
+  .home a.section-link:before {
+    font-size: 6rem;
+  }
+
+  .home a.section-link.tag-experience:before {
+    font-size: 4rem;
   }
 }
 
@@ -3316,7 +3327,7 @@ footer h4 {
   padding: 2rem;
   border: 0.2rem solid #bde513;
   max-width: 71rem;
-  margin: 25rem 2rem;
+  margin: 27.5rem 2rem;
   font-size: 1.7rem;
   font-weight: 200;
   color: #bde513;
@@ -3324,7 +3335,7 @@ footer h4 {
 
 footer iframe {
   position: absolute;
-  top: 75%;
+  top: 79%;
   right: 50%;
   transform: translate(50%, -50%);
   padding: 0 2rem;
@@ -3335,8 +3346,18 @@ footer p {
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
-  bottom: 5rem;
+  bottom: 3rem;
   text-align: center;
+}
+
+@media screen and (min-width: 550px) {
+  footer h4 {
+    margin: 25rem 2rem;
+  }
+
+  footer iframe {
+    top: 70%;
+  }
 }
 
 @media screen and (min-width: 750px) {

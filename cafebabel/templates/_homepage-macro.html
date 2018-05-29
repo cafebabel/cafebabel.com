@@ -56,8 +56,11 @@
   {% endif %}
 {% endmacro %}
 
-{% macro participation(class, title, description, button_link, button_text) %}
+{% macro participation(class, title, description, button_link, button_text, gif, gif_alt) %}
   <section class=participation-{{ class }}>
+    {% if gif %}
+      <img src="{{ gif }}" alt="{{ gif_alt }}">
+    {% endif %}
     <h3>{{ title }}</h3>
     <p>{{ description }}</p>
     <a class=button href={{ button_link }}>{{ button_text }}</a>
