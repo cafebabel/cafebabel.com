@@ -2735,17 +2735,18 @@ article.article-video:before {
   font-family: 'icomoon';
   content: '\ea1c';
   position: absolute;
-  z-index: 1;
+  text-align: center;
   font-size: 2.1rem;
+  line-height: 1;
   border: 0.2rem solid;
   border-radius: 50%;
-  text-align: center;
-  line-height: 1;
   padding: 0.6rem 0.5rem 0.8rem 0.9rem;
   left: 1rem;
   top: 1rem;
   color: #fff;
+  opacity: 0.9;
   transition: all 0.3s;
+  z-index: 1;
 }
 
 @media screen and (min-width: 900px) {
