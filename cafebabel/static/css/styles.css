@@ -806,7 +806,7 @@ a.logo:after {
 /* Preloader */
 
 #preloader-layer {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -817,11 +817,16 @@ a.logo:after {
   transition: all 0.3s ease-in-out;
   z-index: 5;
 }
+
 #preloader-layer img {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.tag-page-edit #preloader-layer img {
+  margin-left: 0;
 }
 
 #preloader-layer.slideup {
@@ -2737,7 +2742,7 @@ button.menu.main-menu + nav a.tag-network:before {
   margin: 0 -2rem;
   max-height: 70rem;
   background-color: #eeeeee;
-  background-attachment: fixed;
+  background-attachment: scroll;
   background-size: cover;
   position: relative;
   display: block;
@@ -2890,6 +2895,11 @@ article .article-detail h3 {
 .article-page section[class*=' participation-'] a.button {
   display: inline-block;
   width: auto;
+}
+
+section[class^='participation-'] img,
+section[class*=' participation-'] img {
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 750px) {
@@ -3055,6 +3065,7 @@ article .article-detail h3 {
     height: 45vw;
     max-height: 70rem;
     background-size: cover;
+    background-attachment: fixed;
   }
 
   .home section.series .tag-articles {
@@ -3655,7 +3666,7 @@ footer p {
   height: 7rem;
   bottom: 0;
   left: 0;
-  padding: 1rem 2rem 1rem 1rem;
+  padding: 1rem 4rem 1rem 1rem;
   z-index: 1;
   display: none;
 }
