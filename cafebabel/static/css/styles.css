@@ -2800,7 +2800,7 @@ button.menu.main-menu + nav a.tag-network:before {
   display: block;
   text-align: center;
   font-family: 'sporting_grotesque', sans-serif;
-  font-size: 3rem;
+  font-size: 2.2rem;
   line-height: 1.3;
   transition: all 0.3s;
 }
@@ -2808,7 +2808,7 @@ button.menu.main-menu + nav a.tag-network:before {
 .home a.section-link:before {
   font-family: 'icomoon';
   display: block;
-  font-size: 6rem;
+  font-size: 5rem;
 }
 
 .home a.section-link:after {
@@ -3103,6 +3103,15 @@ article .article-detail h3 {
   .home a.section-link {
     max-width: 120rem;
     margin: 2rem auto 5rem;
+    font-size: 3rem;
+  }
+
+  .home a.section-link:before {
+    font-size: 6rem;
+  }
+
+  .home a.section-link.tag-experience:before {
+    font-size: 4rem;
   }
 }
 
