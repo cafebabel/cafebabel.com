@@ -27,6 +27,15 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     })
   }
 })
+/* Preloader slide down when input:submit is clicked */
+const inputSubmit = document.querySelector('input[type="submit"]')
+if (inputSubmit) {
+  inputSubmit.addEventListener('click', () => {
+    preloader.classList.remove('slideup')
+    preloader.classList.remove('hidden')
+    preloader.classList.add('slidedown')
+  })
+}
 
 /* open menu */
 Array.from(document.querySelectorAll('button.menu')).forEach(button => {
@@ -54,36 +63,23 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     a.setAttribute('target', '_blank')
 })
 
-/* smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
-function animate(elem, style, from, to, time) {
-  if (!elem) return
-  const start = new Date().getTime()
-  const timer = setInterval(() => {
-    const step = Math.min(1, (new Date().getTime() - start) / time)
-    elem[style] = from + step * (to - from)
-    if (step === 1) {
-      clearInterval(timer)
-    }
-  }, 25) /* allow smooth scroll on firefox */
-  elem[style] = from
-}
+/* NOT smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
 const subscribeLink = document.querySelector(
   '#social-networks .icon-newsletter2'
 )
+const subscribeLinkHome = document.querySelector(
+  '.participation-newseletter-form a'
+)
+if (subscribeLinkHome) {
+  subscribeLinkHome.addEventListener('click', event => {
+    event.preventDefault()
+    window.scrollTo(0, document.querySelector('#content').scrollHeight)
+  })
+}
+
 subscribeLink.addEventListener('click', event => {
-  const target = document.querySelector(event.target.getAttribute('href'))
-  const scrollPosition =
-    window.pageYOffset !== undefined
-      ? window.pageYOffset
-      : (document.documentElement || document.body.parentNode || document.body)
-          .scrollTop
-  animate(
-    document.scrollingElement || document.documentElement,
-    'scrollTop',
-    scrollPosition,
-    target.offsetTop,
-    300 /* Total duration of the animation in ms */
-  )
+  event.preventDefault()
+  window.scrollTo(0, document.querySelector('#content').scrollHeight)
 })
 
 /* Hover effect article image */
@@ -177,4 +173,13 @@ Array.from(document.querySelectorAll('.svg-animation')).forEach(svg => {
       window.onscroll = null
     }
   })
+
+/* Add player if tag #video is present */
+Array.from(
+  document.querySelectorAll('article .article-detail .tags-list a.tag-video')
+).forEach(homepageTagList => {
+  homepageTagList.parentNode.parentNode.parentNode.classList.add(
+    'article-video'
+  )
+
 })

@@ -162,6 +162,9 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-play:before {
+  content: '\ea1c';
+}
 .icon-donate:before {
   content: '\e910';
 }
@@ -1078,6 +1081,10 @@ button.menu + nav ul li.social ul li {
 button.menu + nav ul li.social ul li:nth-of-type(2),
 button.menu + nav ul li.social ul li:nth-of-type(4) {
   padding-right: 0;
+}
+
+Button.menu + nav ul li.social ul li .icon-newsletter2 {
+  display: none;
 }
 
 button.menu + nav ul li.social ul li a:hover:after {
@@ -2227,6 +2234,10 @@ p.translation-language {
   text-align: center;
 }
 
+.article-page article .translation-details + ul {
+  margin-bottom: 5rem;
+}
+
 article .share {
   width: 23rem;
   margin: 0 auto;
@@ -2716,6 +2727,53 @@ button.menu.main-menu + nav a.tag-network:before {
 
 .home article {
   margin: 0 auto 1rem;
+}
+
+.home article,
+.profile-page article,
+.tag-page article {
+  position: relative;
+}
+
+article.article-video:before {
+  font-family: 'icomoon';
+  content: '\ea1c';
+  position: absolute;
+  text-align: center;
+  font-size: 2.1rem;
+  line-height: 1;
+  border: 0.2rem solid;
+  border-radius: 50%;
+  padding: 0.6rem 0.5rem 0.8rem 0.9rem;
+  right: 1rem;
+  top: 1rem;
+  color: #fff;
+  opacity: 0.9;
+  transition: all 0.3s;
+  z-index: 1;
+}
+
+@media screen and (min-width: 900px) {
+  article.article-video:before {
+    font-size: 7rem;
+    border: 0.5rem solid;
+    padding: 1.3rem 1rem 1.3rem 2rem;
+    right: 2rem;
+    top: 2rem;
+  }
+
+  .home .latest .latest-column:nth-of-type(2) article.article-video:before {
+    font-size: 2.1rem;
+    line-height: 1;
+    border: 0.2rem solid;
+    padding: 0.6rem 0.5rem 0.8rem 0.9rem;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  article.article-video.thumbnail-hover:before {
+    color: #bde513;
+  }
 }
 
 .home h2 {
@@ -3761,18 +3819,4 @@ footer p {
   #cookie-disclaimer.show {
     display: none;
   }
-  /*#cookie-disclaimer {
-    height: 5rem;
-  }
-
-  #cookie-disclaimer p {
-    text-align: center;
-    font-size: 1.3rem;
-    line-height: 2.5;
-  }
-
-  #cookie-disclaimer button {
-    top: 1.2rem;
-    right: 2.2rem;
-  }*/
 }
