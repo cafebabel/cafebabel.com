@@ -1088,19 +1088,21 @@ button.menu + nav ul li a {
   display: inline-block;
 }
 
-button.menu + nav ul li a:after {
-  content: '';
-  position: absolute;
-  height: 0.2rem;
-  background-color: #00283c;
-  left: 0;
-  bottom: 0.5rem;
-  width: 0;
-  transition: all 0.3s;
-}
+@media screen and (min-width: 750px) {
+  button.menu + nav ul li a:after {
+    content: '';
+    position: absolute;
+    height: 0.2rem;
+    background-color: #00283c;
+    left: 0;
+    bottom: 0.5rem;
+    width: 0;
+    transition: all 0.3s;
+  }
 
-button.menu + nav ul li a:hover:after {
-  width: 100%;
+  button.menu + nav ul li a:hover:after {
+    width: 100%;
+  }
 }
 
 button.menu.active + nav {
@@ -1480,7 +1482,7 @@ select#author {
     margin-bottom: 5rem;
     padding: 2rem;
     background-color: #eeeeee;
-    z-index: 2;
+    z-index: 1;
   }
 
   #markdown-helper button:after {
@@ -2800,7 +2802,7 @@ button.menu.main-menu + nav a.tag-network:before {
   display: block;
   text-align: center;
   font-family: 'sporting_grotesque', sans-serif;
-  font-size: 3rem;
+  font-size: 2.2rem;
   line-height: 1.3;
   transition: all 0.3s;
 }
@@ -2842,7 +2844,7 @@ button.menu.main-menu + nav a.tag-network:before {
 a.section-link.tag-impact {
   background: url('../img/bg-section-impact.jpg') center;
   display: block;
-  font-size: 6rem;
+  font-size: 5rem;
 }
 
 .home a.section-link:after {
@@ -3160,6 +3162,15 @@ article .article-detail h3 {
   .home a.section-link {
     max-width: 120rem;
     margin: 2rem auto 5rem;
+    font-size: 3rem;
+  }
+
+  .home a.section-link:before {
+    font-size: 6rem;
+  }
+
+  .home a.section-link.tag-experience:before {
+    font-size: 4rem;
   }
 }
 
@@ -3364,7 +3375,7 @@ footer h4 {
   padding: 2rem;
   border: 0.2rem solid #bde513;
   max-width: 71rem;
-  margin: 25rem 2rem;
+  margin: 27.5rem 2rem;
   font-size: 1.7rem;
   font-weight: 200;
   color: #bde513;
@@ -3372,7 +3383,7 @@ footer h4 {
 
 footer iframe {
   position: absolute;
-  top: 75%;
+  top: 79%;
   right: 50%;
   transform: translate(50%, -50%);
   padding: 0 2rem;
@@ -3383,8 +3394,18 @@ footer p {
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
-  bottom: 5rem;
+  bottom: 3rem;
   text-align: center;
+}
+
+@media screen and (min-width: 550px) {
+  footer h4 {
+    margin: 25rem 2rem;
+  }
+
+  footer iframe {
+    top: 70%;
+  }
 }
 
 @media screen and (min-width: 750px) {
@@ -3670,107 +3691,5 @@ footer p {
 @media screen and (min-width: 750px) {
   .article-page article .editorial-line-resources.faq {
     width: 49.6%;
-  }
-}
-
-/* Under construction pop-up */
-
-#under-construction {
-  position: fixed;
-  background: rgba(255, 255, 255, 0.6);
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  display: none;
-}
-
-#under-construction .modal {
-  position: fixed;
-  background: url('../img/bg-under-construction.jpg') 50%;
-  background-size: cover;
-  width: 80%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 1rem;
-  box-shadow: 0.2rem 1rem 2rem 0.2rem rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
-
-#under-construction.show {
-  display: block;
-}
-
-#under-construction h2 {
-  font-style: normal;
-  font-size: 2.5rem;
-  margin: 3rem 1rem 4rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-#under-construction button {
-  position: absolute;
-  top: 1rem;
-  right: 1.2rem;
-  color: #00283c;
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  width: 2rem;
-  z-index: 11;
-}
-
-#under-construction button:after {
-  font-family: 'icomoon';
-  content: '\ea0f';
-  font-size: 1.5rem;
-}
-
-#under-construction p {
-  text-align: center;
-  line-height: 1.6;
-  font-size: 1.5rem;
-}
-
-#under-construction p:last-of-type {
-  font-weight: 100;
-  font-style: italic;
-  margin: 5rem 0 2rem;
-}
-
-#under-construction img {
-  height: 2.5rem;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-@media screen and (min-width: 750px) {
-  #under-construction .modal {
-    padding: 6rem;
-    width: 55%;
-  }
-
-  #under-construction h2 {
-    font-size: 5rem;
-    margin: 2rem 1rem 7rem;
-  }
-
-  #under-construction img {
-    height: 3.2rem;
-  }
-
-  #under-construction p {
-    font-size: 1.9rem;
-    line-height: 1.8;
-  }
-
-  #under-construction button {
-    top: 2rem;
-    right: 2.2rem;
   }
 }
