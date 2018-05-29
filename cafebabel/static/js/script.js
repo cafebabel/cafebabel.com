@@ -54,19 +54,7 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     a.setAttribute('target', '_blank')
 })
 
-/* smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
-function animate(elem, style, from, to, time) {
-  if (!elem) return
-  const start = new Date().getTime()
-  const timer = setInterval(() => {
-    const step = Math.min(1, (new Date().getTime() - start) / time)
-    elem[style] = from + step * (to - from)
-    if (step === 1) {
-      clearInterval(timer)
-    }
-  }, 25) /* allow smooth scroll on firefox */
-  elem[style] = from
-}
+/* NOT smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
 const subscribeLink = document.querySelector(
   '#social-networks .icon-newsletter2'
 )
