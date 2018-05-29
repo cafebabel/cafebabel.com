@@ -27,6 +27,15 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     })
   }
 })
+/* Preloader slide down when input:submit is clicked */
+const inputSubmit = document.querySelector('input[type="submit"]')
+if (inputSubmit) {
+  inputSubmit.addEventListener('click', () => {
+    preloader.classList.remove('slideup')
+    preloader.classList.remove('hidden')
+    preloader.classList.add('slidedown')
+  })
+}
 
 /* open menu */
 Array.from(document.querySelectorAll('button.menu')).forEach(button => {
