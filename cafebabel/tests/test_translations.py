@@ -4,6 +4,7 @@ import pytest
 import mongoengine
 from flask.helpers import get_flashed_messages
 
+from .. import mail
 from ..articles.models import Article
 from ..articles.tags.models import Tag
 from ..articles.translations.models import Translation
@@ -341,19 +342,19 @@ def test_translation_published_should_have_reference(
              f'/fr/article/title-{published_translation.id}/>') in response)
 
 
-def test_article_model_is_translated_in(translation):
+def test_article_model_is_translated_in(app, translation):
     article = translation.original_article
     assert article.is_translated_in(translation.language)
     assert not article.is_translated_in('dummy')
 
 
-def test_article_model_get_translation(translation):
+def test_article_model_get_translation(app, translation):
     article = translation.original_article
     assert article.get_translation(translation.language) == translation
     assert article.get_translation('dummy') is None
 
 
-def test_translation_editing_language_prevents_duplicates(translation):
+def test_translation_editing_language_prevents_duplicates(app, translation):
     translation.language = translation.original_article.language
     with pytest.raises(mongoengine.errors.NotUniqueError) as error:
         translation.save()
@@ -405,3 +406,26 @@ def test_translation_can_edit_translators(client, translation, editor, user2):
         f'/fr/article/translation/{translation.id}/edit/', data=data)
     translation.reload()
     assert translation.translators[0].id == user2.id
+
+
+def test_create_draft_sends_email_to_editor(app, client, article, user, editor):
+    mail.init_app(app)  # Re-load using test configuration.
+    login(client, user.email, 'password')
+    language = app.config['LANGUAGES'][1][0]
+    data = {
+        'title': 'title',
+        'summary': 'summary',
+        'body': 'body',
+        'original': article.id
+    }
+    with mail.record_messages() as outbox:
+        response = client.post(f'/{language}/article/translation/new/',
+                               data=data)
+        translation = Translation.objects.first()
+        assert response.status_code == HTTPStatus.FOUND
+        assert len(outbox) == 1
+        assert outbox[0].recipients == [
+            app.config['EDITOR_EMAILS'][translation.language]]
+        assert outbox[0].subject == f'New article translation in {language}'
+        assert (f'/{language}/article/translation/{translation.id}/'
+                in outbox[0].body)

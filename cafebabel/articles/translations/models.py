@@ -1,8 +1,9 @@
-from flask import url_for
+from flask import url_for, current_app, request
 from flask_login import current_user
+from flask_mail import Message
 from mongoengine import signals, errors, ValidationError
 
-from ... import db
+from ... import db, mail
 from ...users.models import User
 from ...articles.models import Article
 from ...articles.tags.models import Tag
@@ -15,12 +16,15 @@ class Translation(Article):
 
     @property
     def detail_url(self):
+        return self.get_detail_url()
+
+    def get_detail_url(self, **kwargs):
         if self.is_draft:
             return url_for('translations.detail', id=self.id,
-                           lang=self.language)
+                           lang=self.language, **kwargs)
         else:
             return url_for('articles.detail', slug=self.slug,
-                           article_id=self.id, lang=self.language)
+                           article_id=self.id, lang=self.language, **kwargs)
 
     @property
     def is_translation(self):
@@ -75,9 +79,25 @@ class Translation(Article):
 
         return self.save()
 
+    @classmethod
+    def alert_editor(cls, sender, document, **kwargs):
+        if not kwargs.get('created', False):
+            return
+        language = document.language
+        editor_email = current_app.config['EDITOR_EMAILS'][language]
+        data = request.form.to_dict()
+        msg = Message(
+            f'New article translation in {language}',
+            sender='yourlovelyserver@cafebabel.com',
+            recipients=[editor_email],
+            body=document.get_detail_url(_external=True)
+        )
+        mail.send(msg)
+
 
 signals.pre_save.connect(Article.update_publication_date, sender=Translation)
 signals.pre_save.connect(Translation.check_duplicate, sender=Translation)
 signals.pre_save.connect(Article.update_slug, sender=Translation)
 signals.post_save.connect(Article.store_image, sender=Translation)
+signals.post_save.connect(Translation.alert_editor, sender=Translation)
 signals.pre_delete.connect(Article.delete_image_file, sender=Translation)
