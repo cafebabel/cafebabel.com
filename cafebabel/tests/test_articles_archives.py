@@ -26,6 +26,14 @@ def test_archive_is_redirect_from_production(app, client, published_article):
         f'{published_article.id}/'
     )
 
+def test_archive_is_redirected_from_previous_server(client, published_article):
+    response = client.get(f'/politique/article/{published_article.slug}.html')
+    assert response.status_code == HTTPStatus.MOVED_PERMANENTLY
+    assert response.location == ('http://localhost/'
+                                 f'{published_article.language}/article'
+                                 f'/{published_article.slug}'
+                                 f'-{published_article.id}/')
+
 
 def test_archive_is_redirect_to_translation(client, translation):
     url = 'http://localhost/lifestyle/articolo/old-translation.html'
