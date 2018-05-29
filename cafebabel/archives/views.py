@@ -7,7 +7,10 @@ from ..articles.models import Article
 archives = Blueprint('archives', __name__)
 
 
-@archives.route('/<regex("[a-z-]+"):_tag>/<regex("[a-z]+"):_>/<_slug>.html')
-def archive(**kwargs):
-    article = Article.objects.get_or_404(archive__url__iendswith=request.path)
+@archives.route('/<regex("[a-z-]+"):_tag>/<regex("[a-z]+"):_>/<slug>.html')
+def archive(slug, **kwargs):
+    try:
+        article = Article.objects.get(archive__url__iendswith=request.path)
+    except Article.DoesNotExist:
+        article = Article.objects.get_or_404(status='published', slug=slug)
     return redirect(article.detail_url, HTTPStatus.MOVED_PERMANENTLY)
