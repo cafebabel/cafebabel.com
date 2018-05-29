@@ -42,6 +42,11 @@ Array.from(document.querySelectorAll('button.menu')).forEach(button => {
     }
   })
 })
+const newsletterLink = document.querySelector('.icon-newsletter2')
+newsletterLink.addEventListener('click', () => {
+  const activeButton = document.querySelector('button.active.menu')
+  activeButton.classList.remove('active')
+})
 
 /* external link in new tab */
 Array.from(document.querySelectorAll('a')).forEach(a => {
