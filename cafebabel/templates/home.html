@@ -31,10 +31,18 @@
       {{ card(article_editors_pick, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
     {% endfor %}
   </section>
-  <h2>Latest</h2>
+  {% if current_language == 'en' %}
+    <h2>Latest</h2>
+  {% elif current_language == 'fr' %}
+    <h2>Chaud</h2>
+  {% endif %}
   {{ latest("latest", 8) }}
   <section class=categories>
-    <h2>Sections</h2>
+    {% if current_language == 'en' %}
+      <h2>Sections</h2>
+    {% elif current_language == 'fr' %}
+      <h2>Nos rubriques</h2>
+    {% endif %}
     {% for category in categories|shuffle %}
       <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>
       {% set tag_category, articles_category = articles_for_tag(category.slug, 3) %}
