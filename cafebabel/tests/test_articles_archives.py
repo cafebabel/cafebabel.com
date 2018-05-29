@@ -13,17 +13,6 @@ def test_archive_is_redirect_to_article_with_lang(client, published_article):
                                  f'{published_article.slug}-'
                                  f'{published_article.id}/')
 
-def test_archive_is_redirect_to_article_with_lang_in_url(client,
-                                                         published_article):
-    url = 'http://localhost/fr/lifestyle/article/ancien-article.html'
-    published_article.modify(language='fr',
-                             archive=ArticleArchive(id=1, url=url))
-    response = client.get(url)
-    assert response.status_code == HTTPStatus.MOVED_PERMANENTLY
-    assert response.location == ('http://localhost/fr/article/'
-                                 f'{published_article.slug}-'
-                                 f'{published_article.id}/')
-
 
 def test_archive_is_redirect_from_production(app, client, published_article):
     url_prod = 'http://www.cafebabel.co.uk/lifestyle/article/old-article.html'
