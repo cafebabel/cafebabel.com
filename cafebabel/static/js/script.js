@@ -73,10 +73,13 @@ const subscribeLink = document.querySelector(
 const subscribeLinkHome = document.querySelector(
   '.participation-newseletter-form a'
 )
-subscribeLinkHome.addEventListener('click', event => {
-  event.preventDefault()
-  window.scrollTo(0, document.querySelector('#content').scrollHeight)
-})
+if (subscribeLinkHome) {
+  subscribeLinkHome.addEventListener('click', event => {
+    event.preventDefault()
+    window.scrollTo(0, document.querySelector('#content').scrollHeight)
+  })
+}
+
 subscribeLink.addEventListener('click', event => {
   event.preventDefault()
   window.scrollTo(0, document.querySelector('#content').scrollHeight)
