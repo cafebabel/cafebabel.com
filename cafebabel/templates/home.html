@@ -113,10 +113,18 @@
   {{ series("meet-my-hood", 2) }}
   {{ latest("latest2", 3) }}
   </section>
-  <h2>Latest</h2>
+  {% if current_language == 'en' %}
+    <h2>Latest</h2>
+  {% elif current_language == 'fr' %}
+    <h2>Chaud</h2>
+  {% endif %}
   {{ latest("latest", 8) }}
   <section class=categories>
-    <h2>Sections</h2>
+    {% if current_language == 'en' %}
+      <h2>Sections</h2>
+    {% elif current_language == 'fr' %}
+      <h2>Nos rubriques</h2>
+    {% endif %}
     {% for category in categories|shuffle %}
       <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>
       {% set tag_category, articles_category = articles_for_tag(category.slug, 3) %}
@@ -143,15 +151,15 @@
     {{ series("network", 0, 'Because Cafébabel is so much more than a magazine') }}
     <h2>Serie</h2>
     {{ series("who-cares", 0, 'Our take on (g)local debates gaining ground in Europe.', 'See all Who cares articles') }}
-    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way') }}
+    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
   {% elif current_language == 'fr' %}
     <h2>Série</h2>
-    {{ series("meet-my-hood", 0, 'Découvrir les quartiers européens avec les locaux.', 'Voir tous les articles Meet My Hood') }}
+    {{ series("meet-my-hood", 0, 'Découvrir les quartiers européens avec les locaux.', 'Voir tous les articles de la série') }}
     {{ participation('newseletter-form', 'Newsletter', 'Tu ne veux rien rater du meilleur de Cafébabel ?', '#static-pages-links', 'Abonne-toi à notre newsletter quinzomadaire ici.', '/static/img/gif-newsletter.gif', 'gif newsletter') }}
-    {{ series("network", 0, 'Parce que Cafébabel est bien plus qu’un média') }}
+    {{ series("network", 0, 'Parce que Cafébabel est bien plus qu’un média.') }}
     <h2>Série</h2>
-    {{ series("who-cares", 0, 'Notre regard sur les débats (g)locaux qui agitent l’Europe.', 'Voir tous les articles Who Cares') }}
-    {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir', '/article/proposal/new/', 'Par ici') }}
+    {{ series("who-cares", 0, 'Notre regard sur les débats (g)locaux qui agitent l’Europe.', 'Regarder toutes les vidéos de la série') }}
+    {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir.', '/article/proposal/new/', 'Par ici', '/static/img/gif-wave.gif', 'gif participer') }}
   {% elif current_language == 'de' %}
     <h2>Série</h2>
     {{ series("meet-my-hood", 0, 'Entdeckt Europas Kieze durch die Augen der Anwohner.', 'Alle Artikel der Reihe sehen') }}
@@ -159,23 +167,23 @@
     {{ series("network", 0, 'Weil Cafébabel mehr ist als nur ein Magazin.') }}
     <h2>Série</h2>
     {{ series("who-cares", 0, 'Unsere Sicht auf die (g)lokalen Debatten, die Europa bewegen.', 'Alle Artikel der Reihe sehen') }}
-    {{ participation('participate', 'Mitmachen', 'Cafébabel einen Artikel vorschlagen?', '/article/proposal/new/', 'Hier entlang') }}
+    {{ participation('participate', 'Mitmachen', 'Cafébabel einen Artikel vorschlagen?', '/article/proposal/new/', 'Hier entlang', '/static/img/gif-wave.gif', 'gif mitmachen') }}
   {% elif current_language == 'es' %}
     <h2>Série</h2>
-    {{ series("meet-my-hood", 0, 'Découvrir les quartiers européens avec les locaux.', 'Voir tous les articles Meet My Hood') }}
-    {{ participation('newseletter-form', 'Wanna hear from us once every two weeks ? Subscribe', '', '#static-pages-links', 'This way', '/static/img/gif-newsletter.gif', 'gif newsletter') }}
-    {{ series("network", 0, 'Parce que Cafébabel est bien plus qu’un média') }}
+    {{ series("meet-my-hood", 0, 'Descubre los mejores barrios de Europa de la mano de quienes viven en ellos.', 'Ver todos los artículos de la serie') }}
+    {{ participation('newseletter-form', 'Newsletter', 'Para que no te pierdas nada.', '#static-pages-links', 'Por aquí', '/static/img/gif-newsletter.gif', 'gif newsletter') }}
+    {{ series("network", 0, 'Porque Cafébabel es mucho más que una revista.') }}
     <h2>Série</h2>
-    {{ series("who-cares", 0, 'Notre regard sur les débats (g)locaux qui agitent l’Europe.', 'Voir tous les articles Who Cares') }}
-    {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', '/article/proposal/new/', 'Come come come!') }}
+    {{ series("who-cares", 0, 'Los temas más controvertidos, interesantes y necesarios.', 'Ver todos los vídeos de la serie') }}
+    {{ participation('participate', 'Participa', '¿Te gustaría proponer una idea? Adelante.', '/article/proposal/new/', 'Por aquí', '/static/img/gif-wave.gif', 'gif participate') }}
   {% elif current_language == 'it' %}
     <h2>Série</h2>
-    {{ series("meet-my-hood", 0, 'Scoprite i quartieri europei attraverso gli occhi dei loro abitanti.', 'Voir tous les articles Meet My Hood') }}
-    {{ participation('newseletter-form', 'Vuoi rimanere sempre aggiornato?', '', '#static-pages-links', 'This way', '/static/img/gif-newsletter.gif', 'gif newsletter') }}
+    {{ series("meet-my-hood", 0, 'Scoprite i quartieri europei attraverso gli occhi dei loro abitanti.', 'Leggi tutti gli articoli della serie') }}
+    {{ participation('newseletter-form', 'Vuoi rimanere sempre aggiornato?', '', '#static-pages-links', 'Da questa parte', '/static/img/gif-newsletter.gif', 'gif newsletter') }}
     {{ series("network", 0, 'Perché Cafébabel è molto più che un semplice magazine.') }}
     <h2>Série</h2>
-    {{ series("who-cares", 0, 'Il nostro punto di vista sui dibattiti (g)local in tutta Europa.', 'Voir tous les articles Who Cares') }}
-    {{ participation('participate', 'Partecipa', 'Vuoi mandare un\'idea a Cafébabel?  E\' la tua occasione!', '/article/proposal/new/', 'Da questa parte') }}
+    {{ series("who-cares", 0, 'Il nostro punto di vista sui dibattiti (g)local in tutta Europa.', 'guarda tutti i video della serie') }}
+    {{ participation('participate', 'Partecipa', 'Vuoi mandare un\'idea a Cafébabel?  E\' la tua occasione!', '/article/proposal/new/', 'Da questa parte', '/static/img/gif-wave.gif', 'gif partecipa') }}
   {% elif current_language == 'pl' %}
     <h2>Serie</h2>
     {{ series("meet-my-hood", 0, 'Discover European neighbourhoods through the eyes of locals.', 'See all Meet My Hood articles') }}
@@ -183,17 +191,21 @@
     {{ series("network", 0, 'Because Cafébabel is so much more than a magazine') }}
     <h2>Serie</h2>
     {{ series("who-cares", 0, 'Our take on (g)local debates gaining ground in Europe.', 'See all Who cares articles') }}
-    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way') }}
+    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
   {% endif %}
+  <div id=cookie-disclaimer>
+    <button title="close this window"></button>
+    <p>This website uses cookies to improve its functioning and your interaction with it. Using cookies, we collect and temporarily store some of your personal data. You can change the cookie settings in your browser.</p>
+  </div>
   <script>
-    if (!sessionStorage.getItem('popup')) {
-      const underConstructionPopUp = document.querySelector('#under-construction')
+    //if (!sessionStorage.getItem('popup')) {
+      const underConstructionPopUp = document.querySelector('#cookie-disclaimer')
       underConstructionPopUp.classList.add('show')
       underConstructionPopUp.querySelector('button').addEventListener('click', () => {
         underConstructionPopUp.classList.remove('show')
       })
-      sessionStorage.setItem('popup', 'true');
-    }
+      //sessionStorage.setItem('popup', 'true');
+    //}
   </script>
 {% endblock %}
 {% block class_partners %}class=partners{% endblock %}

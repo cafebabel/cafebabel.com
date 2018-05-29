@@ -86,6 +86,20 @@ subscribeLink.addEventListener('click', event => {
   )
 })
 
+/* Hover effect article image */
+const articleThumbnails = document.querySelectorAll('.home article')
+articleThumbnails.forEach(articleThumbnail => {
+  const articleThumbnailLinks = articleThumbnail.querySelectorAll('a')
+  articleThumbnailLinks.forEach(articleThumbnailLink => {
+    articleThumbnailLink.addEventListener('mouseover', () => {
+      articleThumbnail.classList.add('thumbnail-hover')
+    })
+    articleThumbnailLink.addEventListener('mouseout', () => {
+      articleThumbnail.classList.remove('thumbnail-hover')
+    })
+  })
+})
+
 /* animation flash info */
 const flashes = document.querySelector('.flashes')
 if (flashes) {
