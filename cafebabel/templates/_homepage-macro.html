@@ -33,7 +33,7 @@
           {% if loop.index == 4 %}
             </div><div class=latest-column>
           {% endif %}
-          {{ card(article_latest) }}
+          {{ card(article_latest, image_dimensions=config.RESIZE_SIZE_ARTICLE_SECTION_LIST) }}
         {% endfor %}
         </div>
     </section>
@@ -49,7 +49,7 @@
           {% if loop.index == 2 %}
             </div><div class=latest-column>
           {% endif %}
-          {{ card(article_latest, image_dimensions=config.RESIZE_SIZE_ARTICLE_LIST) }}
+          {{ card(article_latest, image_dimensions=config.RESIZE_SIZE_ARTICLE_SECTION_LIST) }}
         {% endfor %}
         </div>
     </section>
