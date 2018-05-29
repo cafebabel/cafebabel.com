@@ -2234,6 +2234,10 @@ p.translation-language {
   text-align: center;
 }
 
+.article-page article .translation-details + ul {
+  margin-bottom: 5rem;
+}
+
 article .share {
   width: 23rem;
   margin: 0 auto;
