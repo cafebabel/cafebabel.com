@@ -61,7 +61,7 @@
     {{ series("network", 0, 'Because Cafébabel is so much more than a magazine') }}
     <h2>Serie</h2>
     {{ series("who-cares", 0, 'Our take on (g)local debates gaining ground in Europe.', 'See all Who cares articles') }}
-    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way') }}
+    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
   {% elif current_language == 'fr' %}
     <h2>Série</h2>
     {{ series("meet-my-hood", 0, 'Découvrir les quartiers européens avec les locaux.', 'Voir tous les articles Meet My Hood') }}
@@ -69,7 +69,7 @@
     {{ series("network", 0, 'Parce que Cafébabel est bien plus qu’un média') }}
     <h2>Série</h2>
     {{ series("who-cares", 0, 'Notre regard sur les débats (g)locaux qui agitent l’Europe.', 'Voir tous les articles Who Cares') }}
-    {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir', '/article/proposal/new/', 'Par ici') }}
+    {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir', '/article/proposal/new/', 'Par ici', '/static/img/gif-wave.gif', 'gif participer') }}
   {% elif current_language == 'de' %}
     <h2>Série</h2>
     {{ series("meet-my-hood", 0, 'Entdeckt Europas Kieze durch die Augen der Anwohner.', 'Alle Artikel der Reihe sehen') }}
@@ -77,7 +77,7 @@
     {{ series("network", 0, 'Weil Cafébabel mehr ist als nur ein Magazin.') }}
     <h2>Série</h2>
     {{ series("who-cares", 0, 'Unsere Sicht auf die (g)lokalen Debatten, die Europa bewegen.', 'Alle Artikel der Reihe sehen') }}
-    {{ participation('participate', 'Mitmachen', 'Cafébabel einen Artikel vorschlagen?', '/article/proposal/new/', 'Hier entlang') }}
+    {{ participation('participate', 'Mitmachen', 'Cafébabel einen Artikel vorschlagen?', '/article/proposal/new/', 'Hier entlang', '/static/img/gif-wave.gif', 'gif mitmachen') }}
   {% elif current_language == 'es' %}
     <h2>Série</h2>
     {{ series("meet-my-hood", 0, 'Découvrir les quartiers européens avec les locaux.', 'Voir tous les articles Meet My Hood') }}
@@ -85,7 +85,7 @@
     {{ series("network", 0, 'Parce que Cafébabel est bien plus qu’un média') }}
     <h2>Série</h2>
     {{ series("who-cares", 0, 'Notre regard sur les débats (g)locaux qui agitent l’Europe.', 'Voir tous les articles Who Cares') }}
-    {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', '/article/proposal/new/', 'Come come come!') }}
+    {{ participation('participate', 'Participate', 'Hey wanna write for us? C\'mon', '/article/proposal/new/', 'Come come come!', '/static/img/gif-wave.gif', 'gif participate') }}
   {% elif current_language == 'it' %}
     <h2>Série</h2>
     {{ series("meet-my-hood", 0, 'Scoprite i quartieri europei attraverso gli occhi dei loro abitanti.', 'Voir tous les articles Meet My Hood') }}
@@ -93,7 +93,7 @@
     {{ series("network", 0, 'Perché Cafébabel è molto più che un semplice magazine.') }}
     <h2>Série</h2>
     {{ series("who-cares", 0, 'Il nostro punto di vista sui dibattiti (g)local in tutta Europa.', 'Voir tous les articles Who Cares') }}
-    {{ participation('participate', 'Partecipa', 'Vuoi mandare un\'idea a Cafébabel?  E\' la tua occasione!', '/article/proposal/new/', 'Da questa parte') }}
+    {{ participation('participate', 'Partecipa', 'Vuoi mandare un\'idea a Cafébabel?  E\' la tua occasione!', '/article/proposal/new/', 'Da questa parte', '/static/img/gif-wave.gif', 'gif partecipa') }}
   {% elif current_language == 'pl' %}
     <h2>Serie</h2>
     {{ series("meet-my-hood", 0, 'Discover European neighbourhoods through the eyes of locals.', 'See all Meet My Hood articles') }}
@@ -101,7 +101,7 @@
     {{ series("network", 0, 'Because Cafébabel is so much more than a magazine') }}
     <h2>Serie</h2>
     {{ series("who-cares", 0, 'Our take on (g)local debates gaining ground in Europe.', 'See all Who cares articles') }}
-    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way') }}
+    {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
   {% endif %}
   <script>
     if (!sessionStorage.getItem('popup')) {
