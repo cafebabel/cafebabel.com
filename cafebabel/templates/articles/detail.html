@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "articles/macros.html" as macros %}
 {% from "_meta-macro.html" import meta %}
+{% from "_homepage-macro.html" import participation with context %}
 
 {% block meta_title %}{{ article.title }} – Cafébabel{% endblock %}
 {% block metas %}
@@ -121,6 +122,22 @@
   {% endblock %}
 
   {{ self.edit_button() }}
+
+  <nav class=article-participate>
+    {% if current_language == 'en' %}
+      {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/en/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
+    {% elif current_language == 'fr' %}
+      {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir', '/fr/article/proposal/new/', 'Par ici', '/static/img/gif-wave.gif', 'gif participer') }}
+    {% elif current_language == 'de' %}
+      {{ participation('participate', 'Mitmachen', 'Cafébabel einen Artikel vorschlagen?', '/de/article/proposal/new/', 'Hier entlang', '/static/img/gif-wave.gif', 'gif mitmachen') }}
+    {% elif current_language == 'es' %}
+      {{ participation('participate', 'Participa', '¿Te gustaría proponer una idea? Adelante. ', '/es/article/proposal/new/', 'Por aquí', '/static/img/gif-wave.gif', 'gif participa') }}
+    {% elif current_language == 'it' %}
+      {{ participation('participate', 'Partecipa', 'Vuoi mandare un\'idea a Cafébabel?  E\' la tua occasione!', '/it/article/proposal/new/', 'Da questa parte', '/static/img/gif-wave.gif', 'gif partecipa') }}
+    {% elif current_language == 'pl' %}
+      {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/pl/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
+    {% endif %}
+  </nav>
 
 </article>
 {% endblock %}
