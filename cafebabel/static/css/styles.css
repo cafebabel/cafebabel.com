@@ -817,6 +817,7 @@ a.logo:after {
   transition: all 0.3s ease-in-out;
   z-index: 5;
 }
+
 #preloader-layer img {
   position: absolute;
   left: 50%;
@@ -2894,6 +2895,11 @@ article .article-detail h3 {
 .article-page section[class*=' participation-'] a.button {
   display: inline-block;
   width: auto;
+}
+
+section[class^='participation-'] img,
+section[class*=' participation-'] img {
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 750px) {
