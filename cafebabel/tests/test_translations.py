@@ -342,19 +342,19 @@ def test_translation_published_should_have_reference(
              f'/fr/article/title-{published_translation.id}/>') in response)
 
 
-def test_article_model_is_translated_in(translation):
+def test_article_model_is_translated_in(app, translation):
     article = translation.original_article
     assert article.is_translated_in(translation.language)
     assert not article.is_translated_in('dummy')
 
 
-def test_article_model_get_translation(translation):
+def test_article_model_get_translation(app, translation):
     article = translation.original_article
     assert article.get_translation(translation.language) == translation
     assert article.get_translation('dummy') is None
 
 
-def test_translation_editing_language_prevents_duplicates(translation):
+def test_translation_editing_language_prevents_duplicates(app, translation):
     translation.language = translation.original_article.language
     with pytest.raises(mongoengine.errors.NotUniqueError) as error:
         translation.save()
