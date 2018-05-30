@@ -3,7 +3,7 @@
 {% from "_meta-macro.html" import meta %}
 {% from "_homepage-macro.html" import participation with context %}
 
-{% block meta_title %}{{ article.title }} – Cafébabel{% endblock %}
+{% block meta_title %}{{ article.title }}{% endblock %}
 {% block metas %}
   {{ meta('name=description', article.summary|striptags) }}
   {{ meta('name=author', article.authors|join(', ')) }}
