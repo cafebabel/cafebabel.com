@@ -1140,17 +1140,15 @@ button.menu + nav a {
 }
 
 .participate,
-.translate {
-  display: block;
-}
-
+.translate,
 .donate {
-  display: none;
+  display: block;
 }
 
 @media screen and (min-width: 750px) {
   #participate,
-  #translate {
+  #translate,
+  #donate {
     position: fixed;
     top: 1.5rem;
     font-size: 1.1rem;
@@ -1159,13 +1157,15 @@ button.menu + nav a {
   }
 
   #participate:hover,
-  #translate:hover {
+  #translate:hover,
+  #donate:hover {
     top: 1.3rem;
     color: #bde513;
   }
 
   #participate:before,
-  #translate:before {
+  #translate:before,
+  #donate:before {
     font-family: 'icomoon';
     display: block;
     text-align: center;
@@ -1174,7 +1174,8 @@ button.menu + nav a {
   }
 
   #participate:hover:after,
-  #translate:hover:after {
+  #translate:hover:after,
+  #donate:hover:after {
     width: 0;
   }
 
@@ -1191,9 +1192,9 @@ button.menu + nav a {
     content: '\e907';
   }
 
-  /*#donate:before {
+  #donate:before {
     content: '\e910';
-  }*/
+  }
 
   .participate {
     display: none;
@@ -1212,7 +1213,7 @@ button.menu + nav a {
   }
 
   #donate {
-    display: none;
+    display: block;
     left: 29.5rem;
   }
 }
