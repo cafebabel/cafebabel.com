@@ -3405,6 +3405,8 @@ footer h4 {
 
 footer iframe {
   position: absolute;
+  width: 100%;
+  border: none;
   top: 79%;
   right: 50%;
   transform: translate(50%, -50%);
