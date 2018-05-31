@@ -88,7 +88,7 @@ class Translation(Article):
         data = request.form.to_dict()
         msg = Message(
             f'New article translation in {language}',
-            sender='yourlovelyserver@cafebabel.com',
+            sender='with.love@cafebabel.com',
             recipients=[editor_email],
             body=document.get_detail_url(_external=True)
         )

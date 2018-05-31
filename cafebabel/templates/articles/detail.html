@@ -96,7 +96,7 @@
     </p>
   {% endif %}
 
-  {% if translations_drafts %}
+  {% if translations_drafts and current_user.has_role('editor') %}
     <p class=translation-details>Review this article in:</p>
     <ul>
       {% for translation in translations_drafts %}
