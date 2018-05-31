@@ -24,7 +24,7 @@ flush-logs:  # type=error|access
 	@echo "Log file emptied!"
 
 deploy:  # env=prod|preprod
-	@echo "\n> Fetching master branch and updating sources."
+	@echo "\n> Fetching {branch} branch and updating sources."
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
 	make sync-archives-media
