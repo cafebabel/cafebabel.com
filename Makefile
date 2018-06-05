@@ -30,7 +30,7 @@ deploy:  # env=prod|preprod
 	make sync-archives-media
 	@echo "\n> Launching gunicorn daemon."
 	${remote} "${goto_src} && pkill gunicorn 2> /dev/null; \
-		gunicorn --daemon -b ${${env}_server} ${env}:app \
+		gunicorn --daemon -w 10 -b ${${env}_server} ${env}:app \
 		--error-logfile ~/log/error.log --access-logfile ~/log/access.log"
 	@echo "\n> App is deployed. Run \`make logs env=${env} type=access|error\` to follow activity."
 
