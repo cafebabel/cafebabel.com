@@ -6,8 +6,8 @@ var imagesArray = [
 ]
 var preloader = document.getElementById('preloader-layer')
 
-var num = Math.floor(Math.random() * imagesArray.length)
-var preloaderImg = preloader.querySelector('img')
+var num = Math.floor(Math.random() * imagesArray.length),
+  preloaderImg = preloader.getElementsByTagName('img')
 preloaderImg.src = imagesArray[num]
 setTimeout(() => {
   preloader.classList.add('slideup')
@@ -27,3 +27,12 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     })
   }
 })
+/* Preloader slide down when input:submit is clicked */
+const inputSubmit = document.querySelector('input[type="submit"]')
+if (inputSubmit) {
+  inputSubmit.addEventListener('click', () => {
+    preloader.classList.remove('slideup')
+    preloader.classList.remove('hidden')
+    preloader.classList.add('slidedown')
+  })
+}
