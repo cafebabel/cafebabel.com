@@ -1,8 +1,8 @@
 {% macro article_publication_date(article) %}
   {% if article.publication_date %}
-    <span>Published on <time pubdate="{{ article.publication_date.date() }}">{{ article.publication_date.strftime('%B %-d, %Y') }}</time></span>
+    <span>Published on <time datetime="{{ article.publication_date.date() }}">{{ article.publication_date.strftime('%B %-d, %Y') }}</time></span>
   {% else %}
-    <span>Created on <time pubdate="{{ article.creation_date.date() }}">{{ article.creation_date.strftime('%B %-d, %Y') }}</time></span>
+    <span>Created on <time datetime="{{ article.creation_date.date() }}">{{ article.creation_date.strftime('%B %-d, %Y') }}</time></span>
   {% endif %}
 {% endmacro %}
 
