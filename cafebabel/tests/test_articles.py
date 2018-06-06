@@ -41,7 +41,7 @@ def test_published_article_should_display_content(client, published_article,
     assert f'<meta name=description content="summary text">' in response
     assert f'<div class=summary><p>summary text</p></div>' in response
     assert f'<p>{published_article.body}</p>' in response
-    assert (f'<time pubdate="{published_article.publication_date.date()}">'
+    assert (f'<time datetime="{published_article.publication_date.date()}">'
             f'{published_article.publication_date.strftime("%B %-d, %Y")}'
             '</time>' in response)
     assert (('<span class=original-language>'

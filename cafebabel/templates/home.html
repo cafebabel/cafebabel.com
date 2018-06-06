@@ -4,22 +4,50 @@
 {% from "_homepage-macro.html" import series, latest, latest_section, participation with context %}
 
 {% block metas %}
-  {{ meta('name=description', 'Cafébabel is the first ever participatory magazine for and by European millennials. Join the party!') }}
+  {% if current_language == 'en' %}
+    {{ meta('name=description', 'Cafébabel is the first participatory magazine made by and for young Europeans. Join the party!') }}
+  {% elif current_language == 'fr' %}
+    {{ meta('name=description', 'Cafébabel est le premier magazine participatif fait par et pour les jeunes en Europe. Rejoignez-nous !') }}
+  {% elif current_language == 'de' %}
+    {{ meta('name=description', 'Cafébabel ist das erste mehrsprachige partizipative Magazin von und für junge Leute in Europa. Seid ihr dabei?') }}
+  {% elif current_language == 'es' %}
+    {{ meta('name=description', 'Cafébabel es el primer medio participativo de Europa creado por y para los jóvenes. ¡Participa!') }}
+  {% elif current_language == 'it' %}
+    {{ meta('name=description', 'Cafébabel è il primo magazine partecipativo fatto da e per i giovani europei. Unisciti a noi!') }}
+  {% elif current_language == 'pl' %}
+      {{ meta('name=description', 'Cafébabel is the first participatory magazine made by and for young Europeans. Join the party!') }}
+  {% endif %}
   {{ meta('name=author', 'Cafébabel') }}
 {% endblock %}
-
 {% block metas_social %}
   {{ meta('property=og:url', request.url) }}
-  {{ meta('property=og:image', url_for('static', filename='img/cafebabel-thumbnail-default.jpg')) }}
+  {{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
   {{ meta('property=og:title', self.meta_title()) }}
   {{ meta('property=og:type', 'website') }}
-  {{ meta('property=og:description', 'Cafébabel is the first ever participatory magazine for and by European millennials. Join the party!') }}
   {{ meta('property=og:site_name', 'Cafébabel') }}
   {{ meta('property=og:locale', current_language) }}
+  {% if current_language == 'en' %}
+    {{ meta('property=og:description', 'Cafébabel is the first participatory magazine made by and for young Europeans. Join the party!') }}
+    {{ meta('name=twitter:description', 'Cafébabel is the first participatory magazine made by and for young Europeans. Join the party!') }}
+  {% elif current_language == 'fr' %}
+    {{ meta('property=og:description', 'Cafébabel est le premier magazine participatif fait par et pour les jeunes en Europe. Rejoignez-nous !') }}
+    {{ meta('name=twitter:description', 'Cafébabel est le premier magazine participatif fait par et pour les jeunes en Europe. Rejoignez-nous !') }}
+  {% elif current_language == 'de' %}
+    {{ meta('property=og:description', 'Cafébabel ist das erste mehrsprachige partizipative Magazin von und für junge Leute in Europa. Seid ihr dabei?') }}
+    {{ meta('name=twitter:description', 'Cafébabel ist das erste mehrsprachige partizipative Magazin von und für junge Leute in Europa. Seid ihr dabei?') }}
+  {% elif current_language == 'es' %}
+    {{ meta('property=og:description', 'Cafébabel es el primer medio participativo de Europa creado por y para los jóvenes. ¡Participa!') }}
+    {{ meta('name=twitter:description', 'Cafébabel es el primer medio participativo de Europa creado por y para los jóvenes. ¡Participa!') }}
+  {% elif current_language == 'it' %}
+    {{ meta('property=og:description', 'Cafébabel è il primo magazine partecipativo fatto da e per i giovani europei. Unisciti a noi!') }}
+    {{ meta('name=twitter:description', 'Cafébabel è il primo magazine partecipativo fatto da e per i giovani europei. Unisciti a noi!') }}
+  {% elif current_language == 'pl' %}
+    {{ meta('property=og:description', 'Cafébabel is the first ever participatory magazine for and by European millennials. Join the party!') }}
+    {{ meta('name=twitter:description', 'Cafébabel is the first ever participatory magazine for and by European millennials. Join the party!') }}
+  {% endif %}
   {{ meta('name=twitter:card', 'summary') }}
-  {{ meta('name=twitter:image', url_for('static', filename='img/cafebabel-thumbnail-default.jpg')) }}
+  {{ meta('name=twitter:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
   {{ meta('name=twitter:title', self.meta_title()) }}
-  {{ meta('name=twitter:description', 'Cafébabel is the first ever participatory magazine for and by European millennials. Join the party!') }}
   {{ meta('name=twitter:url', request.url) }}
 {% endblock %}
 
@@ -219,8 +247,8 @@
       <li><a href=http://www.culture.gouv.fr/ title="Ministère de la culture">Ministère de la culture</a></li>
       <li><a href=http://fondationhippocrene.eu/ title="Fondation Hippocrène">Fondation Hippocrène</a></li>
       <li><a href=https://www.ofaj.org/ title="OFAJ">OFAJ</a></li>
-      <li><a href=https://www.goethe.de/ title=Goethe Institut">Goethe Institut</a></li>
-      <li><a href=https://www.bpb.de/ title=Bundeszentrale für politische Bildung">Bundeszentrale für politische Bildung</a></li>
+      <li><a href=https://www.goethe.de/ title="Goethe Institut">Goethe Institut</a></li>
+      <li><a href=https://www.bpb.de/ title="Bundeszentrale für politische Bildung">Bundeszentrale für politische Bildung</a></li>
     </ul>
   </div>
 {% endblock %}
