@@ -25,7 +25,24 @@
   {{ meta('name=twitter:url', request.url) }}
 {% endblock %}
 
-{% block extra_head %}<link rel="alternate" hreflang={{ article.language }} href={{ article.detail_url }}>{% endblock %}
+{% block extra_head %}
+  <link rel="alternate" hreflang={{ article.language }} href=https://cafebabel.com{{ article.detail_url }}>
+  {% if article.is_translation %}
+    <link rel="alternate" hreflang={{ article.original_article.language }} href=https://cafebabel.com{{ article.original_article.detail_url }}>
+  {% endif %}
+  {% if translations_publisheds %}
+    {% for translation in translations_publisheds %}
+      <link rel="alternate" hreflang={{ translation.language }} href=https://cafebabel.com{{ translation.detail_url }}>
+    {% endfor %}
+  {% endif %}
+  {% for lang_code, lang_label in get_languages() %}
+    {% if article.language != lang_code and lang_code not in translations_langs %}
+      {% if article.is_translated_in(lang_code) %}
+        <link rel="alternate" hreflang={{ lang_code }} href=https://cafebabel.com{{ article.get_translation(lang_code).detail_url }}>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endblock %}
 
 {% block body_class %}article-page{% endblock %}
 
