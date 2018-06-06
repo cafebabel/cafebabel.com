@@ -11,7 +11,7 @@ var num = Math.floor(Math.random() * imagesArray.length),
 preloaderImg.src = imagesArray[num]
 setTimeout(() => {
   preloader.classList.add('slideup')
-}, 1200)
+}, 600)
 /* Preloader slide down when internal link is clicked */
 Array.from(document.querySelectorAll('a')).forEach(a => {
   if (a.href.search(/\w+:\/\//) === 0 && a.hostname == location.hostname) {
