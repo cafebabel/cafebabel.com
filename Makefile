@@ -2,7 +2,7 @@
 server=${env}@185.34.32.17
 src_dir=~/cafebabel.com
 venv_dir=~/cafebabel.com/venv
-branch=master
+branch=${env}
 old_prod=prod@91.194.60.65
 old_prod_media_dir=~/cafebabel/data/medias
 prod_server=127.0.0.1:5001
@@ -24,13 +24,13 @@ flush-logs:  # type=error|access
 	@echo "Log file emptied!"
 
 deploy:  # env=prod|preprod
-	@echo "\n> Fetching master branch and updating sources."
+	@echo "\n> Fetching {branch} branch and updating sources."
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
 	make sync-archives-media
 	@echo "\n> Launching gunicorn daemon."
 	${remote} "${goto_src} && pkill gunicorn 2> /dev/null; \
-		gunicorn --daemon -b ${${env}_server} ${env}:app \
+		gunicorn --daemon -w 10 -b ${${env}_server} ${env}:app \
 		--error-logfile ~/log/error.log --access-logfile ~/log/access.log"
 	@echo "\n> App is deployed. Run \`make logs env=${env} type=access|error\` to follow activity."
 
