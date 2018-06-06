@@ -2,7 +2,7 @@
 server=${env}@185.34.32.17
 src_dir=~/cafebabel.com
 venv_dir=~/cafebabel.com/venv
-branch=${env}
+branch=master
 old_prod=prod@91.194.60.65
 old_prod_media_dir=~/cafebabel/data/medias
 prod_server=127.0.0.1:5001
