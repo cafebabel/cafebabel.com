@@ -1,13 +1,13 @@
 /* Preloader slide up when page is loaded */
-var imagesArray = [
+const imagesArray = [
   '/static/img/preloader-A.gif',
   '/static/img/preloader-B.gif',
   '/static/img/preloader-C.gif'
 ]
-var preloader = document.getElementById('preloader-layer')
+const preloader = document.querySelector('#preloader-layer')
 
 var num = Math.floor(Math.random() * imagesArray.length),
-  preloaderImg = preloader.getElementsByTagName('img')
+  preloaderImg = preloader.querySelector('img')
 preloaderImg.src = imagesArray[num]
 setTimeout(() => {
   preloader.classList.add('slideup')
