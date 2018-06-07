@@ -1505,7 +1505,7 @@ select#author {
   #markdown-helper button:after {
     position: absolute;
     right: 0.3rem;
-    top: -3.2rem;
+    top: -4.4rem;
   }
 
   #markdown-helper.fixed {
@@ -2234,6 +2234,15 @@ p.translation-language {
   opacity: 0;
   z-index: -1;
   display: none;
+}
+
+.article-language-selector li.translation-draft a {
+  background-color: #fcd6c4;
+  color: #00283c;
+}
+
+.article-language-selector li.translation-draft a:hover {
+  background-color: #efccb7;
 }
 
 .article-language-selector li.original-language a:hover:before {
