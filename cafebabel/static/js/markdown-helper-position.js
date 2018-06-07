@@ -1,16 +1,15 @@
 /* Add fixed position to markdown helper */
 const markdownHelper = document.querySelector('#markdown-helper')
 
-const editPageTextArea = document.querySelector('.textarea.markdowntext'),
-  editPageTextAreaHeight = editPageTextArea.offsetHeight,
-  viewportHeight = Math.max(
-    document.documentElement.clientHeight,
-    window.innerHeight || 0
-  ),
-  markdownHelperCross = markdownHelper.querySelector('button')
+const editPageTextArea = document.querySelector('.textarea.markdowntext')
+const viewportHeight = Math.max(
+  document.documentElement.clientHeight,
+  window.innerHeight || 0
+)
+const markdownHelperCross = markdownHelper.querySelector('button')
 
-function isElementInViewport(el) {
-  const rect = el.getBoundingClientRect()
+function isElementInViewport(element) {
+  const rect = element.getBoundingClientRect()
   return (
     rect.bottom >= 960 /* 960px to exclude footer height */ &&
     rect.right >= 0 &&
@@ -21,6 +20,7 @@ function isElementInViewport(el) {
   )
 }
 window.addEventListener('scroll', () => {
+  const editPageTextAreaHeight = editPageTextArea.clientHeight
   if (
     isElementInViewport(editPageTextArea) &&
     editPageTextAreaHeight >= viewportHeight
@@ -32,5 +32,5 @@ window.addEventListener('scroll', () => {
 })
 markdownHelperCross.addEventListener('click', event => {
   event.preventDefault()
-  markdownHelper.classList.remove('fixed')
+  markdownHelper.classList.add('close')
 })

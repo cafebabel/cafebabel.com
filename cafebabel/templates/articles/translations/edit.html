@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block extra_js %}
-  {% assets filters='jsmin', output='build/translations-edit.js', 'js/articles-tags.js', 'js/textarea-change.js', 'choices/js/choices.min.js', 'js/articles-users.js' %}
+  {% assets filters='jsmin', output='build/translations-edit.js', 'js/articles-tags.js', 'js/textarea-change.js', 'choices/js/choices.min.js', 'js/articles-users.js', 'js/markdown-helper-position.js' %}
       <script src={{ ASSET_URL }}></script>
   {% endassets %}
 {% endblock %}
@@ -53,7 +53,7 @@
     <label for=summary>Lead paragraph</label>
     <textarea id=summary name=summary>{{ translation.summary }}</textarea>
   </div>
-  <div class=textarea>
+  <div class="textarea markdowntext">
     <label for=body>Body text</label>
     <textarea id=body name=body required>{{ translation.body }}</textarea>
     {% include "articles/markdown-helper.html" %}
