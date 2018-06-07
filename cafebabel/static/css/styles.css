@@ -2236,6 +2236,15 @@ p.translation-language {
   display: none;
 }
 
+.article-language-selector li.translation-draft a {
+  background-color: #fcd6c4;
+  color: #00283c;
+}
+
+.article-language-selector li.translation-draft a:hover {
+  background-color: #efccb7;
+}
+
 .article-language-selector li.original-language a:hover:before {
   bottom: -23px;
   opacity: 1;
