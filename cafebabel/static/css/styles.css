@@ -1514,6 +1514,12 @@ select#author {
     margin-bottom: 1rem;
   }
 
+  #markdown-helper.close {
+    position: absolute;
+    bottom: auto;
+    margin-bottom: 5rem;
+  }
+
   #markdown-helper pre {
     display: inline-block;
     margin: 0;

@@ -2,7 +2,6 @@
 const markdownHelper = document.querySelector('#markdown-helper')
 
 const editPageTextArea = document.querySelector('.textarea.markdowntext')
-const editPageTextAreaHeight = editPageTextArea.offsetHeight
 const viewportHeight = Math.max(
   document.documentElement.clientHeight,
   window.innerHeight || 0
@@ -15,12 +14,13 @@ function isElementInViewport(element) {
     rect.bottom >= 960 /* 960px to exclude footer height */ &&
     rect.right >= 0 &&
     rect.top <=
-    (window.innerHeight || document.documentElement.clientHeight) -
-    500 /* 500px after textarea enter viewport */ &&
+      (window.innerHeight || document.documentElement.clientHeight) -
+        500 /* 500px after textarea enter viewport */ &&
     rect.left <= (window.innerWidth || document.documentElement.clientWidth)
   )
 }
 window.addEventListener('scroll', () => {
+  const editPageTextAreaHeight = editPageTextArea.clientHeight
   if (
     isElementInViewport(editPageTextArea) &&
     editPageTextAreaHeight >= viewportHeight
@@ -32,5 +32,5 @@ window.addEventListener('scroll', () => {
 })
 markdownHelperCross.addEventListener('click', event => {
   event.preventDefault()
-  markdownHelper.classList.remove('fixed')
+  markdownHelper.classList.add('close')
 })
