@@ -339,7 +339,7 @@ def test_translation_published_should_have_reference(
         f'/en/article/{published_article.slug}-{published_article.id}/')
     assert response.status_code == HTTPStatus.OK
     assert (('<li class=translated-language><a href='
-             f'/fr/article/title-{published_translation.id}/>') in response)
+             f'/fr/article/title-{published_translation.id}/ title="See this article in fr">') in response)
 
 
 def test_article_model_is_translated_in(app, translation):
