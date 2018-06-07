@@ -2,7 +2,7 @@
 {% import "articles/macros.html" as macros %}
 
 {% block extra_js %}
-  {% assets filters='jsmin', output='build/translations-create.js', 'js/articles-tags.js', 'js/textarea-change.js' %}
+  {% assets filters='jsmin', output='build/translations-create.js', 'js/articles-tags.js', 'js/textarea-change.js', 'js/markdown-helper-position.js' %}
       <script src={{ ASSET_URL }}></script>
   {% endassets %}
 {% endblock %}
@@ -24,7 +24,7 @@
       <label for=summary>Lead paragraph</label>
       <textarea id=summary name=summary>{{ article.summary or '' }}</textarea>
     </div>
-    <div class=textarea>
+    <div class="textarea markdowntext">
       <label for=body>Body text</label>
       <textarea id=body name=body required>{{ article.body }}</textarea>
       {% include "articles/markdown-helper.html" %}
