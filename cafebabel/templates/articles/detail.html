@@ -98,6 +98,11 @@
               {% endif %}
             {% endif %}
           {% endfor %}
+        {% if translations_drafts and current_user.has_role('editor') %}
+            {% for translation in translations_drafts %}
+              <li class=translation-draft><a href={{ translation.detail_url }} title="Translation draft">{{ translation.language }}</a></li>
+            {% endfor %}
+        {% endif %}
       </ul>
     </div>
 
@@ -111,15 +116,6 @@
     <p class=translation-details>
       Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
     </p>
-  {% endif %}
-
-  {% if translations_drafts and current_user.has_role('editor') %}
-    <p class=translation-details>Review this article in:</p>
-    <ul>
-      {% for translation in translations_drafts %}
-        <li>{{ translation.language }}: <a href={{ translation.detail_url }}>{{ translation.title }}</a></li>
-      {% endfor %}
-    </ul>
   {% endif %}
 
   {% block share_nav %}
