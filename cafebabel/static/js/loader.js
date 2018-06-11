@@ -6,12 +6,12 @@ const imagesArray = [
 ]
 const preloader = document.querySelector('#preloader-layer')
 
-var num = Math.floor(Math.random() * imagesArray.length),
+const num = Math.floor(Math.random() * imagesArray.length),
   preloaderImg = preloader.querySelector('img')
 preloaderImg.src = imagesArray[num]
 setTimeout(() => {
   preloader.classList.add('slideup')
-}, 600)
+}, 1000)
 /* Preloader slide down when internal link is clicked */
 Array.from(document.querySelectorAll('a')).forEach(a => {
   if (a.href.search(/\w+:\/\//) === 0 && a.hostname == location.hostname) {

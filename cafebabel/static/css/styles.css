@@ -332,6 +332,11 @@ p {
   margin: 0 0 4rem;
 }
 
+hr {
+  max-width: 75rem;
+  margin-bottom: 3rem;
+}
+
 blockquote {
   font-family: 'sporting_grotesque', sans-serif;
   font-size: 2.2rem;
