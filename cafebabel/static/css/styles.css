@@ -3482,6 +3482,13 @@ footer p {
   z-index: 0;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  /* if chrome */
+  .article-page article .row .fixed-background {
+    background: url('../img/bg-static-pages.jpg') scroll center / cover; /* fixed doesn't work on chrome */
+  }
+}
+
 @media screen and (max-width: 750px) {
   .article-page article .row .fixed-background {
     background-attachment: inherit;
