@@ -47,15 +47,21 @@ subscribeLink.addEventListener('click', event => {
 function thumbnailHoverEffect(articlePage) {
   const articleThumbnails = document.querySelectorAll(articlePage)
   articleThumbnails.forEach(articleThumbnail => {
-    const articleThumbnailLinks = articleThumbnail.querySelectorAll('a')
-    articleThumbnailLinks.forEach(articleThumbnailLink => {
-      articleThumbnailLink.addEventListener('mouseover', () => {
-        articleThumbnail.classList.add('thumbnail-hover')
+    function toggleClassOnMouseover(targetedLink) {
+      const articleThumbnailLinks = articleThumbnail.querySelectorAll(
+        targetedLink
+      )
+      articleThumbnailLinks.forEach(articleThumbnailLink => {
+        articleThumbnailLink.addEventListener('mouseover', () => {
+          articleThumbnail.classList.add('thumbnail-hover')
+        })
+        articleThumbnailLink.addEventListener('mouseout', () => {
+          articleThumbnail.classList.remove('thumbnail-hover')
+        })
       })
-      articleThumbnailLink.addEventListener('mouseout', () => {
-        articleThumbnail.classList.remove('thumbnail-hover')
-      })
-    })
+    }
+    toggleClassOnMouseover('article > a')
+    toggleClassOnMouseover('h3 > a')
   })
 }
 thumbnailHoverEffect('.home article')
