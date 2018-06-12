@@ -3000,7 +3000,7 @@ section[class*=' participation-'] img {
     color: #bde513;
   }
 
-  .home article.thumbnail-hover img {
+  article.thumbnail-hover img {
     opacity: 0.8;
     transition: all 0.3s;
   }

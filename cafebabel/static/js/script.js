@@ -44,18 +44,23 @@ subscribeLink.addEventListener('click', event => {
 })
 
 /* Hover effect article image */
-const articleThumbnails = document.querySelectorAll('.home article')
-articleThumbnails.forEach(articleThumbnail => {
-  const articleThumbnailLinks = articleThumbnail.querySelectorAll('a')
-  articleThumbnailLinks.forEach(articleThumbnailLink => {
-    articleThumbnailLink.addEventListener('mouseover', () => {
-      articleThumbnail.classList.add('thumbnail-hover')
-    })
-    articleThumbnailLink.addEventListener('mouseout', () => {
-      articleThumbnail.classList.remove('thumbnail-hover')
+function thumbnailHoverEffect(articlePage) {
+  const articleThumbnails = document.querySelectorAll(articlePage)
+  articleThumbnails.forEach(articleThumbnail => {
+    const articleThumbnailLinks = articleThumbnail.querySelectorAll('a')
+    articleThumbnailLinks.forEach(articleThumbnailLink => {
+      articleThumbnailLink.addEventListener('mouseover', () => {
+        articleThumbnail.classList.add('thumbnail-hover')
+      })
+      articleThumbnailLink.addEventListener('mouseout', () => {
+        articleThumbnail.classList.remove('thumbnail-hover')
+      })
     })
   })
-})
+}
+thumbnailHoverEffect('.home article')
+thumbnailHoverEffect('.tag-page article')
+thumbnailHoverEffect('.profile-page article')
 
 /* animation flash info */
 const flashes = document.querySelector('.flashes')
