@@ -71,17 +71,21 @@ const socialIcons = Array.from(
 )
 if (socialIcons) {
   socialIcons.forEach(socialIcon => {
-    socialIcon.querySelector('a').addEventListener('click', event => {
-      event.preventDefault()
-      const socialsClick = socialIcon.querySelector('a').contains(event.target)
-      if (socialsClick) {
-        socialIcons.forEach(li => li.classList.remove('active'))
-        socialIcon.classList.add('active')
-        socialIcon.querySelector('input').focus()
-      } else {
-        socialIcon.classList.remove('active')
-      }
-    })
+    socialIcon
+      .querySelector('.profile-social')
+      .addEventListener('click', event => {
+        event.preventDefault()
+        const socialsClick = socialIcon
+          .querySelector('.profile-social')
+          .contains(event.target)
+        if (socialsClick) {
+          socialIcons.forEach(li => li.classList.remove('active'))
+          socialIcon.classList.add('active')
+          socialIcon.querySelector('input').focus()
+        } else {
+          socialIcon.classList.remove('active')
+        }
+      })
   })
   // when input element loses the focus the target become inactive
   socialIcons.forEach(socialIcon => {
