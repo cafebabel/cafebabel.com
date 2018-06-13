@@ -24,6 +24,11 @@
     <link rel=stylesheet href={{ ASSET_URL }}>
 {% endassets %}
 {% block extra_head %}{% endblock %}
+<noscript>
+  <style type="text/css">
+    #preloader-layer {display:none;}
+  </style>
+</noscript>
 
 <body class="{% block body_class %}{% endblock %}">
 
