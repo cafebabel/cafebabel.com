@@ -29,7 +29,7 @@ def test_authenticated_user_can_access_login_required_page(client, user):
     login(client, user.email, 'password')
     response = client.get(f'/en/profile/{user.id}/edit/')
     assert response.status_code == HTTPStatus.OK
-    assert "<h1>Testy Tester's profile</h1>" in response
+    assert "<h1>Testy Tester</h1>" in response
 
 
 def test_authenticated_user_can_access_his_email(client, user):

@@ -1,6 +1,6 @@
 {% macro social_field(name) %}
 <li>
-  <a href="{{ user.profile.socials.get(name) }}" class=icon-{{ name }}></a>
+  <div class="profile-social icon-{{ name }}"></div>
   <label for=social-{{ name }}>
     <span class=icon-{{ name }}></span>
     <input type=url id=social-{{ name }} name=socials-{{ name }} value="{{ user.profile.socials.get(name) or '' }}">
