@@ -2128,6 +2128,10 @@ select#author {
   font-weight: 200;
 }
 
+.article-page .article-language-selector + p {
+  margin-top: 3rem;
+}
+
 .article-page article p img {
   margin: 0 auto 2rem;
 }
