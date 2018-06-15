@@ -3507,7 +3507,7 @@ footer p {
   position: relative;
 }
 
-.article-page article figure {
+.article-page article .row figure {
   position: relative;
   float: left;
   width: 50%;
@@ -3515,12 +3515,12 @@ footer p {
   margin-top: 2rem;
 }
 
-.article-page article figure img {
+.article-page article .row figure img {
   margin: 0 auto;
   padding: 0.5rem;
 }
 
-.article-page article figure figcaption {
+.article-page article .row figure figcaption {
   text-align: center;
   padding: 1rem 0.8rem 0;
   font-weight: 400;
@@ -3533,16 +3533,16 @@ footer p {
     height: 50rem;
   }
 
-  .article-page article figure {
+  .article-page article .row figure {
     width: 25%;
     margin-top: 16rem;
   }
 
-  .article-page article figure img {
+  .article-page article .row figure img {
     padding: 0;
   }
 
-  .article-page article figure figcaption {
+  .article-page article .row figure figcaption {
     padding: 1rem 2rem 0;
     font-size: 1.8rem;
   }
