@@ -2073,7 +2073,7 @@ select#author {
 
 .article-page figure.full {
   margin: 0 auto;
-  max-width: 120rem;
+  max-width: 100%;
 }
 
 .article-page figcaption {
