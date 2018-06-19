@@ -1,5 +1,6 @@
 /* Add fixed position to markdown helper */
 const markdownHelper = document.querySelector('#markdown-helper')
+const saveButton = document.querySelector('.article-page-edit .tags + input')
 
 const editPageTextArea = document.querySelector('.textarea.markdowntext')
 const viewportHeight = Math.max(
@@ -26,8 +27,10 @@ window.addEventListener('scroll', () => {
     editPageTextAreaHeight >= viewportHeight
   ) {
     markdownHelper.classList.add('fixed')
+    saveButton.classList.add('fixed')
   } else {
     markdownHelper.classList.remove('fixed')
+    saveButton.classList.remove('fixed')
   }
 })
 markdownHelperCross.addEventListener('click', event => {
