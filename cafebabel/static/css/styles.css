@@ -127,15 +127,15 @@ main {
 
 @font-face {
   font-family: 'sporting_grotesque';
-  src: url('../fonts/sporting_grotesque_normal-webfont.woff2') format('woff2'),
-    url('../fonts/sporting_grotesque_normal-webfont.woff') format('woff');
+  src: url('../fonts/sportinggrotesque-regular-webfont.woff2') format('woff2'),
+    url('../fonts/sportinggrotesque-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'sporting_grotesque';
-  src: url('../fonts/sporting_grotesque_gras-webfont.woff2') format('woff2'),
-    url('../fonts/sporting_grotesque_gras-webfont.woff') format('woff');
+  src: url('../fonts/sportinggrotesque-bold-webfont.woff2') format('woff2'),
+    url('../fonts/sportinggrotesque-bold-webfont.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
@@ -1515,7 +1515,7 @@ select#author {
 
   #markdown-helper.fixed {
     position: fixed;
-    bottom: 0;
+    bottom: 5rem;
     margin-bottom: 1rem;
   }
 
@@ -1529,8 +1529,19 @@ select#author {
     display: inline-block;
     margin: 0;
   }
+
   .textarea.markdowntext {
     margin-bottom: 18rem;
+  }
+
+  .article-page-edit .tags + input.fixed {
+    position: fixed;
+    bottom: -1rem;
+    transform: translateX(-50%);
+    left: 50%;
+    height: 4rem;
+    line-height: 0;
+    z-index: 2;
   }
 }
 
@@ -1597,6 +1608,7 @@ select#author {
 .profile-page main .social-networks li {
   display: inline-block;
   width: 3.5rem;
+  cursor: pointer;
 }
 
 .profile-page main .file {
@@ -2054,6 +2066,24 @@ select#author {
   display: block;
 }
 
+.article-page figure {
+  margin: 0 auto;
+  max-width: 75rem;
+}
+
+.article-page figure.full {
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.article-page figcaption {
+  font-family: 'sporting_grotesque', sans-serif;
+  color: #696969;
+  font-size: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
 .article-page article h4 {
   font-family: 'sporting_grotesque', sans-serif;
   color: #696969;
@@ -2125,6 +2155,10 @@ select#author {
   margin: 3rem auto 5rem auto;
   font-size: 2rem;
   font-weight: 200;
+}
+
+.article-page .article-language-selector + p {
+  margin-top: 3rem;
 }
 
 .article-page article p img {
@@ -3034,7 +3068,7 @@ section[class*=' participation-'] img {
     color: #bde513;
   }
 
-  .home article.thumbnail-hover img {
+  article.thumbnail-hover img {
     opacity: 0.8;
     transition: all 0.3s;
   }
@@ -3539,6 +3573,13 @@ footer p {
   z-index: 0;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  /* if chrome */
+  .article-page article .row .fixed-background {
+    background: url('../img/bg-static-pages.jpg') scroll center / cover; /* fixed doesn't work on chrome */
+  }
+}
+
 @media screen and (max-width: 750px) {
   .article-page article .row .fixed-background {
     background-attachment: inherit;
@@ -3556,7 +3597,7 @@ footer p {
   position: relative;
 }
 
-.article-page article figure {
+.article-page article .row figure {
   position: relative;
   float: left;
   width: 50%;
@@ -3564,16 +3605,18 @@ footer p {
   margin-top: 2rem;
 }
 
-.article-page article figure img {
+.article-page article .row figure img {
   margin: 0 auto;
   padding: 0.5rem;
 }
 
-.article-page article figure figcaption {
+.article-page article .row figure figcaption {
+  font-family: 'vremena_grotesk', sans-serif;
   text-align: center;
+  color: #00283c;
   padding: 1rem 0.8rem 0;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 @media screen and (min-width: 750px) {
@@ -3582,16 +3625,16 @@ footer p {
     height: 50rem;
   }
 
-  .article-page article figure {
+  .article-page article .row figure {
     width: 25%;
     margin-top: 16rem;
   }
 
-  .article-page article figure img {
+  .article-page article .row figure img {
     padding: 0;
   }
 
-  .article-page article figure figcaption {
+  .article-page article .row figure figcaption {
     padding: 1rem 2rem 0;
     font-size: 1.8rem;
   }

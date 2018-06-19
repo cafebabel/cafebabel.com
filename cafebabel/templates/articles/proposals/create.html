@@ -18,8 +18,8 @@
     <label for=field_name>Name*</label><input name=name id=field_name required>
     <label for=field_email>Email*</label><input type=email name=email id=field_email required>
     <label for=field_city>Current location</label><input name=city id=field_city>
-    <label for=field_topic>Topic in a sentence *<p>ex: Drug laws in Portugal</p></label><textarea name=topic id=field_topic required></textarea>
-    <label for=field_angle>Detailed pitch<p>ex: I want to interview young and old people living in Portugal to find out how they experienced the 2001 drug policy reforms until now</p></label><textarea name=angle id=field_angle></textarea>
+    <label for=field_topic>Topic in a sentence*<p>ex: Drug laws in Portugal</p></label><textarea name=topic maxlength=1000 id=field_topic required></textarea>
+    <label for=field_angle>Detailed pitch<p>(Max. 1,000 characters)</p><p>ex: I want to interview young and old people living in Portugal to find out how they experienced the 2001 drug policy reforms until now</p></label><textarea name=angle maxlength=1000 id=field_angle></textarea>
       <div class=select>
         <label for=media-type>Type of contribution
           <select name=media id=media-type required>

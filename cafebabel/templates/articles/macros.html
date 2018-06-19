@@ -97,7 +97,7 @@
       {{ article_publication_date(article) }}
       — by
       {% for author in article.authors %}
-        <a href={{ author.detail_url }}>{{ author }}</a>
+        <a href={{ author.detail_url }}>{{ author }}</a>{{ "," if not loop.last }}
       {% endfor %}
     </p>
     <p class=tags-list>
