@@ -127,15 +127,15 @@ main {
 
 @font-face {
   font-family: 'sporting_grotesque';
-  src: url('../fonts/sporting_grotesque_normal-webfont.woff2') format('woff2'),
-    url('../fonts/sporting_grotesque_normal-webfont.woff') format('woff');
+  src: url('../fonts/sportinggrotesque-regular-webfont.woff2') format('woff2'),
+    url('../fonts/sportinggrotesque-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'sporting_grotesque';
-  src: url('../fonts/sporting_grotesque_gras-webfont.woff2') format('woff2'),
-    url('../fonts/sporting_grotesque_gras-webfont.woff') format('woff');
+  src: url('../fonts/sportinggrotesque-bold-webfont.woff2') format('woff2'),
+    url('../fonts/sportinggrotesque-bold-webfont.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
