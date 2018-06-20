@@ -771,7 +771,7 @@ body > header {
   height: 7.9rem;
   background-color: #fff;
   box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.05);
-  z-index: 2;
+  z-index: 6;
 }
 
 @media screen and (min-width: 750px) {
@@ -815,7 +815,7 @@ a.logo:after {
 
 #preloader-layer {
   position: fixed;
-  top: 0;
+  top: 7.9rem;
   right: 0;
   bottom: 0;
   left: 0;
@@ -829,7 +829,7 @@ a.logo:after {
 #preloader-layer img {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%;
   transform: translate(-50%, -50%);
 }
 
@@ -843,17 +843,20 @@ a.logo:after {
 }
 
 #preloader-layer.slidedown {
-  top: 0;
+  top: 7.9rem;
   bottom: 0;
+}
+
+@media screen and (min-width: 750px) {
+  #preloader-layer,
+  #preloader-layer.slidedown {
+    top: 9rem;
+  }
 }
 
 #preloader-layer.hidden {
   display: none;
 }
-
-/*#preloader-layer {
-  display: none;
-}*/
 
 /* Menu */
 
