@@ -143,7 +143,7 @@ main {
 /* Icomoon */
 
 @font-face {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   src: url('../fonts/icomoon.ttf?8rv96k') format('truetype'),
     url('../fonts/icomoon.woff?8rv96k') format('woff'),
     url('../fonts/icomoon.svg?8rv96k#icomoon') format('svg');
@@ -153,7 +153,7 @@ main {
 
 [class^='icon-'],
 [class*=' icon-'] {
-  font-family: 'icomoon' !important;
+  font-family: 'icomoon-icons' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -613,7 +613,7 @@ label[for='remember'] {
 }
 
 [type='checkbox']:after {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea10';
   text-transform: none;
   line-height: 2.6rem;
@@ -672,7 +672,7 @@ select {
 
 .select label:after {
   position: absolute;
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   font-size: 1.9rem;
   content: '\ea3e';
   right: 1.2rem;
@@ -1178,7 +1178,7 @@ button.menu + nav a {
   #participate:before,
   #translate:before,
   #donate:before {
-    font-family: 'icomoon';
+    font-family: 'icomoon-icons';
     display: block;
     text-align: center;
     font-size: 2.8rem;
@@ -1304,7 +1304,7 @@ button.menu + nav a {
 }
 
 .file label[for='image']:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\e927';
   display: block;
   font-size: 4rem;
@@ -1407,7 +1407,7 @@ h1.edit input {
 
 .article-page-edit .tags .tags-list li button:after,
 #markdown-helper button:after {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea0f';
   font-size: 1.3rem;
   margin-left: 1rem;
@@ -1671,7 +1671,7 @@ select#author {
 }
 
 .profile-page main .file input + label strong:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\e927';
   display: block;
   font-size: 5rem;
@@ -2571,7 +2571,7 @@ a.tag-raw:before,
 .article-page article p.tags-list a.tag-creative:before,
 a.tag-creative:before,
 button.menu.main-menu + nav a.tag-network:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   padding-right: 0.4rem;
 }
 
@@ -2637,7 +2637,7 @@ button.menu.main-menu + nav a.tag-network:before {
 }
 
 .tag-page.tag-network main header h1:before {
-  font-family: icomoon;
+  font-family: icomoon-icons;
   content: '\e909';
   padding-right: 1rem;
   font-size: 4.5rem;
@@ -2798,7 +2798,7 @@ button.menu.main-menu + nav a.tag-network:before {
 }
 
 article.article-video:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea1c';
   position: absolute;
   text-align: center;
@@ -2933,7 +2933,7 @@ article.article-video:before {
 }
 
 .home a.section-link:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   display: block;
   font-size: 5rem;
 }
@@ -3821,7 +3821,7 @@ footer p {
 }
 
 #cookie-disclaimer button:after {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea0f';
   font-size: 1.5rem;
 }
