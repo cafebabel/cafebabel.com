@@ -1531,6 +1531,7 @@ select#author {
   #markdown-helper pre {
     display: inline-block;
     margin: 0;
+    letter-spacing: -0.01rem;
   }
 
   .textarea.markdowntext {
