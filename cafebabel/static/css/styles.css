@@ -162,8 +162,8 @@ main {
   line-height: 1;
   color: #00283c;
 }
-.icon-play-icon:before {
-  content: '\ea1c';
+.icon-play:before {
+  content: '\ead1';
 }
 .icon-donate:before {
   content: '\e910';
@@ -2800,7 +2800,7 @@ button.menu.main-menu + nav a.tag-network:before {
 
 article.article-video:before {
   font-family: 'icomoon-icons';
-  content: '\ea1c';
+  content: '\ead1';
   position: absolute;
   text-align: center;
   font-size: 2.1rem;
