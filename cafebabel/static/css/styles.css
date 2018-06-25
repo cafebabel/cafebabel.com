@@ -143,7 +143,7 @@ main {
 /* Icomoon */
 
 @font-face {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   src: url('../fonts/icomoon.ttf?8rv96k') format('truetype'),
     url('../fonts/icomoon.woff?8rv96k') format('woff'),
     url('../fonts/icomoon.svg?8rv96k#icomoon') format('svg');
@@ -153,7 +153,7 @@ main {
 
 [class^='icon-'],
 [class*=' icon-'] {
-  font-family: 'icomoon' !important;
+  font-family: 'icomoon-icons' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -163,7 +163,7 @@ main {
   color: #00283c;
 }
 .icon-play:before {
-  content: '\ea1c';
+  content: '\ead1';
 }
 .icon-donate:before {
   content: '\e910';
@@ -613,7 +613,7 @@ label[for='remember'] {
 }
 
 [type='checkbox']:after {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea10';
   text-transform: none;
   line-height: 2.6rem;
@@ -672,7 +672,7 @@ select {
 
 .select label:after {
   position: absolute;
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   font-size: 1.9rem;
   content: '\ea3e';
   right: 1.2rem;
@@ -771,7 +771,7 @@ body > header {
   height: 7.9rem;
   background-color: #fff;
   box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.05);
-  z-index: 2;
+  z-index: 6;
 }
 
 @media screen and (min-width: 750px) {
@@ -815,7 +815,7 @@ a.logo:after {
 
 #preloader-layer {
   position: fixed;
-  top: 0;
+  top: 7.9rem;
   right: 0;
   bottom: 0;
   left: 0;
@@ -829,7 +829,7 @@ a.logo:after {
 #preloader-layer img {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%;
   transform: translate(-50%, -50%);
 }
 
@@ -843,17 +843,20 @@ a.logo:after {
 }
 
 #preloader-layer.slidedown {
-  top: 0;
+  top: 7.9rem;
   bottom: 0;
+}
+
+@media screen and (min-width: 750px) {
+  #preloader-layer,
+  #preloader-layer.slidedown {
+    top: 9rem;
+  }
 }
 
 #preloader-layer.hidden {
   display: none;
 }
-
-/*#preloader-layer {
-  display: none;
-}*/
 
 /* Menu */
 
@@ -1175,7 +1178,7 @@ button.menu + nav a {
   #participate:before,
   #translate:before,
   #donate:before {
-    font-family: 'icomoon';
+    font-family: 'icomoon-icons';
     display: block;
     text-align: center;
     font-size: 2.8rem;
@@ -1301,7 +1304,7 @@ button.menu + nav a {
 }
 
 .file label[for='image']:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\e927';
   display: block;
   font-size: 4rem;
@@ -1404,7 +1407,7 @@ h1.edit input {
 
 .article-page-edit .tags .tags-list li button:after,
 #markdown-helper button:after {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea0f';
   font-size: 1.3rem;
   margin-left: 1rem;
@@ -1528,6 +1531,7 @@ select#author {
   #markdown-helper pre {
     display: inline-block;
     margin: 0;
+    letter-spacing: -0.01rem;
   }
 
   .textarea.markdowntext {
@@ -1668,7 +1672,7 @@ select#author {
 }
 
 .profile-page main .file input + label strong:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\e927';
   display: block;
   font-size: 5rem;
@@ -2568,7 +2572,7 @@ a.tag-raw:before,
 .article-page article p.tags-list a.tag-creative:before,
 a.tag-creative:before,
 button.menu.main-menu + nav a.tag-network:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   padding-right: 0.4rem;
 }
 
@@ -2634,7 +2638,7 @@ button.menu.main-menu + nav a.tag-network:before {
 }
 
 .tag-page.tag-network main header h1:before {
-  font-family: icomoon;
+  font-family: icomoon-icons;
   content: '\e909';
   padding-right: 1rem;
   font-size: 4.5rem;
@@ -2795,8 +2799,8 @@ button.menu.main-menu + nav a.tag-network:before {
 }
 
 article.article-video:before {
-  font-family: 'icomoon';
-  content: '\ea1c';
+  font-family: 'icomoon-icons';
+  content: '\ead1';
   position: absolute;
   text-align: center;
   font-size: 2.1rem;
@@ -2930,7 +2934,7 @@ article.article-video:before {
 }
 
 .home a.section-link:before {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   display: block;
   font-size: 5rem;
 }
@@ -3818,7 +3822,7 @@ footer p {
 }
 
 #cookie-disclaimer button:after {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea0f';
   font-size: 1.5rem;
 }
