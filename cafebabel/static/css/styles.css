@@ -162,7 +162,7 @@ main {
   line-height: 1;
   color: #00283c;
 }
-.icon-play:before {
+.icon-play-icon:before {
   content: '\ea1c';
 }
 .icon-donate:before {
