@@ -2426,6 +2426,32 @@ article .share a:first-child {
   bottom: -50rem;
 }
 
+@media screen and (min-width: 750px) {
+  .home .flashes {
+    background: url(http://127.0.1:8887/bg-flashes-A.jpg) center / 100%;
+    border: none;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    height: 50%;
+    width: 50%;
+    box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .home .flashes li {
+    font-family: 'sporting_grotesque', sans-serif;
+    color: #fff;
+    text-align: center;
+    padding-top: 45%;
+  }
+
+  .home .flashes li:before {
+    content: url('../img/gif-newsletter.gif');
+    position: absolute;
+    top: 40%;
+    left: 35%;
+  }
+}
+
 /* Tag page */
 
 .tag-page .tag-header.default,
