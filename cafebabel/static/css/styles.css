@@ -2450,7 +2450,7 @@ article .share a:first-child {
   }
 
   .home .flashes li:before {
-    content: url('../img/gif-newsletter.gif');
+    content: url('http://127.1:8887/180702-gif-fist-bump-D.gif');
     position: absolute;
     top: 40%;
     left: 35%;
