@@ -34,7 +34,7 @@ def create():
             body=BODY_EMAIL_TEMPLATE.format(**data)
         )
         mail.send(msg)
-        flash('Thanks! We’ll be getting back to you asap', 'success')
+        flash('Nice one! You’ll be hearing back from your editor ASAP', 'success')
         return redirect(lang_url_for('cores.home_lang'))
 
     return render_template(
