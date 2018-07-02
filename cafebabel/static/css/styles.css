@@ -1984,10 +1984,14 @@ select#author {
 .article-page article h3,
 .article-page article h4,
 .article-page article h5,
-.article-page article h6,
-.article-page article p {
+.article-page article h6 {
   max-width: 75rem;
   margin: 0 auto 5rem auto;
+}
+
+.article-page article p {
+  max-width: 75rem;
+  margin: 0 auto 3rem auto;
 }
 
 .article-page article > img {
