@@ -2463,6 +2463,10 @@ article .share a:first-child {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .home .flashes.hidden {
+    bottom: -50rem;
+  }
 }
 
 /* Tag page */
