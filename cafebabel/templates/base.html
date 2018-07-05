@@ -25,9 +25,9 @@
 {% endassets %}
 {% block extra_head %}{% endblock %}
 <noscript>
-  <style type="text/css">#preloader-layer {display:none;}</style>
+  <style>#preloader-layer {display:none;}</style>
 </noscript>
-<!--[if IE]><style type="text/css">#preloader-layer {display:none;}</style><![endif]-->
+<!--[if IE]><style>#preloader-layer {display:none;}</style><![endif]-->
 
 <body class="{% block body_class %}{% endblock %}">
 
@@ -173,7 +173,7 @@
 <div id=preloader-layer>
     <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="loading...">
 </div>
-<script src="/static/js/loader.js" type="text/javascript"></script>
+<script src="/static/js/loader.js"></script>
 {% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js', 'js/lazyload.min.js', 'js/lazyload-setup.js' %}
     <script src={{ ASSET_URL }}></script>
 {% endassets %}
