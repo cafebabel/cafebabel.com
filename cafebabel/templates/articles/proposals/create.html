@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_meta-macro.html" import meta %}
 
 {% block extra_js %}
   {% assets filters='jsmin', output='build/proposals-create.js', 'js/textarea-change.js' %}
@@ -7,6 +8,25 @@
 {% endblock %}
 
 {% block meta_title %}Pitch an article – Cafébabel{% endblock %}
+
+{% block metas %}
+  {{ meta('name=description', 'Want to pitch articles for Cafébabel? You’ve come to the right place.') }}
+{% endblock %}
+
+{% block metas_social %}
+  {{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
+  {{ meta('property=og:url', request.url) }}
+  {{ meta('property=og:title', self.meta_title()) }}
+  {{ meta('property=og:type', 'article') }}
+  {{ meta('property=og:description', 'Want to pitch articles for Cafébabel? You’ve come to the right place.') }}
+  {{ meta('property=og:site_name', 'Cafébabel') }}
+  {{ meta('property=og:locale', current_language) }}
+  {{ meta('name=twitter:card', 'summary') }}
+  {{ meta('name=twitter:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
+  {{ meta('name=twitter:title', self.meta_title()) }}
+  {{ meta('name=twitter:description', 'Want to pitch articles for Cafébabel? You’ve come to the right place.') }}
+  {{ meta('name=twitter:url', request.url) }}
+{% endblock %}
 
 {% block body_class %}pitch-page{% endblock %}
 {% block body %}

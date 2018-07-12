@@ -2154,7 +2154,7 @@ select#author {
 
 .article-page article h3 {
   text-align: center;
-  margin: 3rem auto 5rem auto;
+  margin: 5rem auto;
 }
 
 .article-page article .summary,
@@ -2311,7 +2311,7 @@ p.translation-language {
 
 article .share {
   width: 23rem;
-  margin: 0 auto;
+  margin: 6rem auto;
   text-align: center;
   font-weight: 200;
   line-height: 1.5;

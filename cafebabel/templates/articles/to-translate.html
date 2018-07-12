@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 {% from "articles/macros.html" import card %}
+{% from "_meta-macro.html" import meta %}
 
 {% block meta_title %}Translate articles – Cafébabel{% endblock %}
+
+{% block metas %}
+  {{ meta('name=description', 'Want to translate articles for Cafébabel? You’ve come to the right place.') }}
+{% endblock %}
+
+{% block metas_social %}
+  {{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
+  {{ meta('property=og:url', request.url) }}
+  {{ meta('property=og:title', self.meta_title()) }}
+  {{ meta('property=og:type', 'article') }}
+  {{ meta('property=og:description', 'Want to translate articles for Cafébabel? You’ve come to the right place.') }}
+  {{ meta('property=og:site_name', 'Cafébabel') }}
+  {{ meta('property=og:locale', current_language) }}
+  {{ meta('name=twitter:card', 'summary') }}
+  {{ meta('name=twitter:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
+  {{ meta('name=twitter:title', self.meta_title()) }}
+  {{ meta('name=twitter:description', 'Want to translate articles for Cafébabel? You’ve come to the right place.') }}
+  {{ meta('name=twitter:url', request.url) }}
+{% endblock %}
 
 {% block body_class %}translate-list-page{% endblock %}
 {% block body %}
