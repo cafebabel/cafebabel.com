@@ -1984,10 +1984,14 @@ select#author {
 .article-page article h3,
 .article-page article h4,
 .article-page article h5,
-.article-page article h6,
-.article-page article p {
+.article-page article h6 {
   max-width: 75rem;
   margin: 0 auto 5rem auto;
+}
+
+.article-page article p {
+  max-width: 75rem;
+  margin: 0 auto 3rem auto;
 }
 
 .article-page article > img {
@@ -2150,7 +2154,7 @@ select#author {
 
 .article-page article h3 {
   text-align: center;
-  margin: 3rem auto 5rem auto;
+  margin: 5rem auto;
 }
 
 .article-page article .summary,
@@ -2187,6 +2191,10 @@ article p.video-wrapper iframe {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+article iframe.instagram-media {
+  margin: 0 auto 5rem !important; /* overwrite auto inline insta iframe css */
 }
 
 textarea#body {
@@ -2303,7 +2311,7 @@ p.translation-language {
 
 article .share {
   width: 23rem;
-  margin: 0 auto;
+  margin: 6rem auto;
   text-align: center;
   font-weight: 200;
   line-height: 1.5;
@@ -2424,6 +2432,41 @@ article .share a:first-child {
 
 .flashes.hidden {
   bottom: -50rem;
+}
+
+@media screen and (min-width: 750px) {
+  .home .flashes {
+    background: #fff url('../img/bg-flashes.jpg') center / 100%;
+    border: none;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    height: 50%;
+    width: 50%;
+    max-width: 70rem;
+    box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .home .flashes:before {
+    content: url('../img/gif-fist-bump.gif');
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .home .flashes li {
+    position: absolute;
+    font-family: 'sporting_grotesque', sans-serif;
+    color: #fff;
+    text-align: center;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .home .flashes.hidden {
+    bottom: -50rem;
+  }
 }
 
 /* Tag page */
