@@ -237,6 +237,7 @@ h6 {
 
 h1,
 article h1:first-of-type {
+  font-family: 'VremenaGroteskBold', sans-serif;
   font-size: 2.5rem;
   margin: 4rem 0;
   border: 0.3rem solid #00283c;
