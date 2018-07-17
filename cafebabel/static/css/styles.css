@@ -237,6 +237,7 @@ h6 {
 
 h1,
 article h1:first-of-type {
+  font-family: 'VremenaGroteskBold', sans-serif;
   font-size: 2.5rem;
   margin: 4rem 0;
   border: 0.3rem solid #00283c;
@@ -291,7 +292,8 @@ hr {
   margin-bottom: 3rem;
 }
 
-blockquote {
+blockquote,
+.article-page blockquote p {
   font-family: 'sporting_grotesque', sans-serif;
   font-size: 2.2rem;
   margin: 5rem 0;
@@ -300,7 +302,8 @@ blockquote {
 }
 
 @media screen and (min-width: 750px) {
-  blockquote {
+  blockquote,
+  .article-page blockquote p {
     font-size: 2.8rem;
   }
 }
