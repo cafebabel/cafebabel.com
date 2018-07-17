@@ -64,64 +64,7 @@ main {
   }
 }
 
-/* Vremena Grotesk */
-
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbook-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbook-webfont.woff') format('woff');
-  font-weight: 100;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbookitalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbookitalic-webfont.woff') format('woff');
-  font-weight: 100;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagrotesk-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagrotesk-webfont.woff') format('woff');
-  font-weight: 200;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskitalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskitalic-webfont.woff') format('woff');
-  font-weight: 200;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskmedium-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskmedium-webfont.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskmediumitalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskmediumitalic-webfont.woff') format('woff');
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbold-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbold-webfont.woff') format('woff');
-  font-weight: 800;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'vremena_grotesk';
-  src: url('../fonts/vremenagroteskbolditalic-webfont.woff2') format('woff2'),
-    url('../fonts/vremenagroteskbolditalic-webfont.woff') format('woff');
-  font-weight: 800;
-  font-style: italic;
-}
+/* Vremena Grotesk : header link */
 
 /* Sporting grotesque */
 
@@ -261,10 +204,11 @@ input,
 select,
 textarea {
   color: #00283c;
-  font-family: 'vremena_grotesk', sans-serif;
+  font-family: 'VremenaGroteskRegular', sans-serif;
   font-size: 1.8rem;
   line-height: 1.5;
-  font-weight: 200;
+  /*font-weight: 200;*/
+  font-weight: normal;
   font-style: normal;
   border-radius: 0;
 }
@@ -280,6 +224,16 @@ textarea {
 }
 
 /* Titles */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'VremenaGroteskMedium', sans-serif;
+  font-weight: normal;
+}
 
 h1,
 article h1:first-of-type {
@@ -360,14 +314,21 @@ ul {
   margin: 0;
   padding-left: 0;
 }
+
 li {
   text-align: left;
   position: relative;
 }
+
 li a {
   display: inline-block;
   text-decoration: none;
   position: relative;
+}
+
+strong {
+  font-family: 'VremenaGroteskBold', sans-serif;
+  font-weight: normal;
 }
 
 label {
@@ -1030,8 +991,8 @@ button.menu.profile + nav li.icon-cross:before {
 }
 
 button.menu.profile + nav li.icon-cross a {
-  font-family: 'vremena_grotesk', sans-serif;
-  font-weight: 200;
+  font-family: 'VremenaGroteskRegular', sans-serif;
+  /*font-weight: 200;*/
   line-height: 1.5;
 }
 
@@ -1351,9 +1312,10 @@ h1.edit.active label {
 }
 
 h1.edit input {
+  font-family: 'VremenaGroteskMedium', sans-serif;
   border: none;
   font-size: 4.2rem;
-  font-weight: 600;
+  /*font-weight: 600;*/
   padding: 0;
   margin: 0;
   text-align: center;
@@ -1491,7 +1453,8 @@ select#author {
 }
 
 .article-page-edit textarea {
-  font-weight: 100;
+  font-family: 'VremenaGroteskBook', sans-serif;
+  /*font-weight: 100;*/
 }
 
 #markdown-helper {
@@ -1661,7 +1624,8 @@ select#author {
 
 .profile-page main .file input + label strong {
   /* https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
-  font-weight: 200;
+  font-family: 'VremenaGroteskRegular', sans-serif;
+  /*font-weight: 200;*/
   text-align: center;
   display: block;
   padding: 1.2rem;
@@ -1818,8 +1782,9 @@ select#author {
 }
 
 .profile-page .oversized {
+  font-family: 'VremenaGroteskBold', sans-serif;
   color: red;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .profile-page main section:nth-of-type(2) {
@@ -1877,7 +1842,7 @@ select#author {
   text-align: center;
   width: 100%;
   font-size: 2.4rem;
-  font-weight: 700;
+  font-family: 'VremenaGroteskBold', sans-serif;
   border: 0.1rem solid #fff;
   margin-bottom: 2rem;
   cursor: pointer;
@@ -1954,8 +1919,9 @@ select#author {
 }
 
 .pitch-page label > p {
+  font-family: 'VremenaGroteskBook', sans-serif;
   font-size: 1.3rem;
-  font-weight: 100;
+  /*font-weight: 100;*/
   font-style: italic;
   margin: 0;
 }
@@ -2014,6 +1980,7 @@ select#author {
 .article-page h1:first-of-type {
   font-family: 'sporting_grotesque', sans-serif;
   padding: 3rem 1.5rem 7rem;
+  font-weight: bold;
 }
 
 .article-page article h2 {
@@ -2021,7 +1988,8 @@ select#author {
 }
 
 .article-page p {
-  font-weight: 100;
+  font-family: 'VremenaGroteskBook', sans-serif;
+  /*font-weight: 100;*/
 }
 
 .article-page-edit .file img,
@@ -2090,17 +2058,17 @@ select#author {
   font-size: 1rem;
   text-align: center;
   padding: 2rem;
+  font-weight: bold;
 }
 
 .article-page article h4 {
   font-family: 'sporting_grotesque', sans-serif;
   color: #696969;
   font-size: 1.6rem;
-  font-weight: 200;
 }
 
 .article-page article .contributor-container h4 {
-  font-family: 'vremena_grotesk', sans-serif;
+  font-family: 'VremenaGroteskRegular', sans-serif;
   color: #00283c;
   text-align: center;
   font-size: 1.3rem;
@@ -2159,10 +2127,11 @@ select#author {
 
 .article-page article .summary,
 .article-page article .summary > p {
+  font-family: 'VremenaGroteskRegular', sans-serif;
   max-width: 100%;
   margin: 3rem auto 5rem auto;
   font-size: 2rem;
-  font-weight: 200;
+  /*font-weight: 200;*/
 }
 
 .article-page .article-language-selector + p {
@@ -2203,11 +2172,12 @@ textarea#body {
 
 .article-language-selector,
 p.translation-language {
+  font-family: 'VremenaGroteskRegular', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.6rem;
-  font-weight: 200;
+  /*font-weight: 200;*/
 }
 
 .article-language-selector li {
@@ -2310,10 +2280,11 @@ p.translation-language {
 }
 
 article .share {
+  font-family: 'VremenaGroteskRegular', sans-serif;
   width: 23rem;
   margin: 6rem auto;
   text-align: center;
-  font-weight: 200;
+  /*font-weight: 200;*/
   line-height: 1.5;
 }
 
@@ -2567,9 +2538,10 @@ article .article-detail p span {
 
 .article-page article p.tags-list a,
 .tags-list a {
+  font-family: 'VremenaGroteskRegular', sans-serif;
   position: relative;
   font-size: 1rem;
-  font-weight: 200;
+  /*font-weight: 200;*/
   padding: 0.3rem 0.5rem;
   background-color: #eeeeee;
   display: inline-block;
@@ -2883,10 +2855,11 @@ article.article-video:before {
 }
 
 .home h2 {
+  font-family: 'VremenaGroteskBook', sans-serif;
   text-align: center;
   display: block;
   font-size: 1.5rem;
-  font-weight: 100;
+  /*font-weight: 100;*/
   font-style: italic;
   margin-bottom: 1rem;
 }
@@ -2926,11 +2899,12 @@ article.article-video:before {
 }
 
 .home section.series h2 {
+  font-family: 'VremenaGroteskBold', sans-serif;
   font-size: 3rem;
   margin-bottom: 2rem;
   color: #fff;
   font-style: normal;
-  font-weight: 600;
+  /*font-weight: 600;*/
 }
 
 .home section.series .banner .series-infos p {
@@ -3016,6 +2990,7 @@ a.section-link.tag-creative:after {
 
 article .article-detail h3 {
   font-family: 'sporting_grotesque', sans-serif;
+  font-weight: bold;
   font-size: 1.8rem;
 }
 
@@ -3130,7 +3105,7 @@ section[class*=' participation-'] img {
 
   .home .editors-pick article .article-detail h3 {
     line-height: 1.1;
-    font-weight: 800;
+    /*font-weight: 800;*/
     width: 45%;
   }
 
@@ -3363,9 +3338,10 @@ section[class*=' participation-'] img {
 }
 
 #static-pages-links nav li {
+  font-family: 'VremenaGroteskBook', sans-serif;
   display: inline-block;
   font-size: 1.3rem;
-  font-weight: 100;
+  /*font-weight: 100;*/
 }
 
 #static-pages-links nav ul,
@@ -3498,13 +3474,14 @@ footer {
 }
 
 footer h4 {
+  font-family: 'VremenaGroteskRegular', sans-serif;
   text-align: center;
   padding: 2rem;
   border: 0.2rem solid #bde513;
   max-width: 71rem;
   margin: 27.5rem 2rem;
   font-size: 1.7rem;
-  font-weight: 200;
+  /*font-weight: 200;*/
   color: #bde513;
 }
 
@@ -3601,11 +3578,11 @@ footer p {
 }
 
 .article-page article .row figure figcaption {
-  font-family: 'vremena_grotesk', sans-serif;
+  font-family: 'VremenaGroteskMedium', sans-serif;
   text-align: center;
   color: #00283c;
   padding: 1rem 0.8rem 0;
-  font-weight: 400;
+  /*font-weight: normal;*/
   font-size: 1.2rem;
 }
 
@@ -3689,8 +3666,9 @@ footer p {
 
 .article-page article .row.contact.local-team p,
 .article-page article .row.contact.questions p {
+  font-family: 'VremenaGroteskRegular', sans-serif;
   font-size: 1.7rem;
-  font-weight: 400;
+  /*font-weight: 400;*/
 }
 
 @media screen and (min-width: 750px) {
@@ -3737,7 +3715,8 @@ footer p {
 }
 
 .article-page article .row.editorial-line p {
-  font-weight: 700;
+  font-family: 'VremenaGroteskBold', sans-serif;
+  /*font-weight: 700;*/
   font-size: 1.7rem;
 }
 
@@ -3879,4 +3858,32 @@ footer p {
   #cookie-disclaimer.show {
     display: none;
   }
+}
+
+/* ad :-( */
+
+.ean_element {
+  max-width: 75rem;
+  margin: 2rem auto;
+  display: block !important;
+  border: 0.2rem solid #eee;
+  padding: 2rem;
+  color: #696969;
+  font-family: sans-serif;
+}
+
+.ea_link {
+  box-shadow: none !important;
+  color: #696969;
+  font-size: 1.2rem;
+}
+
+.ea_expand h2 {
+  color: #696969;
+  font-weight: normal;
+}
+
+.ea_summary {
+  font-size: 1.7rem;
+  line-height: 1;
 }
