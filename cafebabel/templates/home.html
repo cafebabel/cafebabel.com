@@ -53,11 +53,93 @@
 
 {% block body_class %}home{% endblock %}
 {% block body %}
-  <section class=editors-pick>
+<section class=editors-pick>
     {% set tag_editors_pick, articles_editors_pick = articles_for_tag('editors-pick', limit=1) %}
     {% for article_editors_pick in articles_editors_pick %}
       {{ card(article_editors_pick, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
     {% endfor %}
+</section>
+
+  <h2>Sections</h2>
+{% for category in categories|shuffle %}
+  <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>
+  <div class="svg-animation">
+    {% if category.slug == 'impact' %}
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 550 400" enable-background="new 0 0 550 400" xml:space="preserve">
+        <g>
+          <path fill="none" stroke="#00283c" stroke-width="21.489" stroke-miterlimit="10" d="M428.627,204.313
+            c26.641,11.091,28.826-13.303,28.826-35.531c0-22.18-11.09-68.801-11.09-68.801s-46.621,11.107-68.832,11.107
+            c-22.193,0-46.635-2.247-35.531-28.871c11.09-26.641,22.225-64.402-31.07-64.402c-53.281,0-42.161,37.762-31.084,64.385
+            c11.104,26.641-13.338,28.888-35.531,28.888c-22.228,0-68.832-11.107-68.832-11.107s11.09,46.621,11.09,68.801
+            c0,22.228-2.2,46.622-28.84,35.531c-26.641-11.104-64.388-22.197-64.388,31.085c0,53.298,37.748,42.191,64.388,31.07
+            c26.641-11.104,28.84,13.337,28.84,35.518c0,22.228-11.09,68.832-11.09,68.832s46.604,11.104,68.832,11.104
+            c22.193,0,46.635-2.213,35.531-28.826c-11.09-26.668-22.197-64.399,31.084-64.399c53.312,0,42.16,37.731,31.088,64.399
+            c-11.107,26.627,13.334,28.826,35.531,28.826c22.21,0,68.832-11.09,68.832-11.09s11.072-46.618,11.072-68.846
+            c0-22.194-2.199-46.621-28.826-35.531c-26.668,11.121-64.385,22.225-64.385-31.07C364.225,182.117,401.959,193.21,428.627,204.313z
+            "/>
+        </g>
+        </svg>
+    {% endif %}
+    {% if category.slug == 'creative' %}
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 550 400" enable-background="new 0 0 550 400" xml:space="preserve">
+      <g>
+        <path fill="none" stroke="#00283c" stroke-width="21.489" stroke-miterlimit="10" d="M170.586,365.237
+          c9.588,9.603,25.911,10.323,36.224,0l43.475-43.464c20.724-20.734,45.159-23.154,73.824-28.08
+          c28.657-4.927,61.035-12.579,93.388-44.943c50.615-50.615,41.873-130.909-4.194-176.961
+          c-46.05-46.046-126.322-54.792-176.934-4.188c-32.37,32.368-40.026,64.752-44.945,93.406c-4.93,28.658-7.364,53.083-28.087,73.818
+          l-43.479,43.467c-10.296,10.324-9.581,26.637,0.018,36.235L170.586,365.237z"/>
+
+        <line fill="none" stroke="#00283c" stroke-width="21.489" stroke-miterlimit="10" x1="148.688" y1="245.504" x2="236.871" y2="333.699"/>
+        <path fill="none" stroke="#00283c" stroke-width="21.489" stroke-miterlimit="10" d="M170.738,361.638
+          c-13.803,13.8-36.173,13.8-49.976-0.003c-13.799-13.807-13.799-36.18,0-49.979"/>
+      </g>
+      </svg>
+    {% endif %}
+    {% if category.slug == 'raw' %}
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 550 400" enable-background="new 0 0 550 400" xml:space="preserve">
+      <g>
+        <path fill="none" stroke="#00283c" stroke-width="21.2738" stroke-linejoin="round" stroke-miterlimit="10" d="M376.542,252.648
+          l71.923,64.896c17.099,17.625,17.678,35.63,4.907,49.07l0,0c-13.441,13.441-28.397,10.148-45.603-4.907l-73.759-68.314"/>
+        <path fill="none" stroke="#00283c" stroke-width="21.2738" stroke-miterlimit="10" d="M161.822,75.501
+          c54.601-54.595,143.126-54.595,197.728,0c54.6,54.597,54.6,143.126,0,197.721c-54.602,54.602-143.127,54.602-197.728,0
+          C107.225,218.628,107.225,130.099,161.822,75.501z"/>
+
+        <line fill="none" stroke="#00283c" stroke-width="21.2738" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="218.11" y1="174.37" x2="302.135" y2="174.37"/>
+        <line fill="none" stroke="#00283c" stroke-width="21.2738" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="260.454" y1="132.023" x2="260.454" y2="216.047"/>
+      </g>
+      </svg>
+    {% endif %}
+    {% if category.slug == 'experience' %}
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 550 400" enable-background="new 0 0 550 400" xml:space="preserve">
+      <g>
+        <path fill="none" stroke="#00283c" stroke-width="21.489" stroke-miterlimit="10" d="M463.549,167.262l-4.146-4.231
+          c-2.909-2.978-71.256-71.706-168.49-74.023c-1.653-0.069-3.312-0.105-4.977-0.105h-0.014h-0.006c-0.122,0-0.234,0.003-0.346,0.003
+          c-1.542,0.007-3.073,0.033-4.606,0.102c-97.28,2.298-165.629,71.045-168.528,74.023l-4.143,4.231"/>
+        <path fill="none" stroke="#00283c" stroke-width="21.489" stroke-miterlimit="10" d="M197.881,216.083
+          c0,48.62,39.415,88.038,88.036,88.038c48.624,0,88.042-39.418,88.042-88.038c0-48.617-39.418-88.032-88.042-88.032
+          C237.296,128.051,197.881,167.466,197.881,216.083z"/>
+        <path fill="#00283c" d="M234.709,216.083c0,28.283,22.928,51.211,51.208,51.211c28.286,0,51.207-22.928,51.207-51.211
+          c0-28.28-22.921-51.205-51.207-51.205C257.637,164.878,234.709,187.803,234.709,216.083z"/>
+        <path fill="none" stroke="#00283c" stroke-width="21.489" stroke-miterlimit="10" d="M462.329,215.859l-4.148-5.115
+          c-2.907-3.597-71.242-86.56-168.486-89.351c-1.65-0.085-3.312-0.135-4.981-0.135h-0.006c0,0,0,0-0.014,0
+          c-0.118,0-0.23,0.003-0.342,0.003c-1.545,0.01-3.08,0.046-4.609,0.125c-97.28,2.771-165.625,85.76-168.528,89.357l-4.143,5.115
+          l4.143,5.112c2.903,3.59,71.249,86.579,168.528,89.354c1.529,0.079,3.064,0.118,4.609,0.122c0.111,0,0.224,0.003,0.342,0.003
+          c0.014,0,0.014,0,0.014,0h0.006c1.67,0,3.331-0.046,4.981-0.128c97.244-2.795,165.579-85.761,168.486-89.351L462.329,215.859z"/>
+      </g>
+      </svg>
+    {% endif %}
+  </div>
+  {{ category.name }}
+  </a>
+{% endfor %}
+
+  {{ latest("latest1", 3) }}
+  {{ series("meet-my-hood", 2) }}
+  {{ latest("latest2", 3) }}
   </section>
   {% if current_language == 'en' %}
     <h2>Latest</h2>

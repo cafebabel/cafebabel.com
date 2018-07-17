@@ -2952,6 +2952,42 @@ article.article-video:before {
 
 .home a.section-link:before {
   font-family: 'icomoon-icons';
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+  display: none;
+}
+
+.home svg {
+  width: 13rem;
+}
+
+.home svg path {
+  display: none;
+}
+
+.home .active svg path {
+  display: block;
+  stroke-dasharray: 400%;
+  stroke-dashoffset: 10%;
+  animation: impact 3s linear 1;
+}
+
+@keyframes impact {
+  from {
+    stroke-dashoffset: 400%;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+a.section-link.tag-impact {
+  background: url('../img/bg-section-impact.jpg') center;
+  font-family: 'icomoon-icons';
+
   display: block;
   font-size: 5rem;
 }
@@ -3251,6 +3287,29 @@ section[class*=' participation-'] img {
   article .article-detail h3 {
     font-size: 2.8rem;
   }
+
+  .home a.section-link {
+    height: 28vw;
+    max-height: 28rem;
+    font-size: 3rem;
+    padding-top: 30%;
+  }
+  .home svg {
+    width: 15rem;
+  }
+
+  .home a.section-link:before {
+    font-size: 8rem;
+  }
+
+  a.section-link.experience:before {
+    font-size: 7rem;
+  }
+
+  .home .editors-pick article .article-detail h3 {
+    font-size: 4.2rem;
+  }
+
 
   .home .editors-pick article .article-detail p:first-of-type {
     display: block;
