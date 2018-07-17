@@ -3880,3 +3880,31 @@ footer p {
     display: none;
   }
 }
+
+/* ad :-( */
+
+.ean_element {
+  max-width: 75rem;
+  margin: 2rem auto;
+  display: block !important;
+  border: 0.2rem solid #eee;
+  padding: 2rem;
+  color: #696969;
+  font-family: sans-serif;
+}
+
+.ea_link {
+  box-shadow: none !important;
+  color: #696969;
+  font-size: 1.2rem;
+}
+
+.ea_expand h2 {
+  color: #696969;
+  font-weight: normal;
+}
+
+.ea_summary {
+  font-size: 1.7rem;
+  line-height: 1;
+}
