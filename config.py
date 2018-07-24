@@ -51,7 +51,7 @@ class BaseConfig:
             'pl': 'https://twitter.com/cafebabel_POL'
         },
         'instagram': {
-            'en': 'https://www.instagram.com/inside.cafebabel/'
+            'en': 'https://www.instagram.com/cafebabelmagazine/'
         },
         'youtube': {
             'en': 'https://www.youtube.com/channel/UCKanXxqYDt3vmz89Ig6RqBg'
