@@ -78,9 +78,9 @@ def test_social_networks_are_redirected_to_localized_accounts(client):
 
 def test_social_networks_fallback_on_english_accounts(client):
     response = client.get('/en/')
-    assert '<a href=https://www.instagram.com/inside.cafebabel/' in response
+    assert '<a href=https://www.instagram.com/cafebabelmagazine/' in response
     response = client.get('/fr/')
-    assert '<a href=https://www.instagram.com/inside.cafebabel/' in response
+    assert '<a href=https://www.instagram.com/cafebabelmagazine/' in response
 
 
 def test_error_not_found(client):
