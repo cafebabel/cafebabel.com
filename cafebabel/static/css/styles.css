@@ -2304,7 +2304,8 @@ article .share a:first-child {
   margin-right: 1rem;
 }
 
-.article-page section[class^='participation-'] {
+.article-page section.participation-donate {
+  display: none;
 }
 
 @media screen and (min-width: 750px) {
