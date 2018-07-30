@@ -2304,6 +2304,9 @@ article .share a:first-child {
   margin-right: 1rem;
 }
 
+.article-page section[class^='participation-'] {
+}
+
 @media screen and (min-width: 750px) {
   .article-page h1:first-of-type {
     padding: 4rem 5rem 6rem;
@@ -2345,6 +2348,15 @@ article .share a:first-child {
   }
   .article-language-selector li.original-language a:before {
     display: block;
+  }
+  .article-page .article-participate {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .article-page .article-participate section {
+    margin: 5rem auto;
   }
 }
 
@@ -3028,7 +3040,12 @@ article .article-detail h3 {
   margin: 5rem auto;
   border: 0.1rem solid;
   text-align: center;
-  padding: 13rem 2rem;
+  padding: 10rem 2rem;
+}
+
+.article-page section[class^='participation-'],
+.article-page section[class*=' participation-'] {
+  margin: 5rem 2rem;
 }
 
 .home section[class^='participation-'] a.button,
@@ -3276,6 +3293,18 @@ section[class*=' participation-'] img {
 
   .home a.section-link.tag-experience:before {
     font-size: 4rem;
+  }
+
+  .home section[class^='participation-'],
+  .home section[class*=' participation-'],
+  .article-page section[class^='participation-'],
+  .article-page section[class*=' participation-'] {
+    padding: 13rem 2rem;
+  }
+  .article-page section[class^='participation-'],
+  .article-page section[class*=' participation-'] {
+    margin: 5rem 2rem;
+    width: 100%;
   }
 }
 
