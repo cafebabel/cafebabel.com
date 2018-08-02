@@ -2463,7 +2463,8 @@ article .share a:first-child {
 .tag-page-edit form .file {
   position: absolute;
   height: 70vh;
-  background: #e0e0e0 no-repeat center 50%;
+  background: #e0e0e0 linear-gradient(to top, #fff, #e0e0e0) no-repeat center
+    50%;
   top: 7.9rem;
   left: 0;
   bottom: 0;
