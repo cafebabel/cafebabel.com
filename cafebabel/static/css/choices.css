@@ -65,7 +65,7 @@
 }
 .choices[data-type*='select-multiple'] .choices__button:after,
 .choices[data-type*='text'] .choices__button:after {
-  font-family: 'icomoon';
+  font-family: 'icomoon-icons';
   content: '\ea0f';
   font-size: 1.3rem;
   color: #00283c;
