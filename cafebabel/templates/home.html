@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "_meta-macro.html" import meta %}
 {% from "articles/macros.html" import card %}
-{% from "_homepage-macro.html" import series, latest, latest_section, participation with context %}
+{% from "_homepage-macro.html" import series, external_series, latest, latest_section, participation with context %}
 
 {% block metas %}
   {% if current_language == 'en' %}
@@ -92,6 +92,7 @@
   </section>
   {% if current_language == 'en' %}
     <h2>Serie</h2>
+    {{ external_series('https://borderline.cafebabel.com/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'Borderline', 'Borderline, A fresh take on Poland and its border regions to challenge the one-sided view of a country celebrating 100 years of independence this year.') }}
     {{ series("meet-my-hood", 0, 'Discover European neighbourhoods through the eyes of locals.', 'See all Meet My Hood articles') }}
     {{ participation('newseletter-form', 'Want to stay in the loop with our bi-monthly newsletter?', '', '', 'This way', '/static/img/gif-newsletter.gif', 'gif newsletter') }}
     {{ series("network", 0, 'Because Cafébabel is so much more than a magazine') }}

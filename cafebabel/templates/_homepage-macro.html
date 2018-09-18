@@ -19,9 +19,26 @@
       </div>
     {% endif %}
     {% if button_text %}
-      <a class=button href={{ tag_series.detail_url }}>{{ button_text }}</a>
+      <a class=button>{{ button_text }}</a>
     {% endif %}
   </section>
+{% endmacro %}
+
+{% macro external_series(external_link, banner_url, video_url, serie_name, description, button_text) %}
+<section class="series external_series">
+  <a href="{{ external_link }}" class=banner style="background-image:url({{ banner_url }});">
+    <div class=series-infos>
+      <h2>{{ serie_name }}</h2>
+      {% if description %}
+      <p>{{ description }}</p>
+      {% endif %}
+    </div>
+    <video class="landing-video" loop muted data-autoplay data-keepplaying><source src={{ video_url }} type="video/mp4"></video>
+  </a>
+  {% if button_text %}
+  <a href="{{ external_link }}" class=button>{{ button_text }}</a>
+  {% endif %}
+</section>
 {% endmacro %}
 
 {% macro latest(tag_slug, limit) %}
