@@ -2902,9 +2902,46 @@ article.article-video:before {
   display: block;
 }
 
+.home section.series.external_series .banner:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  background-image: url(https://borderline.cafebabel.com/wp-content/themes/blank/img/noise.png), linear-gradient(to bottom, #000039, black);
+  opacity: 0.3;
+  z-index: 2;
+}
+
+.home section.series.external_series .banner {
+  position: relative;
+  overflow-y: hidden;
+}
+
 .home section.series .banner:hover:after,
 .home section.series .tag-articles article > a:hover:after {
   width: 0;
+}
+
+.home section.series video.landing-video {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-color: black;
+  background-position: center center;
+  background-size: contain;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.home section.series.external_series .banner .series-infos {
+  z-index: 2;
 }
 
 .home section.series .banner .series-infos {
@@ -2928,6 +2965,11 @@ article.article-video:before {
   text-align: center;
   font-size: 2rem;
   color: #fff;
+}
+
+.home section.series.external_series .banner .series-infos p {
+  max-width: 80%;
+  margin: 0 auto 4rem;
 }
 
 .home section.series .tag-articles {

@@ -1,3 +1,13 @@
+/* Preloader slide down when input:submit is clicked */
+const inputSubmited = document.querySelector('input[type="submit"]')
+if (inputSubmited) {
+  inputSubmited.addEventListener('click', () => {
+    preloader.classList.remove('slideup')
+    preloader.classList.remove('hidden')
+    preloader.classList.add('slidedown')
+  })
+}
+
 /* open menu */
 Array.from(document.querySelectorAll('button.menu')).forEach(button => {
   button.addEventListener('click', () => {
@@ -44,29 +54,18 @@ subscribeLink.addEventListener('click', event => {
 })
 
 /* Hover effect article image */
-function thumbnailHoverEffect(articlePage) {
-  const articleThumbnails = document.querySelectorAll(articlePage)
-  articleThumbnails.forEach(articleThumbnail => {
-    function toggleClassOnMouseover(targetedLink) {
-      const articleThumbnailLinks = articleThumbnail.querySelectorAll(
-        targetedLink
-      )
-      articleThumbnailLinks.forEach(articleThumbnailLink => {
-        articleThumbnailLink.addEventListener('mouseover', () => {
-          articleThumbnail.classList.add('thumbnail-hover')
-        })
-        articleThumbnailLink.addEventListener('mouseout', () => {
-          articleThumbnail.classList.remove('thumbnail-hover')
-        })
-      })
-    }
-    toggleClassOnMouseover('article > a')
-    toggleClassOnMouseover('h3 > a')
+const articleThumbnails = document.querySelectorAll('.home article')
+articleThumbnails.forEach(articleThumbnail => {
+  const articleThumbnailLinks = articleThumbnail.querySelectorAll('a')
+  articleThumbnailLinks.forEach(articleThumbnailLink => {
+    articleThumbnailLink.addEventListener('mouseover', () => {
+      articleThumbnail.classList.add('thumbnail-hover')
+    })
+    articleThumbnailLink.addEventListener('mouseout', () => {
+      articleThumbnail.classList.remove('thumbnail-hover')
+    })
   })
-}
-thumbnailHoverEffect('.home article')
-thumbnailHoverEffect('.tag-page article')
-thumbnailHoverEffect('.profile-page article')
+})
 
 /* animation flash info */
 const flashes = document.querySelector('.flashes')
@@ -82,21 +81,17 @@ const socialIcons = Array.from(
 )
 if (socialIcons) {
   socialIcons.forEach(socialIcon => {
-    socialIcon
-      .querySelector('.profile-social')
-      .addEventListener('click', event => {
-        event.preventDefault()
-        const socialsClick = socialIcon
-          .querySelector('.profile-social')
-          .contains(event.target)
-        if (socialsClick) {
-          socialIcons.forEach(li => li.classList.remove('active'))
-          socialIcon.classList.add('active')
-          socialIcon.querySelector('input').focus()
-        } else {
-          socialIcon.classList.remove('active')
-        }
-      })
+    socialIcon.querySelector('a').addEventListener('click', event => {
+      event.preventDefault()
+      const socialsClick = socialIcon.querySelector('a').contains(event.target)
+      if (socialsClick) {
+        socialIcons.forEach(li => li.classList.remove('active'))
+        socialIcon.classList.add('active')
+        socialIcon.querySelector('input').focus()
+      } else {
+        socialIcon.classList.remove('active')
+      }
+    })
   })
   // when input element loses the focus the target become inactive
   socialIcons.forEach(socialIcon => {
@@ -145,3 +140,8 @@ Array.from(
     'article-video'
   )
 })
+
+/* video autoplay */
+var video = document.querySelector('video')
+video.autoplay = true
+video.load()
