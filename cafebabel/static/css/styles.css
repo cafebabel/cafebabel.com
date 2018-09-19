@@ -2964,6 +2964,12 @@ article.article-video:before {
   }
 }
 
+@media screen and (min-width: 1200px) {
+  .home section.series.external_series .series-infos img {
+    max-width: 40rem;
+  }
+}
+
 .home section.series h2 {
   font-family: 'VremenaGroteskBold', sans-serif;
   font-size: 3rem;
