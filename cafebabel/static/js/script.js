@@ -142,6 +142,8 @@ Array.from(
 })
 
 /* video autoplay */
-var video = document.querySelector('video')
-video.autoplay = true
-video.load()
+const video = document.querySelector('video')
+if (video) {
+  video.autoplay = true
+  video.load()
+}
