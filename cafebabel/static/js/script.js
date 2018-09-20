@@ -140,10 +140,3 @@ Array.from(
     'article-video'
   )
 })
-
-/* video autoplay */
-const video = document.querySelector('video')
-if (video) {
-  video.autoplay = true
-  video.load()
-}
