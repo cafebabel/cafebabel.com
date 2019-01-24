@@ -2304,10 +2304,6 @@ article .share a:first-child {
   margin-right: 1rem;
 }
 
-.article-page section.participation-donate {
-  display: none;
-}
-
 @media screen and (min-width: 750px) {
   .article-page h1:first-of-type {
     padding: 4rem 5rem 6rem;
