@@ -110,6 +110,8 @@
     <h2>Série</h2>
     {{ series("who-cares", 0, 'Notre regard sur les débats (g)locaux qui agitent l’Europe.', 'Regarder toutes les vidéos de la série') }}
     {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir.', '/article/proposal/new/', 'Par ici', '/static/img/gif-wave.gif', 'gif participer') }}
+    {{ external_series('https://emptyeurope.cafebabel.com/', '', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/02/video-home.mp4', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/01/logo-empty-europe-white.svg' ,'Empty Europe logo', "Une série pour faire le vide dans les régions dépeuplées d'Europe.") }}
+    {{ external_series('https://europeana.cafebabel.com/', '/static/img/partners/europeana.jpg', '', 'https://europeana.cafebabel.com/wp-content/uploads/2019/02/logoeuropeana-copie.jpg' ,'Europeana logo', "Une brève histoire du XXème siècle.") }}
   {% elif current_language == 'de' %}
     <h2>Serie</h2>
     {{ external_series('https://borderline.cafebabel.com/de/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Ein frischer Blick auf Polen und seine Grenzregionen zum 100-jährigen Jubiläum der polnischen Unabhängigkeit.') }}

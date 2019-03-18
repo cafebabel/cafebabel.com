@@ -9,3 +9,5 @@ __pycache__/
 /data/
 /cafebabel/static/.webassets-cache
 /cafebabel/static/build
+/flask_resize/
+/venv/
