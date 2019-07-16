@@ -775,53 +775,6 @@ a.logo:after {
   }
 }
 
-/* Preloader */
-
-#preloader-layer {
-  position: fixed;
-  top: 7.9rem;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.1);
-  background: white;
-  transition: all 0.3s ease-in-out;
-  z-index: 5;
-}
-
-#preloader-layer img {
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-}
-
-.tag-page-edit #preloader-layer img {
-  margin-left: 0;
-}
-
-#preloader-layer.slideup {
-  top: -110%;
-  bottom: auto;
-}
-
-#preloader-layer.slidedown {
-  top: 7.9rem;
-  bottom: 0;
-}
-
-@media screen and (min-width: 750px) {
-  #preloader-layer,
-  #preloader-layer.slidedown {
-    top: 9rem;
-  }
-}
-
-#preloader-layer.hidden {
-  display: none;
-}
-
 /* Menu */
 
 button.menu,
