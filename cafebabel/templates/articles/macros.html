@@ -108,3 +108,18 @@
   </div>
 </article>
 {% endmacro %}
+
+{% macro learn_languages_partner(article) %}
+  {% if article.is_published %}
+    <div id="a9-parent-iframe"
+      {% if article.language == 'en' %}data-src="https://www.frantastique.com/partner/puafshryxh/21199"
+      {% elif article.language == 'fr' %}data-src="https://www.gymglish.com/scripts/parent-of-iframe-5.min.js"
+      {% elif article.language == 'it' %}data-src="https://www.frantastique.com/partner/puafshryxh/21258"
+      {% elif article.language == 'es' %}data-src="https://www.frantastique.com/partner/puafshryxh/21256"
+      {% elif article.language == 'de' %}data-src="https://www.frantastique.com/partner/puafshryxh/21254"
+      {% else %}data-src=""
+      {% endif %}
+    ></div>
+    <script src="https://www.gymglish.com/scripts/parent-of-iframe-5.min.js"></script>
+  {% endif %}
+{% endmacro %}

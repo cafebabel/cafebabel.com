@@ -25,10 +25,6 @@
     <link rel=stylesheet href={{ ASSET_URL }}>
 {% endassets %}
 {% block extra_head %}{% endblock %}
-<noscript>
-  <style>#preloader-layer {display:none;}</style>
-</noscript>
-<!--[if IE]><style>#preloader-layer {display:none;}</style><![endif]-->
 
 <body class="{% block body_class %}{% endblock %}">
 
@@ -76,7 +72,7 @@
       </li>
     </ul>
   </nav>
-  
+
   <a href={{ lang_url_for('proposals.create') }} id=participate title=Participate>Participate</a>
   <a href={{ lang_url_for('articles.to_translate') }} id=translate title=Translate>Translate</a>
   <a href=https://www.helloasso.com/associations/babel-international/collectes/soutenez-cafebabel id=donate title=Donate>Donate</a>
@@ -171,10 +167,6 @@
   <iframe src="https://app.mailjet.com/widget/iframe/2iD4/4zE" height=270></iframe>
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
-<div id=preloader-layer>
-    <img src={{ url_for('static', filename='img/preloader-A.gif') }} alt="loading...">
-</div>
-<script src="/static/js/loader.js"></script>
 {% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js', 'js/lazyload.min.js', 'js/lazyload-setup.js' %}
     <script src={{ ASSET_URL }}></script>
 {% endassets %}

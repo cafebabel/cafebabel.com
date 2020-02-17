@@ -100,6 +100,8 @@
     <h2>Serie</h2>
     {{ series("who-cares", 0, 'Our take on (g)local debates gaining ground in Europe.', 'See all Who cares articles') }}
     {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
+    {{ external_series('https://emptyeurope.cafebabel.com/', '', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/02/video-home.mp4', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/01/logo-empty-europe-white.svg' ,'Empty Europe logo', "") }}
+    {{ external_series('https://europeana.cafebabel.com/', '/static/img/partners/europeana.jpg', '', 'https://europeana.cafebabel.com/wp-content/uploads/2019/02/logoeuropeana-copie.jpg' ,'Europeana logo', "") }}
   {% elif current_language == 'fr' %}
     <h2>Série</h2>
     {{ external_series('https://borderline.cafebabel.com/fr/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Un nouveau regard sur la Pologne et ses frontières. Parce qu’il est temps de changer les perceptions sur un pays qui fête ses 100 ans d’indépendance.') }}
@@ -110,6 +112,8 @@
     <h2>Série</h2>
     {{ series("who-cares", 0, 'Notre regard sur les débats (g)locaux qui agitent l’Europe.', 'Regarder toutes les vidéos de la série') }}
     {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir.', '/article/proposal/new/', 'Par ici', '/static/img/gif-wave.gif', 'gif participer') }}
+    {{ external_series('https://emptyeurope.cafebabel.com/', '', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/02/video-home.mp4', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/01/logo-empty-europe-white.svg' ,'Empty Europe logo', "Une série pour faire le vide dans les régions dépeuplées d'Europe.") }}
+    {{ external_series('https://europeana.cafebabel.com/', '/static/img/partners/europeana.jpg', '', 'https://europeana.cafebabel.com/wp-content/uploads/2019/02/logoeuropeana-copie.jpg' ,'Europeana logo', "Une brève histoire du XXème siècle.") }}
   {% elif current_language == 'de' %}
     <h2>Serie</h2>
     {{ external_series('https://borderline.cafebabel.com/de/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Ein frischer Blick auf Polen und seine Grenzregionen zum 100-jährigen Jubiläum der polnischen Unabhängigkeit.') }}
@@ -130,6 +134,7 @@
     <h2>Serie</h2>
     {{ series("who-cares", 0, 'Los temas más controvertidos, interesantes y necesarios.', 'Ver todos los vídeos de la serie') }}
     {{ participation('participate', 'Participa', '¿Te gustaría proponer una idea? Adelante.', '/article/proposal/new/', 'Por aquí', '/static/img/gif-wave.gif', 'gif participate') }}
+    {{ external_series('https://emptyeurope.cafebabel.com/', '', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/02/video-home.mp4', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/01/logo-empty-europe-white.svg' ,'Empty Europe logo', "") }}
   {% elif current_language == 'it' %}
     <h2>Série</h2>
     {{ external_series('https://borderline.cafebabel.com/it/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Una nuova interpretazione della Polonia e delle sue regioni di confine per sfidare la visione unilaterale di un paese che celebra quest’anno i 100 anni di indipendenza.') }}
@@ -140,6 +145,8 @@
     <h2>Serie</h2>
     {{ series("who-cares", 0, 'Il nostro punto di vista sui dibattiti (g)local in tutta Europa.', 'guarda tutti i video della serie') }}
     {{ participation('participate', 'Partecipa', 'Vuoi mandare un\'idea a Cafébabel?  E\' la tua occasione!', '/article/proposal/new/', 'Da questa parte', '/static/img/gif-wave.gif', 'gif partecipa') }}
+    {{ external_series('https://emptyeurope.cafebabel.com/', '', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/02/video-home.mp4', 'https://emptyeurope.cafebabel.com/wp-content/uploads/2019/01/logo-empty-europe-white.svg' ,'Empty Europe logo', "") }}
+    {{ external_series('https://europeana.cafebabel.com/', '/static/img/partners/europeana.jpg', '', 'https://europeana.cafebabel.com/wp-content/uploads/2019/02/logoeuropeana-copie.jpg' ,'Europeana logo', "") }}
   {% elif current_language == 'pl' %}
     <h2>Serie</h2>
     {{ external_series('https://borderline.cafebabel.com/pl/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Nowe spojrzenie na Polskę i jej granice – by lepiej zrozumieć kraj, który świętuje w tym roku stulecie niepodległości.') }}
@@ -164,6 +171,8 @@
       })
       //sessionStorage.setItem('popup', 'true');
     //}
+    // @BUGFIX: Ensure autoplay actually starts all videos
+    Array.from(document.querySelectorAll('video')).forEach(v => v.play())
   </script>
 {% endblock %}
 {% block class_partners %}class=partners{% endblock %}
