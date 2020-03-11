@@ -102,6 +102,31 @@ function deactivateInput(input) {
   parent.classList.remove('active', 'completed')
 }
 
+<<<<<<< HEAD
+=======
+/* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
+const autofillContent = `"${String.fromCharCode(0xFEFF)}"`
+function checkAutofill(input) {
+  if (!input.value) {
+    const style = window.getComputedStyle(input)
+    if (style.content !== autofillContent)
+      return false
+  }
+  activateInput(input)
+  return true
+}
+const input = document.querySelector('input[type=password]')
+if (!checkAutofill(input)) {
+  deactivateInput(input)
+  let interval = 0
+  const intervalId = setInterval(() => {
+    if (checkAutofill(input) || interval++ >= 20){
+      activateInput(input)
+      clearInterval(intervalId)
+    }
+  }, 100)
+}
+>>>>>>> de5b817... corrections after reviews
 /* animation login fields */
 Array.from(
   document.querySelectorAll('.authentication-form > div > input')
