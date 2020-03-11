@@ -506,7 +506,11 @@ button:hover,
 }
 
 .authentication-form > div > input:-webkit-autofill {
+<<<<<<< HEAD
   content: '\feff'; /* https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
+=======
+    content: '\feff'; /* https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
+>>>>>>> de5b817... corrections after reviews
 }
 
 .authentication-form a {
