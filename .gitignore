@@ -7,13 +7,11 @@ __pycache__/
 *.egg-info/
 /cafebabel/uploads/
 /data/
-<<<<<<< HEAD
 /cafebabel/static/.webassets-cache
 /cafebabel/static/build
-/flask_resize/
-/venv/
-=======
-.idea/
 .DS_Store
+.idea/
+cafebabel/static/uploads/
+flask_resize/
 venv/
->>>>>>> de5b817... corrections after reviews
+
