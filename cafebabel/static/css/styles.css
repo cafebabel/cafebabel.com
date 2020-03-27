@@ -2521,8 +2521,6 @@ article .article-detail p span {
 a.tag-impact,
 .article-page article p.tags-list a.tag-society,
 a.tag-society,
-.article-page article p.tags-list a.tag-raw,
-a.tag-raw,
 .article-page article p.tags-list a.tag-creative,
 a.tag-creative {
   color: #00283c;
@@ -2532,8 +2530,6 @@ a.tag-creative {
 a.tag-impact:before,
 .article-page article p.tags-list a.tag-society:before,
 a.tag-society:before,
-.article-page article p.tags-list a.tag-raw:before,
-a.tag-raw:before,
 .article-page article p.tags-list a.tag-creative:before,
 a.tag-creative:before,
 button.menu.main-menu + nav a.tag-news-from-home:before {
@@ -2551,10 +2547,6 @@ a.tag-society:before {
 
 .tags-list a.tag-society:before {
   font-size: 1rem;
-}
-
-a.tag-raw:before {
-  content: '\e905';
 }
 
 a.tag-creative:before {
@@ -2984,10 +2976,6 @@ a.section-link.tag-impact:after {
 
 a.section-link.tag-society:after {
   background-image: url('../img/bg-page-experience.jpg');
-}
-
-a.section-link.tag-raw:after {
-  background-image: url('../img/bg-page-raw.jpg');
 }
 
 a.section-link.tag-creative:after {
