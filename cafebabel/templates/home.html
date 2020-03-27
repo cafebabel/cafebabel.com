@@ -68,14 +68,11 @@
         {% if category.slug == 'creative' %}
           {{ latest_section("creative-home", 3) }}
         {% endif %}
-        {% if category.slug == 'experience' %}
-          {{ latest_section("experience-home", 3) }}
-        {% endif %}
         {% if category.slug == 'impact' %}
           {{ latest_section("impact-home", 3) }}
         {% endif %}
-        {% if category.slug == 'raw' %}
-          {{ latest_section("raw-home", 3) }}
+        {% if category.slug == 'society' %}
+          {{ latest_section("society-home", 3) }}
         {% endif %}
       {% endif %}
     {% endfor %}

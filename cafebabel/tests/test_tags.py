@@ -203,11 +203,11 @@ def test_tag_categories_by_language(app, tag):
 
 
 def test_tag_menu_categories_redirect(app, client):
-    Tag.objects.create(name='Raw', summary='text chapo',
+    Tag.objects.create(name='Society', summary='text chapo',
                        language=app.config['LANGUAGES'][0][0])
-    response = client.get('/en/article/tag/raw/')
+    response = client.get('/en/article/tag/society/')
     assert response.status_code == HTTPStatus.OK
-    assert '<a href=/fr/article/tag/raw/>FR</a></li>' in response
+    assert '<a href=/fr/article/tag/society/>FR</a></li>' in response
 
 
 def test_tag_menu_regular_do_not_redirect(app, client, tag):
