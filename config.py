@@ -25,7 +25,7 @@ class BaseConfig:
     )
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
 
-    CATEGORIES_SLUGS = ['impact', 'experience', 'raw', 'creative']
+    CATEGORIES_SLUGS = ['impact', 'experience', 'raw', 'creative', 'society']
     STATIC_PAGES_SLUGS = [
         'about-us',
         'contact',

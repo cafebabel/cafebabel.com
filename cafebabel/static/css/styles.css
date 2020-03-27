@@ -851,7 +851,8 @@ button.menu + nav {
   transition: all 0.3s;
 }
 
-button.menu + nav .tag-experience:before {
+button.menu + nav .tag-experience:before,
+button.menu + nav .tag-society:before {
   font-size: 5vw;
 }
 
@@ -874,7 +875,8 @@ button.menu + nav .tag-experience:before {
     font-size: 6vh;
   }
 
-  button.menu + nav .tag-experience:before {
+  button.menu + nav .tag-experience:before,
+  button.menu + nav .tag-society:before {
     font-size: 4vh;
   }
 
@@ -2521,6 +2523,8 @@ article .article-detail p span {
 a.tag-impact,
 .article-page article p.tags-list a.tag-experience,
 a.tag-experience,
+.article-page article p.tags-list a.tag-society,
+a.tag-society,
 .article-page article p.tags-list a.tag-raw,
 a.tag-raw,
 .article-page article p.tags-list a.tag-creative,
@@ -2532,6 +2536,8 @@ a.tag-creative {
 a.tag-impact:before,
 .article-page article p.tags-list a.tag-experience:before,
 a.tag-experience:before,
+.article-page article p.tags-list a.tag-society:before,
+a.tag-society:before,
 .article-page article p.tags-list a.tag-raw:before,
 a.tag-raw:before,
 .article-page article p.tags-list a.tag-creative:before,
@@ -2545,11 +2551,13 @@ a.tag-impact:before {
   content: '\e904';
 }
 
-a.tag-experience:before {
+a.tag-experience:before,
+a.tag-society:before {
   content: '\e903';
 }
 
-.tags-list a.tag-experience:before {
+.tags-list a.tag-experience:before,
+.tags-list a.tag-society:before {
   font-size: 1rem;
 }
 
@@ -2982,7 +2990,8 @@ a.section-link.tag-impact:after {
   background-image: url('../img/bg-page-impact.jpg');
 }
 
-a.section-link.tag-experience:after {
+a.section-link.tag-experience:after,
+a.section-link.tag-society:after {
   background-image: url('../img/bg-page-experience.jpg');
 }
 
@@ -2994,7 +3003,8 @@ a.section-link.tag-creative:after {
   background-image: url('../img/bg-page-creative.jpg');
 }
 
-.home a.section-link.tag-experience:before {
+.home a.section-link.tag-experience:before,
+.home a.section-link.tag-society:before {
   font-size: 4rem;
 }
 
@@ -3286,7 +3296,8 @@ section[class*=' participation-'] img {
     font-size: 6rem;
   }
 
-  .home a.section-link.tag-experience:before {
+  .home a.section-link.tag-experience:before,
+  .home a.section-link.tag-society:before {
     font-size: 4rem;
   }
 
@@ -3329,6 +3340,8 @@ section[class*=' participation-'] img {
 .article-page article p.tags-list a.tag-creative-home,
 .tags-list a.tag-experience-home,
 .article-page article p.tags-list a.tag-experience-home,
+.tags-list a.tag-society-home,
+.article-page article p.tags-list a.tag-society-home,
 .tags-list a.tag-impact-home,
 .article-page article p.tags-list a.tag-impact-home,
 .tags-list a.tag-raw-home,
