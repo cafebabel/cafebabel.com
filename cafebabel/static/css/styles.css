@@ -506,11 +506,7 @@ button:hover,
 }
 
 .authentication-form > div > input:-webkit-autofill {
-<<<<<<< HEAD
   content: '\feff'; /* https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
-=======
-    content: '\feff'; /* https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
->>>>>>> de5b817... corrections after reviews
 }
 
 .authentication-form a {
@@ -1067,21 +1063,18 @@ button.menu + nav a {
 }
 
 #participate,
-#translate,
-#donate {
+#translate {
   display: none;
 }
 
 .participate,
-.translate,
-.donate {
+.translate {
   display: block;
 }
 
 @media screen and (min-width: 750px) {
   #participate,
-  #translate,
-  #donate {
+  #translate {
     position: fixed;
     top: 1.5rem;
     font-size: 1.1rem;
@@ -1090,15 +1083,13 @@ button.menu + nav a {
   }
 
   #participate:hover,
-  #translate:hover,
-  #donate:hover {
+  #translate:hover {
     top: 1.3rem;
     color: #bde513;
   }
 
   #participate:before,
-  #translate:before,
-  #donate:before {
+  #translate:before {
     font-family: 'icomoon-icons';
     display: block;
     text-align: center;
@@ -1107,8 +1098,7 @@ button.menu + nav a {
   }
 
   #participate:hover:after,
-  #translate:hover:after,
-  #donate:hover:after {
+  #translate:hover:after {
     width: 0;
   }
 
@@ -1125,10 +1115,6 @@ button.menu + nav a {
     content: '\e907';
   }
 
-  #donate:before {
-    content: '\e910';
-  }
-
   .participate {
     display: none;
   }
@@ -1140,14 +1126,8 @@ button.menu + nav a {
     left: 22.5rem;
   }
 
-  .translate,
-  .donate {
+  .translate {
     display: none;
-  }
-
-  #donate {
-    display: block;
-    left: 29.5rem;
   }
 }
 
