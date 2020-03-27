@@ -909,7 +909,7 @@ button.menu.profile .image,
   }
 
   li.section a:before,
-  button.menu.main-menu + nav a.tag-network:before {
+  button.menu.main-menu + nav a.tag-news-from-home:before {
     margin-right: 1rem;
   }
 }
@@ -2536,7 +2536,7 @@ a.tag-experience:before,
 a.tag-raw:before,
 .article-page article p.tags-list a.tag-creative:before,
 a.tag-creative:before,
-button.menu.main-menu + nav a.tag-network:before {
+button.menu.main-menu + nav a.tag-news-from-home:before {
   font-family: 'icomoon-icons';
   padding-right: 0.4rem;
 }
@@ -2561,7 +2561,7 @@ a.tag-creative:before {
   content: '\e901';
 }
 
-button.menu.main-menu + nav a.tag-network:before {
+button.menu.main-menu + nav a.tag-news-from-home:before {
   content: '\e909';
 }
 
@@ -2576,24 +2576,24 @@ button.menu.main-menu + nav a.tag-network:before {
 
 /* Tag page Network */
 
-.tag-page.tag-network main {
+.tag-page.tag-news-from-home main {
   background: linear-gradient(to bottom, #ffefef, #ffefef) no-repeat 0 10rem; /* add a 10rem margin top (header's height) to main bg-color */
 }
 
-.tag-page.tag-network #content {
+.tag-page.tag-news-from-home #content {
   display: block;
 }
 
-.tag-page.tag-network main header {
+.tag-page.tag-news-from-home main header {
   max-width: none;
   width: 100%;
 }
 
-.tag-page.tag-network main header + p {
+.tag-page.tag-news-from-home main header + p {
   margin: -4rem 0 -2rem;
 }
 
-.tag-page.tag-network main header h1 {
+.tag-page.tag-news-from-home main header h1 {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -2602,14 +2602,14 @@ button.menu.main-menu + nav a.tag-network:before {
   color: #fff;
 }
 
-.tag-page.tag-network main header h1:before {
+.tag-page.tag-news-from-home main header h1:before {
   font-family: icomoon-icons;
   content: '\e909';
   padding-right: 1rem;
   font-size: 4.5rem;
 }
 
-.tag-page.tag-network article .article-detail {
+.tag-page.tag-news-from-home article .article-detail {
   padding: 1rem;
   width: 100%;
   min-height: unset;
@@ -2618,39 +2618,39 @@ button.menu.main-menu + nav a.tag-network:before {
   box-shadow: none;
 }
 
-.tag-page.tag-network article .tags-list {
+.tag-page.tag-news-from-home article .tags-list {
   display: none;
 }
 
-.tag-page.tag-network article > a:hover:after {
+.tag-page.tag-news-from-home article > a:hover:after {
   width: 0;
 }
 
-.tag-page.tag-network a.button {
+.tag-page.tag-news-from-home a.button {
   max-width: 100%;
 }
 
 @media screen and (min-width: 750px) {
-  .tag-page.tag-network #content {
+  .tag-page.tag-news-from-home #content {
     display: grid;
     grid-gap: 2rem;
     grid-template-columns: 50% 50%;
     justify-content: center;
   }
 
-  .tag-page.tag-network main header,
-  .tag-page.tag-network main header + p {
+  .tag-page.tag-news-from-home main header,
+  .tag-page.tag-news-from-home main header + p {
     grid-column: span 2;
   }
 
-  .tag-page.tag-network article {
+  .tag-page.tag-news-from-home article {
     width: 100%;
     margin: 0;
     padding: 1.5rem;
     background-color: #fff;
   }
 
-  .tag-page.tag-network article > a {
+  .tag-page.tag-news-from-home article > a {
     display: block;
     overflow: hidden;
     height: 30rem;
@@ -2658,41 +2658,41 @@ button.menu.main-menu + nav a.tag-network:before {
     margin: 0 auto;
   }
 
-  .tag-page.tag-network article > a > img {
+  .tag-page.tag-news-from-home article > a > img {
     height: 30rem;
     margin-left: 50%;
     transform: translateX(-50%);
     max-width: none;
   }
 
-  .tag-page.tag-network article:nth-child(even) {
+  .tag-page.tag-news-from-home article:nth-child(even) {
     /*padding: 0 1rem 0 0;*/
   }
 }
 
 @media screen and (min-width: 1350px) {
   /* 1200px + grid-gaps */
-  .tag-page.tag-network #content {
+  .tag-page.tag-news-from-home #content {
     grid-gap: 3rem 2rem;
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .tag-page.tag-network article .article-detail,
-  .tag-page.tag-network article > a {
+  .tag-page.tag-news-from-home article .article-detail,
+  .tag-page.tag-news-from-home article > a {
     width: 40rem;
   }
 
-  .tag-page.tag-network article,
-  .tag-page.tag-network article:nth-child(even) {
+  .tag-page.tag-news-from-home article,
+  .tag-page.tag-news-from-home article:nth-child(even) {
     /*padding: 0;*/
   }
 
-  .tag-page.tag-network main header,
-  .tag-page.tag-network main header + p {
+  .tag-page.tag-news-from-home main header,
+  .tag-page.tag-news-from-home main header + p {
     grid-column: span 3;
   }
 
-  .tag-page.tag-network main header {
+  .tag-page.tag-news-from-home main header {
     margin: 60vh 0 0;
   }
 }
