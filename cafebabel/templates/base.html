@@ -56,7 +56,7 @@
       <li class=participate><a href={{ lang_url_for('proposals.create') }} title=Participate>Pitch an article</a></li>
       <li class=translate><a href={{ lang_url_for('articles.to_translate') }} title=Translate>Translate an article</a></li>
       {% set static_pages = static_pages_for(current_language) %}
-      <li><a href={{ url_for('tags.detail', slug='network') }} class=tag-network>Network</a></li>
+      <li><a href={{ url_for('tags.detail', slug='news-from-home') }} class=tag-news-from-home>News from home</a></li>
       <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
       {% if current_user.has_role('editor') %}
         <li class="editors-panel">
