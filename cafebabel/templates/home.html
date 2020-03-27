@@ -59,7 +59,7 @@
       {{ card(article_editors_pick, image_dimensions=config.RESIZE_SIZE_ARTICLE_COVER) }}
     {% endfor %}
   </section>
-  {{ latest("latest", 8) }}
+  {{ latest("latest", 5) }}
   <section class=categories>
     {% for category in categories|shuffle %}
       <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>

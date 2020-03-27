@@ -50,7 +50,7 @@
     <section class=latest>
       <div class=latest-column>
         {% for article_latest in articles_latest %}
-          {% if loop.index == 4 %}
+          {% if loop.index == 3 %}
             </div><div class=latest-column>
           {% endif %}
           {{ card(article_latest, image_dimensions=config.RESIZE_SIZE_ARTICLE_SECTION_LIST) }}
