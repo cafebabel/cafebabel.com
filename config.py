@@ -110,7 +110,7 @@ class BaseConfig:
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
-    HARD_LIMIT_PER_PAGE = 20
+    HARD_LIMIT_PER_PAGE = 50
 
     GOOGLE_ANALYTICS_ID = ''
 
