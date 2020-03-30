@@ -2295,14 +2295,13 @@ article .share a:first-child {
 }
 
 .article-page article .related-article {
-  display: flex;
   padding-bottom: 0;
   position: relative;
   margin: 9rem auto 7rem;
   background: linear-gradient(180deg, #faebd7, #fffaf3);
   max-width: 85rem;
 }
-.article-page article .related-article div:first-of-type {
+.article-page article .related-article a div:first-of-type {
   width: 50%;
   margin: 0;
   background-position: center;
@@ -2318,27 +2317,30 @@ article .share a:first-child {
   display: block;
   font-size: 1.3rem;
 }
-.article-page article .related-article > div {
+.article-page article .related-article a {
+  display: flex;
+}
+.article-page article .related-article a > div {
   margin: 2rem;
 }
-.article-page article .related-article h3 {
+.article-page article .related-article a h3 {
   font-size: 1.7rem;
   text-align: left;
   margin: 0;
 }
-.article-page article .related-article p {
+.article-page article .related-article a p {
   display: none;
 }
 @media screen and (min-width: 750px){
-  .article-page article .related-article div:first-of-type {
+  .article-page article .related-article a div:first-of-type {
     width: 100%;
   }
-  .article-page article .related-article p {
+  .article-page article .related-article a p {
     display: block;
     font-size: 1.5rem;
     max-width: none;
   }
-  .article-page article .related-article h3 {
+  .article-page article .related-article a h3 {
     margin: 0 0 2rem;
   }
 }
