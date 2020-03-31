@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "_meta-macro.html" import meta %}
 {% from "articles/macros.html" import card %}
-{% from "_homepage-macro.html" import series, external_series, latest, latest_section, participation with context %}
+{% from "_homepage-macro.html" import series, external_series, latest, latest_section, participation, group_series with context %}
 
 {% block metas %}
   {% if current_language == 'en' %}
@@ -88,6 +88,15 @@
     {{ external_series('https://generation-yerevan.cafebabel.com/', '', 'https://media.cafebabel.com/tags/200310-banniere-generation-yerevan.mp4', 'https://media.cafebabel.com/tags/200310-logo-generation-yerevan.svg' ,'Generation Yerevan logo', 'Portrait of the young Armenians who make the cultural and political change in Yerevan.', '') }}
     {{ external_series('https://blueborder.cafebabel.com/', 'https://blueborder.cafebabel.com/wp-content/uploads/2020/03/banner-cafebabel.jpg', '', 'https://blueborder.cafebabel.com/wp-content/uploads/2020/01/logo-blueborder-homepage-writting.svg' ,'#blueborder logo', 'Five cross-border stories that deliver a new perspective on Europe\'s southern edges.', '') }}
   {% elif current_language == 'fr' %}
+    <section class=group-series>
+      <h2>Series</h2>
+      <div class=group-series-container>
+        {{ group_series('la-frontiere-des-extremes') }}
+        {{ group_series('meet-my-hood') }}
+        {{ group_series('voglio-mangiare-cosi') }}
+        {{ group_series('voglio-vivere-cosi') }}
+      </div>
+    </section>
     {{ external_series('https://borderline.cafebabel.com/fr/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Un nouveau regard sur la Pologne et ses frontières. Parce qu’il est temps de changer les perceptions sur un pays qui fête ses 100 ans d’indépendance.') }}
     {{ series("meet-my-hood", 0, 'Découvrir les quartiers européens avec les locaux.', 'Voir tous les articles de la série') }}
     {{ participation('newseletter-form', 'Newsletter', 'Tu ne veux rien rater du meilleur de Cafébabel ?', '', 'Abonne-toi à notre newsletter quinzomadaire ici.', '/static/img/gif-newsletter.gif', 'gif newsletter') }}
