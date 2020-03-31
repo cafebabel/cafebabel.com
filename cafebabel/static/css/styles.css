@@ -3442,11 +3442,20 @@ section[class*=' participation-'] img {
     padding-bottom: 0;
     margin: 1rem;
   }
+  .group-series .group-series-container.four-series a {
+    width: calc(100% / 2 - 2rem);
+  }
   .group-series .group-series-container a:hover .group-series-thumbnail {
     opacity: 0.8;
   }
   .group-series .group-series-container a:hover h3 {
     color: #bde513;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .group-series .group-series-container.four-series a {
+    width: calc(100% / 4 - 2rem);
   }
 }
 
