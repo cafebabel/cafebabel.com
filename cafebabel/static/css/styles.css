@@ -3391,6 +3391,72 @@ section[class*=' participation-'] img {
   }
 }
 
+.group-series {
+  background-color: #00283c;
+  background-color: black;
+  background: url(../img/noise2.png),
+  linear-gradient(to bottom right, #000, #00283c);
+  margin: 0 -2rem;
+}
+.group-series h2 {
+  color: white;
+  padding-top: 3rem;
+}
+.group-series .group-series-container {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 2rem 5rem;
+}
+.group-series .group-series-container a {
+  width: 100%;
+  background-color: white;
+  display: block;
+  padding-bottom: 0.1rem; /* otherwise margin-bottom isn't applied */
+  margin-bottom: 2rem;
+}
+.group-series .group-series-container a:after {
+  content: none;
+}
+.group-series .group-series-container a .group-series-thumbnail {
+  opacity: 1;
+  height: 25rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transition: opacity .3s;
+}
+.group-series .group-series-container a h3 {
+  text-align: center;
+  margin: 4rem 1rem;
+  transition: color .3s;
+}
+
+@media screen and (min-width: 750px) {
+  .group-series .group-series-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 5rem;
+  }
+  .group-series .group-series-container a {
+    width: calc(100% / 3 - 2rem);
+    padding-bottom: 0;
+    margin: 1rem;
+  }
+  .group-series .group-series-container a:hover .group-series-thumbnail {
+    opacity: 0.8;
+  }
+  .group-series .group-series-container a:hover h3 {
+    color: #bde513;
+  }
+}
+
+@media screen and (min-width: 1240px) {
+  .group-series {
+    margin: 0;
+  }
+}
+
+
 /* Hide layout tags */
 
 .tags-list a.tag-editors-pick,
