@@ -98,11 +98,24 @@
   {% elif current_language == 'fr' %}
     <section class=group-series>
       <h2>Séries</h2>
-      <div class="group-series-container four-series">
+      <div class="group-series-container grid-four-columns">
         {{ group_series('la-frontiere-des-extremes') }}
         {{ group_series('meet-my-hood') }}
         {{ group_series('voglio-mangiare-cosi') }}
         {{ group_series('voglio-vivere-cosi') }}
+      </div>
+    </section>
+    <section class="group-series podcasts">
+      <h2>Podcast</h2>
+      <div class="group-series-container grid-four-columns">
+        {{ group_series('soupe-a-lunion') }}
+        {{ group_series('en-peripherie') }}
+        {{ group_series('ou-sont-les-fans') }}
+        {{ group_series('peace-babies') }}
+        {{ group_series('cabris') }}
+        {{ group_series('french-crushs') }}
+        {{ group_series('explique-moi-leurope') }}
+        {{ group_series('europod') }}
       </div>
     </section>
     {{ external_series('https://borderline.cafebabel.com/fr/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Un nouveau regard sur la Pologne et ses frontières. Parce qu’il est temps de changer les perceptions sur un pays qui fête ses 100 ans d’indépendance.') }}
