@@ -3395,7 +3395,7 @@ section[class*=' participation-'] img {
   background-color: #00283c;
   background-color: black;
   background: url(../img/noise2.png),
-  linear-gradient(to bottom right, #000, #00283c);
+  linear-gradient(to bottom, #000, #0c153c);
   margin: 0 -2rem;
 }
 .group-series h2 {
