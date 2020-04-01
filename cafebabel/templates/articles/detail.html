@@ -153,6 +153,25 @@
   </nav>
 
 </article>
+<aside id=pop-up-newsletter>
+  <span></span>
+  <img src="/static/img/gif-newsletter.gif" alt="gif newsletter">
+  {% if current_language == 'en' %}
+    <p>Want to stay in the loop with our bi-monthly newsletter?</p>
+  {% elif current_language == 'fr' %}
+    <p>Tu ne veux rien rater du meilleur de Cafébabel ?</p>
+  {% elif current_language == 'de' %}
+    <p>Unseren Newsletter abonnieren?</p>
+  {% elif current_language == 'es' %}
+    <p>Para que no te pierdas nada.</p>
+  {% elif current_language == 'it' %}
+    <p>Vuoi rimanere sempre aggiornato?</p>
+  {% elif current_language == 'pl' %}
+    <p>Want to stay in the loop with our bi-monthly newsletter?</p>
+  {% endif %}
+  <iframe class="mj-w-res-iframe" style="height:auto;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://app.mailjet.com/widget/iframe/2iD4/qcn" width="100%"></iframe>
+  <script type="text/javascript" src="https://app.mailjet.com/statics/js/iframeResizer.min.js"></script>
+</aside>
 
 {{ macros.learn_languages_partner(article) }}
 {% endblock %}
