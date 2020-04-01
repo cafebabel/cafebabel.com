@@ -154,6 +154,15 @@ Array.from(
   )
 })
 
+/* Add podcast icon if tag #podcast is present */
+Array.from(
+    document.querySelectorAll('article .article-detail .tags-list a.tag-podcast')
+).forEach(homepageTagList => {
+  homepageTagList.parentNode.parentNode.parentNode.classList.add(
+      'article-podcast'
+  )
+})
+
 /* video autoplay */
 const video = document.querySelector('video')
 if (video) {
