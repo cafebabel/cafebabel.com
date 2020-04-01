@@ -2345,6 +2345,57 @@ article .share a:first-child {
   }
 }
 
+/* pop up newsletter subscription */
+
+aside#pop-up-newsletter {
+  opacity: 0;
+  position: fixed;
+  text-align: center;
+  width: 90%;
+  height: 50rem;
+  left: 50%;
+  top: -50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 4rem 2rem;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.05);
+  transition: all .3s;
+  z-index: -1;
+}
+aside#pop-up-newsletter.active {
+  display: block;
+  opacity: 1;
+  top: 50%;
+  z-index: 20;
+}
+aside#pop-up-newsletter span {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 6rem;
+  height: 6rem;
+}
+aside#pop-up-newsletter span:after {
+  font-family: 'icomoon-icons';
+  content: '\ea0f';
+  font-size: 1.4rem;
+  right: 2rem;
+  top: 2rem;
+  position: absolute;
+}
+aside#pop-up-newsletter img {
+  margin: 0 auto;
+  width: 19rem;
+}
+@media screen and (min-width: 750px) {
+  aside#pop-up-newsletter {
+    width: 60rem;
+  }
+  aside#pop-up-newsletter span:after {
+    cursor: pointer;
+  }
+}
+
 /* Translation list page */
 
 .translate-list-page h2 {
