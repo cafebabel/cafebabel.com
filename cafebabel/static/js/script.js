@@ -28,15 +28,6 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
 const subscribeLink = document.querySelector(
   '#social-networks .icon-newsletter2'
 )
-const subscribeLinkHome = document.querySelector(
-  '.participation-newseletter-form a'
-)
-if (subscribeLinkHome) {
-  subscribeLinkHome.addEventListener('click', event => {
-    event.preventDefault()
-    window.scrollTo(0, document.querySelector('#content').scrollHeight)
-  })
-}
 
 subscribeLink.addEventListener('click', event => {
   event.preventDefault()
