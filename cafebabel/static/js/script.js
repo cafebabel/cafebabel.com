@@ -24,14 +24,13 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     a.setAttribute('target', '_blank')
 })
 
-/* NOT smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
+/* smooth scroll to anchor https://stackoverflow.com/a/42261685 */
 const subscribeLink = document.querySelector(
   '#social-networks .icon-newsletter2'
 )
 
 subscribeLink.addEventListener('click', event => {
   event.preventDefault()
-  //window.scrollTo(0, document.querySelector('body').scrollHeight)
   window.scrollTo({
     top: document.querySelector('body').scrollHeight,
     behavior: 'smooth'
