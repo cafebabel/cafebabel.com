@@ -171,15 +171,17 @@ if (video) {
 }
 
 /* display newsletter subscription popup on article pages after 10s */
-const newsletterPopup = document.querySelector(
-    '#pop-up-newsletter'
-)
-if (!sessionStorage.getItem('popup')) {
-  setTimeout( () => {
-    newsletterPopup.classList.add('active')
-    newsletterPopup.querySelector('span').addEventListener('click', () => {
-      newsletterPopup.classList.remove('active')
-    })
-  }, 10000)
-  sessionStorage.setItem('popup', 'true')
+const newsletterPopup = document.querySelector('#pop-up-newsletter'),
+      articlePage = document.querySelector('.article-page')
+if (articlePage) {
+  if (!sessionStorage.getItem('popup')) {
+    setTimeout( () => {
+      newsletterPopup.classList.add('active')
+      newsletterPopup.querySelector('span').addEventListener('click', () => {
+        newsletterPopup.classList.remove('active')
+      })
+    }, 10000)
+    sessionStorage.setItem('popup', 'true')
+  }
 }
+
