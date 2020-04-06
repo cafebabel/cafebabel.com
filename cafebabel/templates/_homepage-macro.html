@@ -90,7 +90,7 @@
 {% macro group_series(tag_slug, image_dimensions=config.RESIZE_SIZE_ARTICLE_LIST) %}
   {% set tag_series, articles_series = articles_for_tag(tag_slug) %}
   <a href={{ tag_series.detail_url }} title="{{ tag_series.name }}">
-    <div class="group-series-thumbnail"{% if tag_series.image_url %} style="background-image:url({{ tag_series.image_url|resize(image_dimensions) or '' }});">{% else %}style="background-image:url({{ url_for('static', filename='img/article-thumbnail.default.jpg') }});">{% endif %}
+    <div class="group-series-thumbnail"{% if tag_series.image_url %} style="background-image:url({{ tag_series.image_url|resize(image_dimensions) or '' }});">{% else %}style="background-image:url(https://cafebabel.com/static/img/article-thumbnail-default.jpg);">{% endif %}
     </div>
     <h3>{{ tag_series.name }}</h3>
   </a>
