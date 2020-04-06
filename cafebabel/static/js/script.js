@@ -31,7 +31,11 @@ const subscribeLink = document.querySelector(
 
 subscribeLink.addEventListener('click', event => {
   event.preventDefault()
-  window.scrollTo(0, document.querySelector('body').scrollHeight)
+  //window.scrollTo(0, document.querySelector('body').scrollHeight)
+  window.scrollTo({
+    top: document.querySelector('body').scrollHeight,
+    behavior: 'smooth'
+  })
 })
 
 /* Hover effect article image */
