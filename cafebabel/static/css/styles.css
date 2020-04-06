@@ -3730,7 +3730,7 @@ footer {
   width: 100%;
   height: 70rem;
   font-size: 1.7rem;
-  background: url(../img/texture-footer.svg),
+  background: url(../img/noise2.png),
     linear-gradient(to bottom right, #001e2f, #20556d);
   color: #fff;
   position: fixed;
