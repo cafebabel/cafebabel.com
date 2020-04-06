@@ -3496,6 +3496,10 @@ section[class*=' participation-'] img {
   linear-gradient(to bottom, #000, #0c153c);
   margin: 0 -2rem;
 }
+.group-series.podcasts {
+  background: url(../img/noise2.png),
+  linear-gradient(to bottom, #fcd6c4, #fff);
+}
 .group-series h2 {
   color: white;
   padding-top: 3rem;
@@ -3540,7 +3544,7 @@ section[class*=' participation-'] img {
     padding-bottom: 0;
     margin: 1rem;
   }
-  .group-series .group-series-container.four-series a {
+  .group-series .group-series-container.grid-four-columns a {
     width: calc(100% / 2 - 2rem);
   }
   .group-series .group-series-container a:hover .group-series-thumbnail {
@@ -3552,7 +3556,7 @@ section[class*=' participation-'] img {
 }
 
 @media screen and (min-width: 1000px) {
-  .group-series .group-series-container.four-series a {
+  .group-series .group-series-container.grid-four-columns a {
     width: calc(100% / 4 - 2rem);
   }
 }
