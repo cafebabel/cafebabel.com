@@ -11,7 +11,7 @@
 
 {% block metas_social %}
   {{ meta('property=article:author', article.authors|join(', ')) }}
-  {{ meta('property=og:image', 'https://media.cafebabel.com' + article.image_url) }}
+  {{ meta('property=og:image', article.image_url) }}
   {{ meta('property=og:url', request.url) }}
   {{ meta('property=og:title', self.meta_title()) }}
   {{ meta('property=og:type', 'article') }}
