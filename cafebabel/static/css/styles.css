@@ -3250,10 +3250,6 @@ section[class*=' participation-'] img {
     width: 0;
   }
 
-  .home section.series {
-    margin-bottom: 10rem;
-  }
-
   .home article {
     margin-bottom: 5rem;
   }
@@ -3503,6 +3499,7 @@ section[class*=' participation-'] img {
 .group-series h2 {
   color: white;
   padding-top: 3rem;
+  margin: 0;
 }
 .group-series .group-series-container {
   max-width: 1200px;
