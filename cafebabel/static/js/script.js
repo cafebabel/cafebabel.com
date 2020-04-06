@@ -40,7 +40,7 @@ if (subscribeLinkHome) {
 
 subscribeLink.addEventListener('click', event => {
   event.preventDefault()
-  window.scrollTo(0, document.querySelector('#content').scrollHeight)
+  window.scrollTo(0, document.querySelector('body').scrollHeight)
 })
 
 /* Hover effect article image */

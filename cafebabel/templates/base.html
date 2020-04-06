@@ -163,8 +163,10 @@
 </main>
 
 <footer>
-  <h4>Want our bi-monthly newsletter in your inbox? Then type in your email address here:</h4>
-  <iframe src="https://app.mailjet.com/widget/iframe/2iD4/4zE" height=270></iframe>
+  <div id=newsletter-subscriber>
+    <h4>Want our bi-monthly newsletter in your inbox? Then type in your email address here:</h4>
+    <iframe src="https://app.mailjet.com/widget/iframe/2iD4/4zE" height=270></iframe>
+  </div>
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
 {% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js', 'js/lazyload.min.js', 'js/lazyload-setup.js' %}
