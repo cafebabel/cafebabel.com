@@ -61,7 +61,7 @@
   </section>
   {{ latest("latest", 5) }}
   <section class=categories>
-    {% for category in categories|shuffle %}
+    {% for category in categories|reverse %}
       <a href={{ category.detail_url }} class="section-link tag-{{ category.slug }}">{{ category.name }}</a>
       {% set tag_category, articles_category = articles_for_tag(category.slug, 3) %}
       {% if articles_category %}
