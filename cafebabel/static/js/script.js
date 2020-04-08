@@ -24,20 +24,6 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     a.setAttribute('target', '_blank')
 })
 
-/* smooth scroll to anchor https://stackoverflow.com/a/42261685 */
-/*const subscribeLink = document.querySelector(
-  '#social-networks .icon-newsletter2'
-)
-
-subscribeLink.addEventListener('click', event => {
-  event.preventDefault()
-  window.scrollTo({
-    top: document.querySelector('body').scrollHeight + 10000,
-    behavior: 'smooth'
-  })
-  console.log(document.querySelector('body').scrollHeight + 10000)
-})*/
-
 /* Hover effect article image */
 const articleThumbnails = document.querySelectorAll('.home article')
 articleThumbnails.forEach(articleThumbnail => {
