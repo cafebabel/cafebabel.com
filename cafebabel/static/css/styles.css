@@ -3009,6 +3009,10 @@ article.article-podcast:before {
   display: block;
 }
 
+.home section.series.external_series {
+  margin-bottom: 5rem;
+}
+
 .home section.series.external_series .banner:before {
   content: "";
   position: absolute;
