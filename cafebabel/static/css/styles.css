@@ -3580,7 +3580,7 @@ section[class*=' participation-'] img {
 #static-pages-links {
   background-color: #00283c;
   padding: 1.7rem;
-  margin-bottom: 70rem;
+  margin-bottom: 100rem;
 }
 
 #static-pages-links.partners {
@@ -3640,7 +3640,7 @@ section[class*=' participation-'] img {
 #partners {
   width: 100%;
   background-color: #fff;
-  margin-bottom: 80rem;
+  margin-bottom: 100rem;
 }
 
 #partners ul {
@@ -3726,9 +3726,14 @@ section[class*=' participation-'] img {
   }
 }
 
+#newsletter {
+  width: 0;
+  height: 0;
+}
+
 footer {
   width: 100%;
-  height: 80rem;
+  height: 100rem;
   font-size: 1.7rem;
   background: url(../img/noise2.png),
     linear-gradient(to bottom right, #001e2f, #20556d);

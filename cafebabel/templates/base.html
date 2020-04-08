@@ -160,6 +160,7 @@
     </nav>
   </nav>
   {% block partners %}{% endblock %}
+  <div id=newsletter></div>
 </main>
 
 <footer>
@@ -169,7 +170,7 @@
   </div>
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
-{% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js', 'js/lazyload.min.js', 'js/lazyload-setup.js' %}
+{% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js', 'js/smooth.js', 'js/lazyload.min.js', 'js/lazyload-setup.js' %}
     <script src={{ ASSET_URL }}></script>
 {% endassets %}
 {% block extra_js %}{% endblock %}
