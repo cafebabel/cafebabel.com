@@ -50,7 +50,7 @@
         </ul>
       </li>
       {% set categories = get_categories() %}
-      {% for category in categories %}
+      {% for category in categories|reverse %}
         <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class=tag-{{ category.slug }}>{{ category.name }}</a></li>
       {% endfor %}
       <li class=participate><a href={{ lang_url_for('proposals.create') }} title=Participate>Pitch an article</a></li>
