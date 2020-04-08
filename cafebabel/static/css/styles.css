@@ -3502,8 +3502,11 @@ section[class*=' participation-'] img {
 }
 .group-series h2 {
   color: white;
-  padding-top: 3rem;
+  padding-top: 3.5rem;
   margin: 0;
+  font-size: 3rem;
+  font-family: 'sporting_grotesque', sans-serif;
+  font-style: normal;
 }
 .group-series .group-series-container {
   max-width: 1200px;
