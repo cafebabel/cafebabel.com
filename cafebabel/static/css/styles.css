@@ -83,6 +83,63 @@ main {
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'VremenaGroteskRegular';
+  src: url('../fonts/vremenagrotesk-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagrotesk-webfont.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'VremenaGroteskRegular';
+  src: url('../fonts/vremenagroteskitalic-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagroteskitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'VremenaGroteskMedium';
+  src: url('../fonts/vremenagroteskmedium-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagroteskmedium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'VremenaGroteskMedium';
+  src: url('../fonts/vremenagroteskmediumitalic-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagroteskmediumitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'VremenaGroteskBold';
+  src: url('../fonts/vremenagroteskbook-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagroteskbook-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'VremenaGroteskBold';
+  src: url('../fonts/vremenagroteskbolditalic-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagroteskbolditalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'VremenaGroteskBook';
+  src: url('../fonts/vremenagroteskbook-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagroteskbook-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'VremenaGroteskBook';
+  src: url('../fonts/vremenagroteskbookitalic-webfont.woff2') format('woff2'),
+  url('../fonts/vremenagroteskbookitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
 /* Icomoon */
 
 @font-face {
