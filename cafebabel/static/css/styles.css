@@ -105,6 +105,12 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-podcast:before {
+  content: '\e960';
+}
+.icon-video:before {
+  content: '\e970';
+}
 .icon-play:before {
   content: '\ead1';
 }
@@ -127,7 +133,7 @@ main {
   content: '\e90e';
 }
 .icon-youtube2:before {
-  content: '\e90f';
+  content: '\e911';
 }
 .icon-network:before {
   content: '\e909';
@@ -2645,6 +2651,10 @@ a.tag-impact:before,
 a.tag-society:before,
 .article-page article p.tags-list a.tag-creative:before,
 a.tag-creative:before,
+.article-page article p.tags-list a.tag-video:before,
+a.tag-video:before,
+.article-page article p.tags-list a.tag-podcast:before,
+a.tag-podcast:before,
 button.menu.main-menu + nav a.tag-news-from-home:before {
   font-family: 'icomoon-icons';
   padding-right: 0.4rem;
@@ -2664,6 +2674,14 @@ a.tag-society:before {
 
 a.tag-creative:before {
   content: '\e901';
+}
+
+a.tag-video:before {
+  content: '\e970';
+}
+
+a.tag-podcast:before {
+  content: '\e960';
 }
 
 button.menu.main-menu + nav a.tag-news-from-home:before {
