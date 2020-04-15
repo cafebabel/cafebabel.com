@@ -105,6 +105,12 @@ main {
   line-height: 1;
   color: #00283c;
 }
+.icon-podcast:before {
+  content: '\e960';
+}
+.icon-video:before {
+  content: '\e970';
+}
 .icon-play:before {
   content: '\ead1';
 }
@@ -127,7 +133,7 @@ main {
   content: '\e90e';
 }
 .icon-youtube2:before {
-  content: '\e90f';
+  content: '\e911';
 }
 .icon-network:before {
   content: '\e909';
