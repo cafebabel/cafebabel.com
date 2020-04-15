@@ -2651,6 +2651,10 @@ a.tag-impact:before,
 a.tag-society:before,
 .article-page article p.tags-list a.tag-creative:before,
 a.tag-creative:before,
+.article-page article p.tags-list a.tag-video:before,
+a.tag-video:before,
+.article-page article p.tags-list a.tag-podcast:before,
+a.tag-podcast:before,
 button.menu.main-menu + nav a.tag-news-from-home:before {
   font-family: 'icomoon-icons';
   padding-right: 0.4rem;
@@ -2672,6 +2676,14 @@ a.tag-creative:before {
   content: '\e901';
 }
 
+a.tag-video:before {
+  content: '\e970';
+}
+
+a.tag-podcast:before {
+  content: '\e960';
+}
+
 button.menu.main-menu + nav a.tag-news-from-home:before {
   content: '\e909';
 }
@@ -2683,25 +2695,6 @@ button.menu.main-menu + nav a.tag-news-from-home:before {
 
 .tags-list a:hover:after {
   width: 0;
-}
-
-nav ul li a.tag-video,
-nav ul li a.tag-podcast {
-  margin-left: 2rem;
-}
-nav ul li a.tag-video:before,
-nav ul li a.tag-podcast:before {
-  position: absolute;
-  width: 4rem;
-  left: -4.5rem;
-
-}
-
-nav ul li a.tag-video:before {
-  content: url('../img/picto-video-blue.svg')
-}
-nav ul li a.tag-podcast:before {
-  content: url('../img/picto-podcast-blue.svg')
 }
 
 /* Tag page Network/News from home/Video/Podcast */
