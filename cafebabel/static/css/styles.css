@@ -106,10 +106,10 @@ main {
   color: #00283c;
 }
 .icon-podcast:before {
-  content: '\e961';
+  content: '\e962';
 }
 .icon-video:before {
-  content: '\e971';
+  content: '\e972';
 }
 .icon-play:before {
   content: '\ead1';
@@ -2677,11 +2677,11 @@ a.tag-creative:before {
 }
 
 a.tag-video:before {
-  content: '\e971';
+  content: '\e972';
 }
 
 a.tag-podcast:before {
-  content: '\e961';
+  content: '\e962';
 }
 
 button.menu.main-menu + nav a.tag-news-from-home:before {
