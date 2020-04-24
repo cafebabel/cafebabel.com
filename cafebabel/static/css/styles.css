@@ -3508,20 +3508,27 @@ section[class*=' participation-'] img {
 }
 
 .group-series {
-  background-color: #00283c;
-  background-color: black;
+  background-color: #e8e8e8;
   background: url(../img/noise2.png),
-  linear-gradient(to bottom, #000, #0c153c);
+  linear-gradient(to bottom, #e2e2e2, #e8e8e8);
   margin: 0 -2rem;
 }
 .group-series.podcasts {
   background: url(../img/noise2.png),
-  linear-gradient(to bottom, #fcd6c4, #fff);
+  linear-gradient(to bottom, #00283c, #e8e8e8);
 }
 .group-series h2 {
-  color: white;
-  padding-top: 3rem;
+  padding-top: 3.5rem;
   margin: 0;
+  font-size: 3rem;
+  font-family: 'sporting_grotesque', sans-serif;
+  font-style: normal;
+}
+.group-series h2 a {
+  color: white;
+}
+.group-series h2 a:after {
+  background-color: white;
 }
 .group-series .group-series-container {
   max-width: 1200px;
