@@ -86,7 +86,7 @@ main {
 /* Icomoon */
 
 @font-face {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   src: url('../fonts/icomoon.ttf?8rv96k') format('truetype'),
     url('../fonts/icomoon.woff?8rv96k') format('woff'),
     url('../fonts/icomoon.svg?8rv96k#icomoon') format('svg');
@@ -96,7 +96,7 @@ main {
 
 [class^='icon-'],
 [class*=' icon-'] {
-  font-family: 'icomoon-icons' !important;
+  font-family: 'icomoon' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -106,10 +106,10 @@ main {
   color: #00283c;
 }
 .icon-podcast:before {
-  content: '\e961';
+  content: '\e962';
 }
 .icon-video:before {
-  content: '\e971';
+  content: '\e972';
 }
 .icon-play:before {
   content: '\ead1';
@@ -583,7 +583,7 @@ label[for='remember'] {
 }
 
 [type='checkbox']:after {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   content: '\ea10';
   text-transform: none;
   line-height: 2.6rem;
@@ -642,7 +642,7 @@ select {
 
 .select label:after {
   position: absolute;
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   font-size: 1.9rem;
   content: '\ea3e';
   right: 1.2rem;
@@ -1096,7 +1096,7 @@ button.menu + nav a {
 
   #participate:before,
   #translate:before {
-    font-family: 'icomoon-icons';
+    font-family: 'icomoon';
     display: block;
     text-align: center;
     font-size: 2.8rem;
@@ -1211,7 +1211,7 @@ button.menu + nav a {
 }
 
 .file label[for='image']:before {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   content: '\e927';
   display: block;
   font-size: 4rem;
@@ -1315,7 +1315,7 @@ h1.edit input {
 
 .article-page-edit .tags .tags-list li button:after,
 #markdown-helper button:after {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.3rem;
   margin-left: 1rem;
@@ -1582,7 +1582,7 @@ select#author {
 }
 
 .profile-page main .file input + label strong:before {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   content: '\e927';
   display: block;
   font-size: 5rem;
@@ -2393,7 +2393,7 @@ aside#pop-up-newsletter span {
   height: 6rem;
 }
 aside#pop-up-newsletter span:after {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.4rem;
   right: 2rem;
@@ -2656,7 +2656,7 @@ a.tag-video:before,
 .article-page article p.tags-list a.tag-podcast:before,
 a.tag-podcast:before,
 button.menu.main-menu + nav a.tag-news-from-home:before {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   padding-right: 0.4rem;
 }
 
@@ -2677,11 +2677,11 @@ a.tag-creative:before {
 }
 
 a.tag-video:before {
-  content: '\e971';
+  content: '\e972';
 }
 
 a.tag-podcast:before {
-  content: '\e961';
+  content: '\e962';
 }
 
 button.menu.main-menu + nav a.tag-news-from-home:before {
@@ -2736,7 +2736,7 @@ button.menu.main-menu + nav a.tag-news-from-home:before {
 }
 
 .tag-page.tag-news-from-home main header h1:before {
-  font-family: icomoon-icons;
+  font-family: icomoon;
   content: '\e909';
   padding-right: 1rem;
   font-size: 4.5rem;
@@ -2920,7 +2920,7 @@ button.menu.main-menu + nav a.tag-news-from-home:before {
 }
 
 article.article-video:before {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   content: '\ead1';
   position: absolute;
   text-align: center;
@@ -3157,7 +3157,7 @@ article.article-podcast:before {
 }
 
 .home a.section-link:before {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   display: block;
   font-size: 5rem;
 }
@@ -4134,7 +4134,7 @@ footer p {
 }
 
 #cookie-disclaimer button:after {
-  font-family: 'icomoon-icons';
+  font-family: 'icomoon';
   content: '\ea0f';
   font-size: 1.5rem;
 }
