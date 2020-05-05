@@ -28,11 +28,8 @@ deploy:  # env=prod|preprod
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
 	make sync-archives-media
-	@echo "\n> Launching gunicorn daemon."
-	${remote} "${goto_src} && pkill gunicorn 2> /dev/null; \
-		gunicorn --daemon -w 10 -b ${${env}_server} ${env}:app \
-		--error-logfile ~/log/error.log --access-logfile ~/log/access.log"
-	@echo "\n> App is deployed. Run \`make logs env=${env} type=access|error\` to follow activity."
+	${remote} "supervisorctl restart ${env}"
+	@echo "\n> App is deployed."
 
 sync-archives-media:
 	@echo "\n> Synchronizing archives media from old production server."
@@ -52,9 +49,9 @@ make-dirs:
 	mkdir -p ./logs
 	mkdir -p ./cafebabel/uploads/{archives,articles,tags,users,resized-images}
 
-reset-db:
-       make flask-command command=initdb
-       make flask-command command=load_fixtures
+# reset-db:  # env=prod|preprod
+# 	make flask-command command=initdb
+# 	make flask-command command=load_fixtures
 
-flask-command:  # command=whatever flask command
-	${remote} "${goto_src} && FLASK_APP=prod flask ${command}"
+flask-command:  # env=prod|preprod command=whatever-flask-command
+	${remote} "${goto_src} && FLASK_APP=${env} flask ${command}"
