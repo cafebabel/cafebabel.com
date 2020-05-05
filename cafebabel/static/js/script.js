@@ -24,25 +24,6 @@ Array.from(document.querySelectorAll('a')).forEach(a => {
     a.setAttribute('target', '_blank')
 })
 
-/* NOT smooth scroll to anchor https://stackoverflow.com/a/17733311/6481285 */
-const subscribeLink = document.querySelector(
-  '#social-networks .icon-newsletter2'
-)
-const subscribeLinkHome = document.querySelector(
-  '.participation-newseletter-form a'
-)
-if (subscribeLinkHome) {
-  subscribeLinkHome.addEventListener('click', event => {
-    event.preventDefault()
-    window.scrollTo(0, document.querySelector('#content').scrollHeight)
-  })
-}
-
-subscribeLink.addEventListener('click', event => {
-  event.preventDefault()
-  window.scrollTo(0, document.querySelector('#content').scrollHeight)
-})
-
 /* Hover effect article image */
 const articleThumbnails = document.querySelectorAll('.home article')
 articleThumbnails.forEach(articleThumbnail => {
@@ -102,6 +83,29 @@ function deactivateInput(input) {
   parent.classList.remove('active', 'completed')
 }
 
+/* Detect chrome autofill https://stackoverflow.com/questions/35049555/chrome-autofill-autocomplete-no-value-for-password/40852860#40852860 */
+/*const autofillContent = `"${String.fromCharCode(0xFEFF)}"`
+function checkAutofill(input) {
+  if (!input.value) {
+    const style = window.getComputedStyle(input)
+    if (style.content !== autofillContent)
+      return false
+  }
+  activateInput(input)
+  return true
+}
+const input = document.querySelector('input[type=password]')
+if (!checkAutofill(input)) {
+  deactivateInput(input)
+  let interval = 0
+  const intervalId = setInterval(() => {
+    if (checkAutofill(input) || interval++ >= 20){
+      activateInput(input)
+      clearInterval(intervalId)
+    }
+  }, 100)
+}*/
+
 /* animation login fields */
 Array.from(
   document.querySelectorAll('.authentication-form > div > input')
@@ -131,9 +135,34 @@ Array.from(
   )
 })
 
+/* Add podcast icon if tag #podcast is present */
+Array.from(
+    document.querySelectorAll('article .article-detail .tags-list a.tag-podcast')
+).forEach(homepageTagList => {
+  homepageTagList.parentNode.parentNode.parentNode.classList.add(
+      'article-podcast'
+  )
+})
+
 /* video autoplay */
 const video = document.querySelector('video')
 if (video) {
   video.autoplay = true
   video.load()
 }
+
+/* display newsletter subscription popup on article pages after 10s */
+const newsletterPopup = document.querySelector('#pop-up-newsletter'),
+      articlePage = document.querySelector('.article-page')
+if (articlePage) {
+  if (!sessionStorage.getItem('popup')) {
+    setTimeout( () => {
+      newsletterPopup.classList.add('active')
+      newsletterPopup.querySelector('span').addEventListener('click', () => {
+        newsletterPopup.classList.remove('active')
+      })
+    }, 10000)
+    sessionStorage.setItem('popup', 'true')
+  }
+}
+

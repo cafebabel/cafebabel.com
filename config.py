@@ -25,7 +25,7 @@ class BaseConfig:
     )
     DEFAULT_LANGUAGE = LANGUAGES[0][0]
 
-    CATEGORIES_SLUGS = ['impact', 'experience', 'raw', 'creative']
+    CATEGORIES_SLUGS = ['impact', 'creative', 'society']
     STATIC_PAGES_SLUGS = [
         'about-us',
         'contact',
@@ -110,7 +110,7 @@ class BaseConfig:
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     MAX_CONTENT_LENGTH = 1024 * 1024 * 16  # Megabytes.
     USERS_IMAGE_MAX_CONTENT_LENGTH = 1024 * 500  # Kilobytes.
-    HARD_LIMIT_PER_PAGE = 20
+    HARD_LIMIT_PER_PAGE = 50
 
     GOOGLE_ANALYTICS_ID = ''
 

@@ -11,7 +11,7 @@
 
 {% block metas_social %}
   {{ meta('property=article:author', article.authors|join(', ')) }}
-  {{ meta('property=og:image', absolute(article.image_url)) }}
+  {{ meta('property=og:image', article.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER)) }}
   {{ meta('property=og:url', request.url) }}
   {{ meta('property=og:title', self.meta_title()) }}
   {{ meta('property=og:type', 'article') }}
@@ -19,7 +19,7 @@
   {{ meta('property=og:site_name', 'Cafébabel') }}
   {{ meta('property=og:locale', current_language) }}
   {{ meta('name=twitter:card', 'summary') }}
-  {{ meta('name=twitter:image', absolute(article.image_url)) }}
+  {{ meta('name=twitter:image', article.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER)) }}
   {{ meta('name=twitter:title', self.meta_title()) }}
   {{ meta('name=twitter:description', article.summary|striptags) }}
   {{ meta('name=twitter:url', request.url) }}
@@ -136,47 +136,26 @@
 
   {{ self.edit_button() }}
 
-  <nav class=article-participate>
-    {% if current_language == 'en' %}
-      {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/en/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
-      {{ participation('donate', 'Donate', 'You’ve reached the end of the article, but your Cafébabel adventure has just begun!
-      You can DONATE however much you’d like to help Cafébabel finance its quality reporting projects as well as its team of professional journalists.
-The price of a coffee or a beer to support the independence of your favourite European magazine… that’s all it takes!
-On behalf of the Cafébabel team, Merci, Gracias, Thanks, Grazie, Danke!', 'https://www.okpal.com/europe-in-real-life-by-cafebabel/', 'This way', '/static/img/gif-donate.gif', 'gif donate') }}
-    {% elif current_language == 'fr' %}
-      {{ participation('participate', 'Participer', 'Tu veux proposer une idée de sujet à Cafébabel ? Fais-toi plaisir', '/fr/article/proposal/new/', 'Par ici', '/static/img/gif-wave.gif', 'gif participer') }}
-      {{ participation('donate', 'Donner', 'L’article est déjà terminé mais ton aventure Cafébabel continue !
-Tu peux  FAIRE UN DON du montant de ton choix pour aider Cafébabel à financer des reportages de qualité ainsi que son équipe de journalistes professionnels.
-Le prix d’un café ou d’une bière pour devenir le garant de l’indépendance et de la qualité de ton magazine européen préféré.
-De la part de toute l’équipe Cafébabel : Merci, Gracias, Thanks, Gracie, Danke !', 'https://www.helloasso.com/associations/babel-international/collectes/soutenez-cafebabel', 'Par ici', '/static/img/gif-donate.gif', 'gif donner') }}
-    {% elif current_language == 'de' %}
-      {{ participation('participate', 'Mitmachen', 'Cafébabel einen Artikel vorschlagen?', '/de/article/proposal/new/', 'Hier entlang', '/static/img/gif-wave.gif', 'gif mitmachen') }}
-      {{ participation('donate', 'Spende', 'Du bist bereits am Ende des Artikels angelangt. Aber das Abenteuer Cafébabel geht weiter!
-Jetzt SPENDEN und Cafébabel helfen, weiterhin Reportagen aus ganz Europa für euch machen zu können und unser Team professioneller Journalisten zu unterstützen.
-Zum Preis eines Kaffees oder Biers könnt ihr die Unabhängigkeit und Qualität eures Lieblingsmagazins fördern.
-Vom gesamten Cafébabel-Team: Merci, Gracias, Thanks, Grazie, Danke!', 'https://www.okpal.com/europe-in-real-life-by-cafebabel/', 'Hier entlang', '/static/img/gif-donate.gif', 'gif mitmachen') }}
-    {% elif current_language == 'es' %}
-      {{ participation('participate', 'Participa', '¿Te gustaría proponer una idea? Adelante.', '/es/article/proposal/new/', 'Por aquí', '/static/img/gif-wave.gif', 'gif participa') }}
-      {{ participation('donate', 'Donar', 'You’ve reached the end of the article, but your Cafébabel adventure has just begun!
-      You can DONATE however much you’d like to help Cafébabel finance its quality reporting projects as well as its team of professional journalists.
-The price of a coffee or a beer to support the independence of your favourite European magazine… that’s all it takes!
-On behalf of the Cafébabel team, Merci, Gracias, Thanks, Grazie, Danke!', 'https://www.okpal.com/europe-in-real-life-by-cafebabel/', 'Por aquí', '/static/img/gif-donate.gif', 'gif participa') }}
-    {% elif current_language == 'it' %}
-      {{ participation('participate', 'Partecipa', 'Vuoi mandare un\'idea a Cafébabel?  E\' la tua occasione!', '/it/article/proposal/new/', 'Da questa parte', '/static/img/gif-wave.gif', 'gif partecipa') }}
-      {{ participation('donate', 'Donare', 'You’ve reached the end of the article, but your Cafébabel adventure has just begun!
-      You can DONATE however much you’d like to help Cafébabel finance its quality reporting projects as well as its team of professional journalists.
-The price of a coffee or a beer to support the independence of your favourite European magazine… that’s all it takes!
-On behalf of the Cafébabel team, Merci, Gracias, Thanks, Grazie, Danke!', 'https://www.okpal.com/europe-in-real-life-by-cafebabel/', 'Da questa parte', '/static/img/gif-donate.gif', 'gif partecipa') }}
-    {% elif current_language == 'pl' %}
-      {{ participation('participate', 'Participate', 'Want to pitch an idea to Cafébabel? Now’s your chance!', '/pl/article/proposal/new/', 'This way', '/static/img/gif-wave.gif', 'gif participate') }}
-      {{ participation('donate', 'Donate', 'You’ve reached the end of the article, but your Cafébabel adventure has just begun!
-      You can DONATE however much you’d like to help Cafébabel finance its quality reporting projects as well as its team of professional journalists.
-The price of a coffee or a beer to support the independence of your favourite European magazine… that’s all it takes!
-On behalf of the Cafébabel team, Merci, Gracias, Thanks, Grazie, Danke!', 'https://www.okpal.com/europe-in-real-life-by-cafebabel/', 'This way', '/static/img/gif-donate.gif', 'gif participate') }}
-    {% endif %}
-  </nav>
-
 </article>
+<aside id=pop-up-newsletter>
+  <span></span>
+  <img src="/static/img/gif-newsletter.gif" alt="gif newsletter">
+  {% if current_language == 'en' %}
+    <p>Want to stay in the loop with our bi-monthly newsletter?</p>
+  {% elif current_language == 'fr' %}
+    <p>Tu ne veux rien rater du meilleur de Cafébabel ?</p>
+  {% elif current_language == 'de' %}
+    <p>Unseren Newsletter abonnieren?</p>
+  {% elif current_language == 'es' %}
+    <p>Para que no te pierdas nada.</p>
+  {% elif current_language == 'it' %}
+    <p>Vuoi rimanere sempre aggiornato?</p>
+  {% elif current_language == 'pl' %}
+    <p>Want to stay in the loop with our bi-monthly newsletter?</p>
+  {% endif %}
+  <iframe class="mj-w-res-iframe" style="height:auto;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://app.mailjet.com/widget/iframe/2iD4/qcn" width="100%"></iframe>
+  <script type="text/javascript" src="https://app.mailjet.com/statics/js/iframeResizer.min.js"></script>
+</aside>
 
 {{ macros.learn_languages_partner(article) }}
 {% endblock %}

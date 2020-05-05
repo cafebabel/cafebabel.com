@@ -50,14 +50,15 @@
         </ul>
       </li>
       {% set categories = get_categories() %}
-      {% for category in categories %}
+      {% for category in categories|reverse %}
         <li class="section {{ category.slug }}"><a href={{ category.detail_url }} class=tag-{{ category.slug }}>{{ category.name }}</a></li>
       {% endfor %}
       <li class=participate><a href={{ lang_url_for('proposals.create') }} title=Participate>Pitch an article</a></li>
       <li class=translate><a href={{ lang_url_for('articles.to_translate') }} title=Translate>Translate an article</a></li>
       {% set static_pages = static_pages_for(current_language) %}
-      <li><a href={{ url_for('tags.detail', slug='network') }} class=tag-network>Network</a></li>
-      <li class=donate><a href=https://www.helloasso.com/associations/babel-international/collectes/soutenez-cafebabel title=Donate>Donate</a></li>
+      <li><a href={{ url_for('tags.detail', slug='video') }} class=tag-video>Videos</a></li>
+      <li><a href={{ url_for('tags.detail', slug='podcast') }} class=tag-podcast>Podcasts</a></li>
+      <li><a href={{ url_for('tags.detail', slug='news-from-home') }} class=tag-news-from-home>News from home</a></li>
       <li><a href={{ static_pages.get('about-us', '#') }}>About</a></li>
       {% if current_user.has_role('editor') %}
         <li class="editors-panel">
@@ -75,7 +76,6 @@
 
   <a href={{ lang_url_for('proposals.create') }} id=participate title=Participate>Participate</a>
   <a href={{ lang_url_for('articles.to_translate') }} id=translate title=Translate>Translate</a>
-  <a href=https://www.helloasso.com/associations/babel-international/collectes/soutenez-cafebabel id=donate title=Donate>Donate</a>
 
   <a href={{ lang_url_for('cores.home_lang') }} class=logo>
     <img src={{ url_for('static', filename='img/logo-cafebabel.svg') }} alt="logo Cafébabel">
@@ -160,14 +160,17 @@
     </nav>
   </nav>
   {% block partners %}{% endblock %}
+  <div id=newsletter></div>
 </main>
 
 <footer>
-  <h4>Want our bi-monthly newsletter in your inbox? Then type in your email address here:</h4>
-  <iframe src="https://app.mailjet.com/widget/iframe/2iD4/4zE" height=270></iframe>
+  <div id=newsletter-subscriber>
+    <h4>Want our bi-monthly newsletter in your inbox? Then type in your email address here:</h4>
+    <iframe src="https://app.mailjet.com/widget/iframe/2iD4/4zE" height=270></iframe>
+  </div>
   <p>© Cafébabel — {{ get_year() }}</p>
 </footer>
-{% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js', 'js/lazyload.min.js', 'js/lazyload-setup.js' %}
+{% assets filters='jsmin', output='build/common.js', 'js/utils.js', 'js/script.js', 'js/smooth.js', 'js/lazyload.min.js', 'js/lazyload-setup.js' %}
     <script src={{ ASSET_URL }}></script>
 {% endassets %}
 {% block extra_js %}{% endblock %}

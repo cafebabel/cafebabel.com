@@ -26,7 +26,7 @@
 
 {% macro external_series(external_link, banner_url, video_url, logo_source, logo_alt, description, button_text) %}
 <section class="series external_series">
-  <a href="{{ external_link }}" class=banner style="background-image:url({{ banner_url }});">
+  <a href="{{ external_link }}" target=_blank class=banner style="background-image:url({{ banner_url }});">
     <div class=series-infos>
       <h2>{{ serie_name }}</h2>
       <img src="{{ logo_source }}" alt="{{ logo_alt }}" />
@@ -50,7 +50,7 @@
     <section class=latest>
       <div class=latest-column>
         {% for article_latest in articles_latest %}
-          {% if loop.index == 4 %}
+          {% if loop.index == 3 %}
             </div><div class=latest-column>
           {% endif %}
           {{ card(article_latest, image_dimensions=config.RESIZE_SIZE_ARTICLE_SECTION_LIST) }}
@@ -85,4 +85,13 @@
     <p>{{ description }}</p>
     <a class=button {% if button_link %}href={{ button_link }}{% endif %}>{{ button_text }}</a>
   </section>
+{% endmacro %}
+
+{% macro group_series(tag_slug, image_dimensions=config.RESIZE_SIZE_ARTICLE_LIST) %}
+  {% set tag_series, articles_series = articles_for_tag(tag_slug) %}
+  <a href={{ tag_series.detail_url }} title="{{ tag_series.name }}">
+    <div class="group-series-thumbnail"{% if tag_series.image_url %} style="background-image:url({{ tag_series.image_url|resize(image_dimensions) or '' }});">{% else %}style="background-image:url(https://cafebabel.com/static/img/article-thumbnail-default.jpg);">{% endif %}
+    </div>
+    <h3>{{ tag_series.name }}</h3>
+  </a>
 {% endmacro %}
