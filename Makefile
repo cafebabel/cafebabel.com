@@ -1,5 +1,5 @@
 # Config
-server=${env}@185.34.32.17
+server=${env}@cafebabel.com
 src_dir=~/cafebabel.com
 venv_dir=~/cafebabel.com/venv
 branch=master
@@ -28,7 +28,7 @@ deploy:  # env=prod|preprod
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
 	make sync-archives-media
-	${remote} "sudo /usr/local/bin/reload-${env}.sh"
+	${remote} "sudo supervisorctl restart ${env}"
 	@echo "\n> App is deployed."
 
 sync-archives-media:
