@@ -28,7 +28,7 @@ deploy:  # env=prod|preprod
 	${remote} "${goto_src} && git fetch origin ${branch} && git checkout ${branch} && git reset --hard FETCH_HEAD"
 	${remote} "${goto_src} && pip install -r requirements.txt"
 	make sync-archives-media
-	${remote} "supervisorctl restart ${env}"
+	${remote} "sudo /usr/local/bin/reload-${env}.sh"
 	@echo "\n> App is deployed."
 
 sync-archives-media:
