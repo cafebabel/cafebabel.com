@@ -12,7 +12,7 @@
 {% block metas_social %}
   {{ meta('property=article:author', article.authors|join(', ')) }}
   {% if article.image_url %}
-    {{ meta('property=og:image', article.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER)) }}
+    {{ meta('property=og:image', article.image_url) }}
   {% else %}
     {{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
   {% endif %}
@@ -24,7 +24,7 @@
   {{ meta('property=og:locale', current_language) }}
   {{ meta('name=twitter:card', 'summary') }}
   {% if article.image_url %}
-    {{ meta('name=twitter:image', article.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER)) }}
+    {{ meta('name=twitter:image', article.image_url) }}
   {% else %}
     {{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
   {% endif %}
