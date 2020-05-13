@@ -22,7 +22,7 @@
   {{ meta('property=og:description', article.summary|striptags) }}
   {{ meta('property=og:site_name', 'Cafébabel') }}
   {{ meta('property=og:locale', current_language) }}
-  {{ meta('name=twitter:card', 'summary test') }}
+  {{ meta('name=twitter:card', 'summary') }}
   {% if article.image_url %}
     {{ meta('name=twitter:image', article.image_url) }}
   {% else %}
