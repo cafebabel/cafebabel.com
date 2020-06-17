@@ -5,129 +5,122 @@
 
 {% block meta_title %}{{ article.title }}{% endblock %}
 {% block metas %}
-  {{ meta('name=description', article.summary|striptags) }}
-  {{ meta('name=author', article.authors|join(', ')) }}
+{{ meta('name=description', article.summary|striptags) }}
+{{ meta('name=author', article.authors|join(', ')) }}
 {% endblock %}
 
 {% block metas_social %}
-  {{ meta('property=article:author', article.authors|join(', ')) }}
-  {% if article.image_url %}
-    {{ meta('property=og:image', article.image_url) }}
-  {% else %}
-    {{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
-  {% endif %}
-  {{ meta('property=og:url', request.url) }}
-  {{ meta('property=og:title', self.meta_title()) }}
-  {{ meta('property=og:type', 'article') }}
-  {{ meta('property=og:description', article.summary|striptags) }}
-  {{ meta('property=og:site_name', 'Cafébabel') }}
-  {{ meta('property=og:locale', current_language) }}
-  {{ meta('name=twitter:card', 'summary') }}
-  {% if article.image_url %}
-    {{ meta('name=twitter:image', article.image_url) }}
-  {% else %}
-    {{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
-  {% endif %}
-  {{ meta('name=twitter:title', self.meta_title()) }}
-  {{ meta('name=twitter:description', article.summary|striptags) }}
-  {{ meta('name=twitter:url', request.url) }}
+{{ meta('property=article:author', article.authors|join(', ')) }}
+{% if article.image_url %}
+{{ meta('property=og:image', article.image_url) }}
+{% else %}
+{{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
+{% endif %}
+{{ meta('property=og:url', request.url) }}
+{{ meta('property=og:title', self.meta_title()) }}
+{{ meta('property=og:type', 'article') }}
+{{ meta('property=og:description', article.summary|striptags) }}
+{{ meta('property=og:site_name', 'Cafébabel') }}
+{{ meta('property=og:locale', current_language) }}
+{{ meta('name=twitter:card', 'summary') }}
+{% if article.image_url %}
+{{ meta('name=twitter:image', article.image_url) }}
+{% else %}
+{{ meta('property=og:image', url_for('static', filename='img/cafebabel-default-thumbnail.jpg')) }}
+{% endif %}
+{{ meta('name=twitter:title', self.meta_title()) }}
+{{ meta('name=twitter:description', article.summary|striptags) }}
+{{ meta('name=twitter:url', request.url) }}
 {% endblock %}
 
 {% block extra_head %}
-  <link rel="alternate" hreflang={{ article.language }} href=https://cafebabel.com{{ article.detail_url }}>
-  {% if article.is_translation %}
-    <link rel="alternate" hreflang={{ article.original_article.language }} href=https://cafebabel.com{{ article.original_article.detail_url }}>
-  {% endif %}
-  {% if translations_publisheds %}
-    {% for translation in translations_publisheds %}
-      <link rel="alternate" hreflang={{ translation.language }} href=https://cafebabel.com{{ translation.detail_url }}>
-    {% endfor %}
-  {% endif %}
+<link rel="alternate" hreflang={{ article.language }} href=https://cafebabel.com{{ article.detail_url }}>
+  {% if article.is_translation %} <link rel="alternate" hreflang={{ article.original_article.language }}
+  href=https://cafebabel.com{{ article.original_article.detail_url }}> {% endif %} {% if translations_publisheds %}
+  {% for translation in translations_publisheds %} <link rel="alternate" hreflang={{ translation.language }}
+  href=https://cafebabel.com{{ translation.detail_url }}> {% endfor %} {% endif %}
   {% for lang_code, lang_label in get_languages() %}
-    {% if article.language != lang_code and lang_code not in translations_langs %}
-      {% if article.is_translated_in(lang_code) %}
-        <link rel="alternate" hreflang={{ lang_code }} href=https://cafebabel.com{{ article.get_translation(lang_code).detail_url }}>
-      {% endif %}
-    {% endif %}
-  {% endfor %}
+  {% if article.language != lang_code and lang_code not in translations_langs %}
+  {% if article.is_translated_in(lang_code) %} <link rel="alternate" hreflang={{ lang_code }}
+  href=https://cafebabel.com{{ article.get_translation(lang_code).detail_url }}> {% endif %} {% endif %} {% endfor %}
+  {% endblock %} {% block body_class %}article-page{% endblock %} {% block body %} <article>
+{% if article.has_image %}
+<img src="{{ article.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) }}" alt="Image for {{ article.title }}">
+{% endif %}
+{% block edit_button %}
+{% if current_user.has_role('editor') and article.is_published %}
+<a class=button href={{ lang_url_for('articles.edit', article_id=article.id) }}>Edit article</a>
+{% endif %}
+{% endblock %}
+<h1>{{ article.title }}</h1>
+
+{{ macros.article_meta(article) }}
+
+{% block tag_list %}
+{% if article.tags %}
+<p class=tags-list>
+  {% for tag in article.tags -%}
+  <a href={{ tag.detail_url }} class=tag-{{ tag.slug }}>{{ tag.name }}</a>
+  {%- endfor %}
+</p>
+{% endif %}
 {% endblock %}
 
-{% block body_class %}article-page{% endblock %}
-
-{% block body %}
-<article>
-    {% if article.has_image %}
-    <img src="{{ article.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) }}" alt="Image for {{ article.title }}">
+<div class=article-language-selector>
+  <ul>
+    {% if article.is_translation %}
+    <li><span>{{ article.language }}</span></li>
+    {% else %}
+    <li><span class=original-language>{{ article.language }}</span></li>
     {% endif %}
-    {% block edit_button %}
-      {% if current_user.has_role('editor') and article.is_published %}
-        <a class=button href={{ lang_url_for('articles.edit', article_id=article.id) }}>Edit article</a>
-      {% endif %}
-    {% endblock %}
-    <h1>{{ article.title }}</h1>
-
-    {{ macros.article_meta(article) }}
-
-    {% block tag_list %}
-    {% if article.tags %}
-      <p class=tags-list>
-        {% for tag in article.tags -%}
-          <a href={{ tag.detail_url }} class=tag-{{ tag.slug }}>{{ tag.name }}</a>
-        {%- endfor %}
-      </p>
+    {% if article.is_translation %}
+    <li class=original-language><a href="{{ article.original_article.detail_url }}"
+        title="Original language">{{ article.original_article.language }}</a></li>
     {% endif %}
-    {% endblock %}
-
-    <div class=article-language-selector>
-      <ul>
-        {% if article.is_translation %}
-          <li><span>{{ article.language }}</span></li>
-        {% else %}
-          <li><span class=original-language>{{ article.language }}</span></li>
-        {% endif %}
-          {% if article.is_translation %}
-            <li class=original-language><a href="{{ article.original_article.detail_url }}" title="Original language">{{ article.original_article.language }}</a></li>
-          {% endif %}
-          {% if translations_publisheds %}
-            {% for translation in translations_publisheds %}
-                <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
-            {% endfor %}
-          {% endif %}
-          {% for lang_code, lang_label in get_languages() %}
-            {% if article.language != lang_code and lang_code not in translations_langs %}
-              {% if article.is_translation %}
-                {% if lang_code != article.original_article.language %}
-                  <li class=to-translate-languages><a href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.original_article.id }}">{{ lang_code }}</a></li>
-                {% endif %}
-              {% elif article.is_translated_in(lang_code) %}
-                <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_code }}</a></li>
-              {% else %}
-                <li class=to-translate-languages><a href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.id }}">{{ lang_code }}</a></li>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        {% if translations_drafts and current_user.has_role('editor') %}
-            {% for translation in translations_drafts %}
-              <li class=translation-draft><a href={{ translation.detail_url }} title="Translation draft">{{ translation.language }}</a></li>
-            {% endfor %}
-        {% endif %}
-      </ul>
-    </div>
-
-    {% if article.summary %}
-      <div class=summary>{{ article.summary|markdown }}</div>
+    {% if translations_publisheds %}
+    {% for translation in translations_publisheds %}
+    <li class=translated-language><a href={{ translation.detail_url }}>{{ translation.language }}</a></li>
+    {% endfor %}
     {% endif %}
+    {% for lang_code, lang_label in get_languages() %}
+    {% if article.language != lang_code and lang_code not in translations_langs %}
+    {% if article.is_translation %}
+    {% if lang_code != article.original_article.language %}
+    <li class=to-translate-languages><a
+        href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.original_article.id }}">{{ lang_code }}</a>
+    </li>
+    {% endif %}
+    {% elif article.is_translated_in(lang_code) %}
+    <li class=translated-language><a href={{ article.get_translation(lang_code).detail_url }}>{{ lang_code }}</a></li>
+    {% else %}
+    <li class=to-translate-languages><a
+        href="{{ url_for('translations.create', lang=lang_code) }}?original={{ article.id }}">{{ lang_code }}</a></li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% if translations_drafts and current_user.has_role('editor') %}
+    {% for translation in translations_drafts %}
+    <li class=translation-draft><a href={{ translation.detail_url }}
+        title="Translation draft">{{ translation.language }}</a></li>
+    {% endfor %}
+    {% endif %}
+  </ul>
+</div>
 
-    {{ article.body|markdown|rewrite_img_src }}
+{% if article.summary %}
+<div class=summary>{{ article.summary|markdown }}</div>
+{% endif %}
 
-  {% if article.is_translation %}
-    <p class=translation-details>
-      Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
-    </p>
-  {% endif %}
+{{ article.body|markdown|rewrite_img_src }}
 
-  {% block share_nav %}
-  <nav class=share>
+{% if article.is_translation %}
+<p class=translation-details>
+  Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
+</p>
+{% endif %}
+
+{% block share_nav %}
+<nav class=share>
   <p>Loved this story? Then tell your friends:
     {% set lang = current_language %}
     {% if lang == 'en' %}{% set twitter_nickname = 'cafebabel_eng' %}{% endif %}
@@ -136,34 +129,35 @@
     {% if lang == 'it' %}{% set twitter_nickname = 'cafebabel_it' %}{% endif %}
     {% if lang == 'es' %}{% set twitter_nickname = 'cafebabel_es' %}{% endif %}
     {% if lang == 'pl' %}{% set twitter_nickname = 'cafebabel_pol' %}{% endif %}
-    <a href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via={{ twitter_nickname }}">Twitter</a>
+    <a
+      href="https://twitter.com/share?url={{ request.url|quote_plus }}&text={{ article.title }}&via={{ twitter_nickname }}">Twitter</a>
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|quote_plus }}">Facebook</a>
   </p>
-  </nav>
-  {% endblock %}
+</nav>
+{% endblock %}
 
-  {{ self.edit_button() }}
+{{ self.edit_button() }}
 
 </article>
 <aside id=pop-up-newsletter>
   <span></span>
   <img src="/static/img/gif-newsletter.gif" alt="gif newsletter">
   {% if current_language == 'en' %}
-    <p>Want to stay in the loop with our bi-monthly newsletter?</p>
+  <p>Want to stay in the loop with our bi-monthly newsletter?</p>
   {% elif current_language == 'fr' %}
-    <p>Tu ne veux rien rater du meilleur de Cafébabel ?</p>
+  <p>Tu ne veux rien rater du meilleur de Cafébabel ?</p>
   {% elif current_language == 'de' %}
-    <p>Unseren Newsletter abonnieren?</p>
+  <p>Unseren Newsletter abonnieren?</p>
   {% elif current_language == 'es' %}
-    <p>Para que no te pierdas nada.</p>
+  <p>Para que no te pierdas nada.</p>
   {% elif current_language == 'it' %}
-    <p>Vuoi rimanere sempre aggiornato?</p>
+  <p>Vuoi rimanere sempre aggiornato?</p>
   {% elif current_language == 'pl' %}
-    <p>Want to stay in the loop with our bi-monthly newsletter?</p>
+  <p>Want to stay in the loop with our bi-monthly newsletter?</p>
   {% endif %}
-  <iframe class="mj-w-res-iframe" style="height:auto;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://app.mailjet.com/widget/iframe/2iD4/qcn" width="100%"></iframe>
+  <iframe class="mj-w-res-iframe" style="height:auto;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+    src="https://app.mailjet.com/widget/iframe/2iD4/qcn" width="100%"></iframe>
   <script type="text/javascript" src="https://app.mailjet.com/statics/js/iframeResizer.min.js"></script>
 </aside>
 
-{{ macros.learn_languages_partner(article) }}
 {% endblock %}

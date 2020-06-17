@@ -4,7 +4,7 @@
 
 {% block meta_title %}{{ translation.title }}{% endblock %}
 {% block metas %}
-  {{ meta('name=description', translation.summary|striptags) }}
+{{ meta('name=description', translation.summary|striptags) }}
 {% endblock %}
 
 {% block body_class %}article-page{% endblock %}
@@ -12,13 +12,14 @@
 <article>
 
   {% if translation.has_image %}
-    <img src="{{ translation.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) }}" alt="Image for {{ translation.title }}">
+  <img src="{{ translation.image_url|resize(config.RESIZE_SIZE_ARTICLE_COVER) }}"
+    alt="Image for {{ translation.title }}">
   {% endif %}
 
   {% block edit_button %}
-    {% if current_user.has_role('editor') or current_user in translation.translators %}
-      <a class=button href={{ lang_url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
-    {% endif %}
+  {% if current_user.has_role('editor') or current_user in translation.translators %}
+  <a class=button href={{ lang_url_for('translations.edit', id=translation.id) }}>Edit this translation</a>
+  {% endif %}
   {% endblock %}
 
   <h1>{{ translation.title }}</h1>
@@ -28,17 +29,17 @@
   <p class="translation-language">Article in <span>{{ translation.language }}</span></p>
 
   {% block tag_list %}
-    {% if translation.tags %}
-      <p class=tags-list>
-        {% for tag in translation.tags -%}
-          <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
-        {%- endfor %}
-      </p>
-    {% endif %}
+  {% if translation.tags %}
+  <p class=tags-list>
+    {% for tag in translation.tags -%}
+    <a href={{ tag.detail_url }}{% if tag.is_category %} class={{ tag.name|lower }}{% endif %}>{{ tag.name }}</a>
+    {%- endfor %}
+  </p>
+  {% endif %}
   {% endblock %}
 
   {% if translation.summary %}
-    <div class=summary>{{ translation.summary|markdown }}</div>
+  <div class=summary>{{ translation.summary|markdown }}</div>
   {% endif %}
 
   {{ translation.body|markdown|rewrite_img_src }}
@@ -46,13 +47,10 @@
   <p class=translation-details>
     Translated from <a href="{{ translation.original_article.detail_url }}">{{ translation.original_article.title }}</a>
     by {% for translator in translation.translators -%}
-      <a href="{{ translator.detail_url }}">{{ translator }}</a>
+    <a href="{{ translator.detail_url }}">{{ translator }}</a>
     {%- endfor %}.
   </p>
 
   {{ self.edit_button() }}
 </article>
-
-{{ macros.learn_languages_partner(translation) }}
-
 {% endblock %}

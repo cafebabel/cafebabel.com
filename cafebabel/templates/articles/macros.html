@@ -1,95 +1,100 @@
 {% macro article_publication_date(article) %}
-  {% if article.publication_date %}
-    <span>Published on <time datetime="{{ article.publication_date.date() }}">{{ article.publication_date.strftime('%B %-d, %Y') }}</time></span>
-  {% else %}
-    <span>Created on <time datetime="{{ article.creation_date.date() }}">{{ article.creation_date.strftime('%B %-d, %Y') }}</time></span>
-  {% endif %}
+{% if article.publication_date %}
+<span>Published on <time
+    datetime="{{ article.publication_date.date() }}">{{ article.publication_date.strftime('%B %-d, %Y') }}</time></span>
+{% else %}
+<span>Created on <time
+    datetime="{{ article.creation_date.date() }}">{{ article.creation_date.strftime('%B %-d, %Y') }}</time></span>
+{% endif %}
 {% endmacro %}
 
 {% macro profile_image(author, image_dimensions=config.RESIZE_SIZE_PROFILE_THUMBNAIL) %}
-  {% if author.profile.has_image %}
-    <div style="background-image:url({{ author.profile.image_url|resize(image_dimensions) }})" class=image></div><!-- preserve image ratio centered in a round shape -->
-  {% else %}
-    <img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture" class=image>
-  {% endif %}
+{% if author.profile.has_image %}
+<div style="background-image:url({{ author.profile.image_url|resize(image_dimensions) }})" class=image></div>
+<!-- preserve image ratio centered in a round shape -->
+{% else %}
+<img src={{ url_for('static', filename='img/profile.svg') }} alt="Default profile picture" class=image>
+{% endif %}
 {% endmacro %}
 
 {%- macro article_meta(article) -%}
-  <p>
-    {{ article_publication_date(article) }}
-  </p>
-  <div class=contributor-container>
-    <div class=author-container>
-      <h4>Story by</h4>
-      {% for author in article.authors %}
-          <a href="{{ author.detail_url }}" class=author-link>
-            {{ profile_image(author) }}
-            {{ author }}
-          </a>
-      {% endfor %}
-    </div>
-    {% if article.is_translation %}
-      <div class=translator-container>
-        <h4>Translation by:</h4>
-          {% for translator in article.translators -%}
-              <a href="{{ translator.detail_url }}" class=translator-link>
-                {{ profile_image(translator) }}
-                {{ translator }}
-              </a>
-          {%- endfor %}
-      </div>
-    {% endif %}
+<p>
+  {{ article_publication_date(article) }}
+</p>
+<div class=contributor-container>
+  <div class=author-container>
+    <h4>Story by</h4>
+    {% for author in article.authors %}
+    <a href="{{ author.detail_url }}" class=author-link>
+      {{ profile_image(author) }}
+      {{ author }}
+    </a>
+    {% endfor %}
   </div>
+  {% if article.is_translation %}
+  <div class=translator-container>
+    <h4>Translation by:</h4>
+    {% for translator in article.translators -%}
+    <a href="{{ translator.detail_url }}" class=translator-link>
+      {{ profile_image(translator) }}
+      {{ translator }}
+    </a>
+    {%- endfor %}
+  </div>
+  {% endif %}
+</div>
 {%- endmacro %}
 
 {%- macro tags_fields(article=None) -%}
-  <div class=tags>
-    <label for=tag-1>Tags</label>
-    <ul class=tags-list>
-      {% if article and article.tags %}
-        {% for tag in article.tags -%}
-          <li class=saved>
-            {{ tag.name }}{# Avoid any whitespace between the name and the input.
+<div class=tags>
+  <label for=tag-1>Tags</label>
+  <ul class=tags-list>
+    {% if article and article.tags %}
+    {% for tag in article.tags -%}
+    <li class=saved>
+      {{ tag.name }}{# Avoid any whitespace between the name and the input.
             #}<input name=tag-{{ loop.index }} list=tags value="{{ tag.name }}" type=hidden>
-            <button type=button></button>
-          </li>
-        {%- endfor %}
-      {% endif %}
-    </ul>
-    <div class=tag-container><input name=tag-new autocomplete=off list=tags-suggestions><button class=add>+</button></div>
-    <ul id=tags-suggestions class=inactive></ul>
-  </div>
+      <button type=button></button>
+    </li>
+    {%- endfor %}
+    {% endif %}
+  </ul>
+  <div class=tag-container><input name=tag-new autocomplete=off list=tags-suggestions><button class=add>+</button></div>
+  <ul id=tags-suggestions class=inactive></ul>
+</div>
 {%- endmacro %}
 
 {%- macro image_upload(object) -%}
-  <div class=file>
-    {% if object.has_image %}
-      <output><img src={{ object.image_url }} alt="Image for {{ object.name }}"></output>
-      <div class=checkbox>
-        <label for=delete-image>Delete image</label>
-        <input type=checkbox name=delete-image id=delete-image value=1>
-      </div>
-    {% else %}
-      <canvas class=noise></canvas>
-      <output></output>
-    {% endif %}
-    <label for=image>Click to upload a cover photo <small>Dimensions: 1200x467, max. 500 KB</small></label>
-    <input type=file id=image name=image>
+<div class=file>
+  {% if object.has_image %}
+  <output><img src={{ object.image_url }} alt="Image for {{ object.name }}"></output>
+  <div class=checkbox>
+    <label for=delete-image>Delete image</label>
+    <input type=checkbox name=delete-image id=delete-image value=1>
   </div>
+  {% else %}
+  <canvas class=noise></canvas>
+  <output></output>
+  {% endif %}
+  <label for=image>Click to upload a cover photo <small>Dimensions: 1200x467, max. 500 KB</small></label>
+  <input type=file id=image name=image>
+</div>
 {%- endmacro %}
 
 {% macro default_article_picture() %}
-  <img  class=lazy data-src={{ url_for('static', filename='img/article-thumbnail-default.jpg') }} alt="Default thumbnail picture">
+<img class=lazy data-src={{ url_for('static', filename='img/article-thumbnail-default.jpg') }}
+  alt="Default thumbnail picture">
 {% endmacro %}
 
 {% macro card(article, image_dimensions=config.RESIZE_SIZE_ARTICLE_LIST) %}
 <article>
   {% if article.has_image %}
-    <a href={{ article.detail_url }}><img class=lazy data-src={{ article.image_url|resize(image_dimensions) }} alt="Image for {{ article.title }}"></a>
+  <a href={{ article.detail_url }}><img class=lazy data-src={{ article.image_url|resize(image_dimensions) }}
+      alt="Image for {{ article.title }}"></a>
   {% else %}
-    <a href={{ article.detail_url }}>
-      {{ default_article_picture() }}
-    </a>
+  <a href={{ article.detail_url }}>
+    {{ default_article_picture() }}
+  </a>
   {% endif %}
   <div class=article-detail>
     <h3><a href={{ article.detail_url }}>{{ article.title }}</a></h3>
@@ -97,29 +102,14 @@
       {{ article_publication_date(article) }}
       — by
       {% for author in article.authors %}
-        <a href={{ author.detail_url }}>{{ author }}</a>{{ "," if not loop.last }}
+      <a href={{ author.detail_url }}>{{ author }}</a>{{ "," if not loop.last }}
       {% endfor %}
     </p>
     <p class=tags-list>
       {% for tag in article.tags -%}
-        <a href={{ tag.detail_url }} class=tag-{{ tag.slug }}>{{ tag.name }}</a>
+      <a href={{ tag.detail_url }} class=tag-{{ tag.slug }}>{{ tag.name }}</a>
       {%- endfor %}
     </p>
   </div>
 </article>
-{% endmacro %}
-
-{% macro learn_languages_partner(article) %}
-  {% if article.is_published %}
-    <div id="a9-parent-iframe"
-      {% if article.language == 'en' %}data-src="https://www.frantastique.com/partner/puafshryxh/21199"
-      {% elif article.language == 'fr' %}data-src="https://www.gymglish.com/scripts/parent-of-iframe-5.min.js"
-      {% elif article.language == 'it' %}data-src="https://www.frantastique.com/partner/puafshryxh/21258"
-      {% elif article.language == 'es' %}data-src="https://www.frantastique.com/partner/puafshryxh/21256"
-      {% elif article.language == 'de' %}data-src="https://www.frantastique.com/partner/puafshryxh/21254"
-      {% else %}data-src=""
-      {% endif %}
-    ></div>
-    <script src="https://www.gymglish.com/scripts/parent-of-iframe-5.min.js"></script>
-  {% endif %}
 {% endmacro %}
