@@ -45,6 +45,23 @@
 </div>
 {%- endmacro %}
 
+{%- macro reminder_article_meta(article) -%}
+  <div class=contributor-container>
+    <div class=author-container>
+      <h4>Story by</h4>
+      {% for author in article.authors %}
+        <a href="{{ author.detail_url }}" class=author-link>
+          {{ profile_image(author) }}
+          {{ author }}
+        </a>
+        {% if author.profile.about %}
+          {{ author.profile.about }}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{%- endmacro %}
+
 {%- macro tags_fields(article=None) -%}
 <div class=tags>
   <label for=tag-1>Tags</label>
