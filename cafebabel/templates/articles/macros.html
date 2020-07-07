@@ -50,13 +50,15 @@
     <div class=author-container>
       <h4>Story by</h4>
       {% for author in article.authors %}
-        <a href="{{ author.detail_url }}" class=author-link>
-          {{ profile_image(author) }}
-          {{ author }}
-        </a>
-        {% if author.profile.about %}
-          {{ author.profile.about }}
-        {% endif %}
+        <div class=author-detail>
+          <a href="{{ author.detail_url }}" class=author-link>
+            {{ profile_image(author) }}
+            {{ author }}
+          </a>
+          {% if author.profile.about %}
+            <p>{{ author.profile.about }}</p>
+          {% endif %}
+        </div>
       {% endfor %}
     </div>
   </div>

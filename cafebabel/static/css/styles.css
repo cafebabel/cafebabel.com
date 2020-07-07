@@ -1975,6 +1975,26 @@ select#author {
   font-size: 1.3rem;
 }
 
+.article-page .contributor-container .author-detail {
+  display: flex;
+  max-width: 35rem;
+}
+
+.article-page .contributor-container .author-detail .author-link {
+  margin-right: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page .contributor-container .author-detail .author-link {
+    min-width: 12rem;
+    margin-right: 0;
+  }
+}
+
+.article-page .contributor-container.reminder .author-link:hover:after {
+  width: 0;
+}
+
 @media screen and (max-width: 750px) {
   .article-page .contributor-container {
     display: flex;
