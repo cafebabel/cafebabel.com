@@ -113,6 +113,8 @@
 
 {{ article.body|markdown|rewrite_img_src }}
 
+{{ macros.reminder_article_meta(article) }}
+
 {% if article.is_translation %}
 <p class=translation-details>
   Translated from <a href="{{ article.original_article.detail_url }}">{{ article.original_article.title }}</a>
