@@ -1977,6 +1977,7 @@ select#author {
 
 .article-page .contributor-container .author-detail {
   display: flex;
+  justify-content: center;
   max-width: 35rem;
 }
 
@@ -1986,7 +1987,6 @@ select#author {
 
 @media screen and (min-width: 750px) {
   .article-page .contributor-container .author-detail .author-link {
-    min-width: 12rem;
     margin-right: 0;
   }
 }
