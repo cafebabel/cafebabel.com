@@ -161,7 +161,7 @@ if (articlePage) {
       newsletterPopup.querySelector('span').addEventListener('click', () => {
         newsletterPopup.classList.remove('active')
       })
-    }, 10000)
+    }, 15000)
     sessionStorage.setItem('popup', 'true')
   }
 }
