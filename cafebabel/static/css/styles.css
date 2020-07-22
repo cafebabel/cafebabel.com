@@ -1981,14 +1981,8 @@ select#author {
   max-width: 35rem;
 }
 
-.article-page .contributor-container .author-detail .author-link {
-  margin-right: 2rem;
-}
-
-@media screen and (min-width: 750px) {
-  .article-page .contributor-container .author-detail .author-link {
-    margin-right: 0;
-  }
+.article-page .contributor-container .author-detail p {
+  padding-left: 2rem;
 }
 
 .article-page .contributor-container.reminder .author-link:hover:after {
