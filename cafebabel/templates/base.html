@@ -198,35 +198,19 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 {% endif %}
-<script type="text/javascript"> // axeptio cookie disclaimer
-var el = document.createElement('script');
-el.setAttribute('src', 'https://static.axept.io/sdk.js');
-el.setAttribute('type', 'text/javascript');
-el.setAttribute('async', true);
-el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-el.setAttribute('data-cookies-version', 'cafebabel-base');
 
-if (document.documentElement.lang === 'en'){
-  el.setAttribute('data-cookies-version','custom-en');
-}
-if (document.documentElement.lang === 'fr'){
-  el.setAttribute('data-cookies-version','cafebabel-base');
-}
-if (document.documentElement.lang === 'es'){
-  el.setAttribute('data-cookies-version','custom-es');
-}
-if (document.documentElement.lang === 'it'){
-  el.setAttribute('data-cookies-version','custom-it');
-}
-if (document.documentElement.lang === 'de'){
-  el.setAttribute('data-cookies-version','custom-de');
-}
-if (document.documentElement.lang === 'pl'){
-  el.setAttribute('data-cookies-version','custom-en');
-}
+{% if current_language == 'fr' %}
+  <script type="text/javascript"> // axeptio cookie disclaimer
+  var el = document.createElement('script');
+  el.setAttribute('src', 'https://static.axept.io/sdk.js');
+  el.setAttribute('type', 'text/javascript');
+  el.setAttribute('async', true);
+  el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
+  el.setAttribute('data-cookies-version', 'cafebabel-base');
 
-if (document.body !== null) {
-  document.body.appendChild(el);
-}
-</script>
+  if (document.body !== null) {
+    document.body.appendChild(el);
+  }
+  </script>
+{% endif %}
 </html>
