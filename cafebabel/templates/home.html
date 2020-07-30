@@ -173,19 +173,8 @@
     </section>
     {{ external_series('https://borderline.cafebabel.com/pl/', 'https://borderline.cafebabel.com/wp-content/uploads/2018/08/Szczecin-thumbnail-1200x800.jpg', 'https://borderline.cafebabel.com/wp-content/uploads/2018/09/TSR1080.mp4', 'https://borderline.cafebabel.com/wp-content/uploads/2018/07/logo-borderline.svg' ,'Borderline logo', 'Nowe spojrzenie na Polskę i jej granice – by lepiej zrozumieć kraj, który świętuje w tym roku stulecie niepodległości.') }}
   {% endif %}
-  <div id=cookie-disclaimer>
-    <button title="close this window"></button>
-    <p>This website uses cookies to improve its functioning and your interaction with it. Using cookies, we collect and temporarily store some of your personal data. You can change the cookie settings in your browser.</p>
-  </div>
+
   <script>
-    //if (!sessionStorage.getItem('popup')) {
-      const underConstructionPopUp = document.querySelector('#cookie-disclaimer')
-      underConstructionPopUp.classList.add('show')
-      underConstructionPopUp.querySelector('button').addEventListener('click', () => {
-        underConstructionPopUp.classList.remove('show')
-      })
-      //sessionStorage.setItem('popup', 'true');
-    //}
     // @BUGFIX: Ensure autoplay actually starts all videos
     Array.from(document.querySelectorAll('video')).forEach(v => v.play())
   </script>

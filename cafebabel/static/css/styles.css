@@ -4115,55 +4115,6 @@ footer p {
   }
 }
 
-/* Under construction pop up */
-
-#cookie-disclaimer {
-  position: fixed;
-  background: rgba(255, 255, 255, 0.6);
-  width: 100%;
-  height: 7rem;
-  bottom: 0;
-  left: 0;
-  padding: 1rem 4rem 1rem 1rem;
-  z-index: 1;
-  display: none;
-}
-
-#cookie-disclaimer.show {
-  display: block;
-}
-
-#cookie-disclaimer button {
-  position: absolute;
-  top: 1rem;
-  right: 1.2rem;
-  color: #00283c;
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  width: 2rem;
-  z-index: 11;
-}
-
-#cookie-disclaimer button:after {
-  font-family: 'icomoon';
-  content: '\ea0f';
-  font-size: 1.5rem;
-}
-
-#cookie-disclaimer p {
-  font-size: 0.9rem;
-}
-
-@media screen and (min-width: 750px) {
-  #cookie-disclaimer,
-  #cookie-disclaimer.show {
-    display: none;
-  }
-}
-
 /* ad :-( */
 
 .ean_element {
