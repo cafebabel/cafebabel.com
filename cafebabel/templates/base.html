@@ -201,7 +201,6 @@
 
 {% if current_language == 'en' %}
   <script type="text/javascript"> // axeptio cookie disclaimer
-  console.log('en')
   el.setAttribute('src', 'https://static.axept.io/sdk.js');
   el.setAttribute('type', 'text/javascript');
   el.setAttribute('async', true);
@@ -213,13 +212,12 @@
   </script>
 {% elif current_language == 'fr' %}
   <script type="text/javascript">
-    console.log('fr')
     var el = document.createElement('script');
     el.setAttribute('src', 'https://static.axept.io/sdk.js');
     el.setAttribute('type', 'text/javascript');
     el.setAttribute('async', true);
     el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-    el.setAttribute('data-cookies-version', 'cafebabel-base');
+    el.setAttribute('data-cookies-version', 'custom');
     if (document.body !== null) {
       document.body.appendChild(el);
     }
