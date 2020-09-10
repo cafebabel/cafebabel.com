@@ -199,78 +199,36 @@
 <!-- End Google Tag Manager (noscript) -->
 {% endif %}
 
-{% if current_language == 'en' %}
-  <script type="text/javascript"> // axeptio cookie disclaimer
-  el.setAttribute('src', 'https://static.axept.io/sdk.js');
-  el.setAttribute('type', 'text/javascript');
-  el.setAttribute('async', true);
-  el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-  el.setAttribute('data-cookies-version', 'custom-en');
-  if (document.body !== null) {
-    document.body.appendChild(el);
-  }
-  </script>
-{% elif current_language == 'fr' %}
-  <script type="text/javascript">
-    var el = document.createElement('script');
-    el.setAttribute('src', 'https://static.axept.io/sdk.js');
-    el.setAttribute('type', 'text/javascript');
-    el.setAttribute('async', true);
-    el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-    el.setAttribute('data-cookies-version', 'custom');
-    if (document.body !== null) {
-      document.body.appendChild(el);
-    }
-  </script>
-{% elif current_language == 'it' %}
-  <script type="text/javascript">
-    var el = document.createElement('script');
-    el.setAttribute('src', 'https://static.axept.io/sdk.js');
-    el.setAttribute('type', 'text/javascript');
-    el.setAttribute('async', true);
-    el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-    el.setAttribute('data-cookies-version', 'custom-it');
-    if (document.body !== null) {
-      document.body.appendChild(el);
-    }
-  </script>
-{% elif current_language == 'es' %}
-  <script type="text/javascript">
-    var el = document.createElement('script');
-    el.setAttribute('src', 'https://static.axept.io/sdk.js');
-    el.setAttribute('type', 'text/javascript');
-    el.setAttribute('async', true);
-    el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-    el.setAttribute('data-cookies-version', 'custom-es');
-    if (document.body !== null) {
-      document.body.appendChild(el);
-    }
-  </script>
-{% elif current_language == 'de' %}
-  <script type="text/javascript">
-    var el = document.createElement('script');
-    el.setAttribute('src', 'https://static.axept.io/sdk.js');
-    el.setAttribute('type', 'text/javascript');
-    el.setAttribute('async', true);
-    el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-    el.setAttribute('data-cookies-version', 'custom-de');
-    if (document.body !== null) {
-      document.body.appendChild(el);
-    }
-  </script>
-{% elif current_language == 'pl' %}
-  <script type="text/javascript">
-    console.log('pl')
-    var el = document.createElement('script');
-    el.setAttribute('src', 'https://static.axept.io/sdk.js');
-    el.setAttribute('type', 'text/javascript');
-    el.setAttribute('async', true);
-    el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
-    el.setAttribute('data-cookies-version', 'custom-en');
-    if (document.body !== null) {
-      document.body.appendChild(el);
-    }
-  </script>
-{% endif %}
+
+<script type="text/javascript"> // axeptio cookie disclaimer
+var el = document.createElement('script');
+el.setAttribute('src', 'https://static.axept.io/sdk.js');
+el.setAttribute('type', 'text/javascript');
+el.setAttribute('async', true);
+el.setAttribute('data-id', '5ecd32d0fa0c33050562513e');
+el.setAttribute('data-cookies-version', 'custom-en');
+if (document.documentElement.lang === 'en'){
+  el.setAttribute('data-cookies-version','custom-en');
+}
+if (document.documentElement.lang === 'fr'){
+  el.setAttribute('data-cookies-version','custom');
+}
+if (document.documentElement.lang === 'es'){
+  el.setAttribute('data-cookies-version','custom-es');
+}
+if (document.documentElement.lang === 'de'){
+  el.setAttribute('data-cookies-version','custom-de');
+}
+if (document.documentElement.lang === 'it'){
+  el.setAttribute('data-cookies-version','custom-it');
+}
+if (document.documentElement.lang === 'pl'){
+  el.setAttribute('data-cookies-version','custom-en');
+}
+if (document.body !== null) {
+  document.body.appendChild(el);
+}
+</script>
+
 
 </html>
