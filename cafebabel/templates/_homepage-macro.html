@@ -24,12 +24,14 @@
   </section>
 {% endmacro %}
 
-{% macro external_series(external_link, banner_url, video_url, logo_source, logo_alt, description, button_text) %}
-<section class="series external_series">
+{% macro external_series(external_link, banner_url, video_url, logo_source, logo_alt, description, button_text, custom_styles) %}
+<section class="series external_series" {{ custom_styles }}>
   <a href="{{ external_link }}" target=_blank class=banner style="background-image:url({{ banner_url }});">
     <div class=series-infos>
       <h2>{{ serie_name }}</h2>
+      {% if logo_source %}
       <img src="{{ logo_source }}" alt="{{ logo_alt }}" />
+      {% endif %}
       {% if description %}
       <p>{{ description }}</p>
       {% endif %}
