@@ -29,7 +29,9 @@
   <a href="{{ external_link }}" target=_blank class=banner style="background-image:url({{ banner_url }});">
     <div class=series-infos>
       <h2>{{ serie_name }}</h2>
+      {% if logo_source %}
       <img src="{{ logo_source }}" alt="{{ logo_alt }}" />
+      {% endif %}
       {% if description %}
       <p>{{ description }}</p>
       {% endif %}
