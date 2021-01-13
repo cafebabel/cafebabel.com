@@ -37,7 +37,7 @@
       {% endif %}
     </div>
     {% if video_url %}
-    <video class="landing-video" loop muted data-autoplay data-keepplaying><source src={{ video_url }} type="video/mp4"></video>
+    <video class="landing-video" loop muted data-autoplay data-keepplaying playsinline><source src={{ video_url }} type="video/mp4"></video>
     {% endif %}
   </a>
   {% if button_text %}
