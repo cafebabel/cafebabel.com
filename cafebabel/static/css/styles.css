@@ -3216,7 +3216,7 @@ article .article-detail h3 {
 }
 
 .home article .article-detail p:first-of-type {
-  display: none;
+  /*display: none;*/
 }
 
 .home article .article-detail p:last-child {
